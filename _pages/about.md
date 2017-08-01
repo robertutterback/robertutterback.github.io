@@ -27,3 +27,4 @@ from [Truman State University](http://www.truman.edu).
 
 Site url: {{ site.url }}
 Base url: {{ site.baseurl }}
+Page url: {{ page.url }}

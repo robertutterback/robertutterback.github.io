@@ -5,6 +5,10 @@ title: Schedule
 description: #Materials for courses you taught. Replace this text with your description.
 ---
 
+Site url: {{ site.url }}
+Base url: {{ site.baseurl }}
+Page url: {{ page.url }}
+
 This is my calendar of classes, meetings, office hours, and other
 college events. If you need to meeting with me (outside of office
 hours), email me a few open slots on the calendar. I'm normally on
