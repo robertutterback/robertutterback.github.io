@@ -23,8 +23,3 @@ under [Kunal Agrawal](http://www.cse.wustl.edu/~kunal/) and [Angelina Lee](http:
 both theoretical and systems aspects of parallel computing. I also
 hold a B.S. in mathematics and computer science
 from [Truman State University](http://www.truman.edu).
-
-
-Site url: {{ site.url }}
-Base url: {{ site.baseurl }}
-Page url: {{ page.url }}
