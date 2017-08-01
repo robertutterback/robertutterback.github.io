@@ -13,7 +13,8 @@
 
       <div class="trigger">
         <!-- About -->
-        <a class="page-link" href="{{ site.baseurl | prepend: site.url }}/">About</a>
+        <!-- <a class="page-link" href="{{ site.baseurl | prepend: site.url }}/">About</a> -->
+        <a class="page-link" href="{{ site.baseurl}}{{ post.url }}">About</a>
 
         <!-- Blog -->
         <!-- <a class="page-link" href="{{ '/blog/' | prepend: site.baseurl | prepend: site.url }}">blog</a> -->
@@ -21,7 +22,8 @@
         <!-- Pages -->
         {% for page in site.pages %}
           {% if page.title and page.url != "/" %}
-            <a class="page-link" href="{{ page.url | prepend: site.baseurl | prepend: site.url }}">{{ page.title }}</a>
+						 <!-- <a class="page-link" href="{{ page.url | prepend: site.baseurl | prepend: site.url }}">{{ page.title }}</a> -->
+						 <a class="page-link" href="{{ site.baseurl}}{{ post.url }}">{{ page.title }}</a>
           {% endif %}
         {% endfor %}
 

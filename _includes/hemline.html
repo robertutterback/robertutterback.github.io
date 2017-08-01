@@ -8,7 +8,8 @@
 <!-- Load KaTeX -->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/{{ site.katex_version }}/katex.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/{{ site.katex_version }}/katex.min.js"></script>
-<script src="{{ '/assets/js/katex.js' | prepend: site.baseurl | prepend: site.url }}"></script>
+<script src="{{ site.baseurl}}/assets/js/katex.js"></script>
+<!-- "{{ '/assets/js/katex.js' | prepend: site.baseurl | prepend: site.url }}"></script> -->
 {% endif %}
 
 {% if site.enable_anchorjs %}
@@ -21,8 +22,12 @@
 {% endif %}
 
 <!-- Include custom icon fonts -->
-<link rel="stylesheet" href="{{ '/assets/css/font-awesome.min.css' | prepend: site.baseurl | prepend: site.url }}">
-<link rel="stylesheet" href="{{ '/assets/css/academicons.min.css' | prepend: site.baseurl | prepend: site.url }}">
+<!-- <link rel="stylesheet" href="{{ '/assets/css/font-awesome.min.css' | prepend: site.baseurl | prepend: site.url }}"> -->
+<!-- <link rel="stylesheet" href="{{ '/assets/css/academicons.min.css' | prepend: site.baseurl | prepend: site.url }}"> -->
+
+<link rel="stylesheet" href="{{ site.baseurl}}/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ site.baseurl}}/assets/css/academicons.min.css">
+
 
 <!-- Google Analytics -->
 <!-- <script> -->
