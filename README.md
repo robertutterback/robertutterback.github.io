@@ -1,3 +1,19 @@
+# Academic Website for Robert Utterback
+
+My academic website uses a modified [al-folio](https://github.com/alshedivat/al-folio) theme for
+academics. 
+
+## TODO
+
+* More learning resources
+* Nicer publications page with "working paper" section, abstracts, and
+  links to preprints.
+* Add a page about recommendation letters.
+* Get rid of unnecessary javascript.
+* Blog?
+
+The original documentation for `al-folio' follows.
+
 # al-folio
 
 [![demo](https://img.shields.io/badge/theme-demo-brightgreen.svg)](https://alshedivat.github.io/al-folio/)
