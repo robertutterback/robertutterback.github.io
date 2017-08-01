@@ -6,7 +6,7 @@ description: #Materials for courses you taught. Replace this text with your desc
 ---
 
 This is my calendar of classes, meetings, office hours, and other
-college events. If you need to meeting with me (outside of office
+college events. If you need to meet with me (outside of office
 hours), email me a few open slots on the calendar. I'm normally on
 campus from about 8 AM to 5 PM.
 
