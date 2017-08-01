@@ -25,3 +25,5 @@ hold a B.S. in mathematics and computer science
 from [Truman State University](http://www.truman.edu).
 
 
+Site url: {{ site.url }}
+Base url: {{ site.baseurl }}
