@@ -1,10 +1,21 @@
 ---
 layout: page
 permalink: /teaching/
-title: teaching
-description: Materials for courses you taught. Replace this text with your description.
+title: Teaching
+description: Course materials.
 ---
 
-For now, this page is assumed to be a static description of your courses. You can convert it to a collection similar to `_projects/` so that you can have a dedicated page for each course.
+### Current (Fall 2017)
 
-Organize your courses by years, topics, or universities, however you like!
+* COMP 220: Data Structures
+* COMP 230: Computer Architecture and Organization
+* COMP 325: Organization of Programming Languages
+
+### Previous
+
+* (Spring 2017) [CSE 347: Analysis of Algorithms](http://www.cse.wustl.edu/~bjuba/cse347/s17/) [(WUSTL)](http://www.wustl.edu)
+* (Fall 2016, guest lecturer): [CSE 341: Parallel and Sequential Algorithms](http://www.classes.cec.wustl.edu/~cse341/web/) [(WUSTL)](http://www.wustl.edu)
+  * Guest lecture on parallel divide-and-conquer algorithms
+  * Guest lecture on Luby's algorithm for maximal independent set
+* (Fall 2014, TA): [CSE 341/549: Parallel and Sequential Algorithms](http://www.cse.wustl.edu/~angelee/archive/fall14/) [(WUSTL)](http://www.wustl.edu)
+* (Spring 2013, TA): CSE 341: Parallel and Sequential Algorithms [(WUSTL)](http://www.wustl.edu)
