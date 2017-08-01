@@ -5,7 +5,7 @@ academics.
 
 ## TODO
 
-* More learning resources
+* More learning resources, especially including those that Monmouth College provides.
 * Nicer publications page with "working paper" section, abstracts, and
   links to preprints.
 * Add a page about recommendation letters.
