@@ -14,6 +14,9 @@ you want to know all of this. It's worth it, though.
 * A nice [collection](https://github.com/nushackers/notes-to-cs-freshmen-from-the-future/blob/master/README.md) of advice and info. Although it says freshman,
 it will likely be useful to all CS students.
 * [Vizualizations](https://visualgo.net) of many algorithms and data structures.
+* [Teach Yourself CS](https://teachyourselfcs.com) is another list of resources. It's aimed
+  toward self-taught software engineers, but the materials could be
+  very useful if you're struggling in a particular course.
 
 ### General Learning
 
