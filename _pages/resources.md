@@ -14,6 +14,8 @@ you want to know all of this. It's worth it, though.
 * A nice [collection](https://github.com/nushackers/notes-to-cs-freshmen-from-the-future/blob/master/README.md) of advice and info. Although it says freshman,
 it will likely be useful to all CS students.
 * [Vizualizations](https://visualgo.net) of many algorithms and data structures.
+* A [massive list](https://github.com/sdmg15/Best-websites-a-programmer-should-visit) of links for programmers, ranging from tech news
+  to interview preparation to improving your English.
 * [Teach Yourself CS](https://teachyourselfcs.com) is another list of resources. It's aimed
   toward self-taught software engineers, but the materials could be
   very useful if you're struggling in a particular course.
@@ -22,3 +24,4 @@ it will likely be useful to all CS students.
 
 * Coursera's free [Learning How to Learn](https://www.coursera.org/learn/learning-how-to-learn) course will improve your
   learning of all topics, not just computer science.
+* I heard you like lists, so [here](https://github.com/jnv/lists) is a list of cool lists.
