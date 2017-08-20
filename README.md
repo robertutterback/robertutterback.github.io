@@ -5,11 +5,14 @@ academics.
 
 ## TODO
 
+* Course pages
+  * Add Table of Contents as a floating sidebar
 * More learning resources, especially including those that Monmouth College provides.
 * Nicer publications page with "working paper" section, abstracts, and
   links to preprints.
 * Add a page about recommendation letters.
 * Get rid of unnecessary javascript.
+* Add public key.
 * Blog?
 
 The original documentation for `al-folio' follows.
