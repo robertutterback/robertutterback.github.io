@@ -76,7 +76,8 @@ $background-color:  white;
 
 // Links
 $link-color:        $theme-color;
-$link-hover-color:  darken($theme-color, 40%);
+$link-hover-color:  $dark-blue;
+//$link-hover-color:  darken($theme-color, 40%);
 
 // Breakpoints
 $breakpoint-md: '(min-width: 52em)';
