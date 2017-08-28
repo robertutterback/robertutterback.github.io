@@ -19,9 +19,11 @@ it will likely be useful to all CS students.
 * [Teach Yourself CS](https://teachyourselfcs.com) is another list of resources. It's aimed
   toward self-taught software engineers, but the materials could be
   very useful if you're struggling in a particular course.
+* Get better at using the shell with with [CMD Challeng](https://cmdchallenge.com/).  
 
 ### General Learning
 
-* Coursera's free [Learning How to Learn](https://www.coursera.org/learn/learning-how-to-learn) course will improve your
-  learning of all topics, not just computer science.
+* Coursera's free [Learning How to
+  Learn](https://www.coursera.org/learn/learning-how-to-learn) course
+  will improve your learning of all topics, not just computer science.
 * I heard you like lists, so [here](https://github.com/jnv/lists) is a list of cool lists.
