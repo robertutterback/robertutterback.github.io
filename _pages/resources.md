@@ -26,4 +26,9 @@ it will likely be useful to all CS students.
 * Coursera's free [Learning How to
   Learn](https://www.coursera.org/learn/learning-how-to-learn) course
   will improve your learning of all topics, not just computer science.
+* In a similar vein, improving your problem-solving skills will help
+  many facets of your life. This
+  [tutorial](https://ryanstutorials.net/problem-solving-skills/) is a
+  pretty good one. Also check out Polya's [How to Solve
+  it](https://www.amazon.com/How-Solve-Mathematical-Princeton-Science/dp/069116407X).
 * I heard you like lists, so [here](https://github.com/jnv/lists) is a list of cool lists.
