@@ -127,33 +127,37 @@ services_v1: |
     accommodations. Please meet with the instructor ASAP if this
     applies to you!
 
-    services_v2: "The Teaching and Learning Center offers FREE
-    resources to assist Monmouth College students with their academic
-    success. Programs include Supplemental Instruction for difficult
-    classes, Drop-In and appointment tutoring, and individual Academic
-    Coaching. The TLC is here to help students excel academically. TLC
-    services are not just for struggling students, but can assist all
-    students to get better grades, practice stronger study skills, and
-    manage time.
+services_v2: |
+  * The [Teaching and Learning
+    Center](http://ou.monmouthcollege.edu/academics/teaching-learning-center/)
+    offers FREE resources to assist Monmouth College students with
+    their academic success. Programs include supplemental instruction
+    for difficult classes, drop-in and appointment tutoring, and
+    individual academic coaching. The TLC is here to help students
+    excel academically. TLC services are not just for struggling
+    students, but can assist all students to get better grades,
+    practice stronger study skills, and manage time.
 
     Make an appointment with Kam Williams, Director of Academic
     Support Programs and Student Disability Services, at the TLC on
-    the 2nd floor of Poling Hall. The Department phone number is
+    the 2nd floor of Poling Hall. The department phone number is
     457-2257, or contact the department online at
-    http://ou.monmouthcollege.edu/academics/teaching-learning-center/
-    They can also be reached via email at: tlc@monmouthcollege.edu
+    http://ou.monmouthcollege.edu/academics/teaching-learning-center/. They
+    can also be reached via email at: tlc@monmouthcollege.edu
 
-    Disability Support Services: If you have a disability or had
-    academic accommodations in high school or another college, you may
-    be eligible for academic accommodations at Monmouth College under
-    the Americans with Disabilities Act (ADA). Monmouth College is
-    committed to equal educational access.  Students with disabilities
-    can meet with Kam Williams about accommodations at the Teaching
-    and Learning Center (TLC). The TLC is located on the 2nd floor of
-    Poling Hall. For more information, call 309-457-2257 or connect
-    online at
-    http://ou.monmouthcollege.edu/life/disability-services/default.aspx"
+  * [Disability Support
+    Services](http://ou.monmouthcollege.edu/life/disability-services/default.aspx):
+    If you have a disability or had academic accommodations in high
+    school or another college, you may be eligible for academic
+    accommodations at Monmouth College under the Americans with
+    Disabilities Act (ADA). Monmouth College is committed to equal
+    educational access.
 
+    Students with disabilities can meet with Kam Williams about
+    accommodations at the Teaching and Learning Center (TLC). The TLC
+    is located on the 2nd floor of Poling Hall. For more information,
+    call 309-457-2257 or connect online at
+    http://ou.monmouthcollege.edu/life/disability-services/default.aspx.
 
 gradescale_std_v1: |
   This courses uses a standard grading scale. Assignments and final
