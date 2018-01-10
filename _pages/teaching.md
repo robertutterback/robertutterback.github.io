@@ -7,8 +7,8 @@ description: Course materials.
 
 ### Current (Spring 2018)
 
-* <a href="{{ site.baseurl }}/courses/comp210/s17/">COMP 210: Object-Oriented Programming</a>
-* <a href="{{ site.baseurl }}/courses/comp340/s17/">COMP 340: Analysis of Algorithms</a>
+* <a href="{{ site.baseurl }}/courses/comp210/s18/">COMP 210: Object-Oriented Programming</a>
+* <a href="{{ site.baseurl }}/courses/comp340/s18/">COMP 340: Analysis of Algorithms</a>
 
 ### Fall 2017
 
