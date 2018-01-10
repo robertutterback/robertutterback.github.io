@@ -5,7 +5,12 @@ title: Teaching
 description: Course materials.
 ---
 
-### Current (Fall 2017)
+### Current (Spring 2018)
+
+* <a href="{{ site.baseurl }}/courses/comp220/f17/">COMP 210: Object-Oriented Programming</a>
+* <a href="{{ site.baseurl }}/courses/comp230/f17/">COMP 340: Analysis of Algorithms</a>
+
+### Fall 2017
 
 * <a href="{{ site.baseurl }}/courses/comp220/f17/">COMP 220: Data Structures</a>
 * <a href="{{ site.baseurl }}/courses/comp230/f17/">COMP 230: Computer Architecture and Organization</a>
