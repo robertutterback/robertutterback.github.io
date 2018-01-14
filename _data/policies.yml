@@ -2,7 +2,12 @@
 # things that occasionally change
 late_none_v1: "In general, late assignments will *not* be accepted. Exceptions may be made only for situations beyond your control. If you feel your reason is justified, schedule a meeting with the instructor to plead your case."
 
-late_days_v1: "TODO"
+late_days_v1: "You have each been allotted a *total* of *5* late
+days. You may apply these to any problem sets you see fit and turn in
+your solutions with no penalty. However, you may use at most 2 on any
+individual assignment. The whole point here is to give you some
+flexibility that allows for things like illnesses, long trips, and the
+like. I am unlikely to grant further extensions."
   
 syllabus_deviation_v1: "This syllabus is subject to change based on
 specific class needs, especially the
