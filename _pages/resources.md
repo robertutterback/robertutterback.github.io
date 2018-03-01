@@ -19,7 +19,10 @@ it will likely be useful to all CS students.
 * [Teach Yourself CS](https://teachyourselfcs.com) is another list of resources. It's aimed
   toward self-taught software engineers, but the materials could be
   very useful if you're struggling in a particular course.
-* Get better at using the shell with with [CMD Challeng](https://cmdchallenge.com/).  
+* Get better at using the shell with with [CMD Challenge](https://cmdchallenge.com/).  
+* Visualize the code you write using [Python
+  Tutor](http://pythontutor.com/). Despite the name, you can program
+  in Python, Java, JavaScript, C++, and more!
 
 ### General Learning
 
