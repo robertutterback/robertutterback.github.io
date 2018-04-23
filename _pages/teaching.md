@@ -5,6 +5,12 @@ title: Teaching
 description: Course materials.
 ---
 
+### Fall 2018
+
+* <a href="{{ site.baseurl }}/courses/comp220/f18/">COMP 220: Data Structures</a>
+* <a href="{{ site.baseurl }}/courses/comp230/f18/">COMP 230: Computer Architecture and Organization</a>
+* <a href="{{ site.baseurl }}/courses/comp350ml/f18/">COMP 350 (and MATH 350): Applied Machine Learning</a>
+
 ### Current (Spring 2018)
 
 * <a href="{{ site.baseurl }}/courses/comp210/s18/">COMP 210: Object-Oriented Programming</a>
