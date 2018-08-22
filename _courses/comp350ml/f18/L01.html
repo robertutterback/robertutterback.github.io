@@ -7,9 +7,9 @@
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
-<link rel="stylesheet" href="./reveal/css/reveal.css"/>
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
 
-<link rel="stylesheet" href="./reveal/css/theme/white.css" id="theme"/>
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/white.css" id="theme"/>
 
 <link rel="stylesheet" href="./notes.css"/>
 
@@ -19,7 +19,7 @@
         var link = document.createElement( 'link' );
         link.rel = 'stylesheet';
         link.type = 'text/css';
-        link.href = './reveal/css/print/pdf.css';
+        link.href = 'http://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
         document.getElementsByTagName( 'head' )[0].appendChild( link );
     }
 </script>
@@ -32,13 +32,13 @@
 </section>
 
 <section>
-<section id="slide-org1f6ecc5">
-<h2 id="org1f6ecc5">Logistics</h2>
-<div class="outline-text-2" id="text-org1f6ecc5">
+<section id="slide-org2b57820">
+<h2 id="org2b57820">Logistics</h2>
+<div class="outline-text-2" id="text-org2b57820">
 </div>
 </section>
-<section id="slide-org6049b3a">
-<h3 id="org6049b3a">Syllabus</h3>
+<section id="slide-orgcfb7df9">
+<h3 id="orgcfb7df9">Syllabus</h3>
 <ul>
 <li class="fragment appear">Course website: <a href="https://robertutterback.github.io/courses/comp350ml/f18">https://robertutterback.github.io/courses/comp350ml/f18</a></li>
 <li class="fragment appear">As usual, everything is there</li>
@@ -53,8 +53,8 @@ way of making slides, so there may be some adjustment time there.
 
 </aside>
 </section>
-<section id="slide-org987cea5">
-<h3 id="org987cea5">Grading</h3>
+<section id="slide-org1459eab">
+<h3 id="org1459eab">Grading</h3>
 <ul>
 <li>1 midterm, 20%, 1 final, 20%</li>
 <li>participation: 10% (Socrative)</li>
@@ -64,8 +64,8 @@ way of making slides, so there may be some adjustment time there.
 
 </ul>
 </section>
-<section id="slide-orgbb82818">
-<h3 id="orgbb82818">Books</h3>
+<section id="slide-org060b22f">
+<h3 id="org060b22f">Books</h3>
 <img width="25%" height="50%" src="./assets/apm.png">
 <img width="25%" height="50%" src="./assets/imlp.png">
 <aside class="notes">
@@ -78,8 +78,8 @@ of. It's available online.
 </section>
 </section>
 <section>
-<section id="slide-orge7c76b0">
-<h2 id="orge7c76b0">What and Why of Machine Learning</h2>
+<section id="slide-org58b46e6">
+<h2 id="org58b46e6">What and Why of Machine Learning</h2>
 <aside class="notes">
 <p>
 Let's talk just a little bit about the content of the course. This will just be a kind-of loose collection of ideas and pretty vague.
@@ -87,8 +87,8 @@ Let's talk just a little bit about the content of the course. This will just be 
 
 </aside>
 </section>
-<section id="slide-org8060582">
-<h3 id="org8060582">What is machine learning?</h3>
+<section id="slide-orgb136a68">
+<h3 id="orgb136a68">What is machine learning?</h3>
 <aside class="notes">
 <p>
 Machine learning is about extracting knowledge from data. It is closely related to statistics and optimization, but ML is focused on prediction.
@@ -100,8 +100,8 @@ Given a large dataset, we seek to learn how to make decisions about future obser
 
 </aside>
 </section>
-<section id="slide-org3f38bda">
-<h3 id="org3f38bda"></h3>
+<section id="slide-org52334fa">
+<h3 id="org52334fa"></h3>
 <aside class="notes">
 <p>
 Tons of ML on Facebook news feed:
@@ -128,8 +128,8 @@ TODO: resize this image???!
 
 </aside>
 </section>
-<section id="slide-org0c083ad">
-<h3 id="org0c083ad"></h3>
+<section id="slide-orgac69831">
+<h3 id="orgac69831"></h3>
 <aside class="notes">
 <p>
 Finding faces in images, figuring out specific faces, etc.
@@ -142,8 +142,8 @@ Finding faces in images, figuring out specific faces, etc.
 </p>
 </div>
 </section>
-<section id="slide-orgbf6d3f5">
-<h3 id="orgbf6d3f5"></h3>
+<section id="slide-org85a7318">
+<h3 id="org85a7318"></h3>
 <aside class="notes">
 <p>
 Selecting interesting pictures from an uploaded album.
@@ -156,8 +156,8 @@ Selecting interesting pictures from an uploaded album.
 </p>
 </div>
 </section>
-<section id="slide-org39d668b">
-<h3 id="org39d668b"></h3>
+<section id="slide-orgb3138ec">
+<h3 id="orgb3138ec"></h3>
 <aside class="notes">
 <p>
 Spotify - trying to recommend songs, related artists, etc.
@@ -170,8 +170,8 @@ Spotify - trying to recommend songs, related artists, etc.
 </p>
 </div>
 </section>
-<section id="slide-org53efef3">
-<h3 id="org53efef3"></h3>
+<section id="slide-org9a121ff">
+<h3 id="org9a121ff"></h3>
 <aside class="notes">
 <p>
 Ranking the list of products for search results. (plus ads)
@@ -184,8 +184,8 @@ Ranking the list of products for search results. (plus ads)
 </p>
 </div>
 </section>
-<section id="slide-orgb9b2a82">
-<h3 id="orgb9b2a82"></h3>
+<section id="slide-org4b3da93">
+<h3 id="org4b3da93"></h3>
 <aside class="notes">
 <p>
 Ads, default choices (paperback vs. hardcover vs. kindle), frequently bought together, default seller
@@ -198,8 +198,8 @@ Ads, default choices (paperback vs. hardcover vs. kindle), frequently bought tog
 </p>
 </div>
 </section>
-<section id="slide-org3f6bc86">
-<h3 id="org3f6bc86"></h3>
+<section id="slide-org4829b70">
+<h3 id="org4829b70"></h3>
 <aside class="notes">
 <p>
 But also important application in science. Personalized cancer treatment, medical diagnosis, drug discovery, discovering particles (higgs boson) and planets. The data from telescopes would be much different than this artist illustration: a single pixel for star and planet. You can find exoplanets by seeing the pixel occasionally dim. But there's too much data to do it by hand; ML.
@@ -214,13 +214,13 @@ But also important application in science. Personalized cancer treatment, medica
 </section>
 </section>
 <section>
-<section id="slide-org8159731">
-<h2 id="org8159731">Types of Machine Learning</h2>
-<div class="outline-text-2" id="text-org8159731">
+<section id="slide-org624667e">
+<h2 id="org624667e">Types of Machine Learning</h2>
+<div class="outline-text-2" id="text-org624667e">
 </div>
 </section>
-<section id="slide-org0b67c55">
-<h3 id="org0b67c55">Types of Machine Learning</h3>
+<section id="slide-org3f11f2c">
+<h3 id="org3f11f2c">Types of Machine Learning</h3>
 <ul>
 <li>Supervised</li>
 <li>Unsupervised</li>
@@ -234,8 +234,8 @@ A taxonomy of ML categories. Three main: supervised learning, unsupervised learn
 
 </aside>
 </section>
-<section id="slide-orgc80d1c1">
-<h3 id="orgc80d1c1">Supervised Learning</h3>
+<section id="slide-orga584b5d">
+<h3 id="orga584b5d">Supervised Learning</h3>
 <p>
 \((x_i,y_i) \propto p(x,y)\) i.i.d
 </p>
@@ -258,8 +258,8 @@ In supervised learning, the dataset we learn form is input-output pairs (x<sub>i
 
 </aside>
 </section>
-<section id="slide-org9b6cf17">
-<h3 id="org9b6cf17">Examples of Supervised Learning</h3>
+<section id="slide-org7b02f76">
+<h3 id="org7b02f76">Examples of Supervised Learning</h3>
 <ul>
 <li>Testing for diabetes</li>
 <li>Classifying terrain of satellite image</li>
@@ -277,8 +277,8 @@ This is often used to automate manual labor. For example, you might annotate par
 
 </aside>
 </section>
-<section id="slide-org4a5e766">
-<h3 id="org4a5e766">Unsupervised Learning</h3>
+<section id="slide-org969bf62">
+<h3 id="org969bf62">Unsupervised Learning</h3>
 <p>
 \(x_i \propto p(x)\) i.i.d
 </p>
@@ -297,8 +297,8 @@ Common examples of unsupervised learning is discovering topics in news articles 
 
 </aside>
 </section>
-<section id="slide-orgcb026a6">
-<h3 id="orgcb026a6">Reinforcement Learning</h3>
+<section id="slide-orgd863415">
+<h3 id="orgd863415">Reinforcement Learning</h3>
 <div class="column" style="float:left; width: 50%">
 
 <div class="figure">
@@ -320,8 +320,8 @@ Reinforcement learning has been in the news recently. Alpha go beat the world ch
 
 </aside>
 </section>
-<section id="slide-orgdafae62">
-<h3 id="orgdafae62">Reinforcement Learning</h3>
+<section id="slide-orgfaebbf1">
+<h3 id="orgfaebbf1">Reinforcement Learning</h3>
 <ul>
 <li>Working with an environment, not a dataset</li>
 <li>Action influence the environment</li>
@@ -336,8 +336,8 @@ Reinforcement learning is quite different in that you usually don’t work with 
 
 </aside>
 </section>
-<section id="slide-orge82c2ed">
-<h3 id="orge82c2ed">Other Kinds of Learning</h3>
+<section id="slide-orgc89a3c1">
+<h3 id="orgc89a3c1">Other Kinds of Learning</h3>
 <ul>
 <li>Semi-supervised</li>
 <li>Active Learning</li>
@@ -360,13 +360,13 @@ science and business problems, so it's what we'll focus on.
 </section>
 </section>
 <section>
-<section id="slide-org65f4c9f">
-<h2 id="org65f4c9f">Supervised Learning</h2>
-<div class="outline-text-2" id="text-org65f4c9f">
+<section id="slide-org1cb4ede">
+<h2 id="org1cb4ede">Supervised Learning</h2>
+<div class="outline-text-2" id="text-org1cb4ede">
 </div>
 </section>
-<section id="slide-org794bcc6">
-<h3 id="org794bcc6">Classification and Regression</h3>
+<section id="slide-orga27bb61">
+<h3 id="orga27bb61">Classification and Regression</h3>
 <div class="column" style="float:left; width: 50%">
 <p>
 Classification
@@ -406,8 +406,8 @@ This can be generalized to outputting more than one variable, but we'll be able 
 
 </aside>
 </section>
-<section id="slide-org7f59add">
-<h3 id="org7f59add">Generalization</h3>
+<section id="slide-orgd4c4938">
+<h3 id="orgd4c4938">Generalization</h3>
 <p>
 Not only \(f(x_i) \approx y_i\),
 </p>
@@ -422,8 +422,8 @@ For both regression and classification, it’s important to keep in mind the con
 
 </aside>
 </section>
-<section id="slide-org91421e5">
-<h3 id="org91421e5">Relationship to Statistics</h3>
+<section id="slide-orgfd5852f">
+<h3 id="orgfd5852f">Relationship to Statistics</h3>
 <div class="column" style="float:left; width: 50%">
 <p>
 Statistics
@@ -465,8 +465,8 @@ On the other hand, machine learning is about prediction and generalization. We w
 </section>
 </section>
 <section>
-<section id="slide-orgbf4c19f">
-<h2 id="orgbf4c19f">Overview of the course</h2>
+<section id="slide-org1da13ec">
+<h2 id="org1da13ec">Overview of the course</h2>
 <ul>
 <li>Infrastructure and basic tools</li>
 <li>Basics of Supervised Learning</li>
@@ -484,14 +484,14 @@ On the other hand, machine learning is about prediction and generalization. We w
 </section>
 </section>
 <section>
-<section id="slide-orgfe1afc0">
-<h2 id="orgfe1afc0">Questions?</h2>
+<section id="slide-orgb7de734">
+<h2 id="orgb7de734">Questions?</h2>
 </section>
 </section>
 </div>
 </div>
-<script src="./reveal/lib/js/head.min.js"></script>
-<script src="./reveal/js/reveal.js"></script>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
 
 <script>
 // Full list of configuration options available here:
@@ -521,11 +521,11 @@ multiplex: {
 
 // Optional libraries used to extend on reveal.js
 dependencies: [
- { src: './reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
- { src: './reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: './reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: './reveal/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
- { src: './reveal/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
 ,pdfSeparateFragments: false});
 </script>
 </body>
