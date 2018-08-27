@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Applied Machine Learning</title>
+<meta name="author" content="(Robert Utterback, Based on slides by Andreas Muller)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="/Users/rob/src/reveal/css/reveal.css"/>
+
+<link rel="stylesheet" href="/Users/rob/src/reveal/css/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+<link rel="stylesheet" href="/Users/rob/src/reveal/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '/Users/rob/src/reveal/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Applied Machine Learning</h1><h2 class="author">Robert Utterback, Based on slides by Andreas Muller</h2><h2 class="date">08/24/18</h2>
+</section>
+
+<section>
+<section id="slide-org6740dd6">
+<h2 id="org6740dd6">Guiding Principles in Machine Learning</h2>
+<div class="outline-text-2" id="text-org6740dd6">
+</div>
+</section>
+<section id="slide-org08a5198">
+<h3 id="org08a5198">Goal Considerations</h3>
+<aside class="notes">
+<ol>
+<li>Define a goal. 2. Figure out how to measure that goal!</li>
+
+</ol>
+<p>
+In the real world people won't tell you what algorithm to use or even what type of ML (e.g., supervised vs. unsupervised) to use!
+How to model your problem with ML tools? Should you use ML at all?
+</p>
+
+</aside>
+</section>
+<section id="slide-org132d12d">
+<h3 id="org132d12d">The Cost of Complex Systems</h3>
+<p>
+Data driven first? yes! (or maybe)
+</p>
+
+<p>
+Machine Learning first: No!
+</p>
+<aside class="notes">
+<p>
+Do you always need ML? Sometimes used just b/c it's trendy&#x2026;
+Use data, though.
+</p>
+
+</aside>
+</section>
+<section id="slide-org79baa11">
+<h3 id="org79baa11"></h3>
+<p>
+Thinking in Context!
+</p>
+
+<p>
+What is the baseline?
+</p>
+
+<p>
+What is the benefit?
+</p>
+
+<aside class="notes">
+<p>
+What do you want to achieve? What is the easiest way to achieve this? And what will improving over this baseline buy you?
+</p>
+
+<p>
+Electronics store example: closing down, want to send email to customers for final sale. Use ML to predict which customers might respond. But why? It's a closing sale.
+</p>
+
+</aside>
+</section>
+<section id="slide-org4e04419">
+<h3 id="org4e04419">Good and Bad Substitutes</h3>
+<aside class="notes">
+<p>
+Sometimes it can be hard to find the right metric. It needs to measure what you actually care about, or something close to it, and you actually have to be able to measure it. Often you need to find a good substitute metric for what you really want b/c what you really want is too hard to measure.
+</p>
+
+<p>
+Ex: ad click rates. Doesn't necessarily translate to sales. Easy to influence by putting ads next to what users often click on, or moving stuff around after loading, or other dark patterns.
+</p>
+
+</aside>
+</section>
+<section id="slide-org4854a9b">
+<h3 id="org4854a9b">Communicating Results</h3>
+<aside class="notes">
+<p>
+Explain to others, e.g., your boss, why it works, nothing weird will happen. An important skill.
+</p>
+
+</aside>
+</section>
+<section id="slide-org195d7b8">
+<h3 id="org195d7b8">Explainable Results</h3>
+
+<div class="figure">
+<p><img src="./assets/amazon_explanations.png" alt="amazon_explanations.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Recommendation engines work better if you can explain to users why you made those choices. Sometimes there's a balance between this and good prediction accuracy.
+</p>
+
+</aside>
+</section>
+<section id="slide-org55fc8bf">
+<h3 id="org55fc8bf">Ethical Considerations</h3>
+
+<div class="figure">
+<p><img src="./assets/propublica_compas.png" alt="propublica_compas.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Sometimes explanations and transparency are REALLY important, e.g. when lives are at stake. Ex: risk assessment system that had racial bias. Situation might have been better if the system was more transparent.
+</p>
+
+</aside>
+</section>
+<section id="slide-org2430632">
+<h3 id="org2430632">Data and Data Collection</h3>
+<aside class="notes">
+<p>
+When do you stop collecting data? It improves the model (if it's the right data), but what's the cost of getting it? 
+</p>
+
+</aside>
+</section>
+<section id="slide-orge96f406">
+<h3 id="orge96f406">Free vs. Expensive Data</h3>
+<div class="column" style="float:left; width: 50%">
+<p>
+Free: 
+</p>
+
+<p>
+Predict observable events
+</p>
+
+<ul>
+<li>stock market</li>
+<li>clicks</li>
+
+</ul>
+</div>
+<div class="column" style="float:left; width: 50%">
+<p>
+Expensive
+</p>
+
+<p>
+Automate complex process
+</p>
+
+<ul>
+<li>Diagnosis</li>
+<li>Drug Trial</li>
+<li>Chip Design</li>
+
+</ul>
+</div>
+</section>
+<section id="slide-org68c86e8">
+<h3 id="org68c86e8">Big Data</h3>
+<ul>
+<li>Cost vs. benefit</li>
+<li>Subsample to memory</li>
+
+</ul>
+<aside class="notes">
+<p>
+Big datasets improve your models, but also more complicated to work
+with. Python is easy, but slow. SPARK and others scale, but are hard
+to work with.
+</p>
+
+<p>
+You can learn it when you need it, but not to start.
+</p>
+
+</aside>
+</section>
+<section id="slide-org69f517a">
+<h3 id="org69f517a">Cornerstones of This Course</h3>
+<ul>
+<li>Problem definition and success measures</li>
+<li>Feature engineering and data cleaning</li>
+<li>Strength and weaknesses of different algorithms</li>
+<li>Model selection best practices</li>
+
+</ul>
+</section>
+<section id="slide-org569153c">
+<h3 id="org569153c">The Machine Learning Pipeline</h3>
+
+<div class="figure">
+<p><img src="./assets/ml-workflow.png" alt="ml-workflow.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Just <b>one</b> example of an ML workflow.
+Note that we're not done at the end. Your system may change user behavior! Though we won't really focus on that in this course.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org53a9046">
+<h2 id="org53a9046">About Python</h2>
+<div class="outline-text-2" id="text-org53a9046">
+</div>
+</section>
+<section id="slide-org7146124">
+<h3 id="org7146124">Why Python</h3>
+<ul>
+<li>General purpose language</li>
+<li>Great libraries</li>
+<li>easy to learn / use</li>
+<li>Alternatives: R, Julia, Matlab</li>
+
+</ul>
+<aside class="notes">
+<p>
+Unlike Matlab and R, python is general purpose.
+Lots of libraries since it's so popular, so most things you can do in a few lines.
+But R is a really good option, and from the statistical side it's actually more popular.
+</p>
+
+</aside>
+</section>
+<section id="slide-org2e0f79e">
+<h3 id="org2e0f79e">Why Not Python</h3>
+<ul>
+<li>Not made for statistical computing</li>
+<li>Slow!
+<ul>
+<li>But many libraries are written in C. Use them!</li>
+
+</ul></li>
+<li>Two major, incompatible versions of Python
+<ul>
+<li>2 vs. 3 (we'll use 3)</li>
+
+</ul></li>
+
+</ul>
+<aside class="notes">
+<p>
+Well, it's general purpose&#x2026;but this isn't too much of a downside
+really.  But Python really is pretty slow. For small programs you
+don't notice this much, but when you're doing data analysis you
+definitely do. It's also not very good at parallelism.
+</p>
+
+<p>
+However, Python let's you write some code in C and use it from
+Python. So in fact lots of the libraries we're going to use have a
+Python interface but are written in C, so they are pretty fast. So if
+you wanted to implement your own algorithm and couldn't do it well by
+using the libraries we have, you'd have to write in C and figure out
+how to interface with Python. But you won't need to do that in this
+class.
+</p>
+
+<p>
+Also, two versions of Python. print, division, etc.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgf6cc8d3">
+<h3 id="orgf6cc8d3">Python Packages</h3>
+<ul>
+<li>If you have multiple versions of Python&#x2026;it can be a mess
+<ul>
+<li>Look up "virtual environments"</li>
+
+</ul></li>
+<li>To install python packages (libraries), can use "pip"</li>
+<li>But easier to use anaconda
+<ul>
+<li>Comes with the packages we will want to use</li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-org3f5f0fe">
+<h3 id="org3f5f0fe">Dynamically typed and interpreted</h3>
+<ul>
+<li>Less to type, not int, double, etc.</li>
+<li>But you lose the safety net of types
+<ul>
+<li>Errors shift from compilation to runtime errors</li>
+<li>Need more documentation</li>
+
+</ul></li>
+
+</ul>
+<aside class="notes">
+<p>
+Actually later versions of Python3 include type annotation, but they're not supported everywhere yet.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org59f09bd">
+<h2 id="org59f09bd">Python Tutorial</h2>
+<ul>
+<li><a href="https://docs.python.org/3/tutorial/index.html">https://docs.python.org/3/tutorial/index.html</a></li>
+<li><a href="https://www.w3schools.com/python/">https://www.w3schools.com/python/</a></li>
+<li><a href="https://www.learnpython.org/">https://www.learnpython.org/</a></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="/Users/rob/src/reveal/lib/js/head.min.js"></script>
+<script src="/Users/rob/src/reveal/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c/t',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.10,
+minScale: 0.20,
+maxScale: 10.00,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: '0.0',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: '/Users/rob/src/reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: '/Users/rob/src/reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: '/Users/rob/src/reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: '/Users/rob/src/reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: '/Users/rob/src/reveal/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: '/Users/rob/src/reveal/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+,pdfSeparateFragments: false});
+</script>
+</body>
+</html>
