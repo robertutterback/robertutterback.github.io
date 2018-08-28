@@ -15,9 +15,9 @@
     right: 0
 }
 
-/* .reveal code { */
-/*     font-size: 0.5em; */
-/* } */
+.reveal pre#smallcode {
+    font-size: 0.32em;
+}
 
 .reveal td {
     font-size: 24px !important;
