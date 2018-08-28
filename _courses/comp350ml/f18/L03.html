@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Applied Machine Learning</title>
+<meta name="author" content="(Robert Utterback, Based on slides by Andreas Muller)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="/Users/rob/src/reveal/css/reveal.css"/>
+
+<link rel="stylesheet" href="/Users/rob/src/reveal/css/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+<link rel="stylesheet" href="/Users/rob/src/reveal/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '/Users/rob/src/reveal/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+<section id="slide-orgf29c2f6">
+<h2 id="orgf29c2f6">Machine Learning in Python</h2>
+<p>
+Robert Utterback
+</p>
+
+<p>
+Based on slides by Andreas Muller
+</p>
+<aside class="notes">
+<p>
+Who has the optional, recommended text?
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org59ce847">
+<h2 id="org59ce847">Review and Finish Python Tutorial</h2>
+<aside class="notes">
+<p>
+Review: function, lists, dictionaries
+More: Tuples, list comprehensions
+Documentation strings, exceptions, file i/o, classes
+Stdlib: math, random, statistics
+</p>
+
+</aside>
+</section>
+<section id="slide-org98ece9d">
+<h3 id="org98ece9d">Bad Imports</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >from matplotlib.pyplot import *
+from statistics import *
+from numpy import *
+</code></pre>
+</div>
+<p>
+Bad imports!
+</p>
+<ul>
+<li>Hide functionality</li>
+<li>Where did that function come from?</li>
+
+</ul>
+</section>
+<section id="slide-orga0f1f4d">
+<h3 id="orga0f1f4d">Good imports</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >import matplotlib.pyplot as plt
+import statistics as stat
+import numpy as np
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org1ed6674">
+<h2 id="org1ed6674">Essential Libraries</h2>
+<div class="outline-text-2" id="text-org1ed6674">
+</div>
+</section>
+<section id="slide-org474e6f3">
+<h3 id="org474e6f3">Anaconda</h3>
+<p>
+Nice distribution that includes:
+</p>
+<ul>
+<li>Scikit-learn</li>
+<li>Numpy</li>
+<li>Scipy</li>
+<li>matplotlib</li>
+<li>pandas</li>
+<li>Jupyter Notebook</li>
+
+</ul>
+</section>
+<section id="slide-orgf932a47">
+<h3 id="orgf932a47">Scikit-learn</h3>
+<ul>
+<li>Widely used, open source machine learning library</li>
+<li>You will need to read the documentation sometimes</li>
+<li><a href="http://scikit-learn.org">http://scikit-learn.org</a></li>
+
+</ul>
+</section>
+<section id="slide-org927670c">
+<h3 id="org927670c">Numpy</h3>
+<ul>
+<li>Important library for scientific computing</li>
+<li>Data structures like multidimensional arrays</li>
+<li>Lots of linear algebra functions</li>
+<li>Random number generators</li>
+<li>etc.</li>
+
+</ul>
+</section>
+<section id="slide-orgdea67a7">
+<h3 id="orgdea67a7">Numpy arrays</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >import numpy as np
+x = np.array([[1,2,3],[4,5,6]])
+print("x:\n{}".format(x))
+</code></pre>
+</div>
+
+<pre class="example">
+x:
+[[1 2 3]
+ [4 5 6]]
+
+</pre>
+
+</section>
+<section id="slide-org44e1f0c">
+<h3 id="org44e1f0c">Scipy</h3>
+<ul>
+<li>Collection of scientific computing functions</li>
+<li>Advanced linear algebra</li>
+<li>function optimization</li>
+<li>Signal processing</li>
+<li>Statistical distributions</li>
+
+</ul>
+</section>
+<section id="slide-orgda38727">
+<h3 id="orgda38727">Scipy sparse matrices</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >from scipy import sparse
+
+# 2D NumPy array, identity matrix
+eye = np.eye(4)
+print("NumPy array:\n{}".format(eye))
+</code></pre>
+</div>
+
+<pre class="example">
+NumPy array:
+[[1. 0. 0. 0.]
+ [0. 1. 0. 0.]
+ [0. 0. 1. 0.]
+ [0. 0. 0. 1.]]
+
+</pre>
+
+</section>
+<section id="slide-org8518743">
+<h3 id="org8518743">Scipy sparse matrices</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >sm = sparse.csr_matrix(eye)
+print("SciPy sparse CSR matrix:\n{}".format(sm))
+</code></pre>
+</div>
+
+<pre class="example">
+SciPy sparse CSR matrix:
+  (0, 0)	1.0
+  (1, 1)	1.0
+  (2, 2)	1.0
+  (3, 3)	1.0
+
+</pre>
+
+</section>
+<section id="slide-orga999258">
+<h3 id="orga999258">matplotlib</h3>
+<ul>
+<li>Scientific plotting library</li>
+<li>Line charts, histograms, scatter plots, etc.</li>
+
+</ul>
+</section>
+<section id="slide-orga6fb76d">
+<h3 id="orga6fb76d">Line plot</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >import numpy as np
+import matplotlib.pyplot as plt
+
+# Generate sequence from -10 to 10, 100 steps in between
+x = np.linspace(-10, 10, 100)
+y = np.sin(x)
+plt.plot(x, y, marker="x")
+</code></pre>
+</div>
+
+
+<div class="figure">
+<p><img src="assets/lineplot.png" alt="lineplot.png" height="350px" />
+</p>
+</div>
+</section>
+<section id="slide-orgc686528">
+<h3 id="orgc686528">Pandas</h3>
+<ul>
+<li>Data "wrangling" and analysis library</li>
+<li><code>DataFrame</code> data structure, modeled on <code>R</code>'s <code>DataFrame</code></li>
+<li>Basically a table, like an Excel spreadsheet as a varaible</li>
+<li>pandas can read in many file formats, e.g., SQL, Excel files, CSV</li>
+
+</ul>
+</section>
+<section id="slide-org428f06d">
+<h3 id="org428f06d">Tables</h3>
+<div class="org-src-container">
+
+<pre id="pandastable"><code class="ipython" >import pandas as pd
+# create simple dataset
+data = {'Name': ["John", "Anna", "Peter", "Linda"],
+		'Location': ["New York", "Paris", "Berlin", "London"],
+		'Age': [24, 13, 53, 33]
+       }
+
+data_pandas = pd.DataFrame(data)
+data_pandas
+</code></pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-left">Name</th>
+<th scope="col" class="org-left">Location</th>
+<th scope="col" class="org-right">Age</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">0</td>
+<td class="org-left">John</td>
+<td class="org-left">New York</td>
+<td class="org-right">24</td>
+</tr>
+
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">Anna</td>
+<td class="org-left">Paris</td>
+<td class="org-right">13</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">Peter</td>
+<td class="org-left">Berlin</td>
+<td class="org-right">53</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">Linda</td>
+<td class="org-left">London</td>
+<td class="org-right">33</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="slide-org4f94248">
+<h3 id="org4f94248">Tables</h3>
+<div class="org-src-container">
+
+<pre><code class="ipython" >data_pandas[data_pandas.Age > 30]
+</code></pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-left">Name</th>
+<th scope="col" class="org-left">Location</th>
+<th scope="col" class="org-right">Age</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">Peter</td>
+<td class="org-left">Berlin</td>
+<td class="org-right">53</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">Linda</td>
+<td class="org-left">London</td>
+<td class="org-right">33</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-orgf0cfa46">
+<h3 id="orgf0cfa46">Jupyter Notebook</h3>
+<ul>
+<li>Interactive environment for editing/running code</li>
+<li>Mix text and code</li>
+<li>Run code and display results immediately</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="/Users/rob/src/reveal/lib/js/head.min.js"></script>
+<script src="/Users/rob/src/reveal/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c/t',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.10,
+minScale: 0.20,
+maxScale: 10.00,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: '0.0',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: '/Users/rob/src/reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: '/Users/rob/src/reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: '/Users/rob/src/reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: '/Users/rob/src/reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: '/Users/rob/src/reveal/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: '/Users/rob/src/reveal/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+,pdfSeparateFragments: false});
+</script>
+</body>
+</html>
