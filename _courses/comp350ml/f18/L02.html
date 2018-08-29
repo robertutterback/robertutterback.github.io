@@ -7,19 +7,19 @@
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
-<link rel="stylesheet" href="/Users/rob/src/reveal/css/reveal.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
 
-<link rel="stylesheet" href="/Users/rob/src/reveal/css/theme/white.css" id="theme"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/white.css" id="theme"/>
 
 <link rel="stylesheet" href="./notes.css"/>
-<link rel="stylesheet" href="/Users/rob/src/reveal/lib/css/zenburn.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/css/zenburn.css"/>
 <!-- If the query includes 'print-pdf', include the PDF print sheet -->
 <script>
     if( window.location.search.match( /print-pdf/gi ) ) {
         var link = document.createElement( 'link' );
         link.rel = 'stylesheet';
         link.type = 'text/css';
-        link.href = '/Users/rob/src/reveal/css/print/pdf.css';
+        link.href = 'https://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
         document.getElementsByTagName( 'head' )[0].appendChild( link );
     }
 </script>
@@ -27,17 +27,15 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">Applied Machine Learning</h1><h2 class="author">Robert Utterback, Based on slides by Andreas Muller</h2><h2 class="date">08/24/18</h2>
-</section>
 
 <section>
-<section id="slide-org6740dd6">
-<h2 id="org6740dd6">Guiding Principles in Machine Learning</h2>
-<div class="outline-text-2" id="text-org6740dd6">
+<section id="slide-orge88602c">
+<h2 id="orge88602c">Guiding Principles in Machine Learning</h2>
+<div class="outline-text-2" id="text-orge88602c">
 </div>
 </section>
-<section id="slide-org08a5198">
-<h3 id="org08a5198">Goal Considerations</h3>
+<section id="slide-org5fa4ba6">
+<h3 id="org5fa4ba6">Goal Considerations</h3>
 <aside class="notes">
 <ol>
 <li>Define a goal. 2. Figure out how to measure that goal!</li>
@@ -50,8 +48,8 @@ How to model your problem with ML tools? Should you use ML at all?
 
 </aside>
 </section>
-<section id="slide-org132d12d">
-<h3 id="org132d12d">The Cost of Complex Systems</h3>
+<section id="slide-orgb3a0f14">
+<h3 id="orgb3a0f14">The Cost of Complex Systems</h3>
 <p>
 Data driven first? yes! (or maybe)
 </p>
@@ -67,8 +65,8 @@ Use data, though.
 
 </aside>
 </section>
-<section id="slide-org79baa11">
-<h3 id="org79baa11"></h3>
+<section id="slide-org01fb712">
+<h3 id="org01fb712"></h3>
 <p>
 Thinking in Context!
 </p>
@@ -92,8 +90,8 @@ Electronics store example: closing down, want to send email to customers for fin
 
 </aside>
 </section>
-<section id="slide-org4e04419">
-<h3 id="org4e04419">Good and Bad Substitutes</h3>
+<section id="slide-org705e5a6">
+<h3 id="org705e5a6">Good and Bad Substitutes</h3>
 <aside class="notes">
 <p>
 Sometimes it can be hard to find the right metric. It needs to measure what you actually care about, or something close to it, and you actually have to be able to measure it. Often you need to find a good substitute metric for what you really want b/c what you really want is too hard to measure.
@@ -105,8 +103,8 @@ Ex: ad click rates. Doesn't necessarily translate to sales. Easy to influence by
 
 </aside>
 </section>
-<section id="slide-org4854a9b">
-<h3 id="org4854a9b">Communicating Results</h3>
+<section id="slide-org44bab7d">
+<h3 id="org44bab7d">Communicating Results</h3>
 <aside class="notes">
 <p>
 Explain to others, e.g., your boss, why it works, nothing weird will happen. An important skill.
@@ -114,8 +112,8 @@ Explain to others, e.g., your boss, why it works, nothing weird will happen. An 
 
 </aside>
 </section>
-<section id="slide-org195d7b8">
-<h3 id="org195d7b8">Explainable Results</h3>
+<section id="slide-org4f34b4c">
+<h3 id="org4f34b4c">Explainable Results</h3>
 
 <div class="figure">
 <p><img src="./assets/amazon_explanations.png" alt="amazon_explanations.png" />
@@ -128,8 +126,8 @@ Recommendation engines work better if you can explain to users why you made thos
 
 </aside>
 </section>
-<section id="slide-org55fc8bf">
-<h3 id="org55fc8bf">Ethical Considerations</h3>
+<section id="slide-org48ca308">
+<h3 id="org48ca308">Ethical Considerations</h3>
 
 <div class="figure">
 <p><img src="./assets/propublica_compas.png" alt="propublica_compas.png" />
@@ -142,8 +140,8 @@ Sometimes explanations and transparency are REALLY important, e.g. when lives ar
 
 </aside>
 </section>
-<section id="slide-org2430632">
-<h3 id="org2430632">Data and Data Collection</h3>
+<section id="slide-orgacb0c88">
+<h3 id="orgacb0c88">Data and Data Collection</h3>
 <aside class="notes">
 <p>
 When do you stop collecting data? It improves the model (if it's the right data), but what's the cost of getting it? 
@@ -151,8 +149,8 @@ When do you stop collecting data? It improves the model (if it's the right data)
 
 </aside>
 </section>
-<section id="slide-orge96f406">
-<h3 id="orge96f406">Free vs. Expensive Data</h3>
+<section id="slide-orgfbf0c33">
+<h3 id="orgfbf0c33">Free vs. Expensive Data</h3>
 <div class="column" style="float:left; width: 50%">
 <p>
 Free: 
@@ -185,8 +183,8 @@ Automate complex process
 </ul>
 </div>
 </section>
-<section id="slide-org68c86e8">
-<h3 id="org68c86e8">Big Data</h3>
+<section id="slide-org3e25db7">
+<h3 id="org3e25db7">Big Data</h3>
 <ul>
 <li>Cost vs. benefit</li>
 <li>Subsample to memory</li>
@@ -205,8 +203,8 @@ You can learn it when you need it, but not to start.
 
 </aside>
 </section>
-<section id="slide-org69f517a">
-<h3 id="org69f517a">Cornerstones of This Course</h3>
+<section id="slide-orgba74e46">
+<h3 id="orgba74e46">Cornerstones of This Course</h3>
 <ul>
 <li>Problem definition and success measures</li>
 <li>Feature engineering and data cleaning</li>
@@ -215,8 +213,8 @@ You can learn it when you need it, but not to start.
 
 </ul>
 </section>
-<section id="slide-org569153c">
-<h3 id="org569153c">The Machine Learning Pipeline</h3>
+<section id="slide-org34112de">
+<h3 id="org34112de">The Machine Learning Pipeline</h3>
 
 <div class="figure">
 <p><img src="./assets/ml-workflow.png" alt="ml-workflow.png" />
@@ -232,13 +230,13 @@ Note that we're not done at the end. Your system may change user behavior! Thoug
 </section>
 </section>
 <section>
-<section id="slide-org53a9046">
-<h2 id="org53a9046">About Python</h2>
-<div class="outline-text-2" id="text-org53a9046">
+<section id="slide-org993b996">
+<h2 id="org993b996">About Python</h2>
+<div class="outline-text-2" id="text-org993b996">
 </div>
 </section>
-<section id="slide-org7146124">
-<h3 id="org7146124">Why Python</h3>
+<section id="slide-orge13998a">
+<h3 id="orge13998a">Why Python</h3>
 <ul>
 <li>General purpose language</li>
 <li>Great libraries</li>
@@ -255,8 +253,8 @@ But R is a really good option, and from the statistical side it's actually more 
 
 </aside>
 </section>
-<section id="slide-org2e0f79e">
-<h3 id="org2e0f79e">Why Not Python</h3>
+<section id="slide-orgad08455">
+<h3 id="orgad08455">Why Not Python</h3>
 <ul>
 <li>Not made for statistical computing</li>
 <li>Slow!
@@ -295,8 +293,8 @@ Also, two versions of Python. print, division, etc.
 
 </aside>
 </section>
-<section id="slide-orgf6cc8d3">
-<h3 id="orgf6cc8d3">Python Packages</h3>
+<section id="slide-orge795119">
+<h3 id="orge795119">Python Packages</h3>
 <ul>
 <li>If you have multiple versions of Python&#x2026;it can be a mess
 <ul>
@@ -312,8 +310,8 @@ Also, two versions of Python. print, division, etc.
 
 </ul>
 </section>
-<section id="slide-org3f5f0fe">
-<h3 id="org3f5f0fe">Dynamically typed and interpreted</h3>
+<section id="slide-org9546dd9">
+<h3 id="org9546dd9">Dynamically typed and interpreted</h3>
 <ul>
 <li>Less to type, not int, double, etc.</li>
 <li>But you lose the safety net of types
@@ -333,8 +331,8 @@ Actually later versions of Python3 include type annotation, but they're not supp
 </section>
 </section>
 <section>
-<section id="slide-org59f09bd">
-<h2 id="org59f09bd">Python Tutorial</h2>
+<section id="slide-orgf5ee4e5">
+<h2 id="orgf5ee4e5">Python Tutorial</h2>
 <ul>
 <li><a href="https://docs.python.org/3/tutorial/index.html">https://docs.python.org/3/tutorial/index.html</a></li>
 <li><a href="https://www.w3schools.com/python/">https://www.w3schools.com/python/</a></li>
@@ -345,8 +343,8 @@ Actually later versions of Python3 include type annotation, but they're not supp
 </section>
 </div>
 </div>
-<script src="/Users/rob/src/reveal/lib/js/head.min.js"></script>
-<script src="/Users/rob/src/reveal/js/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="https://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
 
 <script>
 // Full list of configuration options available here:
@@ -376,12 +374,12 @@ multiplex: {
 
 // Optional libraries used to extend on reveal.js
 dependencies: [
- { src: '/Users/rob/src/reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
- { src: '/Users/rob/src/reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: '/Users/rob/src/reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: '/Users/rob/src/reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
- { src: '/Users/rob/src/reveal/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
- { src: '/Users/rob/src/reveal/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
 ,pdfSeparateFragments: false});
 </script>
 </body>
