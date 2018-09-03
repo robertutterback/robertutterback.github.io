@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Applied Machine Learning</title>
+<meta name="author" content="(Robert Utterback)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+<section id="slide-orgc011748">
+<h2 id="orgc011748">Model Tuning</h2>
+<p>
+Robert Utterback
+</p>
+
+<p>
+Based on slides by Andreas Muller
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org39a6c90">
+<h2 id="org39a6c90">Tuning a Model</h2>
+<div class="outline-text-2" id="text-org39a6c90">
+</div>
+</section>
+<section id="slide-org1bb0b31">
+<h3 id="org1bb0b31">Searching for Hyperparameters</h3>
+
+<div class="figure">
+<p><img src="./assets/train_test_set_2d_classification.png" alt="train_test_set_2d_classification.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+So far we’ve work with a split of the data into a training and a test
+set, build the model on the training set, and evaluated on the test
+set. So now, lets say we want to adjust the parameter n<sub>neigbhbors</sub> in
+k neighbors algorithm, how could we do this? [split, try out different
+values of k, choose the best on test set] What’s the problem with
+that?
+</p>
+
+<p>
+good for choosing k, overly optimistic for getting accuracy!
+You can't use that test set twice!
+</p>
+
+</aside>
+</section>
+<section id="slide-orgdbbc3e7">
+<h3 id="orgdbbc3e7">Overfitting the Validation Set</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >data = load_breast_cancer()
+X, y = data.data, data.target
+X = scale(X)
+X_trainval, X_test, y_trainval, y_test \
+	= train_test_split(X, y, random_state=1)
+X_train, X_val, y_train, y_val = \
+	train_test_split(X_trainval, y_trainval, random_state=1)
+knn = KNeighborsClassifier(n_neighbors=5).fit(X_train, y_train)
+print("Validation: {:.3f}".format(knn.score(X_val, y_val)))
+print("Test: {:.3f}".format(knn.score(X_test, y_test)))
+</code></pre>
+</div>
+<pre class="example">
+Validation: 0.981
+Test: 0.944
+
+</pre>
+<aside class="notes">
+<p>
+So I’ll try to illustrate this concept of overfitting the test set. Basically, the idea is that if you try out too many things on the test set, you will learn about noise in the test set, and this knowledge will not generalize to new data.
+</p>
+
+<p>
+So here I give you an example with the breast cancer dataset that’s build into scikit-learn. I split the data twice, now I have a training, a validation and a test set. I build a nearest neighbors model on the training set, and apply it to the test set and the validation set. The results are not the same, but they are pretty close. That they are different is a consequence of the small dataset and the noisy data.
+</p>
+
+</aside>
+</section>
+<section id="slide-orga8d8f3d">
+<h3 id="orga8d8f3d">Noisy Tuning</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >val = []
+test = []
+for i in range(1000):
+    rng = np.random.RandomState(i)
+    noise = rng.normal(scale=.1, size=X_train.shape)
+    knn = KNeighborsClassifier(n_neighbors=5)
+    knn.fit(X_train + noise, y_train)
+    val.append(knn.score(X_val, y_val))
+    test.append(knn.score(X_test, y_test))
+print("Validation: {:.3f}".format(np.max(val)))
+print("Test: {:.3f}".format(test[np.argmax(val)]))
+</code></pre>
+</div>
+
+<pre class="example">
+Validation: 0.991
+Test: 0.951
+
+</pre>
+
+<aside class="notes">
+<p>
+So now let me propose a silly way to tune my classifier. I add random
+noise to my training set for fitting. And I repeat that 1000 times,
+and I check which of these thousand runs has the best performance on
+the validation set. That particular run has very high accuracy,
+quite a bit better than before. If I would use the same set to
+estimate how well my model is, I would think I created a perfect model
+and I should write a paper about building much better models by using
+noise.
+</p>
+
+<p>
+But if I test the same model on the test set, I get a lower accuracy
+then before: the noise I added was good for the validation set, but
+not the test set. The lesson is: If I try something often enough, be
+it parameters or noise, at some point I'll get better performance on
+the validation set, but that doesn’t mean it will be good for any new
+data. By selecting the best among many you introduce a bias, and the
+validation accuracy is not a good measure of generalization
+performance any more.
+</p>
+
+<p>
+Similar: coin flip example. Rare to get 20 heads in a row, but flip
+\(2^20\) coins..
+</p>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-org3f6a9d8">
+<h2 id="org3f6a9d8">Data Splitting</h2>
+<div class="outline-text-2" id="text-org3f6a9d8">
+</div>
+</section>
+<section id="slide-org2073585">
+<h3 id="org2073585">Threefold Split</h3>
+
+<div class="figure">
+<p><img src="./assets/threefold_split.png" alt="threefold_split.png" height="200px" />
+</p>
+</div>
+
+<ul>
+<li>pro: fast, simple</li>
+<li>con: high variance, bad use of data for small datasets</li>
+
+</ul>
+<aside class="notes">
+<p>
+The simplest way to combat this overfitting to the test set is by
+using a three-fold split of the data, into a training, a validation
+and a test set as we just did. We use the training set for model
+building, the validation set for parameter selection and the test set
+for a final evaluation of the model. So how many models should you try
+out on the test set? Only one! Ideally use use the test-set exactly
+once, otherwise you make a multiple hypothesis testing error!
+</p>
+
+<p>
+What are downsides of this? We lose a lot of data for evaluation, and
+the results depend on the particular sampling.
+</p>
+
+</aside>
+</section>
+<section id="slide-org44b76b6">
+<h3 id="org44b76b6">Implementing Threefold Split</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >X_trainval, X_test, y_trainval, y_test = \
+	train_test_split(X, y)
+X_train, X_val, y_train, y_val = \
+	train_test_split(X_trainval, y_trainval)
+val_scores = []
+neighbors = np.arange(1, 15, 2)
+for i in neighbors:
+    knn = KNeighborsClassifier(n_neighbors=i)
+    knn.fit(X_train, y_train)
+    val_scores.append(knn.score(X_val, y_val))
+print("best validation score: {:.3f}".format(np.max(val_scores)))
+best_n_neighbors = neighbors[np.argmax(val_scores)]
+print("best n_neighbors: {}".format(best_n_neighbors))
+knn = KNeighborsClassifier(n_neighbors=best_n_neighbors)
+knn.fit(X_trainval, y_trainval)
+print("test-set score: {:.3f}".format(knn.score(X_test, y_test)))
+</code></pre>
+</div>
+
+<pre class="example">
+best validation score: 0.972
+best n_neighbors: 3
+test-set score: 0.958
+
+</pre>
+
+<aside class="notes">
+<p>
+Here is an implementation of the three-fold split for selecting the
+number of neighbors. For each number of neighbors that we want to try,
+we build a model on the training set, and evaluate it on the
+validation set. We then pick the best validation set score, here
+that’s 97.2%, achieved when using three neighbors. We then retrain the
+model with this parameter, and evaluate on the test set. The
+retraining step is somewhat optional. We could also just use the best
+model. But retraining allows us to make better use of all the data.
+</p>
+
+<p>
+Still, depending on the test-set size we might be using only 70% or
+80% of the data, and our results depend on how exactly we split the
+datasets. So how can we make this more robust?
+</p>
+
+</aside>
+</section>
+<section id="slide-orga7a686c">
+<h3 id="orga7a686c">Methods for Splitting Data</h3>
+<div class="column" style="float:left; width: 50%">
+<p>
+Nonrandom
+</p>
+<ul>
+<li>create model from patients in same disease stage, test on different sample population</li>
+<li>spam filtering: care more about current spam techniques than old ones</li>
+
+</ul>
+</div>
+<div class="column" style="float:left; width: 50%">
+<p>
+Random
+</p>
+<ul>
+<li>Simple random sample</li>
+<li>Stratified random sampling</li>
+<li>Maximum dissimilarity sampling</li>
+
+</ul>
+</div>
+<aside class="notes">
+<p>
+Let's just talk briefly about splitting data. <b>How</b> you split the data
+can influence how accurate your results are!
+</p>
+
+<p>
+Nonrandom: (1) want to test how well it generalizes to other
+populations, (2) want to sample the right spam
+</p>
+
+<p>
+But usually we want something that is random in some way. Actually,
+what we really care about is splitting into <b>similar</b> data sets.
+</p>
+
+<p>
+Simple random does not control for data attributes, e.g., one class is
+represented more than the others!
+</p>
+
+</aside>
+</section>
+<section id="slide-org92f4f23">
+<h3 id="org92f4f23">Stratified Random Sampling</h3>
+<ul>
+<li>Random sample within subgroups (e.g., classes)</li>
+<li>Similar strategy for numeric values: break into groups (e.g., low,
+medium, high), sample from these</li>
+
+</ul>
+</section>
+<section id="slide-org8ee0c3e">
+<h3 id="org8ee0c3e">Maximum Dissimilarity Sampling</h3>
+<ul>
+<li>Pick some measure of "dissimilarity", e.g., distance</li>
+<li>Repeatedly pick data points that are most dissimilar to current set
+of points</li>
+<li>Requires measure of distance and method to determine dissimilarity
+between sets of points</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orgc6be0bf">
+<h2 id="orgc6be0bf">Cross Validation</h2>
+<div class="outline-text-2" id="text-orgc6be0bf">
+</div>
+</section>
+<section id="slide-orge52c5ca">
+<h3 id="orge52c5ca">Resampling Methods</h3>
+<ul>
+<li>Use subset of samples to fit model, everything else to estimate error</li>
+<li>Repeat over and over with new samples</li>
+<li>Aggregate results</li>
+<li>Different methods in choosing subsamples</li>
+
+</ul>
+<aside class="notes">
+<p>
+But sometimes we simply don't have enough data to split into train,
+test, and val sets! Luckily we have resampling methods. We're mainly
+concerned with cross-validation
+</p>
+
+</aside>
+</section>
+<section id="slide-org7139c38">
+<h3 id="org7139c38">Cross Validation</h3>
+
+<div class="figure">
+<p><img src="./assets/kfold_cv.png" alt="kfold_cv.png" height="200px" />
+</p>
+</div>
+<ul>
+<li class="fragment appear">pro: more stable, more data</li>
+<li class="fragment appear">con: slower</li>
+
+</ul>
+<aside class="notes">
+<p>
+The answer is of course cross-validation. In cross-validation, you
+split your data into multiple folds, usually 5 or 10, and built
+multiple models. You start by using fold1 as the test data, and the
+remaining ones as the training data. You build your model on the
+training data, and evaluate it on the test fold. For each of the
+splits of the data, you get a model evaluation and a score. In the
+end, you can aggregate the scores, for example by taking the
+mean. What are the pros and cons of this? Each data point is in the
+test-set exactly once! Takes 5 or 10 times longer! Better data use
+(larger training sets). Does that solve all problems? No, it replaces
+only one of the splits, usually the inner one!
+</p>
+
+</aside>
+</section>
+<section id="slide-orga6889d3">
+<h3 id="orga6889d3">Cross Validation Workflow</h3>
+
+<div class="figure">
+<p><img src="./assets/grid_search_cross_validation.png" alt="grid_search_cross_validation.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Here is how the workflow looks like when we are using five-fold
+cross-validation together with a test-set split for adjusting
+parameters. We start out by splitting of the test data, and then we
+perform cross-validation on the training set. Once we found the right
+setting of the parameters, we retrain on the whole training set and
+evaluate on the test set.
+</p>
+
+</aside>
+</section>
+<section id="slide-orga2395f0">
+<h3 id="orga2395f0">Grid Search</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >from sklearn.model_selection import cross_val_score
+X_train, X_test, y_train, y_test = train_test_split(X, y)
+cross_val_scores = []
+for i in neighbors:
+    knn = KNeighborsClassifier(n_neighbors=i)
+    scores = cross_val_score(knn, X_train, y_train, cv=10)
+    cross_val_scores.append(np.mean(scores))
+print("best cross-validation score: {:.3f}".format(np.max(cross_val_scores)))
+best_n_neighbors = neighbors[np.argmax(cross_val_scores)]
+print("best n_neighbors: {}".format(best_n_neighbors))
+knn = KNeighborsClassifier(n_neighbors=best_n_neighbors)
+knn.fit(X_train, y_train)
+print("test-set score: {:.3f}".format(knn.score(X_test, y_test)))
+</code></pre>
+</div>
+
+<pre class="example">
+best cross-validation score: 0.972
+best n_neighbors: 3
+test-set score: 0.958
+
+</pre>
+<aside class="notes">
+<p>
+Here is an implementation of this for k nearest neighbors.
+</p>
+
+<p>
+We split the data, then we iterate over all parameters and for each of them we do cross-validation.
+</p>
+
+<p>
+We had seven different values of n<sub>neighbors</sub>, and we are running 10
+fold cross-validation. How many models to we train in total? 10 * 7 +
+1 = 71 (the one is the final model)
+</p>
+
+</aside>
+</section>
+<section id="slide-orgee2a46a">
+<h3 id="orgee2a46a">Model Evaluation Workflow</h3>
+
+<div class="figure">
+<p><img src="./assets/gridsearch_workflow.png" alt="gridsearch_workflow.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Here is a conceptual overview of this way of tuning parameters, we
+start of with the dataset and a candidate set of parameters we want to
+try, labeled parameter grid, for example the number of neighbors.
+</p>
+
+<p>
+We split the dataset in to training and test set. We use
+cross-validation and the parameter grid to find the best
+parameters. We use the best parameters and the training set to build a
+model with the best parameters, and finally evaluate it on the test
+set.
+</p>
+
+<p>
+&#x2026;now other cross validation strategies
+</p>
+
+</aside>
+</section>
+<section id="slide-orgf2fcee9">
+<h3 id="orgf2fcee9">Nested Cross Validation</h3>
+<ul>
+<li>Replace outer split by CV loop</li>
+<li>Doesn't yield single model (inner lop might have different best parameter settings)</li>
+<li>Takes a long time, not that useful in practice</li>
+<li>Tells you how good your hyperparameter search is</li>
+
+</ul>
+<aside class="notes">
+<p>
+We could additionally replace the outer split of the data by cross-validation. That would yield what’s known as nested cross-validation. This is sometimes interesting when comparing different models, but it will not actually yield one final model. It will yield one model for each loop of the outer fold, which might have different settings of the parameters. Also, this takes a really long time to train, by an additional factor of 5 or 10, so this is not used very commonly in practice.
+</p>
+
+<p>
+But let’s dive into the cross-validation a bit more.
+</p>
+
+</aside>
+</section>
+<section id="slide-org6ad2166">
+<h3 id="org6ad2166">Choosing \(k\)</h3>
+<ul>
+<li>Usually 5 or 10</li>
+<li>No formal rule</li>
+<li>smaller \(k \implies\) worse estimate of error</li>
+<li>But smaller \(k\) is more computational efficient</li>
+
+</ul>
+<aside class="notes">
+<p>
+As \(k\) gets larger, difference in size between training set and the resampled subsets gets smaller
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org8d39909">
+<h2 id="org8d39909">Cross-Validation Strategies</h2>
+<div class="outline-text-2" id="text-org8d39909">
+</div>
+</section>
+<section id="slide-org3454bd9">
+<h3 id="org3454bd9">Stratified KFold</h3>
+
+<div class="figure">
+<p><img src="./assets/stratified_cv.png" alt="stratified_cv.png" height="400px" />
+</p>
+</div>
+
+<p>
+Stratified: Ensure relative class frequencies in each fold reflect
+relative class frequencies on the whole dataset.
+</p>
+<aside class="notes">
+<p>
+The idea behind stratified k-fold cross-validation is that you want the test set to be as representative of the dataset as possible. StratifiedKFold preserves the class frequencies in each fold to be the same as of the overall dataset. Here is and example of a dataset with three classes that are ordered. If you apply standard three-fold to this, the first third of the data would be in the first fold, the second in the second fold and the third in the third fold. Because this data is sorted, that would be particularly bad. If you use stratified cross-validation it would make sure that each fold has exactly 1/3 of the data from each class.
+</p>
+
+<p>
+This is also helpful if your data is very imbalanced. If some of the classes are very rare, it could otherwise happen that a class is not present at all in a particular fold.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org7030f30">
+<h3 id="org7030f30">Scikit-learn defaults</h3>
+<ul>
+<li>Three-fold is default number of folds</li>
+<li>For classification cross-validation is stratified</li>
+<li><code>train_test_split</code> has stratify option:</li>
+
+</ul>
+<p>
+<code class="src src-python">train_test_split(X, y, stratify=y)</code>
+</p>
+<ul>
+<li>No shuffle by default!</li>
+
+</ul>
+<aside class="notes">
+<p>
+Before we go to the other strategies, I wanted to point out the
+default behavior in scikit-learn. By default, all cross-validation
+strategies are three-fold. If you do cross-validation for
+classification, it will be stratified by default. Because of how the
+interface is done, that’s not true for train<sub>test</sub><sub>split</sub> and if you
+want a stratified train<sub>test</sub><sub>split</sub>, which is always a good idea, you
+should use stratify=y Another thing that’s important to keep in mind
+is that by default scikit-learn doesn’t shuffle! So if you run
+cross-validation twice with the default parameters, it will yield
+exactly the same results.
+</p>
+
+</aside>
+</section>
+<section id="slide-org71833c5">
+<h3 id="org71833c5">Repeated KFold and Leave-One-Out</h3>
+<ul>
+<li>LeaveOneOut: <code class="src src-python">KFold(n_folds=n_samples)</code> 
+<ul>
+<li>High variance</li>
+<li>takes a long time</li>
+
+</ul></li>
+<li>Better: RepeatedKFold
+<ul>
+<li>Apply KFold or StratifiedKFold multiple times with shuffled data.</li>
+<li>Reduces variance!</li>
+
+</ul></li>
+
+</ul>
+<aside class="notes">
+<p>
+If you want even better estimates of the generalization performance, you could try to increase the number of folds, with the extreme of creating one fold per sample. That’s called “LeaveOneOut cross-validation”. However, because the test-set is so small every time, and the training sets all have very large overlap, this method has very high variance. A better way to get a robust estimate is to run 5-fold or 10-fold cross-validation multiple times, while shuffling the dataset.
+</p>
+
+<p>
+Note that variance here is about this technique's estimate of generalization performance (error), NOT the variance of the model.
+</p>
+
+</aside>
+</section>
+<section id="slide-org2b755e3">
+<h3 id="org2b755e3">Shuffle Split</h3>
+
+<div class="figure">
+<p><img src="./assets/shuffle_split_cv.png" alt="shuffle_split_cv.png" height="200px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Another interesting variant is shuffle split and stratified shuffle split. In shuffle split, we repeatedly sample disjoint training and test sets randomly. You only have to specify the number of iterations, the training set size and the test set size. This also allows you to run many iterations with reasonably large test-sets. It’s also great if you have a very large training set and you want to subsample it to get quicker results.
+</p>
+
+</aside>
+</section>
+<section id="slide-org761efc1">
+<h3 id="org761efc1">Group KFold</h3>
+
+<div class="figure">
+<p><img src="./assets/group_kfold.png" alt="group_kfold.png" height="200px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+A somewhat more complicated approach is group k-fold. This is actually for data that doesn’t fulfill our IID assumption and has correlations between samples. The idea is that there are several groups in the data that each contain highly correlated samples. You could think about patient data where you have multiple samples for each patient, then the groups would be which patient a measurement was taken from. If you want to know how well your model generalizes to new patients, you need to ensure that the measurements from each patient are either all in the training set, or all in the test set. And that’s what GroupKFold does. In this example, there are four groups, and we want three folds. The data is divided such that each group is contained in exactly one fold. There are several other cross-validation methods in scikit-learn that use these groups.
+</p>
+
+</aside>
+</section>
+<section id="slide-org0197a00">
+<h3 id="org0197a00">Time Series Split</h3>
+
+<div class="figure">
+<p><img src="./assets/time_series_cv.png" alt="time_series_cv.png" height="300px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Another common case of data that’s not independent is time
+series. Usually todays stock price is correlated with yesterdays and
+tomorrows. If you randomly split time series, this makes predictions
+deceivingly simple. In applications, you usually have data up to some
+point, and then try to make predictions for the future, in other
+words, you’re trying to make a forecast. The TimeSeriesSplit in
+scikit-learn simulates that, by taking increasing chunks of data from
+the past and making predictions on the next chunk. This is quite
+different from the other was to do cross-validation, in that the
+training sets are all overlapping, but it’s more appropriate for
+time-series.
+</p>
+
+</aside>
+</section>
+<section id="slide-org1c9023a">
+<h3 id="org1c9023a">Using CV Generators</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >from sklearn.model_selection import KFold, StratifiedKFold, ShuffleSplit
+kfold = KFold(n_splits=5)
+skfold = StratifiedKFold(n_splits=5, shuffle=True)
+ss = ShuffleSplit(n_splits=20, train_size=.4, test_size=.3)
+print("KFold:\n{}".format(
+      cross_val_score(KNeighborsClassifier(), X, y, cv=kfold)))
+print("StratifiedKFold:\n{}".format(
+      cross_val_score(KNeighborsClassifier(), X, y, cv=skfold)))
+print("ShuffleSplit:\n{}".format(
+      cross_val_score(KNeighborsClassifier(), X, y, cv=ss)))
+</code></pre>
+</div>
+
+<pre class="example">
+KFold:
+[0.92982456 0.95614035 0.96491228 0.98245614 0.96460177]
+StratifiedKFold:
+[0.95652174 0.95652174 0.98230088 0.94690265 0.98230088]
+ShuffleSplit:
+[0.96491228 0.96491228 0.95906433 0.96491228 0.92982456 0.95321637
+ 0.96491228 0.95321637 0.95321637 0.92982456 0.95906433 0.97660819
+ 0.95906433 0.94152047 0.95906433 0.96491228 0.95906433 0.97076023
+ 0.94152047 0.94736842]
+
+</pre>
+
+<aside class="notes">
+<p>
+Ok, so how do we use these cross-validation generators? We can simply pass the object to the cv parameter of the cross<sub>val</sub><sub>score</sub> function, instead of passing a number. Then that generator will be used. Here are some examples for k-neighbors classifier. We instantiate a Kfold object with the number of splits equal to 5, and then pass it to cross<sub>val</sub><sub>score</sub>. We can do the same with StratifiedKFold, and we can also shuffle if we like, or we can use Shuffle split.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgd24cf9b">
+<h3 id="orgd24cf9b"></h3>
+
+<div class="figure">
+<p><img src="./assets/gridsearch_workflow.png" alt="gridsearch_workflow.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Let’s come back to the general workflow for adjusting hyper-parameters, though. So we start with hyper parameters we want to adjust and our dataset, we split it into training and test set, find the best parameters using cross-validation, retrain the model and then do a final evaluation on the test set. Because this is such a common pattern, there is a helper class for this in scikit-learn, called GridSearch CV, which does most of these steps for you.
+</p>
+
+</aside>
+</section>
+<section id="slide-org59afe97">
+<h3 id="org59afe97">Grid Search CV</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >from sklearn.model_selection import GridSearchCV
+X_train, X_test, y_train, y_test = \
+	train_test_split(X, y, stratify=y)
+param_grid = {'n_neighbors':  np.arange(1, 15, 2)}
+grid = GridSearchCV(KNeighborsClassifier(),
+					param_grid=param_grid,
+					cv=10, return_train_score=True)
+grid.fit(X_train, y_train)
+print("best mean cross-validation score: {:.3f}".format(grid.best_score_))
+print("best parameters: {}".format(grid.best_params_))
+print("test-set score: {:.3f}".format(grid.score(X_test, y_test)))
+</code></pre>
+</div>
+
+<pre class="example">
+best mean cross-validation score: 0.965
+best parameters: {'n_neighbors': 9}
+test-set score: 0.986
+
+</pre>
+
+<aside class="notes">
+<p>
+Here is an example. We still need to split our data into training and test set. We declare the parameters we want to search over as a dictionary. In this example the parameter is just n<sub>neighbors</sub> and the values we want to try out are a range. The keys of the dictionary are the parameter names and the values are the parameter settings we want to try. If you specify multiple parameters, all possible combinations are tried. This is where the name grid-search comes from - it’s an exhaustive search over all possible parameter combinations that you specify.
+</p>
+
+<p>
+GridSearchCV is a class, and it behaves just like any other model in scikit-learn, with a fit, predict and score method. It’s what we call a meta-estimator, since you give it one estimator, here the KneighborsClassifier, and from that GridSearchCV constructs a new estimator that does the parameter search for you. You also specify the parameters you want to search, and the cross-validation strategy. Then GridSearchCV does all the other things we talked about, it does the cross-validation and parameter selection, and retrains a model with the best parameter settings that were found. We can check out the best cross-validation score and the best parameter setting with the bestscore and bestparams attributes. And finally we can compute the accuracy on the test set, simply but using the score method! That will use the retrained model under the hood.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgf3d4767">
+<h3 id="orgf3d4767">kNN Search Results</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >import pandas as pd
+results = pd.DataFrame(grid.cv_results_)
+print(results.columns)
+print(results.params)
+</code></pre>
+</div>
+
+<pre class="example">
+Index(['mean_fit_time', 'std_fit_time', 'mean_score_time', 'std_score_time',
+       'param_n_neighbors', 'params', 'split0_test_score', 'split1_test_score',
+       'split2_test_score', 'split3_test_score', 'split4_test_score',
+       'split5_test_score', 'split6_test_score', 'split7_test_score',
+       'split8_test_score', 'split9_test_score', 'mean_test_score',
+       'std_test_score', 'rank_test_score', 'split0_train_score',
+       'split1_train_score', 'split2_train_score', 'split3_train_score',
+       'split4_train_score', 'split5_train_score', 'split6_train_score',
+       'split7_train_score', 'split8_train_score', 'split9_train_score',
+       'mean_train_score', 'std_train_score'],
+      dtype='object')
+0     {'n_neighbors': 1}
+1     {'n_neighbors': 3}
+2     {'n_neighbors': 5}
+3     {'n_neighbors': 7}
+4     {'n_neighbors': 9}
+5    {'n_neighbors': 11}
+6    {'n_neighbors': 13}
+Name: params, dtype: object
+</pre>
+
+<aside class="notes">
+<p>
+GridSearchCV also computes a lot of interesting statistics for you, which are stored in the cvresults attribute. That attribute is a dictionary, but it’s easiest to convert it to a pandas dataframe to look at it. Here you can see the columns. Theres mean fit time, mean score time, mean test scores, mean training scores, standard deviations and scores for each individual split of the data. And there is one row for each setting of the parameters we tried out.
+</p>
+
+</aside>
+</section>
+<section id="slide-org16bfac8">
+<h3 id="org16bfac8">kNN Search Results</h3>
+
+<div class="figure">
+<p><img src="./assets/grid_search_n_neighbors.png" alt="grid_search_n_neighbors.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+We can use this for example to plot the results of cross-validation over the different parameters. Here are the mean training score and mean test score together with one standard deviation.
+</p>
+
+</aside>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="https://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c/t',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.05,
+minScale: 0.20,
+maxScale: 15.00,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: '0.0',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+,pdfSeparateFragments: false});
+</script>
+</body>
+</html>
