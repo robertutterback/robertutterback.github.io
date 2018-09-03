@@ -22,3 +22,7 @@
 .reveal td {
     font-size: 24px !important;
 }
+
+img {
+    border-style: none !important;
+}
