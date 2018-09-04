@@ -7,19 +7,19 @@
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
-<link rel="stylesheet" href="/Users/rob/src/reveal/css/reveal.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
 
-<link rel="stylesheet" href="/Users/rob/src/reveal/css/theme/white.css" id="theme"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/white.css" id="theme"/>
 
 <link rel="stylesheet" href="./notes.css"/>
-<link rel="stylesheet" href="/Users/rob/src/reveal/lib/css/zenburn.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/css/zenburn.css"/>
 <!-- If the query includes 'print-pdf', include the PDF print sheet -->
 <script>
     if( window.location.search.match( /print-pdf/gi ) ) {
         var link = document.createElement( 'link' );
         link.rel = 'stylesheet';
         link.type = 'text/css';
-        link.href = '/Users/rob/src/reveal/css/print/pdf.css';
+        link.href = 'https://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
         document.getElementsByTagName( 'head' )[0].appendChild( link );
     }
 </script>
@@ -30,8 +30,8 @@
 <div class="slides">
 
 <section>
-<section id="slide-orgcd6b83a">
-<h2 id="orgcd6b83a">Comparing Models</h2>
+<section id="slide-org330bb2c">
+<h2 id="org330bb2c">Comparing Models</h2>
 <p>
 Robert Utterback
 </p>
@@ -42,13 +42,13 @@ Based on slides by Andreas Muller
 </section>
 </section>
 <section>
-<section id="slide-org05eed23">
-<h2 id="org05eed23">Nearest Centroid</h2>
-<div class="outline-text-2" id="text-org05eed23">
+<section id="slide-org7eded58">
+<h2 id="org7eded58">Nearest Centroid</h2>
+<div class="outline-text-2" id="text-org7eded58">
 </div>
 </section>
-<section id="slide-orge1c0c72">
-<h3 id="orge1c0c72">Nearest Centroid</h3>
+<section id="slide-org44825b5">
+<h3 id="org44825b5">Nearest Centroid</h3>
 
 <div class="figure">
 <p><img src="./assets/nearest_centroid_boundary.png" alt="nearest_centroid_boundary.png" height="400px" />
@@ -65,8 +65,8 @@ The nearest centroid model simply computes the centroid, or the mean of each cla
 
 </aside>
 </section>
-<section id="slide-org9b0d037">
-<h3 id="org9b0d037">Scikit-Learn Centroid</h3>
+<section id="slide-orgd16ed29">
+<h3 id="orgd16ed29">Scikit-Learn Centroid</h3>
 <div class="org-src-container">
 
 <pre><code class="python" >from sklearn.model_selection import train_test_split
@@ -91,8 +91,8 @@ Note slightly worse accuracy than kNN here.
 
 </aside>
 </section>
-<section id="slide-org1ceed1e">
-<h3 id="org1ceed1e">NC Tuning Parameter: Nearest Shrunken Centroid</h3>
+<section id="slide-orgdaf6e99">
+<h3 id="orgdaf6e99">NC Tuning Parameter: Nearest Shrunken Centroid</h3>
 
 <div class="figure">
 <p><img src="./assets/nearest_shrunken_centroid_boundary.png" alt="nearest_shrunken_centroid_boundary.png" height="400px" />
@@ -116,13 +116,13 @@ When do you think NC works better than KNN? High dimensions!
 </section>
 </section>
 <section>
-<section id="slide-orgf64de2d">
-<h2 id="orgf64de2d">NC Implementation</h2>
-<div class="outline-text-2" id="text-orgf64de2d">
+<section id="slide-orgd714850">
+<h2 id="orgd714850">NC Implementation</h2>
+<div class="outline-text-2" id="text-orgd714850">
 </div>
 </section>
-<section id="slide-org03540ef">
-<h3 id="org03540ef">Setup</h3>
+<section id="slide-org1973ba9">
+<h3 id="org1973ba9">Setup</h3>
 <p>
 Standard imports and loading the data
 </p>
@@ -141,8 +141,8 @@ targets = iris_dataset.target
 </div>
 
 </section>
-<section id="slide-org78cd944">
-<h3 id="org78cd944">NC class</h3>
+<section id="slide-org2bfa979">
+<h3 id="org2bfa979">NC class</h3>
 <div class="org-src-container">
 
 <pre id="ncclass"><code class="python" >class NC:
@@ -172,8 +172,8 @@ targets = iris_dataset.target
 </div>
 
 </section>
-<section id="slide-org84f00e0">
-<h3 id="org84f00e0">Using the Class</h3>
+<section id="slide-org5ca8d4b">
+<h3 id="org5ca8d4b">Using the Class</h3>
 <div class="org-src-container">
 
 <pre><code class="python" >from sklearn.model_selection import train_test_split
@@ -195,13 +195,13 @@ print(model.predict(X_test))
 </section>
 </section>
 <section>
-<section id="slide-org5186674">
-<h2 id="org5186674">Comparing NC and kNN</h2>
-<div class="outline-text-2" id="text-org5186674">
+<section id="slide-org50c5640">
+<h2 id="org50c5640">Comparing NC and kNN</h2>
+<div class="outline-text-2" id="text-org50c5640">
 </div>
 </section>
-<section id="slide-org04cf6b2">
-<h3 id="org04cf6b2">Parametric vs. non-parametric</h3>
+<section id="slide-orgf05335a">
+<h3 id="orgf05335a">Parametric vs. non-parametric</h3>
 <ul>
 <li>Parametric model: Number of “parameters” (degrees of freedom) independent of data.</li>
 <li>Non-parametric model: Degrees of freedom increase with more data.</li>
@@ -216,8 +216,8 @@ Q: Which one is centroid? A: parametric. Q: NN? A: non-parametric
 </aside>
 
 </section>
-<section id="slide-org5bdb6db">
-<h3 id="org5bdb6db">Overfitting and Underfitting</h3>
+<section id="slide-org8344758">
+<h3 id="org8344758">Overfitting and Underfitting</h3>
 
 <div class="figure">
 <p><img src="./assets/overfitting_underfitting_cartoon_full.png" alt="overfitting_underfitting_cartoon_full.png" height="400px" />
@@ -237,8 +237,8 @@ Coming back to this chart, you usually find that non-parametric models are more 
 
 </aside>
 </section>
-<section id="slide-org0ea50bb">
-<h3 id="org0ea50bb">Model Flexibility</h3>
+<section id="slide-org5041f21">
+<h3 id="org5041f21">Model Flexibility</h3>
 
 <div class="figure">
 <p><img src="./assets/knn_vs_nearest_centroid.png" alt="knn_vs_nearest_centroid.png" height="400px" />
@@ -262,8 +262,8 @@ What do you think are the important computational properties of machine learning
 </section>
 </div>
 </div>
-<script src="/Users/rob/src/reveal/lib/js/head.min.js"></script>
-<script src="/Users/rob/src/reveal/js/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="https://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
 
 <script>
 // Full list of configuration options available here:
@@ -293,12 +293,12 @@ multiplex: {
 
 // Optional libraries used to extend on reveal.js
 dependencies: [
- { src: '/Users/rob/src/reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
- { src: '/Users/rob/src/reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: '/Users/rob/src/reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: '/Users/rob/src/reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
- { src: '/Users/rob/src/reveal/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
- { src: '/Users/rob/src/reveal/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
 ,pdfSeparateFragments: false});
 </script>
 </body>
