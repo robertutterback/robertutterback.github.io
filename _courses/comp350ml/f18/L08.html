@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Applied Machine Learning</title>
+<meta name="author" content="(Robert Utterback)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="/Users/rob/src/reveal/css/reveal.css"/>
+
+<link rel="stylesheet" href="/Users/rob/src/reveal/css/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+<link rel="stylesheet" href="/Users/rob/src/reveal/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '/Users/rob/src/reveal/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+<section id="slide-orgcd6b83a">
+<h2 id="orgcd6b83a">Comparing Models</h2>
+<p>
+Robert Utterback
+</p>
+
+<p>
+Based on slides by Andreas Muller
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org05eed23">
+<h2 id="org05eed23">Nearest Centroid</h2>
+<div class="outline-text-2" id="text-org05eed23">
+</div>
+</section>
+<section id="slide-orge1c0c72">
+<h3 id="orge1c0c72">Nearest Centroid</h3>
+
+<div class="figure">
+<p><img src="./assets/nearest_centroid_boundary.png" alt="nearest_centroid_boundary.png" height="400px" />
+</p>
+</div>
+
+<p>
+\(f(x) = \text{argmin}_{i \in Y} ||\overline{x}_i - x||\)
+</p>
+<aside class="notes">
+<p>
+The nearest centroid model simply computes the centroid, or the mean of each class, and classifies each point by which centroid is the closest. You can write that down as a formula such as here, where x<sub>i</sub> bar is the centroid, and I runs over the classes. You can see that this yields a linear decision boundary between the two classes.
+</p>
+
+</aside>
+</section>
+<section id="slide-org9b0d037">
+<h3 id="org9b0d037">Scikit-Learn Centroid</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = \
+	train_test_split(data, target, random_state=0)
+
+from sklearn.neighbors import NearestCentroid
+nc = NearestCentroid()
+nc.fit(X_train, y_train)
+print("accuracy: {:.2f}".format(nc.score(X_test, y_test)))
+# prints "accuracy: 0.62"
+</code></pre>
+</div>
+<aside class="notes">
+<p>
+Note slightly worse accuracy than kNN here.
+</p>
+
+<p>
+<b>Let's try to implement this</b>
+</p>
+
+</aside>
+</section>
+<section id="slide-org1ceed1e">
+<h3 id="org1ceed1e">NC Tuning Parameter: Nearest Shrunken Centroid</h3>
+
+<div class="figure">
+<p><img src="./assets/nearest_shrunken_centroid_boundary.png" alt="nearest_shrunken_centroid_boundary.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+There’s a variant of the nearest centroid called the nearest shrunken centroid, which allows you to limit model complexity. In nearest shrunken centroid, you pick a positive shrinking threshold, and then you apply the soft-threshold function here to each of the centroids. The soft-thresholding function shrinks each component of a vector towards zero by the threshold, and if that would cross zero, to set this component to zero. Actually the mean of the data is subtracted beforehand so that this makes sense ;)
+</p>
+
+<p>
+What that means is that if the centroids have an entry that is close to zero, this direction gets ignored. Here you can see different settings of the shrinking threshold. No shrinking, a threshold of .4 and a threshold of .8. Because the centers are less than .5 apart from the data mean, the last panel has a perfectly horizontal line.
+</p>
+
+<p>
+When do you think NC works better than KNN? High dimensions!
+</p>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-orgf64de2d">
+<h2 id="orgf64de2d">NC Implementation</h2>
+<div class="outline-text-2" id="text-orgf64de2d">
+</div>
+</section>
+<section id="slide-org03540ef">
+<h3 id="org03540ef">Setup</h3>
+<p>
+Standard imports and loading the data
+</p>
+<div class="org-src-container">
+
+<pre><code class="python" >from scipy.spatial import distance
+import numpy as np
+import math
+
+from sklearn.datasets import load_iris
+iris_dataset = load_iris()
+
+data = iris_dataset.data
+targets = iris_dataset.target
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org78cd944">
+<h3 id="org78cd944">NC class</h3>
+<div class="org-src-container">
+
+<pre id="ncclass"><code class="python" >class NC:
+    def __init__(self):
+        pass
+    def fit(self, X, y):
+        self.centroids = []
+        classes = np.unique(y)
+        for c in classes:
+            points = X[y == c]
+            sums = np.sum(points, axis=0)
+            mean = sums / points.shape[0]
+            self.centroids.append(mean)
+    def predict(self, X):
+        predictions = []
+        for x in X:
+            mn = math.inf
+            best = None
+            for i, centroid in enumerate(self.centroids):
+                dist = distance.euclidean(x, centroid)
+                if dist < mn:
+                    mn = dist
+                    best = i
+            predictions.append(best)
+        return np.array(predictions)
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org84f00e0">
+<h3 id="org84f00e0">Using the Class</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = \
+	train_test_split(data, targets, random_state=0)
+
+model = NC()
+model.fit(X_train, y_train)
+print(model.predict(X_test))
+</code></pre>
+</div>
+
+<pre class="example">
+[2 1 0 2 0 2 0 1 2 1 2 1 1 1 1 0 1 1 0 0 1 1 0 0 1 0 0 1 1 0 2 1 0 1 2 1 0
+ 1]
+
+</pre>
+
+</section>
+</section>
+<section>
+<section id="slide-org5186674">
+<h2 id="org5186674">Comparing NC and kNN</h2>
+<div class="outline-text-2" id="text-org5186674">
+</div>
+</section>
+<section id="slide-org04cf6b2">
+<h3 id="org04cf6b2">Parametric vs. non-parametric</h3>
+<ul>
+<li>Parametric model: Number of “parameters” (degrees of freedom) independent of data.</li>
+<li>Non-parametric model: Degrees of freedom increase with more data.</li>
+
+</ul>
+<aside class="notes">
+<p>
+Note: NOT hyperparameters
+Q: Which one is centroid? A: parametric. Q: NN? A: non-parametric
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org5bdb6db">
+<h3 id="org5bdb6db">Overfitting and Underfitting</h3>
+
+<div class="figure">
+<p><img src="./assets/overfitting_underfitting_cartoon_full.png" alt="overfitting_underfitting_cartoon_full.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Repeat of Generalization slide above</li>
+<li>Discuss that non-parametric are likely to overfit</li>
+<li>But give more flexibility</li>
+
+</ul>
+
+<p>
+Coming back to this chart, you usually find that non-parametric models are more likely to overfit, as they can increase their capacity to fit any dataset, while in some cases, a parametric model might not be able to fit some data. Again, neural networks are somewhat their own thing, as usually people choose networks that could learn any possible data.
+</p>
+
+</aside>
+</section>
+<section id="slide-org0ea50bb">
+<h3 id="org0ea50bb">Model Flexibility</h3>
+
+<div class="figure">
+<p><img src="./assets/knn_vs_nearest_centroid.png" alt="knn_vs_nearest_centroid.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Here is a very simple example where a nearest neighbor algorithm might work, while nearest centroid fails because it is limited to linear decision boundaries. We’ll talk more about linear decision boundaries and their strength and weaknesses on Wednesday.
+</p>
+
+<p>
+Now, I want to talk more about how to adjust the parameters in these models - or really, in any model.
+</p>
+
+<p>
+What do you think are the important computational properties of machine learning models? 
+</p>
+
+</aside>
+</section>
+</section>
+</div>
+</div>
+<script src="/Users/rob/src/reveal/lib/js/head.min.js"></script>
+<script src="/Users/rob/src/reveal/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c/t',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.05,
+minScale: 0.20,
+maxScale: 15.00,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: '0.0',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: '/Users/rob/src/reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: '/Users/rob/src/reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: '/Users/rob/src/reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: '/Users/rob/src/reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: '/Users/rob/src/reveal/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: '/Users/rob/src/reveal/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+,pdfSeparateFragments: false});
+</script>
+</body>
+</html>
