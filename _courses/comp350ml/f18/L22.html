@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Applied Machine Learning</title>
+<meta name="author" content="(Robert Utterback)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+\(
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand{\E}{\mathop{\boldsymbol{E}}}
+\newcommand{\var}{\boldsymbol{Var}}
+\newcommand{\norm}[1]{\lvert\lvert#1\rvert\rvert}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\ltwo}[1]{\norm{#1}_2}
+\newcommand{\lone}[1]{\norm{#1}_1}
+\newcommand{\sgn}[1]{\text{sign}\left( #1 \right)}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\minw}{\min_{w \in \mathbb{R}^p}}
+\newcommand{\sumn}{\sum_{i=1}^n}
+\newcommand{\logloss}{\log{(\exp{(-y_iw^T\vec{x}_i)} + 1)}}
+\)
+
+<section>
+<section id="slide-orgfdec3a1">
+<h2 id="orgfdec3a1">Decision Trees</h2>
+<p>
+Robert Utterback
+</p>
+
+<p>
+Based on slides by Andreas Muller
+</p>
+<aside class="notes">
+<p>
+One of the main tools in toolbox, very popular in industry
+</p>
+
+</aside>
+</section>
+<section id="slide-org60c5e04">
+<h3 id="org60c5e04">Why Trees?</h3>
+<ul>
+<li>Very powerful modeling method – non-linear!</li>
+<li>Don't care about scaling or distribution of data!</li>
+<li>Interpretable</li>
+<li>Basis of very powerful models!</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>Some versions can handle categorical and/or missing data</li>
+<li>Can be combined with other models to form very powerful models</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org61bf596">
+<h2 id="org61bf596">Decision Trees for Classification</h2>
+<aside class="notes">
+<p>
+Many variants, let's talk about the basic classification tree first
+</p>
+
+</aside>
+</section>
+<section id="slide-orgaea498a">
+<h3 id="orgaea498a">Idea: series of binary questions</h3>
+
+<div class="figure">
+<p><img src="./assets/tree01.png" alt="tree01.png" height="500px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Ask a series of binary questions
+</p>
+
+</aside>
+</section>
+<section id="slide-org0d788c4">
+<h3 id="org0d788c4">Building Trees</h3>
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/tree02.png" alt="tree02.png" height="200px" />
+</p>
+</div>
+
+<p>
+Continuous features:
+</p>
+
+<ul>
+<li>“questions” are thresholds on single features.</li>
+<li>Minimize impurity</li>
+
+</ul>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+
+<div class="figure">
+<p><img src="./assets/tree03.png" alt="tree03.png" height="250px" width="450px" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="./assets/tree04.png" alt="tree04.png" height="250px" width="550px" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<p>
+Finds the best feature that minimizes impurity, e.g., make the subsets
+have mostly one class. Note that in the bottom region, there are no
+splits necessary after the second level.
+</p>
+
+<p>
+Finally when all regions are pure we're done. Basically a hierarchical split of the data.
+This algorithm is <b>greedy</b>, notice at the last level it doesn't seem very good&#x2026;looks overfit.
+</p>
+
+</aside>
+</section>
+<section id="slide-org90e221e">
+<h3 id="org90e221e">Criteria (for classification)</h3>
+<ul>
+<li>Gini Index: \(H_\text{gini}(X_m) = \sum_{k\in\mathcal{Y}} p_{mk} (1 - p_{mk})\)</li>
+<li>Cross-Entropy: \(H_\text{CE}(X_m) = -\sum_{k\in\mathcal{Y}} p_{mk} \log(p_{mk})\)</li>
+<li>\(x_m\) observations in node m</li>
+<li>\(\mathcal{Y}\) classes</li>
+<li>\(p_m\) distribution over classes in node m</li>
+
+</ul>
+<aside class="notes">
+<p>
+Two criteria for impurity
+</p>
+
+</aside>
+</section>
+<section id="slide-org13b9957">
+<h3 id="org13b9957">Prediction</h3>
+
+<div class="figure">
+<p><img src="./assets/tree05.png" alt="tree05.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Traverse tree based on feature tests</li>
+<li>Predict most common class in leaf</li>
+<li>Prediction is very fast!</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgbce1684">
+<h2 id="orgbce1684">Regression trees</h2>
+<div class="outline-text-2" id="text-orgbce1684">
+</div>
+</section>
+<section id="slide-orga219142">
+<h3 id="orga219142">Regression Tree math</h3>
+<p>
+\[\text{Prediction: } \bar{y}_m = \frac{1}{N_m} \sum_{i \in N_m} y_i \]
+</p>
+
+<p>
+\[ \text{Mean Squared Error: } H(X_m) = \frac{1}{N_m} \sum_{i \in N_m} (y_i - \bar{y}_m)^2 \]
+</p>
+
+<p>
+\[ \text{Mean Absolute Error: } H(X_m) = \frac{1}{N_m} \sum_{i \in N_m} |y_i - \bar{y}_m| \]
+</p>
+<aside class="notes">
+<ul>
+<li>predict just takes mean</li>
+<li>For splitting: for each possible split, we find the mean and
+consider how "good" the split would predict based on MSE or MAE.</li>
+<li>Q: Which might handle outliers better? (Socrative)</li>
+<li>Without regularization / pruning:</li>
+<li>Each leaf often contains a single point to be “pure”</li>
+<li>Ends up with <b>very</b> deep trees</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org020ec11">
+<h3 id="org020ec11">Visualizing trees with sklearn</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >from sklearn.datasets import load_breast_cancer
+cancer = load_breast_cancer()
+X_train, X_test, y_train, y_test = \
+    train_test_split(cancer.data,cancer.target,
+                     stratify=cancer.target,
+                     random_state=0)
+from sklearn.tree import DecisionTreeClassifier, \
+    export_graphviz
+tree = DecisionTreeClassifier(max_depth=2)
+tree.fit(X_train, y_train) 
+# tree visualization
+tree_dot = export_graphviz(tree, out_file=None,
+                           feature_names=cancer.feature_names)
+print(tree_dot)
+</code></pre>
+</div>
+<aside class="notes">
+<p>
+
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb80aaa4">
+<h3 id="orgb80aaa4">Visualizing trees with sklearn</h3>
+<pre class="example">
+digraph Tree {
+node [shape=box] ;
+0 [label="worst perimeter &lt;= 106.1\ngini = 0.468\nsamples = 426\nvalue = [159, 267]"];
+1 [label="worst concave points &lt;= 0.134\ngini = 0.081\nsamples = 259\nvalue = [11, 248]"];
+0 -&gt; 1 [labeldistance=2.5, labelangle=45, headlabel="True"];
+2 [label="gini = 0.008\nsamples = 240\nvalue = [1, 239]"];
+1 -&gt; 2;
+3 [label="gini = 0.499\nsamples = 19\nvalue = [10, 9]"];
+1 -&gt; 3;
+4 [label="worst concave points &lt;= 0.142\ngini = 0.202\nsamples = 167\nvalue = [148, 19]"];
+0 -&gt; 4 [labeldistance=2.5, labelangle=-45, headlabel="False"];
+5 [label="gini = 0.497\nsamples = 37\nvalue = [20, 17]"];
+4 -&gt; 5;
+6 [label="gini = 0.03\nsamples = 130\nvalue = [128, 2]"];
+4 -&gt; 6;
+}
+</pre>
+<aside class="notes">
+<p>
+
+</p>
+
+</aside>
+</section>
+<section id="slide-orga4dcff2">
+<h3 id="orga4dcff2">Showing dot files in Jupyter</h3>
+<p>
+Requires graphviz C library and Python library
+</p>
+<div class="org-src-container">
+
+<pre><code class="python" >!conda install graphviz python-graphviz
+</code></pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./assets/tree06.png" alt="tree06.png" height="300px" width="800px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Other solutions are possible too, even without graphviz. One day sklearn will probably have a built-in way to do this.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org58094e7">
+<h2 id="org58094e7">Parameter Tuning</h2>
+<div class="outline-text-2" id="text-org58094e7">
+</div>
+</section>
+<section id="slide-orgb971ee4">
+<h3 id="orgb971ee4">Parameters</h3>
+<ul>
+<li>Pre-pruning and post-pruning (not in sklearn yet)</li>
+<li>Limit tree size (pick one, maybe two):</li>
+<li><code>max_depth</code></li>
+<li><code>max_leaf_nodes</code></li>
+<li><code>min_samples_split</code></li>
+<li><code>min_impurity_decrease</code></li>
+
+</ul>
+<aside class="notes">
+nil
+</aside>
+</section>
+<section id="slide-org5b8fdb0">
+<h3 id="org5b8fdb0">No pruning</h3>
+
+<div class="figure">
+<p><img src="./assets/tree07.png" alt="tree07.png" height="550px" />
+</p>
+</div>
+</section>
+<section id="slide-orgbb960a4">
+<h3 id="orgbb960a4"><code>max_depth</code> = 4</h3>
+
+<div class="figure">
+<p><img src="./assets/tree08.png" alt="tree08.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Restricts height of tree -&gt; faster predictions, less memory
+</p>
+
+</aside>
+</section>
+<section id="slide-org79aab69">
+<h3 id="org79aab69"><code>max_leaf_nodes</code> = 8</h3>
+
+<div class="figure">
+<p><img src="./assets/tree09.png" alt="tree09.png" height="500px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Always split the one that has the greatest impurity decrease first
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb12d30c">
+<h3 id="orgb12d30c"><code>min_samples_split</code> = 50</h3>
+
+<div class="figure">
+<p><img src="./assets/tree10.png" alt="tree10.png" height="550px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Only split nodes that have enough samples in them.
+All leaves will <b>either</b> have less than X samples OR will be pure.
+</p>
+
+<p>
+Also, I don't have a slide for <code>min_impurity_decrease</code>. With
+<code>min_samples</code> it may split off a single point. But
+<code>min_impurity_decrease</code> only makes splits that decrease impurity by X
+amount.
+</p>
+
+</aside>
+</section>
+<section id="slide-org609d1ab">
+<h3 id="org609d1ab"></h3>
+<div class="org-src-container">
+
+<pre><code class="python" >from sklearn.model_selection import GridSearchCV
+param_grid = {'max_depth':range(1, 7)}
+grid = GridSearchCV(DecisionTreeClassifier(random_state=0),
+                    param_grid=param_grid,
+                    cv=10)
+grid.fit(X_train, y_train)
+</code></pre>
+</div>
+
+<div class="figure">
+<p><img src="./assets/treeplot01.png" alt="treeplot01.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Usually you pick one of these and tune over it.
+</p>
+
+<p>
+Little bit of overfitting, though actually not that much. Probably b/c this is just a toy dataset.
+</p>
+
+</aside>
+</section>
+<section id="slide-orga21e14e">
+<h3 id="orga21e14e"></h3>
+<div class="org-src-container">
+
+<pre><code class="python" >from sklearn.model_selection import GridSearchCV
+param_grid = {'max_leaf_nodes':range(2, 20)}
+grid = GridSearchCV(DecisionTreeClassifier(random_state=0),
+                    param_grid=param_grid, cv=10)
+grid.fit(X_train, y_train)
+</code></pre>
+</div>
+
+<div class="figure">
+<p><img src="./assets/treeplot02.png" alt="treeplot02.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Again not a whole lot of overfitting. Smaller trees are easier to
+explain b/c you can look at all of this. For a tree of depth 18, it's
+too hard to look at it all at once.
+</p>
+
+</aside>
+</section>
+<section id="slide-org39717d8">
+<h3 id="org39717d8">Relation to Nearest Neighbors</h3>
+<ul>
+<li>Predict average of neighbors – either by k, by epsilon ball or by leaf.</li>
+<li>Trees are much faster to predict.</li>
+<li>Neither can extrapolate</li>
+
+</ul>
+<aside class="notes">
+<p>
+Actually quite similar to NN in some sense. Both predict average of
+neighbors: either k nearest, or within some threshold, while trees
+pick the "neighbors" in the same leaf. The proof that trees can learn
+anything is based on this kind of intuition about neighbors.
+</p>
+
+<p>
+Both can learn a lot, trees have faster predict, but neither can't extrapolate
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org98350b5">
+<h2 id="org98350b5">Extrapolation</h2>
+<div class="outline-text-2" id="text-org98350b5">
+</div>
+</section>
+<section id="slide-orge9c6ab3">
+<h3 id="orge9c6ab3">RAM Price over Time</h3>
+
+<div class="figure">
+<p><img src="./assets/treeextrap01.png" alt="treeextrap01.png" height="500px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Not actually linear, but plotting with a log scale y-axis&#x2026;
+</p>
+
+</aside>
+</section>
+<section id="slide-org2fef264">
+<h3 id="org2fef264">Extrapolation</h3>
+
+<div class="figure">
+<p><img src="./assets/treeextrap02.png" alt="treeextrap02.png" height="500px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Want to make predictions for years after 2000. Trees do well..
+</p>
+
+</aside>
+</section>
+<section id="slide-org4453f8e">
+<h3 id="org4453f8e">Extrapolation</h3>
+
+<div class="figure">
+<p><img src="./assets/treeextrap03.png" alt="treeextrap03.png" height="500px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+&#x2026;but can't extrapolate from the previous data, b/c it never saw data
+like that! It will always be computing the mean of some values in the
+training set, so always less than or equal to the max! kNN will do the
+same!
+</p>
+
+<p>
+In practice, this only comes up sometimes. Instead of predicting the
+value, you can use the tree to predict the difference from one year to
+the previous year. But it's something to keep in mind &#x2014; trees will
+basically fall back to the values they have previously seen. In
+general, extrapolation is difficult, but with trees/NN you really need
+to be careful.
+</p>
+
+</aside>
+</section>
+<section id="slide-org12c06ae">
+<h3 id="org12c06ae">Instability</h3>
+<div class="column" style="float:left; width: 50%">
+<div class="org-src-container">
+
+<pre id="tinycode"><code class="python" >X_train, X_test, y_train, y_test = \
+    train_test_split(iris.data,
+                     iris.target,
+                     stratify=iris.target,
+                     random_state=0)
+tree = DecisionTreeClassifier(max_leaf_nodes=6)
+tree.fit(X_train, y_train)
+</code></pre>
+</div>
+
+<div class="figure">
+<p><img src="./assets/tree11.png" alt="tree11.png" height="400px" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+<div class="org-src-container">
+
+<pre id="tinycode"><code class="python" >X_train, X_test, y_train, y_test = \
+    train_test_split(iris.data,
+                     iris.target,
+                     stratify=iris.target,
+                     random_state=1)
+tree = DecisionTreeClassifier(max_leaf_nodes=6)
+tree.fit(X_train, y_train)
+</code></pre>
+</div>
+
+<div class="figure">
+<p><img src="./assets/tree12.png" alt="tree12.png" height="400px" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<p>
+Another downside of trees: instability. You'd think if I take the same
+data and make a tree twice I'd get the same tree. But not really true
+at all! The trees aren't really similar! Tree structure is <b>very</b>
+dependent on the dataset you have.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org57edf26">
+<h2 id="org57edf26">Other Tree Details</h2>
+<div class="outline-text-2" id="text-org57edf26">
+</div>
+</section>
+<section id="slide-orga7295f3">
+<h3 id="orga7295f3">Feature importance</h3>
+<div class="column" style="float:left; width: 50%">
+<div class="org-src-container">
+
+<pre id="tinycode"><code class="python" >X_train, X_test, y_train, y_test = \
+    train_test_split(iris.data,
+                     iris.target,
+                     stratify=iris.target,
+                     random_state=1)
+tree = DecisionTreeClassifier(max_leaf_nodes=6)
+tree.fit(X_train,y_train)
+</code></pre>
+</div>
+
+<div class="figure">
+<p><img src="./assets/tree13.png" alt="tree13.png" height="400px" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+<div class="org-src-container">
+
+<pre id="tinycode"><code class="python" >tree.feature_importances_
+# array([0.0, 0.0, 0.414, 0.586])
+</code></pre>
+</div>
+
+<div class="figure">
+<p><img src="./assets/treeimportances.png" alt="treeimportances.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Big tree -&gt; hard to understand what's happening</li>
+<li>But you can get out how important the model thinks each feature is</li>
+<li>Each time a feature is chosen to split on the data, you accumulate
+how much it increases the impurity</li>
+<li>So if a feature is used often and splits well, it will be regarded
+as more important</li>
+<li>Unstable Tree -&gt; Unstable feature importances.</li>
+<li>2 very related features, the feature importances could be anything:
+split between them, all one or the other, or anything in between</li>
+<li>Might take one or multiple from a group of correlated features.</li>
+<li>Doesn't tell you positive or negative influence (direction), but an
+importance.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org28c39fc">
+<h3 id="org28c39fc">Categorical Data</h3>
+<ul>
+<li>Can split on categorical data directly</li>
+<li>Intuitive way to split: split in two subsets</li>
+<li>\(2 ^ \text{n_values}\) many possibilities</li>
+<li>Possible to do in linear time exactly for gini index and binary classification.</li>
+<li>Heuristics done in practice for multi-class.</li>
+<li>Not in sklearn :(</li>
+
+</ul>
+<aside class="notes">
+<p>
+Many tree algorithms handle categorical data (R, other Python libs),
+but unfortunately not sklearn.  Can split into any subset of the
+feature values.  In sklearn you'd have to use one-hot encoding, which
+can add a lot of features, and means that each split in the tree can
+only separate one class!
+</p>
+
+<p>
+Also in theory trees can handle missing values. (1) go down both sides
+when you have a missing value (prediction)) (2) just another val to
+split on, branch for missing, branch for not (e.g., binary feature added)
+</p>
+
+</aside>
+</section>
+<section id="slide-org7dfd5ee">
+<h3 id="org7dfd5ee">Predicting probabilities</h3>
+<ul>
+<li>Fraction of class in leaf.</li>
+<li>Without pruning: Always 100% certain!</li>
+<li>Even with pruning might be too certain.</li>
+
+</ul>
+<aside class="notes">
+<p>
+Trees overfit very easily. So predicting probabilities probably won't
+be very accurate, too optimistic.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb8a369f">
+<h3 id="orgb8a369f">Conditional Inference Trees</h3>
+<ul>
+<li>Select "best" split with correcting for multiple-hypothesis testing.</li>
+<li>More "fair" to categorical variables.</li>
+<li>Only in R so far (party)</li>
+
+</ul>
+</section>
+<section id="slide-orga181309">
+<h3 id="orga181309">Different splitting methods</h3>
+<p>
+<img src="./assets/pose.png" alt="pose.png" />
+(taken from Shotton et. al. Real-Time Human Pose Recognition)
+</p>
+<aside class="notes">
+<ul>
+<li>Could use anything as split candidate!</li>
+<li>Computer vision: pixel comparisons</li>
+<li>They used decision trees to find where parts of the body are.</li>
+<li>Kinect (first generation): depth comparison</li>
+<li>For a particular pixel, ask about the depth of pixels around or far
+away from it, or look at the difference between values.</li>
+<li>Basically the questions you can ask can be much different than linear models.</li>
+<li>Can even learn models inside each node</li>
+<li>Linear models used if extrapolation is needed.</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="https://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c/t',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.05,
+minScale: 0.20,
+maxScale: 15.00,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: '0.0',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+,pdfSeparateFragments: false});
+</script>
+</body>
+</html>
