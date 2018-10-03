@@ -23,6 +23,7 @@
         document.getElementsByTagName( 'head' )[0].appendChild( link );
     }
 </script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 <body>
 <div class="reveal">
@@ -43,8 +44,8 @@
 \)
 
 <section>
-<section id="slide-org00418fc">
-<h2 id="org00418fc">Stacking</h2>
+<section id="slide-org63f635a">
+<h2 id="org63f635a">Stacking</h2>
 <p>
 Robert Utterback
 </p>
@@ -54,15 +55,15 @@ Based on slides by Andreas Müller
 </p>
 <aside class="notes">
 <p>
-
+\(2+2\)
 </p>
 
 </aside>
 </section>
 </section>
 <section>
-<section id="slide-org25b168b">
-<h2 id="org25b168b">More ensembles: Stacking</h2>
+<section id="slide-orgabdbe02">
+<h2 id="orgabdbe02">More ensembles: Stacking</h2>
 <aside class="notes">
 <p>
 Different way to put multiple models together. Stacking tries to go a bit beyond bagging.
@@ -70,8 +71,8 @@ Different way to put multiple models together. Stacking tries to go a bit beyond
 
 </aside>
 </section>
-<section id="slide-orge5e1e0e">
-<h3 id="orge5e1e0e">Averaging</h3>
+<section id="slide-org6df87fc">
+<h3 id="org6df87fc">Averaging</h3>
 <div class="org-src-container">
 
 <pre id="smallcode"><code class="python" >from sklearn.neighbors import KNeighborsClassifier
@@ -101,8 +102,8 @@ as prediction. But we could instead take a weighted average, based on our confid
 
 </aside>
 </section>
-<section id="slide-org33b5a0f">
-<h3 id="org33b5a0f">Simplified Stacking</h3>
+<section id="slide-org49d8b1a">
+<h3 id="org49d8b1a">Simplified Stacking</h3>
 <div class="org-src-container">
 
 <pre><code class="python" >stacking = make_pipeline(voting, LogisticRegression(C=100))
@@ -142,8 +143,8 @@ But instead of logreg you could use any model you want!
 
 </aside>
 </section>
-<section id="slide-orga7427d6">
-<h3 id="orga7427d6">Problem : Overfitting!</h3>
+<section id="slide-org0252953">
+<h3 id="org0252953">Problem : Overfitting!</h3>
 <ul>
 <li>Train first stage on training data</li>
 <li>Second stage trains on probability estimates from training data</li>
@@ -158,8 +159,8 @@ But instead of logreg you could use any model you want!
 
 </aside>
 </section>
-<section id="slide-org0186385">
-<h3 id="org0186385">Stacking</h3>
+<section id="slide-org756b31d">
+<h3 id="org756b31d">Stacking</h3>
 <ul>
 <li>Use validation set to produce prob. estimates</li>
 <li>Train second step estimator on held-out estimates</li>
@@ -178,8 +179,8 @@ Or use cross validation&#x2026;so that you have more data to train with
 
 </aside>
 </section>
-<section id="slide-orgf5d590d">
-<h3 id="orgf5d590d">Hold-out estimates of Probabilities</h3>
+<section id="slide-orgcbeb2b5">
+<h3 id="orgcbeb2b5">Hold-out estimates of Probabilities</h3>
 
 <div class="figure">
 <p><img src="./assets/holdout_estimate.png" alt="holdout_estimate.png" height="200px" />
@@ -208,8 +209,8 @@ Much more training data for second stage. Takes longer, though.
 
 </aside>
 </section>
-<section id="slide-org38c4962">
-<h3 id="org38c4962"></h3>
+<section id="slide-orgbf73c60">
+<h3 id="orgbf73c60"></h3>
 <div class="org-src-container">
 
 <pre id="smallcode"><code class="python" >from sklearn.model_selection import cross_val_predict
