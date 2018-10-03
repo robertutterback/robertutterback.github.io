@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Applied Machine Learning</title>
+<meta name="author" content="(Robert Utterback)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+\(
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand{\E}{\mathop{\boldsymbol{E}}}
+\newcommand{\var}{\boldsymbol{Var}}
+\newcommand{\norm}[1]{\lvert\lvert#1\rvert\rvert}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\ltwo}[1]{\norm{#1}_2}
+\newcommand{\lone}[1]{\norm{#1}_1}
+\newcommand{\sgn}[1]{\text{sign}\left( #1 \right)}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\minw}{\min_{w \in \mathbb{R}^p}}
+\newcommand{\sumn}{\sum_{i=1}^n}
+\newcommand{\logloss}{\log{(\exp{(-y_iw^T\vec{x}_i)} + 1)}}
+\)
+
+<section>
+<section id="slide-org00418fc">
+<h2 id="org00418fc">Stacking</h2>
+<p>
+Robert Utterback
+</p>
+
+<p>
+Based on slides by Andreas Müller
+</p>
+<aside class="notes">
+<p>
+
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org25b168b">
+<h2 id="org25b168b">More ensembles: Stacking</h2>
+<aside class="notes">
+<p>
+Different way to put multiple models together. Stacking tries to go a bit beyond bagging.
+</p>
+
+</aside>
+</section>
+<section id="slide-orge5e1e0e">
+<h3 id="orge5e1e0e">Averaging</h3>
+<div class="org-src-container">
+
+<pre id="smallcode"><code class="python" >from sklearn.neighbors import KNeighborsClassifier
+
+X, y = make_moons(noise=.4, random_state=16, n_samples=300)
+X_train, X_test, y_train, y_test = \
+    train_test_split(X, y, stratify=y, random_state=0)
+voting = VotingClassifier(
+   [('logreg', LogisticRegression(C=100)),
+    ('tree', DecisionTreeClassifier(max_depth=3)),
+    ('knn', KNeighborsClassifier(n_neighbors=3))],
+    voting='soft')
+voting.fit(X_train, y_train)
+lr, tree, knn = voting.estimators_
+</code></pre>
+</div>
+
+<div class="figure">
+<p><img src="./assets/average_voting.png" alt="average_voting.png" height="200px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Two class dataset, trained logreg, decision tree, kNN, takes average
+as prediction. But we could instead take a weighted average, based on our confidence of each model&#x2026;or&#x2026;
+</p>
+
+</aside>
+</section>
+<section id="slide-org33b5a0f">
+<h3 id="org33b5a0f">Simplified Stacking</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >stacking = make_pipeline(voting, LogisticRegression(C=100))
+stacking.fit(X_train, y_train)
+stacking.named_steps.logisticregression.coef_
+</code></pre>
+</div>
+<div class="column" style="float:left; width: 75%">
+
+<div class="figure">
+<p><img src="./assets/average_voting.png" alt="average_voting.png" height="200px" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 25%">
+
+<div class="figure">
+<p><img src="./assets/simple_stacking_result.png" alt="simple_stacking_result.png" height="200px" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<p>
+Take as input the probability estimates from all your models. THEN
+train logistic regression on these estimates, trying to predict the
+class.
+</p>
+
+<p>
+The voting classifier here is just a transformer: transforms into the
+probabilities given by the models inside it.
+</p>
+
+<p>
+But instead of logreg you could use any model you want!
+</p>
+
+</aside>
+</section>
+<section id="slide-orga7427d6">
+<h3 id="orga7427d6">Problem : Overfitting!</h3>
+<ul>
+<li>Train first stage on training data</li>
+<li>Second stage trains on probability estimates from training data</li>
+<li>First stage overfitting -&gt; most informative</li>
+<li>Second stage will "trust" model that overfits the most</li>
+
+</ul>
+<aside class="notes">
+<p>
+
+</p>
+
+</aside>
+</section>
+<section id="slide-org0186385">
+<h3 id="org0186385">Stacking</h3>
+<ul>
+<li>Use validation set to produce prob. estimates</li>
+<li>Train second step estimator on held-out estimates</li>
+<li>No overfitting of second step!</li>
+<li>For testing: as usual</li>
+
+</ul>
+<aside class="notes">
+<p>
+Use a hold out set. This way you're not overfitting as much.
+</p>
+
+<p>
+Or use cross validation&#x2026;so that you have more data to train with
+</p>
+
+</aside>
+</section>
+<section id="slide-orgf5d590d">
+<h3 id="orgf5d590d">Hold-out estimates of Probabilities</h3>
+
+<div class="figure">
+<p><img src="./assets/holdout_estimate.png" alt="holdout_estimate.png" height="200px" />
+</p>
+</div>
+
+<font size=6>
+<ul>
+<li>Split 1 produces probabilities for Fold 1, split2 for Fold 2 etc.</li>
+<li>Get a probability estimate for each data point!</li>
+<li>Unbiased estimates (like on the test set) for the whole training set!</li>
+<li>Without it: The best estimator is the one that memorized the training set.</li>
+
+</ul>
+</font>
+<aside class="notes">
+<p>
+Notice this is <b>outside</b> of any cross validation you might do for
+tuning (grid search!) That also needs cross validation, but now we
+also need an extra round of it.
+</p>
+
+<p>
+Much more training data for second stage. Takes longer, though.
+</p>
+
+</aside>
+</section>
+<section id="slide-org38c4962">
+<h3 id="org38c4962"></h3>
+<div class="org-src-container">
+
+<pre id="smallcode"><code class="python" >from sklearn.model_selection import cross_val_predict
+# take only probabilities of positive classes for
+# more interpretable coefficients
+first_stage = make_pipeline(voting,
+                            FunctionTransformer(lambda X: X[:, 1::2]))
+transform_cv = cross_val_predict(first_stage, X_train,
+                                 y_train, cv=10, method="transform")
+second_stage = LogisticRegression(C=100).fit(transform_cv, y_train)
+print(second_stage.coef_)
+print(second_stage.score(transform_cv, y_train))
+print(second_stage.score(first_stage.transform(X_test), y_test))
+</code></pre>
+</div>
+
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/simple_stacking_result.png" alt="simple_stacking_result.png" height="300px" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/stacking_result.png" alt="stacking_result.png" height="300px" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<p>
+There are actually other ways to do this in sklearn. Here I'm
+specifying I want to use the "transform" method of the voting
+classifier. Use 10-fold CV to always <b>just</b> use transform on the
+held-out set (fold), i.e., just compute probabilities of the voting
+classifier on the hold-out set. So <code>transform_cv</code> is the same size as
+the training data set, so then we can use that to fit LogReg.
+</p>
+
+<p>
+Q: Which model does it trust the most? A: the first, logreg. Now it doesn't trust kNN as much as before.
+</p>
+
+<p>
+The <b>goal</b> of stacking is to blend different models in a smart way,
+making a more expressive model. The next thing seems similar but has a
+different goal.
+</p>
+
+</aside>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="https://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c/t',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.05,
+minScale: 0.20,
+maxScale: 15.00,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: '0.0',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+,pdfSeparateFragments: false});
+</script>
+</body>
+</html>
