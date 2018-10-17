@@ -1,3 +1,7 @@
+.reveal p {
+    text-align: left !important;
+}
+
 .reveal h1.title {
     font-size: 2em;
 }
