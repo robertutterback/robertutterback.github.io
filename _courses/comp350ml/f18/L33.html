@@ -7,19 +7,19 @@
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
-<link rel="stylesheet" href="/Users/rob/src/reveal/css/reveal.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
 
-<link rel="stylesheet" href="/Users/rob/src/reveal/css/theme/white.css" id="theme"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/white.css" id="theme"/>
 
 <link rel="stylesheet" href="./notes.css"/>
-<link rel="stylesheet" href="/Users/rob/src/reveal/lib/css/zenburn.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/css/zenburn.css"/>
 <!-- If the query includes 'print-pdf', include the PDF print sheet -->
 <script>
     if( window.location.search.match( /print-pdf/gi ) ) {
         var link = document.createElement( 'link' );
         link.rel = 'stylesheet';
         link.type = 'text/css';
-        link.href = '/Users/rob/src/reveal/css/print/pdf.css';
+        link.href = 'https://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
         document.getElementsByTagName( 'head' )[0].appendChild( link );
     }
 </script>
@@ -43,8 +43,8 @@
 \newcommand{\logloss}{\log{(\exp{(-y_iw^T\vec{x}_i)} + 1)}}
 \)
 <section>
-<section id="slide-orgc20fecf">
-<h2 id="orgc20fecf">Class Imbalance</h2>
+<section id="slide-orge720155">
+<h2 id="orge720155">Class Imbalance</h2>
 <p>
 Robert Utterback
 </p>
@@ -61,8 +61,8 @@ But first, we need to finish metrics for regression&#x2026;.
 </section>
 </section>
 <section>
-<section id="slide-org245d74c">
-<h2 id="org245d74c">Metrics for Regression Models</h2>
+<section id="slide-org91bb77e">
+<h2 id="org91bb77e">Metrics for Regression Models</h2>
 <aside class="notes">
 <ul>
 <li>Now some metrics for regression</li>
@@ -71,8 +71,8 @@ But first, we need to finish metrics for regression&#x2026;.
 
 </aside>
 </section>
-<section id="slide-org1305b31">
-<h3 id="org1305b31">Built-in Standard Metrics</h3>
+<section id="slide-org8417332">
+<h3 id="org8417332">Built-in Standard Metrics</h3>
 <ul>
 <li>\(R^2\): easy to understand scale</li>
 <li>MSE: easy to relate to input</li>
@@ -89,8 +89,8 @@ But first, we need to finish metrics for regression&#x2026;.
 
 </aside>
 </section>
-<section id="slide-org0139317">
-<h3 id="org0139317">Prediction Plots</h3>
+<section id="slide-orge70cd4a">
+<h3 id="orge70cd4a">Prediction Plots</h3>
 <div class="column" style="float:left; width: 75%">
 <div class="org-src-container">
 
@@ -124,8 +124,8 @@ plt.plot(pred, y_test, 'o')
 
 </aside>
 </section>
-<section id="slide-org56e9d0d">
-<h3 id="org56e9d0d">Residual Plots</h3>
+<section id="slide-orgf26d87a">
+<h3 id="orgf26d87a">Residual Plots</h3>
 <div class="column" style="float:left; width: 50%">
 
 
@@ -159,8 +159,8 @@ visualize these in 2 dimensions</li>
 
 </aside>
 </section>
-<section id="slide-orgb412af9">
-<h3 id="orgb412af9">Target vs Feature</h3>
+<section id="slide-org5eb9e29">
+<h3 id="org5eb9e29">Target vs Feature</h3>
 
 <div class="figure">
 <p><img src="./assets/target_vs_feature.png" alt="target_vs_feature.png" />
@@ -175,8 +175,8 @@ visualize these in 2 dimensions</li>
 
 </aside>
 </section>
-<section id="slide-org84343c5">
-<h3 id="org84343c5">Residual vs Feature</h3>
+<section id="slide-orga6977f0">
+<h3 id="orga6977f0">Residual vs Feature</h3>
 
 <div class="figure">
 <p><img src="./assets/residual_vs_feature.png" alt="residual_vs_feature.png" />
@@ -199,8 +199,8 @@ the model makes is independent of each feature</li>
 
 </aside>
 </section>
-<section id="slide-org6a1e322">
-<h3 id="org6a1e322">Absolute vs Relative: MAPE</h3>
+<section id="slide-org56e1c25">
+<h3 id="org56e1c25">Absolute vs Relative: MAPE</h3>
 <p>
 Mean Absolute Percentage Error
 </p>
@@ -237,8 +237,8 @@ else the percentage error will be very large</li>
 
 </aside>
 </section>
-<section id="slide-org73ad023">
-<h3 id="org73ad023">Over vs under</h3>
+<section id="slide-org74c6b5c">
+<h3 id="org74c6b5c">Over vs under</h3>
 <ul>
 <li>Overprediction and underprediction can have different cost.</li>
 <li>Try to create cost-matrix: how much does overprediction and
@@ -260,13 +260,13 @@ particular residual</li>
 </section>
 </section>
 <section>
-<section id="slide-org6171c44">
-<h2 id="org6171c44">Class Imbalance</h2>
-<div class="outline-text-2" id="text-org6171c44">
+<section id="slide-orgdbe315d">
+<h2 id="orgdbe315d">Class Imbalance</h2>
+<div class="outline-text-2" id="text-orgdbe315d">
 </div>
 </section>
-<section id="slide-org79c6ff0">
-<h3 id="org79c6ff0">Two sources of imbalance</h3>
+<section id="slide-org3163902">
+<h3 id="org3163902">Two sources of imbalance</h3>
 <ul>
 <li>Asymmetric cost</li>
 <li>Asymmetric data</li>
@@ -281,8 +281,8 @@ particular residual</li>
 
 </aside>
 </section>
-<section id="slide-orge0ab105">
-<h3 id="orge0ab105">Why do we care?</h3>
+<section id="slide-org483bb69">
+<h3 id="org483bb69">Why do we care?</h3>
 <ul>
 <li>Why should cost be symmetric?</li>
 <li>All data is imbalanced</li>
@@ -299,8 +299,8 @@ particular residual</li>
 
 </aside>
 </section>
-<section id="slide-org412b61f">
-<h3 id="org412b61f">Changing Thresholds</h3>
+<section id="slide-org39acc3f">
+<h3 id="org39acc3f">Changing Thresholds</h3>
 <font size=6>
 <div class="org-src-container">
 
@@ -358,8 +358,8 @@ weighted avg       0.94      0.93      0.93       143
 
 </aside>
 </section>
-<section id="slide-org775f002">
-<h3 id="org775f002">roc curve</h3>
+<section id="slide-org4077e62">
+<h3 id="org4077e62">roc curve</h3>
 
 <div class="figure">
 <p><img src="./assets/roc_svc_rf_curve.png" alt="roc_svc_rf_curve.png" />
@@ -373,8 +373,8 @@ weighted avg       0.94      0.93      0.93       143
 
 </div>
 </section>
-<section id="slide-org394ef07">
-<h3 id="org394ef07">remedies for the model</h3>
+<section id="slide-org3a3dfe8">
+<h3 id="org3a3dfe8">remedies for the model</h3>
 <div class="notes">
 <ul>
 <li>Today let's look at how to change the training/building of the model to take this imbalance into account</li>
@@ -383,8 +383,8 @@ weighted avg       0.94      0.93      0.93       143
 
 </div>
 </section>
-<section id="slide-org1c773bc">
-<h3 id="org1c773bc">Mammography Data</h3>
+<section id="slide-orgf491ae3">
+<h3 id="orgf491ae3">Mammography Data</h3>
 <div class="column" style="float:left; width: 50%">
 <font size=6>
 <div class="org-src-container">
@@ -438,8 +438,8 @@ Note: Split one slide to two due to size constraints?
 
 </aside>
 </section>
-<section id="slide-orgd2aedbe">
-<h3 id="orgd2aedbe">Mammography Data</h3>
+<section id="slide-orgb8f2dff">
+<h3 id="orgb8f2dff">Mammography Data</h3>
 <div class="org-src-container">
 
 <pre><code class="python" >X_train, X_test, y_train, y_test = \
@@ -470,7 +470,7 @@ print(f"{roc:.3f}, {avep:.3f}")
 </div>
 
 <pre class="example">
-0.940, 0.740
+0.940, 0.739
 
 </pre>
 
@@ -485,8 +485,8 @@ print(f"{roc:.3f}, {avep:.3f}")
 
 </aside>
 </section>
-<section id="slide-org28d100c">
-<h3 id="org28d100c">Mammography Data</h3>
+<section id="slide-orgf099369">
+<h3 id="orgf099369">Mammography Data</h3>
 
 <div class="figure">
 <p><img src="./assets/mammography_features23.png" alt="mammography_features23.png" />
@@ -496,8 +496,8 @@ print(f"{roc:.3f}, {avep:.3f}")
 nil
 </aside>
 </section>
-<section id="slide-org73643cd">
-<h3 id="org73643cd">Basic Approaches</h3>
+<section id="slide-org3b0636b">
+<h3 id="org3b0636b">Basic Approaches</h3>
 <div class="column" style="float:left; width: 50%">
 
 <div class="figure">
@@ -524,13 +524,13 @@ Change the training procedure
 </section>
 </section>
 <section>
-<section id="slide-org18b246c">
-<h2 id="org18b246c">Change the Data: Sampling</h2>
-<div class="outline-text-2" id="text-org18b246c">
+<section id="slide-orgc33ff32">
+<h2 id="orgc33ff32">Change the Data: Sampling</h2>
+<div class="outline-text-2" id="text-orgc33ff32">
 </div>
 </section>
-<section id="slide-orgba900b8">
-<h3 id="orgba900b8">Scikit-learn vs. resampling</h3>
+<section id="slide-orga026060">
+<h3 id="orga026060">Scikit-learn vs. resampling</h3>
 
 <div class="figure">
 <p><img src="./assets/pipeline.png" alt="pipeline.png" />
@@ -547,8 +547,8 @@ Change the training procedure
 
 </aside>
 </section>
-<section id="slide-orgc072b6f">
-<h3 id="orgc072b6f">Imbalance-learn</h3>
+<section id="slide-org0c70352">
+<h3 id="org0c70352">Imbalance-learn</h3>
 <p>
 <a href="http://imbalanced-learn.org">http://imbalanced-learn.org</a>
 </p>
@@ -569,8 +569,8 @@ Extends <code>sklearn</code> API
 
 </aside>
 </section>
-<section id="slide-orgb4dd5d8">
-<h3 id="orgb4dd5d8">Sampler</h3>
+<section id="slide-org15404ac">
+<h3 id="org15404ac">Sampler</h3>
 <ul>
 <li>To resample data sets, each sampler implements</li>
 
@@ -609,8 +609,8 @@ like learning how much you need to sample the majority/minority</li>
 
 </aside>
 </section>
-<section id="slide-org32d5a12">
-<h3 id="org32d5a12">Random Undersampling</h3>
+<section id="slide-org3748cbf">
+<h3 id="org3748cbf">Random Undersampling</h3>
 <div class="org-src-container">
 
 <pre><code class="python" >from imblearn.under_sampling import RandomUnderSampler
@@ -641,8 +641,8 @@ print(np.bincount(y_train_subsample))
 
 </aside>
 </section>
-<section id="slide-org0745a96">
-<h3 id="org0745a96">Random Undersampling</h3>
+<section id="slide-orgd120d54">
+<h3 id="orgd120d54">Random Undersampling</h3>
 <font size=6>
 <div class="org-src-container">
 
@@ -659,7 +659,7 @@ print(f"{roc:.3f}, {avep:.3f}")
 </div>
 
 <pre class="example">
-0.920, 0.533
+0.923, 0.544
 
 </pre>
 
@@ -679,7 +679,7 @@ print(f"{roc:.3f}, {avep:.3f}")
 </div>
 
 <pre class="example">
-0.946, 0.624
+0.940, 0.589
 
 </pre>
 
@@ -696,8 +696,8 @@ print(f"{roc:.3f}, {avep:.3f}")
 
 </aside>
 </section>
-<section id="slide-orga953b8e">
-<h3 id="orga953b8e">Random Oversampling</h3>
+<section id="slide-org417da6b">
+<h3 id="org417da6b">Random Oversampling</h3>
 <div class="org-src-container">
 
 <pre><code class="python" >from imblearn.over_sampling import RandomOverSampler
@@ -729,8 +729,8 @@ print(np.bincount(y_train_oversample))
 
 </aside>
 </section>
-<section id="slide-org95fbd1b">
-<h3 id="org95fbd1b">Random Oversampling</h3>
+<section id="slide-org1f1c9ea">
+<h3 id="org1f1c9ea">Random Oversampling</h3>
 <font size=6>
 <div class="org-src-container">
 
@@ -747,7 +747,7 @@ print(f"{roc:.3f}, {avep:.3f}")
 </div>
 
 <pre class="example">
-0.924, 0.561
+0.924, 0.560
 
 </pre>
 
@@ -767,7 +767,7 @@ print(f"{roc:.3f}, {avep:.3f}")
 </div>
 
 <pre class="example">
-0.918, 0.701
+0.921, 0.703
 
 </pre>
 </font>
@@ -779,8 +779,8 @@ print(f"{roc:.3f}, {avep:.3f}")
 
 </aside>
 </section>
-<section id="slide-org4773826">
-<h3 id="org4773826">Curves for LogReg</h3>
+<section id="slide-org42a8dee">
+<h3 id="org42a8dee">Curves for LogReg</h3>
 
 <div class="figure">
 <p><img src="./assets/curves_logreg.png" alt="curves_logreg.png" />
@@ -795,8 +795,8 @@ print(f"{roc:.3f}, {avep:.3f}")
 
 </aside>
 </section>
-<section id="slide-orgec84a5f">
-<h3 id="orgec84a5f">Curves for Random Forest</h3>
+<section id="slide-org8c009e1">
+<h3 id="org8c009e1">Curves for Random Forest</h3>
 
 <div class="figure">
 <p><img src="./assets/curves_rf.png" alt="curves_rf.png" />
@@ -816,8 +816,8 @@ print(f"{roc:.3f}, {avep:.3f}")
 
 </aside>
 </section>
-<section id="slide-orgdf3c735">
-<h3 id="orgdf3c735">ROC or PR?</h3>
+<section id="slide-orge2c5510">
+<h3 id="orge2c5510">ROC or PR?</h3>
 <p>
 FPR or Precision?
 \[ \large\text{FPR} = \frac{\text{FP}}{\text{FP}+\text{TN}}\]
@@ -835,13 +835,13 @@ FPR or Precision?
 </section>
 </section>
 <section>
-<section id="slide-orgfe57e3b">
-<h2 id="orgfe57e3b">Change the Training</h2>
-<div class="outline-text-2" id="text-orgfe57e3b">
+<section id="slide-org68e1534">
+<h2 id="org68e1534">Change the Training</h2>
+<div class="outline-text-2" id="text-org68e1534">
 </div>
 </section>
-<section id="slide-org2b860df">
-<h3 id="org2b860df">Class-weights</h3>
+<section id="slide-org4780275">
+<h3 id="org4780275">Class-weights</h3>
 <ul>
 <li>Instead of repeating samples, re-weight the loss function.</li>
 <li>Works for most models!</li>
@@ -856,8 +856,8 @@ expensive (dataset size the same).</li>
 
 </aside>
 </section>
-<section id="slide-orgaad823b">
-<h3 id="orgaad823b">Class-weights in linear models</h3>
+<section id="slide-orgefc0603">
+<h3 id="orgefc0603">Class-weights in linear models</h3>
 <p>
 \[\min_{w \in ℝ^{p}}-C \sum_{i=1}^n\log(\exp(-y_iw^T \textbf{x}_i) + 1) + ||w||_2^2\]
 \[ \min_{w \in \mathbb{R}^p} -C \sum_{i=1}^n c_{y_i} \log(\exp(-y_i w^T \mathbf{x}_i) + 1) + ||w||^2_2 \]
@@ -873,8 +873,8 @@ Similar for linear and non-linear SVM
 
 </aside>
 </section>
-<section id="slide-org5dba418">
-<h3 id="org5dba418">Class weights in trees</h3>
+<section id="slide-orgd66d70f">
+<h3 id="orgd66d70f">Class weights in trees</h3>
 <p>
 Gini Index: 
 \[H_\text{gini}(X_m) = \sum_{k\in\mathcal{Y}} p_{mk} (1 - p_{mk})\]
@@ -892,8 +892,8 @@ Weighted vote
 
 </aside>
 </section>
-<section id="slide-org2f0bed7">
-<h3 id="org2f0bed7">Using Class Weights</h3>
+<section id="slide-org8aa69e8">
+<h3 id="org8aa69e8">Using Class Weights</h3>
 <div class="org-src-container">
 
 <pre><code class="python" >lr = LogisticRegression(solver='lbfgs',
@@ -926,7 +926,7 @@ print(f"{roc:.3f}, {avep:.3f}")
 </div>
 
 <pre class="example">
-0.917, 0.702
+0.912, 0.707
 
 </pre>
 
@@ -939,8 +939,8 @@ print(f"{roc:.3f}, {avep:.3f}")
 
 </aside>
 </section>
-<section id="slide-org9538b77">
-<h3 id="org9538b77">Ensemble Resampling</h3>
+<section id="slide-org66e14ad">
+<h3 id="org66e14ad">Ensemble Resampling</h3>
 <ul>
 <li>Random resampling separate for each instance in an ensemble!</li>
 <li>Paper: "Exploratory Undersampling for Class Imbalance Learning"</li>
@@ -958,8 +958,8 @@ print(f"{roc:.3f}, {avep:.3f}")
 
 </aside>
 </section>
-<section id="slide-org67e6dda">
-<h3 id="org67e6dda">Easy Ensemble with imblearn</h3>
+<section id="slide-orgb18618a">
+<h3 id="orgb18618a">Easy Ensemble with imblearn</h3>
 <div class="org-src-container">
 
 <pre><code class="python" >tree = DecisionTreeClassifier(max_features='auto')
@@ -991,8 +991,8 @@ print(f"{roc:.3f}, {avep:.3f}")
 
 </aside>
 </section>
-<section id="slide-org9875664">
-<h3 id="org9875664"></h3>
+<section id="slide-org21258bb">
+<h3 id="org21258bb"></h3>
 
 <div class="figure">
 <p><img src="./assets/roc_vs_pr.png" alt="roc_vs_pr.png" />
@@ -1013,8 +1013,8 @@ print(f"{roc:.3f}, {avep:.3f}")
 </section>
 </div>
 </div>
-<script src="/Users/rob/src/reveal/lib/js/head.min.js"></script>
-<script src="/Users/rob/src/reveal/js/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="https://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
 
 <script>
 // Full list of configuration options available here:
@@ -1044,12 +1044,12 @@ multiplex: {
 
 // Optional libraries used to extend on reveal.js
 dependencies: [
- { src: '/Users/rob/src/reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
- { src: '/Users/rob/src/reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: '/Users/rob/src/reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: '/Users/rob/src/reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
- { src: '/Users/rob/src/reveal/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
- { src: '/Users/rob/src/reveal/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
 ,pdfSeparateFragments: false});
 </script>
 </body>

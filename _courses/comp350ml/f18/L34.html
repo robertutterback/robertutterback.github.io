@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Applied Machine Learning</title>
+<meta name="author" content="(Robert Utterback)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="/Users/rob/src/reveal/css/reveal.css"/>
+
+<link rel="stylesheet" href="/Users/rob/src/reveal/css/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+<link rel="stylesheet" href="/Users/rob/src/reveal/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '/Users/rob/src/reveal/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+\(
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand{\E}{\mathop{\boldsymbol{E}}}
+\newcommand{\var}{\boldsymbol{Var}}
+\newcommand{\norm}[1]{\lvert\lvert#1\rvert\rvert}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\ltwo}[1]{\norm{#1}_2}
+\newcommand{\lone}[1]{\norm{#1}_1}
+\newcommand{\sgn}[1]{\text{sign}\left( #1 \right)}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\minw}{\min_{w \in \mathbb{R}^p}}
+\newcommand{\sumn}{\sum_{i=1}^n}
+\newcommand{\logloss}{\log{(\exp{(-y_iw^T\vec{x}_i)} + 1)}}
+\)
+<section>
+<section id="slide-org62d77d2">
+<h2 id="org62d77d2">Class Imbalance</h2>
+<p>
+Robert Utterback
+</p>
+
+<p>
+Based on slides by Andreas Müller
+</p>
+</section>
+<section id="slide-orgca02fc6">
+<h3 id="orgca02fc6">Basic Approaches</h3>
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/basic_approaches.png" alt="basic_approaches.png" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+<p>
+Change the training procedure
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Want to better adapt to imbalance</li>
+<li>Can change data or training procedure</li>
+<li>Changing data easier</li>
+<li>Can add or remove samples, or both</li>
+<li>Lots of strategies for each</li>
+
+</ul>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-org080929e">
+<h2 id="org080929e">Change the Training</h2>
+<div class="outline-text-2" id="text-org080929e">
+</div>
+</section>
+<section id="slide-org373d593">
+<h3 id="org373d593">Class-weights</h3>
+<ul>
+<li>Instead of repeating samples, re-weight the loss function.</li>
+<li>Works for most models!</li>
+<li>Same effect as over-sampling (though not random), but not as
+expensive (dataset size the same).</li>
+
+</ul>
+<aside class="notes">
+<p>
+
+</p>
+
+</aside>
+</section>
+<section id="slide-orgf9229a3">
+<h3 id="orgf9229a3">Class-weights in linear models</h3>
+<p>
+\[\min_{w \in ℝ^{p}}-C \sum_{i=1}^n\log(\exp(-y_iw^T \textbf{x}_i) + 1) + ||w||_2^2\]
+\[ \min_{w \in \mathbb{R}^p} -C \sum_{i=1}^n c_{y_i} \log(\exp(-y_i w^T \mathbf{x}_i) + 1) + ||w||^2_2 \]
+Similar for linear and non-linear SVM
+</p>
+<aside class="notes">
+<ul>
+<li>Give a weight to each class</li>
+<li>They usually sum to 1, weights based on relative fraction of class in samples</li>
+<li>Intuition: think of repeating each sample c_y_i times</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org244a46a">
+<h3 id="org244a46a">Class weights in trees</h3>
+<p>
+Gini Index: 
+\[H_\text{gini}(X_m) = \sum_{k\in\mathcal{Y}} p_{mk} (1 - p_{mk})\]
+\[H_\text{gini}(X_m) = \sum_{k\in\mathcal{Y}} c_k p_{mk} (1 - p_{mk})\]
+Prediction:
+Weighted vote
+</p>
+<aside class="notes">
+<ul>
+<li>Change the tree-building procedure</li>
+<li>Similar to impurity</li>
+<li>Replacing the data points c_k many times</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org7f282d2">
+<h3 id="org7f282d2">Using Class Weights</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >lr = LogisticRegression(solver='lbfgs',
+                        class_weight='balanced')
+scores = cross_validate(lr, X_train, y_train, cv=10,
+                        scoring=('roc_auc',
+                                 'average_precision'))
+roc = scores['test_roc_auc'].mean()
+avep = scores['test_average_precision'].mean()
+print(f"{roc:.3f}, {avep:.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.924, 0.559
+
+</pre>
+
+<div class="org-src-container">
+
+<pre><code class="python" >rf = RandomForestClassifier(n_estimators=100,
+                            class_weight='balanced')
+scores = cross_validate(rf, X_train, y_train, cv=10,
+                        scoring=('roc_auc',
+                                 'average_precision'))
+roc = scores['test_roc_auc'].mean()
+avep = scores['test_average_precision'].mean()
+print(f"{roc:.3f}, {avep:.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.924, 0.709
+
+</pre>
+
+<aside class="notes">
+<ul>
+<li>Can do this in sklearn</li>
+<li><code>balanced</code> makes populations have same size for all classes (intuitively)</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgf30af88">
+<h3 id="orgf30af88">Ensemble Resampling</h3>
+<ul>
+<li>Random resampling separate for each instance in an ensemble!</li>
+<li>Paper: "Exploratory Undersampling for Class Imbalance Learning"</li>
+<li>Not in sklearn (yet)</li>
+<li>Easy with imblearn</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>I don't think in sklearn, but always check the latest documentation to be sure</li>
+<li>Idea: build ensemble, like bagging</li>
+<li>only you random undersampling for each classifier in your ensemble</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org182cfc1">
+<h3 id="org182cfc1">Easy Ensemble with imblearn</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >tree = DecisionTreeClassifier(max_features='auto')
+resampled_rf = \
+    BalancedBaggingClassifier(base_estimator=tree,
+                              n_estimators=100, random_state=0)
+scores = cross_validate(resampled_rf, X_train, y_train,
+                        cv=10,
+                        scoring=('roc_auc', 'average_precision'))
+roc = scores['test_roc_auc'].mean()
+avep = scores['test_average_precision'].mean()
+print(f"{roc:.3f}, {avep:.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.947, 0.661
+
+</pre>
+
+<aside class="notes">
+<ul>
+<li>As cheap as undersampling, but much better results than anything else!</li>
+<li>Each classifier built with random undersample of dataset</li>
+<li>Ensembles help again, b/c undersampling throws away a lot of data&#x2026;</li>
+<li>&#x2026;BUT we're doing the sampling over and over, so actually use a lot of the data</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org7123841">
+<h3 id="org7123841"></h3>
+
+<div class="figure">
+<p><img src="./assets/roc_vs_pr.png" alt="roc_vs_pr.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Comparison of curves again</li>
+<li>Better in some areas, at least better than understampling with low recall</li>
+<li>Plus much cheaper than oversampling</li>
+<li>Review: undersampling does sampling ONCE, then uses that to build models</li>
+<li>Easy Ensemble does the undersampling separately for each model that it builds</li>
+
+</ul>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-org069731e">
+<h2 id="org069731e">Smart resampling</h2>
+<p>
+(based on nearest neighbour heuristics from the 70's)
+</p>
+<aside class="notes">
+<ul>
+<li>Didn't have RFs in 70s</li>
+<li>Basically prune the dataset to make better predictions using kNN</li>
+<li>Now we can strategically prune majority-class samples (undersample)</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org3c6f62a">
+<h3 id="org3c6f62a">Edited Nearest Neighbours</h3>
+<ul>
+<li>Originally as heuristic for reducing dataset for KNN</li>
+<li>Remove all samples that are misclassified by KNN from training data
+(mode) or that have any point from other class as neighbor (all).</li>
+<li>"Cleans up" outliers and boundaries.</li>
+
+</ul>
+<aside class="notes">
+<p>
+
+</p>
+
+</aside>
+</section>
+<section id="slide-orgd34f24e">
+<h3 id="orgd34f24e">Edited Nearest Neighbours</h3>
+
+<div class="figure">
+<p><img src="./assets/edited_nearest_neighbour.png" alt="edited_nearest_neighbour.png" height="450px" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Synthetic dataset here, green is majority, blue is minority</li>
+<li>All majority samples near minority class are removed</li>
+<li>Basically, err on the side of the minority class</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org628d9f8">
+<h3 id="org628d9f8">Edited Nearest Neighbours</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >from imblearn.under_sampling import EditedNearestNeighbours
+enn = EditedNearestNeighbours(n_neighbors=5)
+X_train_enn, y_train_enn = enn.fit_sample(X_train, y_train)
+
+enn_mode = EditedNearestNeighbours(kind_sel="mode", 
+                                   n_neighbors=5)
+X_train_enn_mode, y_train_enn_mode = \
+    enn_mode.fit_sample(X_train, y_train)
+</code></pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./assets/edited_nearest_neighbour_2.png" alt="edited_nearest_neighbour_2.png" height="300px" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>X axis: feature 3, y axis: feature 4</li>
+<li>Left: original, mid: mode, right: all</li>
+<li>Actually not many points are removed b/c this dataset is actually 6-dimensional</li>
+<li>Makes it harder to actually be close neighbor</li>
+<li>Intuition: Separate the class samples as much as possible</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orga16c6a3">
+<h3 id="orga16c6a3"></h3>
+<font size=6>
+<div class="org-src-container">
+
+<pre><code class="python" >enn_pipe = make_imb_pipeline(EditedNearestNeighbours(n_neighbors=5),
+                             LogisticRegression(solver='lbfgs'))
+scores = cross_val_score(enn_pipe, X_train, y_train, cv=10, scoring='roc_auc')
+print(f"{np.mean(scores):.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.920
+
+</pre>
+
+<div class="org-src-container">
+
+<pre><code class="python" >enn_pipe_rf = make_imb_pipeline(EditedNearestNeighbours(n_neighbors=5),
+                                  RandomForestClassifier(n_estimators=100))
+scores = cross_val_score(enn_pipe_rf, X_train, y_train, cv=10, scoring='roc_auc')
+print(f"{np.mean(scores):.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.942
+
+</pre>
+</font>
+<aside class="notes">
+<ul>
+<li>For other dataset actually get similar results</li>
+<li>But didn't change the dataset that much here</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgf8574e8">
+<h3 id="orgf8574e8">Condensed Nearest Neighbors</h3>
+<ul>
+<li>Iteratively adds points to the data that are misclassified by KNN</li>
+<li>Focuses on the boundaries</li>
+<li>Usually removes many</li>
+
+</ul>
+
+<div class="org-src-container">
+
+<pre><code class="python" >from imblearn.under_sampling import CondensedNearestNeighbour
+cnn = CondensedNearestNeighbour()
+X_train_cnn, y_train_cnn = cnn.fit_sample(X_train, y_train)
+print(X_train_cnn.shape)
+print(np.bincount(y_train_cnn))
+</code></pre>
+</div>
+
+<pre class="example">
+(551, 6)
+[355 196]
+
+</pre>
+<aside class="notes">
+<ul>
+<li>Basically the opposite, interestingly</li>
+<li>Starts with empty set</li>
+<li>Focuses on boundaries (and outliers), removes points in the center
+of a class cluster</li>
+<li>Iteratively adds points to the majority class that are misclassifed by kNN</li>
+<li>i.e., look at all points misclassified, pick random one, add it to dataset</li>
+<li>Prunes it down quite a bit</li>
+<li>Better, but not perfectly balanced</li>
+<li>Intuition: force the model to differentiate the hard cases</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org9ea666c">
+<h3 id="org9ea666c"></h3>
+
+<div class="figure">
+<p><img src="./assets/edited_condensed_nn.png" alt="edited_condensed_nn.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Comparison on synthetic dataset</li>
+<li>Reduces dataset a lot</li>
+<li>Though uses kNN, so for big dataset might be expensive</li>
+<li>Sometimes more expensive than your classifier</li>
+<li>Kind of what SVM does, choosing the support vectors</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgf6410b4">
+<h3 id="orgf6410b4"></h3>
+<font size=6>
+<div class="org-src-container">
+
+<pre><code class="python" >cnn_pipe = make_imb_pipeline(CondensedNearestNeighbour(),
+                             LogisticRegression(solver='lbfgs'))
+scores = cross_val_score(cnn_pipe, X_train, y_train, cv=10, scoring='roc_auc')
+print(f"{np.mean(scores):.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.916
+
+</pre>
+
+<div class="org-src-container">
+
+<pre><code class="python" >rf = RandomForestClassifier(n_estimators=100, random_state=0)
+cnn_pipe = make_imb_pipeline(CondensedNearestNeighbour(), rf)
+scores = cross_val_score(cnn_pipe, X_train, y_train, cv=10, scoring='roc_auc')
+print(f"{np.mean(scores):.2f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.94
+
+</pre>
+</font>
+<aside class="notes">
+<ul>
+<li>Actually not used that much by themselves</li>
+<li>But used together with synthetic data generation</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgb880418">
+<h2 id="orgb880418">Synthetic Sample Generation</h2>
+<aside class="notes">
+<ul>
+<li>Many methods, but most common is SMOTE&#x2026;</li>
+<li>Good for interviews&#x2026;</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgbf9b272">
+<h3 id="orgbf9b272">Synthetic Minority Oversampling Technique (SMOTE)</h3>
+<ul>
+<li>Adds synthetic interpolated data to smaller class</li>
+<li>For each sample in minority class:
+<ul>
+<li>Pick random neighbor from k neighbors.</li>
+<li>Pick point on line connecting the two uniformly</li>
+<li>Repeat.</li>
+
+</ul></li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>Leads to very large datasets (oversampling)</li>
+<li>Might be slow in very high dimensions</li>
+<li>Can be combined with undersampling strategies</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgc955659">
+<h3 id="orgc955659"></h3>
+
+<div class="figure">
+<p><img src="./assets/smote.png" alt="smote.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Oversample until classes are balanced.</li>
+<li>This is generated dataset.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orge56fc1f">
+<h3 id="orge56fc1f"></h3>
+
+<div class="figure">
+<p><img src="./assets/smote_3.png" alt="smote_3.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>This is on actual data, the mammography set.</li>
+<li>Right shows generated data</li>
+<li>Kind of fills in the "convex hull"</li>
+<li>Again, unclear whether higher dimensions will work well</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org39df054">
+<h3 id="org39df054"></h3>
+<font size=6>
+<div class="org-src-container">
+
+<pre><code class="python" >from imblearn.over_sampling import SMOTE
+smote_pipe = make_imb_pipeline(SMOTE(),
+                               LogisticRegression(solver='lbfgs'))
+scores = cross_val_score(smote_pipe, X_train, y_train,
+                         cv=10, scoring='roc_auc')
+print(f"{np.mean(scores):.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.922
+
+</pre>
+
+<div class="org-src-container">
+
+<pre><code class="python" >smote_pipe_rf = \
+    make_imb_pipeline(SMOTE(),
+                      RandomForestClassifier(n_estimators=100))
+scores = cross_val_score(smote_pipe_rf,X_train,y_train,
+                         cv=10, scoring='roc_auc')
+print(f"{np.mean(scores):.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.942
+
+</pre>
+
+<div class="org-src-container">
+
+<pre><code class="python" >param_grid = {'smote__k_neighbors': [3, 5, 7, 9, 11, 15, 31]}
+search = GridSearchCV(smote_pipe_rf, param_grid,
+                      cv=10, scoring="roc_auc")
+search.fit(X_train, y_train)
+print(f"{search.score(X_test, y_test):.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.947
+
+</pre>
+
+</font>
+<aside class="notes">
+<ul>
+<li>Can set how many neighbors you use</li>
+<li>Then it finds the centroid</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgf14c297">
+<h3 id="orgf14c297"></h3>
+
+<div class="figure">
+<p><img src="./assets/param_smote_k_neighbours.png" alt="param_smote_k_neighbours.png" />
+</p>
+</div>
+</section>
+<section id="slide-orged07389">
+<h3 id="orged07389"></h3>
+
+<div class="figure">
+<p><img src="./assets/smote_k_neighbours.png" alt="smote_k_neighbours.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org04d8e49">
+<h2 id="org04d8e49">Summary</h2>
+<ul>
+<li>Always check roc_auc and avg. precision, look at curve</li>
+<li>Undersampling is very fast and can help!</li>
+<li>Undersampling + Ensembles is very powerful!</li>
+<li>Many smart sampling strategies, mixed outcomes</li>
+<li>SMOTE allows adding new interpolated samples, works well in practice</li>
+<li>More advanced variants of SMOTE available</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>Alternative approach to change the model: minimize a loss function
+that directly includes, e.g., precision/recall at threshold k, or
+roc auc, etc.</li>
+<li>Basically change your loss function</li>
+<li>As opposed to just using that score function for grid search</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+</div>
+</div>
+<script src="/Users/rob/src/reveal/lib/js/head.min.js"></script>
+<script src="/Users/rob/src/reveal/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c/t',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.05,
+minScale: 0.20,
+maxScale: 15.00,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: '0.0',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: '/Users/rob/src/reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: '/Users/rob/src/reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: '/Users/rob/src/reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: '/Users/rob/src/reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: '/Users/rob/src/reveal/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: '/Users/rob/src/reveal/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+,pdfSeparateFragments: false});
+</script>
+</body>
+</html>
