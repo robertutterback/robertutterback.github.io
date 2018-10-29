@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/white.css" id="theme"/>
 
 <link rel="stylesheet" href="./notes.css"/>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/css/zenburn.css"/>
 <!-- If the query includes 'print-pdf', include the PDF print sheet -->
 <script>
     if( window.location.search.match( /print-pdf/gi ) ) {
@@ -43,8 +43,8 @@
 \newcommand{\logloss}{\log{(\exp{(-y_iw^T\vec{x}_i)} + 1)}}
 \)
 <section>
-<section id="slide-orge4aa192">
-<h2 id="orge4aa192">Dimensionality Reduction</h2>
+<section id="slide-orgca18a9a">
+<h2 id="orgca18a9a">Dimensionality Reduction</h2>
 <p>
 Robert Utterback
 </p>
@@ -65,8 +65,8 @@ Based on slides by Andreas Müller
 </section>
 </section>
 <section>
-<section id="slide-orgc83f48d">
-<h2 id="orgc83f48d">Principal Component Analysis</h2>
+<section id="slide-orga9f832f">
+<h2 id="orga9f832f">Principal Component Analysis</h2>
 <aside class="notes">
 <p>
 First one we're going to talk about
@@ -74,8 +74,8 @@ First one we're going to talk about
 
 </aside>
 </section>
-<section id="slide-org3f1cc06">
-<h3 id="org3f1cc06">Principal Component Analysis</h3>
+<section id="slide-org2a37dad">
+<h3 id="org2a37dad">Principal Component Analysis</h3>
 
 <div class="figure">
 <p><img src="./assets/pca-intuition.png" alt="pca-intuition.png" height="400px" />
@@ -106,8 +106,8 @@ removing some information</li>
 
 </aside>
 </section>
-<section id="slide-orgc761b74">
-<h3 id="orgc761b74">PCA objective(s)</h3>
+<section id="slide-org1c89e5a">
+<h3 id="org1c89e5a">PCA objective(s)</h3>
 <div class="column" style="float:left; width: 50%">
 <font size=6>
 <p>
@@ -137,8 +137,8 @@ could face other direction.</li>
 
 </aside>
 </section>
-<section id="slide-org502e097">
-<h3 id="org502e097">PCA objective(s)</h3>
+<section id="slide-org6023984">
+<h3 id="org6023984">PCA objective(s)</h3>
 <font size=6>
 <p>
 \[\large\min_{X', \text{rank}(X') = r}\|X-X'\|\]
@@ -162,8 +162,8 @@ back) match the original space?</li>
 
 </aside>
 </section>
-<section id="slide-org9dce602">
-<h3 id="org9dce602">PCA Computation</h3>
+<section id="slide-orgf6df18d">
+<h3 id="orgf6df18d">PCA Computation</h3>
 <ul>
 <li>Center X (subtract mean).</li>
 <li>In practice: Also scale to unit variance.</li>
@@ -188,8 +188,8 @@ variance is same across each of the new dimensions</li>
 
 </aside>
 </section>
-<section id="slide-orgb0f11a0">
-<h3 id="orgb0f11a0">Whitening</h3>
+<section id="slide-org5878c90">
+<h3 id="org5878c90">Whitening</h3>
 
 <div class="figure">
 <p><img src="./assets/whitening.png" alt="whitening.png" />
@@ -206,30 +206,30 @@ variance is same across each of the new dimensions</li>
 </section>
 </section>
 <section>
-<section id="slide-orge9c3b6f">
-<h2 id="orge9c3b6f">PCA for Visualization</h2>
-<div class="outline-text-2" id="text-orge9c3b6f">
+<section id="slide-org600bc1a">
+<h2 id="org600bc1a">PCA for Visualization</h2>
+<div class="outline-text-2" id="text-org600bc1a">
 </div>
 </section>
-<section id="slide-orgd55ffd6">
-<h3 id="orgd55ffd6">PCA for Visualization</h3>
+<section id="slide-org932c184">
+<h3 id="org932c184">PCA for Visualization</h3>
 <div class="column" style="float:left; width: 50%">
 <font size=5>
 <div class="org-src-container">
 
-<pre  class="src src-python"><span style="color: #4c83ff;">from</span> sklearn.decomposition <span style="color: #4c83ff;">import</span> PCA
-<span style="color: #4c83ff;">print</span>(cancer.data.shape)
-<span style="color: #ff69b4;">pca</span> = PCA(n_components=2)
-<span style="color: #ff69b4;">X_pca</span> = pca.fit_transform(cancer.data)
-<span style="color: #8B8989; font-style: italic;"># </span><span style="color: #8B8989; font-style: italic;">print(X_pca.shape)</span>
+<pre><code class="python" >from sklearn.decomposition import PCA
+print(cancer.data.shape)
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(cancer.data)
+# print(X_pca.shape)
 plt.scatter(X_pca[:, 0], X_pca[:, 1], c=cancer.target)
-plt.xlabel(<span style="color: #61CE3C;">"first principal component"</span>)
-plt.ylabel(<span style="color: #61CE3C;">"second principal component"</span>)
-<span style="color: #ff69b4;">components</span> = pca.components_
+plt.xlabel("first principal component")
+plt.ylabel("second principal component")
+components = pca.components_
 plt.imshow(components.T)
-plt.yticks(<span style="color: #4c83ff;">range</span>(<span style="color: #4c83ff;">len</span>(cancer.feature_names)), cancer.feature_names)
+plt.yticks(range(len(cancer.feature_names)), cancer.feature_names)
 plt.colorbar()
-</pre>
+</code></pre>
 </div>
 </font>
 
@@ -265,17 +265,17 @@ features are important!</li>
 
 </aside>
 </section>
-<section id="slide-org408cb6d">
-<h3 id="org408cb6d">Scaling</h3>
+<section id="slide-org587222f">
+<h3 id="org587222f">Scaling</h3>
 <div class="org-src-container">
 
-<pre  class="src src-python"><span style="color: #ff69b4;">pca_scaled</span> = make_pipeline(StandardScaler(),
+<pre><code class="python" >pca_scaled = make_pipeline(StandardScaler(),
                        PCA(n_components=2),
                        LogisticRegression(C=10000))
 pca_scaled.fit(X_train, y_train)
-<span style="color: #4c83ff;">print</span>(pca_scaled.score(X_train, y_train))
-<span style="color: #4c83ff;">print</span>(pca_scaled.score(X_test, y_test))
-</pre>
+print(pca_scaled.score(X_train, y_train))
+print(pca_scaled.score(X_test, y_test))
+</code></pre>
 </div>
 
 
@@ -291,16 +291,16 @@ pca_scaled.fit(X_train, y_train)
 
 </aside>
 </section>
-<section id="slide-org6929c8d">
-<h3 id="org6929c8d">Inspecting Components</h3>
+<section id="slide-org73f2904">
+<h3 id="org73f2904">Inspecting Components</h3>
 <div class="org-src-container">
 
-<pre  class="src src-python"><span style="color: #ff69b4;">components</span> = pca_scaled.named_steps[<span style="color: #61CE3C;">'pca'</span>].components_
+<pre><code class="python" >components = pca_scaled.named_steps['pca'].components_
 plt.imshow(components.T)
-plt.yticks(<span style="color: #4c83ff;">range</span>(<span style="color: #4c83ff;">len</span>(cancer.feature_names)),
+plt.yticks(range(len(cancer.feature_names)),
            cancer.feature_names)
 plt.colorbar()
-</pre>
+</code></pre>
 </div>
 <div class="column" style="float:left; width: 50%">
 
@@ -329,41 +329,41 @@ plt.colorbar()
 </section>
 </section>
 <section>
-<section id="slide-org07ab35c">
-<h2 id="org07ab35c">PCA for Regularization</h2>
-<div class="outline-text-2" id="text-org07ab35c">
+<section id="slide-org6a686e2">
+<h2 id="org6a686e2">PCA for Regularization</h2>
+<div class="outline-text-2" id="text-org6a686e2">
 </div>
 </section>
-<section id="slide-org765dff8">
-<h3 id="org765dff8">PCA for Regularization</h3>
+<section id="slide-orgea60529">
+<h3 id="orgea60529">PCA for Regularization</h3>
 <div class="org-src-container">
 
-<pre  class="src src-python"><span style="color: #ff69b4;">X_train</span>, <span style="color: #ff69b4;">X_test</span>, <span style="color: #ff69b4;">y_train</span>, <span style="color: #ff69b4;">y_test</span> = \
+<pre><code class="python" >X_train, X_test, y_train, y_test = \
     train_test_split(cancer.data, cancer.target,
                      stratify=cancer.target, random_state=0)
-<span style="color: #ff69b4;">lr</span> = LogisticRegression(C=10000, solver=<span style="color: #61CE3C;">'liblinear'</span>)
+lr = LogisticRegression(C=10000, solver='liblinear')
 lr.fit(X_train, y_train)
-<span style="color: #4c83ff;">print</span>(f<span style="color: #61CE3C;">"{lr.score(X_train, y_train):.3f}"</span>)
-<span style="color: #4c83ff;">print</span>(f<span style="color: #61CE3C;">"{lr.score(X_test, y_test):.3f}"</span>)
-</pre>
+print(f"{lr.score(X_train, y_train):.3f}")
+print(f"{lr.score(X_test, y_test):.3f}")
+</code></pre>
 </div>
 
 <pre class="example">
-0.981
-0.937
+0.977
+0.944
 
 </pre>
 
 <div class="org-src-container">
 
-<pre  class="src src-python"><span style="color: #4c83ff;">from</span> sklearn.decomposition <span style="color: #4c83ff;">import</span> PCA
-<span style="color: #ff69b4;">lr</span> = LogisticRegression(C=10000, solver=<span style="color: #61CE3C;">'liblinear'</span>)
-<span style="color: #ff69b4;">pca_lr</span> = make_pipeline(StandardScaler(),
+<pre><code class="python" >from sklearn.decomposition import PCA
+lr = LogisticRegression(C=10000, solver='liblinear')
+pca_lr = make_pipeline(StandardScaler(),
                        PCA(n_components=2), lr)
 pca_lr.fit(X_train, y_train)
-<span style="color: #4c83ff;">print</span>(f<span style="color: #61CE3C;">"{pca_lr.score(X_train, y_train):.3f}"</span>)
-<span style="color: #4c83ff;">print</span>(f<span style="color: #61CE3C;">"{pca_lr.score(X_test, y_test):.3f}"</span>)
-</pre>
+print(f"{pca_lr.score(X_train, y_train):.3f}")
+print(f"{pca_lr.score(X_test, y_test):.3f}")
+</code></pre>
 </div>
 
 <pre class="example">
@@ -388,8 +388,8 @@ LogisticRegression by setting C to a very high value</li>
 
 </aside>
 </section>
-<section id="slide-org6153777">
-<h3 id="org6153777">Variance Covered</h3>
+<section id="slide-org887d7c8">
+<h3 id="org887d7c8">Variance Covered</h3>
 
 <div class="figure">
 <p><img src="./assets/variance-covered.png" alt="variance-covered.png" height="350px" />
@@ -397,12 +397,12 @@ LogisticRegression by setting C to a very high value</li>
 </div>
 <div class="org-src-container">
 
-<pre  class="src src-python"><span style="color: #ff69b4;">pca_lr</span> = make_pipeline(StandardScaler(),
+<pre><code class="python" >pca_lr = make_pipeline(StandardScaler(),
                        PCA(n_components=6), lr)
 pca_lr.fit(X_train, y_train)
-<span style="color: #4c83ff;">print</span>(f<span style="color: #61CE3C;">"{pca_lr.score(X_train, y_train):.3f}"</span>)
-<span style="color: #4c83ff;">print</span>(f<span style="color: #61CE3C;">"{pca_lr.score(X_test, y_test):.3f}"</span>)
-</pre>
+print(f"{pca_lr.score(X_train, y_train):.3f}")
+print(f"{pca_lr.score(X_test, y_test):.3f}")
+</code></pre>
 </div>
 
 <pre class="example">
@@ -428,14 +428,14 @@ components</li>
 
 </aside>
 </section>
-<section id="slide-orgdfa33e7">
-<h3 id="orgdfa33e7">Interpreting Coefficients</h3>
+<section id="slide-org1a6053f">
+<h3 id="org1a6053f">Interpreting Coefficients</h3>
 <div class="org-src-container">
 
-<pre  class="src src-python"><span style="color: #ff69b4;">pca</span> = pca_lr.named_steps[<span style="color: #61CE3C;">'pca'</span>]
-<span style="color: #ff69b4;">lr</span> = pca_lr.named_steps[<span style="color: #61CE3C;">'logisticregression'</span>]
-<span style="color: #ff69b4;">coef_pca</span> = pca.inverse_transform(lr.coef_)
-</pre>
+<pre><code class="python" >pca = pca_lr.named_steps['pca']
+lr = pca_lr.named_steps['logisticregression']
+coef_pca = pca.inverse_transform(lr.coef_)
+</code></pre>
 </div>
 <div class="column" style="float:left; width: 50%">
 
@@ -465,8 +465,8 @@ feature components use these features</li>
 
 </aside>
 </section>
-<section id="slide-orgd72feb8">
-<h3 id="orgd72feb8">PCA is Unsupervised!</h3>
+<section id="slide-org3ea4373">
+<h3 id="org3ea4373">PCA is Unsupervised!</h3>
 <div class="column" style="float:left; width: 50%">
 
 <div class="figure">
@@ -500,13 +500,13 @@ very small separation is key for classification!</li>
 </section>
 </section>
 <section>
-<section id="slide-org842dc0e">
-<h2 id="org842dc0e">PCA for Feature Extraction</h2>
-<div class="outline-text-2" id="text-org842dc0e">
+<section id="slide-org31f5f72">
+<h2 id="org31f5f72">PCA for Feature Extraction</h2>
+<div class="outline-text-2" id="text-org31f5f72">
 </div>
 </section>
-<section id="slide-org9b23e53">
-<h3 id="org9b23e53">PCA for Feature Extraction</h3>
+<section id="slide-orgc81997a">
+<h3 id="orgc81997a">PCA for Feature Extraction</h3>
 
 <div class="figure">
 <p><img src="./assets/pca-for-feature-extraction.png" alt="pca-for-feature-extraction.png" />
@@ -541,28 +541,28 @@ face&#x2026;</li>
 
 </aside>
 </section>
-<section id="slide-org1939ed8">
-<h3 id="org1939ed8">1-NN and Eigenfaces</h3>
+<section id="slide-org2ad8a79">
+<h3 id="org2ad8a79">1-NN and Eigenfaces</h3>
 <font size=6>
 <div class="org-src-container">
 
-<pre  class="src src-python"><span style="color: #4c83ff;">from</span> sklearn.datasets <span style="color: #4c83ff;">import</span> fetch_lfw_people
-<span style="color: #4c83ff;">from</span> sklearn.neighbors <span style="color: #4c83ff;">import</span> KNeighborsClassifier
-<span style="color: #ff69b4;">people</span> = fetch_lfw_people(min_faces_per_person=35, resize=0.7)
-<span style="color: #ff69b4;">X_people</span>, <span style="color: #ff69b4;">y_people</span> = people.data, people.target
-</pre>
+<pre><code class="python" >from sklearn.datasets import fetch_lfw_people
+from sklearn.neighbors import KNeighborsClassifier
+people = fetch_lfw_people(min_faces_per_person=35, resize=0.7)
+X_people, y_people = people.data, people.target
+</code></pre>
 </div>
 
 <div class="org-src-container">
 
-<pre  class="src src-python"><span style="color: #ff69b4;">X_train</span>, <span style="color: #ff69b4;">X_test</span>, <span style="color: #ff69b4;">y_train</span>, <span style="color: #ff69b4;">y_test</span> = \
+<pre><code class="python" >X_train, X_test, y_train, y_test = \
     train_test_split(X_people, y_people,
                      stratify=y_people, random_state=0)
-<span style="color: #4c83ff;">print</span>(X_train.shape)
-<span style="color: #ff69b4;">knn</span> = KNeighborsClassifier(n_neighbors=1)
+print(X_train.shape)
+knn = KNeighborsClassifier(n_neighbors=1)
 knn.fit(X_train, y_train)
-<span style="color: #4c83ff;">print</span>(f<span style="color: #61CE3C;">"{knn.score(X_test, y_test):.3f}"</span>)
-</pre>
+print(f"{knn.score(X_test, y_test):.3f}")
+</code></pre>
 </div>
 
 <pre class="example">
@@ -573,12 +573,12 @@ knn.fit(X_train, y_train)
 
 <div class="org-src-container">
 
-<pre  class="src src-python"><span style="color: #ff69b4;">pca</span> = PCA(n_components=100, whiten=<span style="color: #96CBFE;">True</span>, random_state=0)
+<pre><code class="python" >pca = PCA(n_components=100, whiten=True, random_state=0)
 pca.fit(X_train)
-<span style="color: #ff69b4;">X_train_pca</span> = pca.transform(X_train)
-<span style="color: #ff69b4;">X_test_pca</span> = pca.transform(X_test)
-<span style="color: #4c83ff;">print</span>(X_train_pca.shape)
-</pre>
+X_train_pca = pca.transform(X_train)
+X_test_pca = pca.transform(X_test)
+print(X_train_pca.shape)
+</code></pre>
 </div>
 
 <pre class="example">
@@ -588,10 +588,10 @@ pca.fit(X_train)
 
 <div class="org-src-container">
 
-<pre  class="src src-python"><span style="color: #ff69b4;">knn</span> = KNeighborsClassifier(n_neighbors=1)
+<pre><code class="python" >knn = KNeighborsClassifier(n_neighbors=1)
 knn.fit(X_train_pca, y_train)
-<span style="color: #4c83ff;">print</span>(f<span style="color: #61CE3C;">"{knn.score(X_test_pca, y_test):.3f}"</span>)
-</pre>
+print(f"{knn.score(X_test_pca, y_test):.3f}")
+</code></pre>
 </div>
 
 <pre class="example">
@@ -619,11 +619,11 @@ for 1NN and basically the same for PCA.</li>
 
 </aside>
 </section>
-<section id="slide-orgdc7316c">
-<h3 id="orgdc7316c">Reconstruction</h3>
+<section id="slide-orga55bad1">
+<h3 id="orga55bad1">Reconstruction</h3>
 
 <div class="figure">
-<p><img src="./assets/reconstruction.png" alt="reconstruction.png" />
+<p><img src="./assets/reconstruction.png" alt="reconstruction.png" height="400px" />
 </p>
 </div>
 <aside class="notes">
@@ -640,19 +640,19 @@ for 1NN and basically the same for PCA.</li>
 </section>
 </section>
 <section>
-<section id="slide-org696e9ad">
-<h2 id="org696e9ad">PCA for Outlier Detection</h2>
-<div class="outline-text-2" id="text-org696e9ad">
+<section id="slide-org9c5b725">
+<h2 id="org9c5b725">PCA for Outlier Detection</h2>
+<div class="outline-text-2" id="text-org9c5b725">
 </div>
 </section>
-<section id="slide-org50290c2">
-<h3 id="org50290c2">PCA for Outlier Detection</h3>
+<section id="slide-org423ccc6">
+<h3 id="org423ccc6">PCA for Outlier Detection</h3>
 <div class="org-src-container">
 
-<pre  class="src src-python"><span style="color: #ff69b4;">pca</span> = PCA(n_components=100).fit(X_train)
-<span style="color: #ff69b4;">inv</span> = pca.inverse_transform(pca.transform(X_test))
-<span style="color: #ff69b4;">reconstruction_errors</span> = np.<span style="color: #4c83ff;">sum</span>((X_test - inv)**2, axis=1)
-</pre>
+<pre><code class="python" >pca = PCA(n_components=100).fit(X_train)
+inv = pca.inverse_transform(pca.transform(X_test))
+reconstruction_errors = np.sum((X_test - inv)**2, axis=1)
+</code></pre>
 </div>
 <div class="column" style="float:left; width: 50%">
 
@@ -691,8 +691,8 @@ tilted, forehead cutoff, etc. Mostly about cropping of the images</li>
 </section>
 </section>
 <section>
-<section id="slide-org317c9ed">
-<h2 id="org317c9ed">Manifold Learning</h2>
+<section id="slide-org5b0f2a1">
+<h2 id="org5b0f2a1">Manifold Learning</h2>
 <aside class="notes">
 <ul>
 <li>A class of algorithms that do much more complicated transformations
@@ -705,8 +705,8 @@ dimensional space</li>
 
 </aside>
 </section>
-<section id="slide-org89726e5">
-<h3 id="org89726e5">Manifold Learning</h3>
+<section id="slide-org4216e0a">
+<h3 id="org4216e0a">Manifold Learning</h3>
 
 <div class="figure">
 <p><img src="./assets/manifold-learning-structure.png" alt="manifold-learning-structure.png" />
@@ -726,8 +726,8 @@ points</li>
 
 </aside>
 </section>
-<section id="slide-orgddff9b7">
-<h3 id="orgddff9b7">Pros and Cons</h3>
+<section id="slide-org2cce0a7">
+<h3 id="org2cce0a7">Pros and Cons</h3>
 <ul>
 <li>For visualization only</li>
 <li>Axes don’t correspond to anything in the input space.</li>
@@ -748,8 +748,8 @@ this</li>
 
 </aside>
 </section>
-<section id="slide-orge375fad">
-<h3 id="orge375fad">Algorithms in sklearn</h3>
+<section id="slide-org0c5cc16">
+<h3 id="org0c5cc16">Algorithms in sklearn</h3>
 <ul>
 <li><code>KernelPCA</code> – does PCA, but with kernels 
 <ul>
@@ -781,8 +781,8 @@ features</li>
 </section>
 </section>
 <section>
-<section id="slide-orgd850ce4">
-<h2 id="orgd850ce4">t-SNE</h2>
+<section id="slide-orgff141b8">
+<h2 id="orgff141b8">t-SNE</h2>
 <p>
 \[p_{j\mid i} = \frac{\exp(-\lVert\mathbf{x}_i - \mathbf{x}_j\rVert^2 / 2\sigma_i^2)}{\sum_{k \neq i} \exp(-\lVert\mathbf{x}_i - \mathbf{x}_k\rVert^2 / 2\sigma_i^2)}\]\[p_{ij} = \frac{p_{j\mid i} + p_{i\mid j}}{2N}\]
 </p>
@@ -817,17 +817,17 @@ by distance, how likely to pick neighbor j</li>
 
 </aside>
 </section>
-<section id="slide-org7dac84c">
-<h3 id="org7dac84c"></h3>
+<section id="slide-org66d9901">
+<h3 id="org66d9901"></h3>
 <div class="org-src-container">
 
-<pre  class="src src-python"><span style="color: #4c83ff;">from</span> sklearn.manifold <span style="color: #4c83ff;">import</span> TSNE
-<span style="color: #4c83ff;">from</span> sklearn.datasets <span style="color: #4c83ff;">import</span> load_digits
-<span style="color: #ff69b4;">digits</span> = load_digits()
-<span style="color: #ff69b4;">X</span> = digits.data / 16.
-<span style="color: #ff69b4;">X_tsne</span> = TSNE().fit_transform(X)
-<span style="color: #ff69b4;">X_pca</span> = PCA(n_components=2).fit_transform(X)
-</pre>
+<pre><code class="python" >from sklearn.manifold import TSNE
+from sklearn.datasets import load_digits
+digits = load_digits()
+X = digits.data / 16.
+X_tsne = TSNE().fit_transform(X)
+X_pca = PCA(n_components=2).fit_transform(X)
+</code></pre>
 </div>
 <div class="column" style="float:left; width: 50%">
 
@@ -853,8 +853,8 @@ by distance, how likely to pick neighbor j</li>
 
 </aside>
 </section>
-<section id="slide-orgdeadbc3">
-<h3 id="orgdeadbc3"></h3>
+<section id="slide-org8dd8f8f">
+<h3 id="org8dd8f8f"></h3>
 
 <div class="figure">
 <p><img src="./assets/tsne-embeddings-digits.png" alt="tsne-embeddings-digits.png" height="400px" />
@@ -871,31 +871,31 @@ how they're written</li>
 
 </aside>
 </section>
-<section id="slide-org57f028a">
-<h3 id="org57f028a">Tuning t-SNE perplexity</h3>
+<section id="slide-orgb424030">
+<h3 id="orgb424030">Tuning t-SNE perplexity</h3>
 <div class="column" style="float:left; width: 50%">
 
 <div class="figure">
-<p><img src="./assets/tsne-tuning-2.png" alt="tsne-tuning-2.png" />
+<p><img src="./assets/tsne-tuning-2.png" alt="tsne-tuning-2.png" height="250px" />
 </p>
 </div>
 
 
 <div class="figure">
-<p><img src="./assets/tsne-tuning-5.png" alt="tsne-tuning-5.png" />
+<p><img src="./assets/tsne-tuning-5.png" alt="tsne-tuning-5.png" height="250px" />
 </p>
 </div>
 </div>
 <div class="column" style="float:right; width: 50%">
 
 <div class="figure">
-<p><img src="./assets/tsne-tuning-30.png" alt="tsne-tuning-30.png" />
+<p><img src="./assets/tsne-tuning-30.png" alt="tsne-tuning-30.png" height="250px" />
 </p>
 </div>
 
 
 <div class="figure">
-<p><img src="./assets/tsne-tuning-300.png" alt="tsne-tuning-300.png" />
+<p><img src="./assets/tsne-tuning-300.png" alt="tsne-tuning-300.png" height="250px" />
 </p>
 </div>
 </div>
@@ -912,8 +912,8 @@ how they're written</li>
 
 </aside>
 </section>
-<section id="slide-orgc0ceeff">
-<h3 id="orgc0ceeff"></h3>
+<section id="slide-org44cd8bc">
+<h3 id="org44cd8bc"></h3>
 <div class="column" style="float:left; width: 50%">
 
 <div class="figure">
@@ -937,8 +937,8 @@ how they're written</li>
 
 </aside>
 </section>
-<section id="slide-orgbbe382d">
-<h3 id="orgbbe382d">Play around online</h3>
+<section id="slide-org2799be6">
+<h3 id="org2799be6">Play around online</h3>
 <p>
 <a href="http://distill.pub/2016/misread-tsne/">http://distill.pub/2016/misread-tsne/</a>
 </p>
@@ -958,8 +958,8 @@ straightforward</li>
 </section>
 </section>
 <section>
-<section id="slide-org1c16568">
-<h2 id="org1c16568">Discriminant Analysis</h2>
+<section id="slide-orge938c97">
+<h2 id="orge938c97">Discriminant Analysis</h2>
 <aside class="notes">
 <ul>
 <li>In particular <b>linear</b> DA</li>
@@ -969,8 +969,8 @@ straightforward</li>
 
 </aside>
 </section>
-<section id="slide-orga58b44e">
-<h3 id="orga58b44e">Linear Discriminant Analysis aka Fisher Discriminant</h3>
+<section id="slide-orge91a8fa">
+<h3 id="orge91a8fa">Linear Discriminant Analysis aka Fisher Discriminant</h3>
 <font size=6>
 <p>
 \[    P(y=k | X) = \frac{P(X | y=k) P(y=k)}{P(X)} = \frac{P(X | y=k) P(y = k)}{ \sum_{l} P(X | y=l) \cdot P(y=l)}\]
@@ -1002,8 +1002,8 @@ then nearest centroid</li>
 
 </aside>
 </section>
-<section id="slide-org1605f0e">
-<h3 id="org1605f0e">Quadratic Discriminant Analysis</h3>
+<section id="slide-orgb017f40">
+<h3 id="orgb017f40">Quadratic Discriminant Analysis</h3>
 <p>
 \[ p(X | y=k) = \frac{1}{(2\pi)^n |\Sigma_k|^{1/2}}\exp\left(-\frac{1}{2} (X-\mu_k)^t \Sigma_k^{-1} (X-\mu_k)\right) \]
 </p>
@@ -1018,8 +1018,8 @@ then nearest centroid</li>
 
 </aside>
 </section>
-<section id="slide-org0fa303a">
-<h3 id="org0fa303a">Comparison</h3>
+<section id="slide-orgcace9a6">
+<h3 id="orgcace9a6">Comparison</h3>
 
 <div class="figure">
 <p><img src="./assets/linear-vs-quadratic-discriminant-analysis.png" alt="linear-vs-quadratic-discriminant-analysis.png" height="400px" />
@@ -1034,8 +1034,8 @@ then nearest centroid</li>
 
 </aside>
 </section>
-<section id="slide-orga16a8a4">
-<h3 id="orga16a8a4">Discriminants and PCA</h3>
+<section id="slide-org42a3cc1">
+<h3 id="org42a3cc1">Discriminants and PCA</h3>
 <ul>
 <li>Both fit Gaussian model</li>
 <li>PCA for the whole data</li>
@@ -1053,8 +1053,8 @@ between-class variance)</li>
 
 </aside>
 </section>
-<section id="slide-org861d681">
-<h3 id="org861d681">PCA vs Linear Discriminants</h3>
+<section id="slide-org8eacd95">
+<h3 id="org8eacd95">PCA vs Linear Discriminants</h3>
 
 <div class="figure">
 <p><img src="./assets/pca-lda.png" alt="pca-lda.png" />
@@ -1070,8 +1070,8 @@ between-class variance)</li>
 
 </aside>
 </section>
-<section id="slide-orga7c4c62">
-<h3 id="orga7c4c62">Data where PCA failed</h3>
+<section id="slide-orgd173354">
+<h3 id="orgd173354">Data where PCA failed</h3>
 
 <div class="figure">
 <p><img src="./assets/pca-fail.png" alt="pca-fail.png" />
@@ -1089,8 +1089,8 @@ between-class variance)</li>
 </section>
 </section>
 <section>
-<section id="slide-orgf0a57b0">
-<h2 id="orgf0a57b0">Summary</h2>
+<section id="slide-org57f3fa4">
+<h2 id="org57f3fa4">Summary</h2>
 <ul>
 <li>PCA good for visualization, exploring correlations</li>
 <li>PCA can sometimes help with classification as regularization or for
@@ -1143,6 +1143,7 @@ dependencies: [
  { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
  { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
  { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
  { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
  { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
 ,pdfSeparateFragments: false});
