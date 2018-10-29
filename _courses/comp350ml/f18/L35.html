@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Applied Machine Learning</title>
+<meta name="author" content="(Robert Utterback)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+\(
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand{\E}{\mathop{\boldsymbol{E}}}
+\newcommand{\var}{\boldsymbol{Var}}
+\newcommand{\norm}[1]{\lvert\lvert#1\rvert\rvert}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\ltwo}[1]{\norm{#1}_2}
+\newcommand{\lone}[1]{\norm{#1}_1}
+\newcommand{\sgn}[1]{\text{sign}\left( #1 \right)}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\minw}{\min_{w \in \mathbb{R}^p}}
+\newcommand{\sumn}{\sum_{i=1}^n}
+\newcommand{\logloss}{\log{(\exp{(-y_iw^T\vec{x}_i)} + 1)}}
+\)
+<section>
+<section id="slide-orge4aa192">
+<h2 id="orge4aa192">Dimensionality Reduction</h2>
+<p>
+Robert Utterback
+</p>
+
+<p>
+Based on slides by Andreas Müller
+</p>
+<aside class="notes">
+<ul>
+<li>PCA, Discriminants, Manifold Learning</li>
+<li>Main idea is to take a high-dimensional data set (Q: which means what?)</li>
+<li>And reduce the number of dimensions</li>
+<li>Either for visualization or for an ML pipeline</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgc83f48d">
+<h2 id="orgc83f48d">Principal Component Analysis</h2>
+<aside class="notes">
+<p>
+First one we're going to talk about
+</p>
+
+</aside>
+</section>
+<section id="slide-org3f1cc06">
+<h3 id="org3f1cc06">Principal Component Analysis</h3>
+
+<div class="figure">
+<p><img src="./assets/pca-intuition.png" alt="pca-intuition.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>A 2-dimensional input space</li>
+<li>PCA finds the directions of maximum variance: the direction most elongated</li>
+<li>Then look for the component that captures second-most variance, and so on</li>
+<li>Returns an orthogonal basis (linear combinations of features with
+restrictions)</li>
+<li>We could revisualize so that the components are our axes</li>
+<li>That's what the transformed data is</li>
+<li>So far just a rotation of input space</li>
+<li>Color is not showing anything about the samples, it is just to show
+you where the data "goes" during the transformations</li>
+<li>Since they're ordered by decreasing variance, we can drop some of these components</li>
+<li>e.g., drop the second since it's not as important here</li>
+<li>So we've gone from 2D to 1D</li>
+<li>Kind of like the opposite of adding polynomial features: we're
+noticing when the dataset is actually in a lower dimensional space
+and reducing it down</li>
+<li>We can then rotate back to the original space, which is basically
+removing some information</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgc761b74">
+<h3 id="orgc761b74">PCA objective(s)</h3>
+<div class="column" style="float:left; width: 50%">
+<font size=6>
+<p>
+\[\large\max\limits_{u_1 \in R^p, \| u_1 \| = 1} \text{var}(Xu_1)\]
+\[\large\max\limits_{u_1 \in R^p, \| u_1 \| = 1} u_1^T \text{cov} (X) u_1\]
+</p>
+</font>
+</div>
+<div class="column" style="float:right; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/pca-intuition.png" alt="pca-intuition.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Formalized like this: look over all vectors with norm 1, what is the
+variance of projecting the data along that axis, that's max component</li>
+<li>Could be rewritten with second equation</li>
+<li>Then subtract u_1 from data and iterate to get u_2, etc.</li>
+<li>Note: Direction of u_1 or any u doesn't matter; show how components
+could face other direction.</li>
+<li>Direction, not sign. Sign is meaningless.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org502e097">
+<h3 id="org502e097">PCA objective(s)</h3>
+<font size=6>
+<p>
+\[\large\min_{X', \text{rank}(X') = r}\|X-X'\|\]
+</p>
+</font>
+
+
+<div class="figure">
+<p><img src="./assets/pca-intuition.png" alt="pca-intuition.png" height="300px" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Second way of looking at it: reconstruction error.</li>
+<li>How well does the "reconstruction" (transformed, dropped, rotated
+back) match the original space?</li>
+<li>So look at the difference between original data and reconstructed</li>
+<li>Just a different formulation of the same problem</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org9dce602">
+<h3 id="org9dce602">PCA Computation</h3>
+<ul>
+<li>Center X (subtract mean).</li>
+<li>In practice: Also scale to unit variance.</li>
+<li>Compute singular value decomposition:</li>
+
+</ul>
+
+<div class="figure">
+<p><img src="./assets/pca-computation.png" alt="pca-computation.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>First centers the data, also scale the variance</li>
+<li>Then it does this SVD, you might remember from Linear Algebra</li>
+<li>The values in the diagonals are the variance for each of the
+components in V.</li>
+<li>Additional processing: use D to rescale the data in rotated space so
+variance is same across each of the new dimensions</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgb0f11a0">
+<h3 id="orgb0f11a0">Whitening</h3>
+
+<div class="figure">
+<p><img src="./assets/whitening.png" alt="whitening.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Basically rotate data, then scale to stddev. 1</li>
+<li>Same as using PCA without whitening, then doing StandardScaler.</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orge9c3b6f">
+<h2 id="orge9c3b6f">PCA for Visualization</h2>
+<div class="outline-text-2" id="text-orge9c3b6f">
+</div>
+</section>
+<section id="slide-orgd55ffd6">
+<h3 id="orgd55ffd6">PCA for Visualization</h3>
+<div class="column" style="float:left; width: 50%">
+<font size=5>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #4c83ff;">from</span> sklearn.decomposition <span style="color: #4c83ff;">import</span> PCA
+<span style="color: #4c83ff;">print</span>(cancer.data.shape)
+<span style="color: #ff69b4;">pca</span> = PCA(n_components=2)
+<span style="color: #ff69b4;">X_pca</span> = pca.fit_transform(cancer.data)
+<span style="color: #8B8989; font-style: italic;"># </span><span style="color: #8B8989; font-style: italic;">print(X_pca.shape)</span>
+plt.scatter(X_pca[:, 0], X_pca[:, 1], c=cancer.target)
+plt.xlabel(<span style="color: #61CE3C;">"first principal component"</span>)
+plt.ylabel(<span style="color: #61CE3C;">"second principal component"</span>)
+<span style="color: #ff69b4;">components</span> = pca.components_
+plt.imshow(components.T)
+plt.yticks(<span style="color: #4c83ff;">range</span>(<span style="color: #4c83ff;">len</span>(cancer.feature_names)), cancer.feature_names)
+plt.colorbar()
+</pre>
+</div>
+</font>
+
+
+<div class="figure">
+<p><img src="./assets/pca-for-visualization-cancer-data.png" alt="pca-for-visualization-cancer-data.png" height="250px" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/pca-for-visualization-components-color-bar.png" alt="pca-for-visualization-components-color-bar.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Example on a real dataset: breast cancer dataset</li>
+<li>In this case we know the labels, so you're basically doing this to
+visualize and maybe decide whether this is easy or hard to separate</li>
+<li>Looks like it's relatively easy to separate; probably need a little nonlinearity</li>
+<li>Can also visualize the components: basically it's just looking at two features</li>
+<li>i.e., the components are just combinations of two features</li>
+<li>I didn't scale my data; Q: Why am I getting this?</li>
+<li>A: b/c I didn't scale, these two features have larger scales and dominate</li>
+<li>Imagine one feature with very large scale. Without scaling, it’s
+guaranteed to be the first principal component!</li>
+<li>This is A LOT easier than looking at a 30x30 heatmap to decide which
+features are important!</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org408cb6d">
+<h3 id="org408cb6d">Scaling</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #ff69b4;">pca_scaled</span> = make_pipeline(StandardScaler(),
+                       PCA(n_components=2),
+                       LogisticRegression(C=10000))
+pca_scaled.fit(X_train, y_train)
+<span style="color: #4c83ff;">print</span>(pca_scaled.score(X_train, y_train))
+<span style="color: #4c83ff;">print</span>(pca_scaled.score(X_test, y_test))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./assets/scaled-pca-for-visualization-cancer-data.png" alt="scaled-pca-for-visualization-cancer-data.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Now with scaling, I get a better idea of the dataset</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org6929c8d">
+<h3 id="org6929c8d">Inspecting Components</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #ff69b4;">components</span> = pca_scaled.named_steps[<span style="color: #61CE3C;">'pca'</span>].components_
+plt.imshow(components.T)
+plt.yticks(<span style="color: #4c83ff;">range</span>(<span style="color: #4c83ff;">len</span>(cancer.feature_names)),
+           cancer.feature_names)
+plt.colorbar()
+</pre>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/inspecting-pca-scaled-components.png" alt="inspecting-pca-scaled-components.png" height="350px" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/inspecting-pca-scaled-components-2.png" alt="inspecting-pca-scaled-components-2.png" height="350px" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Now we see the PC are made up of most of the features</li>
+<li>First column is first PC, second is second</li>
+<li>If you're an expert in the area you'd be able to interpret these values</li>
+<li>Can also do a scatter plot, though only works if you're only using 2 PCs</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org07ab35c">
+<h2 id="org07ab35c">PCA for Regularization</h2>
+<div class="outline-text-2" id="text-org07ab35c">
+</div>
+</section>
+<section id="slide-org765dff8">
+<h3 id="org765dff8">PCA for Regularization</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #ff69b4;">X_train</span>, <span style="color: #ff69b4;">X_test</span>, <span style="color: #ff69b4;">y_train</span>, <span style="color: #ff69b4;">y_test</span> = \
+    train_test_split(cancer.data, cancer.target,
+                     stratify=cancer.target, random_state=0)
+<span style="color: #ff69b4;">lr</span> = LogisticRegression(C=10000, solver=<span style="color: #61CE3C;">'liblinear'</span>)
+lr.fit(X_train, y_train)
+<span style="color: #4c83ff;">print</span>(f<span style="color: #61CE3C;">"{lr.score(X_train, y_train):.3f}"</span>)
+<span style="color: #4c83ff;">print</span>(f<span style="color: #61CE3C;">"{lr.score(X_test, y_test):.3f}"</span>)
+</pre>
+</div>
+
+<pre class="example">
+0.981
+0.937
+
+</pre>
+
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #4c83ff;">from</span> sklearn.decomposition <span style="color: #4c83ff;">import</span> PCA
+<span style="color: #ff69b4;">lr</span> = LogisticRegression(C=10000, solver=<span style="color: #61CE3C;">'liblinear'</span>)
+<span style="color: #ff69b4;">pca_lr</span> = make_pipeline(StandardScaler(),
+                       PCA(n_components=2), lr)
+pca_lr.fit(X_train, y_train)
+<span style="color: #4c83ff;">print</span>(f<span style="color: #61CE3C;">"{pca_lr.score(X_train, y_train):.3f}"</span>)
+<span style="color: #4c83ff;">print</span>(f<span style="color: #61CE3C;">"{pca_lr.score(X_test, y_test):.3f}"</span>)
+</pre>
+</div>
+
+<pre class="example">
+0.960
+0.923
+
+</pre>
+
+<aside class="notes">
+<ul>
+<li>PCA can also be used for regularization</li>
+<li>Remove some features, then train &#x2014; avoids overfitting</li>
+<li>So here I'm basically removing regularization from
+LogisticRegression by setting C to a very high value</li>
+<li>Going to use PCA for regularization</li>
+<li>First I just use LR, definitely overfitting judging by train vs. test score</li>
+<li>Reduces overfitting a bit here, though this is a simple problem</li>
+<li>In general it may not be so good with just 2 components</li>
+<li>You could do grid search to find the best # components!</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org6153777">
+<h3 id="org6153777">Variance Covered</h3>
+
+<div class="figure">
+<p><img src="./assets/variance-covered.png" alt="variance-covered.png" height="350px" />
+</p>
+</div>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #ff69b4;">pca_lr</span> = make_pipeline(StandardScaler(),
+                       PCA(n_components=6), lr)
+pca_lr.fit(X_train, y_train)
+<span style="color: #4c83ff;">print</span>(f<span style="color: #61CE3C;">"{pca_lr.score(X_train, y_train):.3f}"</span>)
+<span style="color: #4c83ff;">print</span>(f<span style="color: #61CE3C;">"{pca_lr.score(X_test, y_test):.3f}"</span>)
+</pre>
+</div>
+
+<pre class="example">
+0.981
+0.958
+
+</pre>
+
+<aside class="notes">
+<ul>
+<li>Could obviously also do cross-validation + grid-search</li>
+<li>Here I'm plotting how much variance of the data is explained by each
+components</li>
+<li>So you can look at this and maybe decide how many components to keep</li>
+<li>Maybe here I decide to use 6 components</li>
+<li>Slightly better result and slightly less overfitting</li>
+<li>This is a nice technique</li>
+<li>More theoretically sound than regularization</li>
+<li>Though it seems like it is possibly throwing away a lot of info!</li>
+<li>Note: same plots, different scale. Logscale on bottom</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgdfa33e7">
+<h3 id="orgdfa33e7">Interpreting Coefficients</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #ff69b4;">pca</span> = pca_lr.named_steps[<span style="color: #61CE3C;">'pca'</span>]
+<span style="color: #ff69b4;">lr</span> = pca_lr.named_steps[<span style="color: #61CE3C;">'logisticregression'</span>]
+<span style="color: #ff69b4;">coef_pca</span> = pca.inverse_transform(lr.coef_)
+</pre>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/PCA+logreg.png" alt="PCA+logreg.png" height="300px" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/logreg+noPCA.png" alt="logreg+noPCA.png" height="300px" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Also can still interpret the coefficients</li>
+<li>Take the coefficients, which are weights for each PCA component</li>
+<li>Then transform back into original feature space</li>
+<li>LHS: coefficient index axis is original features, i.e., how do PCA
+feature components use these features</li>
+<li>RHS is plotting coefficients from plain to PCA, showing they are related</li>
+<li>Note the "named_steps" stuff here</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgd72feb8">
+<h3 id="orgd72feb8">PCA is Unsupervised!</h3>
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/pca-is-unsupervised-1.png" alt="pca-is-unsupervised-1.png" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/pca-is-unsupervised-1.png" alt="pca-is-unsupervised-1.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Here's a case where PCA doesn't work well for supervised learning</li>
+<li>This is a 3D classification problem visualized in 2D</li>
+<li>PCs on right</li>
+<li>Note 3rd PC perfectly classifies the dataset!</li>
+<li>But if we just chose the first 2 components, we wouldn't do well at all!</li>
+<li>The point is that choosing components based on the variance might
+not be meaningful.</li>
+<li>B/c you might have features that have very small variance, but that
+very small separation is key for classification!</li>
+<li>Small variance doesn't mean small importance!</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org842dc0e">
+<h2 id="org842dc0e">PCA for Feature Extraction</h2>
+<div class="outline-text-2" id="text-org842dc0e">
+</div>
+</section>
+<section id="slide-org9b23e53">
+<h3 id="org9b23e53">PCA for Feature Extraction</h3>
+
+<div class="figure">
+<p><img src="./assets/pca-for-feature-extraction.png" alt="pca-for-feature-extraction.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>We can also "extract" features</li>
+<li>Used to be very popular in images of faces</li>
+<li>Though deep learning has kind of taken over this kind of thing</li>
+<li>So we have a bunch of faces</li>
+<li>And we want to detect who a particular face is</li>
+<li>Naive: use the pixel space as inputs, i.e., the value of each pixel</li>
+<li>That would be VERY high dimensional and probably wouldn't work very well</li>
+<li>Instead we use PCA to find groups of pixels that are important together</li>
+<li>And what you get are these new features, that kind of represent
+various facial features</li>
+<li>Some of these heads are tilted left or right, some downward facing, etc.</li>
+<li>Some of it is also which direction does the light come from,
+darkness of eyebrows, etc.</li>
+<li>Each face picture is a linear combination of the PCA components,
+weighted by the coefficients that a model learns</li>
+<li>So is a person's face is facing left, you expect that component
+coefficient to be high</li>
+<li>So this is kind of cool, but again, this doesn't necessarily make
+good classifications</li>
+<li>So the first two seem to be able which side the light comes from,
+which is an interesting feature of the picture but NOT of the
+face&#x2026;</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org1939ed8">
+<h3 id="org1939ed8">1-NN and Eigenfaces</h3>
+<font size=6>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #4c83ff;">from</span> sklearn.datasets <span style="color: #4c83ff;">import</span> fetch_lfw_people
+<span style="color: #4c83ff;">from</span> sklearn.neighbors <span style="color: #4c83ff;">import</span> KNeighborsClassifier
+<span style="color: #ff69b4;">people</span> = fetch_lfw_people(min_faces_per_person=35, resize=0.7)
+<span style="color: #ff69b4;">X_people</span>, <span style="color: #ff69b4;">y_people</span> = people.data, people.target
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #ff69b4;">X_train</span>, <span style="color: #ff69b4;">X_test</span>, <span style="color: #ff69b4;">y_train</span>, <span style="color: #ff69b4;">y_test</span> = \
+    train_test_split(X_people, y_people,
+                     stratify=y_people, random_state=0)
+<span style="color: #4c83ff;">print</span>(X_train.shape)
+<span style="color: #ff69b4;">knn</span> = KNeighborsClassifier(n_neighbors=1)
+knn.fit(X_train, y_train)
+<span style="color: #4c83ff;">print</span>(f<span style="color: #61CE3C;">"{knn.score(X_test, y_test):.3f}"</span>)
+</pre>
+</div>
+
+<pre class="example">
+(1539, 5655)
+0.434
+
+</pre>
+
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #ff69b4;">pca</span> = PCA(n_components=100, whiten=<span style="color: #96CBFE;">True</span>, random_state=0)
+pca.fit(X_train)
+<span style="color: #ff69b4;">X_train_pca</span> = pca.transform(X_train)
+<span style="color: #ff69b4;">X_test_pca</span> = pca.transform(X_test)
+<span style="color: #4c83ff;">print</span>(X_train_pca.shape)
+</pre>
+</div>
+
+<pre class="example">
+(1539, 100)
+
+</pre>
+
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #ff69b4;">knn</span> = KNeighborsClassifier(n_neighbors=1)
+knn.fit(X_train_pca, y_train)
+<span style="color: #4c83ff;">print</span>(f<span style="color: #61CE3C;">"{knn.score(X_test_pca, y_test):.3f}"</span>)
+</pre>
+</div>
+
+<pre class="example">
+0.553
+
+</pre>
+</font>
+<aside class="notes">
+<ul>
+<li>Something like 40 classes, very "wide"</li>
+<li>The reason to use 1NN is it kinds of gives an idea of your
+representation of the data</li>
+<li>1NN just looks at the closest neighbor, so if it does well, then
+your representation of the data is pretty good b/c you've basically
+clustered your points together</li>
+<li>Actually can only get as many components as min(n_features, n_samples)</li>
+<li>So then here I pick 100 components (arbitrarily), whiten, and then do 1NN.</li>
+<li>So we do better, although it's kind of weird that 1NN did okay
+initially, normally you'd see something lower like 0.20.</li>
+<li>It might be b/c I didn't balance the dataset, so the accuracy here
+is not that meaningful. With balancing I'd expect to see 0.25 or so
+for 1NN and basically the same for PCA.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgdc7316c">
+<h3 id="orgdc7316c">Reconstruction</h3>
+
+<div class="figure">
+<p><img src="./assets/reconstruction.png" alt="reconstruction.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Another way to select how many components you want</li>
+<li>Look at the reconstructions using X components</li>
+<li>So here we're doing the same inverse_transform as before</li>
+<li>But in this case it's intuitive to visualize each sample</li>
+<li>Can also use PCA for detecting outliers&#x2026;</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org696e9ad">
+<h2 id="org696e9ad">PCA for Outlier Detection</h2>
+<div class="outline-text-2" id="text-org696e9ad">
+</div>
+</section>
+<section id="slide-org50290c2">
+<h3 id="org50290c2">PCA for Outlier Detection</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #ff69b4;">pca</span> = PCA(n_components=100).fit(X_train)
+<span style="color: #ff69b4;">inv</span> = pca.inverse_transform(pca.transform(X_test))
+<span style="color: #ff69b4;">reconstruction_errors</span> = np.<span style="color: #4c83ff;">sum</span>((X_test - inv)**2, axis=1)
+</pre>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/best-reconstructions.png" alt="best-reconstructions.png" />
+</p>
+</div>
+
+<p>
+Best reconstructions
+</p>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/worst-reconstructions.png" alt="worst-reconstructions.png" />
+</p>
+</div>
+
+<p>
+Worst reconstructions
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Which faces are reconstructed well vs. not reconstructed well?</li>
+<li>If not reconstructed well, they may be outliers!</li>
+<li>Best reconstructions look like "most" of the data</li>
+<li>Worst are kind of outliers: hats, lots of shirt collars, very
+tilted, forehead cutoff, etc. Mostly about cropping of the images</li>
+<li>Obviously applies to any kind of data</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org317c9ed">
+<h2 id="org317c9ed">Manifold Learning</h2>
+<aside class="notes">
+<ul>
+<li>A class of algorithms that do much more complicated transformations
+of the data.</li>
+<li>A manifold is just a geometric structure in higher dimensions.</li>
+<li>Idea is you have a smaller dimensional set embedded in a higher
+dimensional space</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org89726e5">
+<h3 id="org89726e5">Manifold Learning</h3>
+
+<div class="figure">
+<p><img src="./assets/manifold-learning-structure.png" alt="manifold-learning-structure.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Learn underlying "manifold" structure, use for dimensionality reduction.</li>
+<li>So here's an example. This is actually just a flat plane, but it's
+been kind of rolled up in 3 dimensions.</li>
+<li>PCA cannot figure this out b/c it's just linear</li>
+<li>Ex: if it projects up/down, the purple will be right next to the red
+points</li>
+<li>Need nonlinear transformations</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgddff9b7">
+<h3 id="orgddff9b7">Pros and Cons</h3>
+<ul>
+<li>For visualization only</li>
+<li>Axes don’t correspond to anything in the input space.</li>
+<li>Often can’t transform new data.</li>
+<li>Pretty pictures!</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>Mostly used just for visualizations</li>
+<li>Hard to interpret</li>
+<li>can't really figure out how to map new data samples onto the
+manifold, although some of them have been extended to be able to do
+this</li>
+<li>Pretty good for exploring data</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orge375fad">
+<h3 id="orge375fad">Algorithms in sklearn</h3>
+<ul>
+<li><code>KernelPCA</code> – does PCA, but with kernels 
+<ul>
+<li>Eigenvalues of kernel-matrix</li>
+
+</ul></li>
+<li>Spectral embedding (Laplacian Eigenmaps) 
+<ul>
+<li>Uses eigenvalues of graph Laplacian</li>
+
+</ul></li>
+<li>Locally Linear Embedding</li>
+<li>Isomap “kernel PCA on manifold”</li>
+<li>t-SNE (t-distributed stochastic neighbor embedding)</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>Kernel: don't worry too much about the idea, but mathematically it's
+similar to how we used kernel SVMs to simulate adding polynomial
+features</li>
+<li>A lot of these are nice and have their uses&#x2026;</li>
+<li>&#x2026;But we're only going to talk about t-SNE</li>
+<li>The least strong theory about t-SNE, but used a lot in practice</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgd850ce4">
+<h2 id="orgd850ce4">t-SNE</h2>
+<p>
+\[p_{j\mid i} = \frac{\exp(-\lVert\mathbf{x}_i - \mathbf{x}_j\rVert^2 / 2\sigma_i^2)}{\sum_{k \neq i} \exp(-\lVert\mathbf{x}_i - \mathbf{x}_k\rVert^2 / 2\sigma_i^2)}\]\[p_{ij} = \frac{p_{j\mid i} + p_{i\mid j}}{2N}\]
+</p>
+<p>
+\[q_{ij} = \frac{(1 + \lVert \mathbf{y}_i - \mathbf{y}_j\rVert^2)^{-1}}{\sum_{k \neq i} (1 + \lVert \mathbf{y}_i - \mathbf{y}_k\rVert^2)^{-1}}\]
+</p>
+<p>
+\[KL(P||Q) = \sum_{i \neq j} p_{ij} \log \frac{p_{ij}}{q_{ij}}\]
+</p>
+<aside class="notes">
+<ul>
+<li>Main idea: find a probability distribution over your data points</li>
+<li>given one data point, if I pick one neighbors at random but weighted
+by distance, how likely to pick neighbor j</li>
+<li>Intuitively, for each data point, look at the density of the neighbors</li>
+<li>Make symmetric</li>
+<li>It's a distribution over pairs of points</li>
+<li>Then assume we have some embedding, those are the y points (x are original)</li>
+<li>Look at a similar thing but distance between the ys</li>
+<li>What we want is for these two distributions to be the same</li>
+<li>So we try to minimize the bottom thing</li>
+<li>&#x2014;</li>
+<li>Starts with a random embedding</li>
+<li>Iteratively updates points to make "close" points close. (gradient descent)</li>
+<li>Global distances are less important, neighborhood counts.</li>
+<li>Good for getting coarse view of topology.</li>
+<li>Can be good for finding interesting data point</li>
+<li>t distribution heavy-tailed so no overcrowding.</li>
+<li>(low perplexity: only close neighbors &#x2013; hyperparameter)</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org7dac84c">
+<h3 id="org7dac84c"></h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #4c83ff;">from</span> sklearn.manifold <span style="color: #4c83ff;">import</span> TSNE
+<span style="color: #4c83ff;">from</span> sklearn.datasets <span style="color: #4c83ff;">import</span> load_digits
+<span style="color: #ff69b4;">digits</span> = load_digits()
+<span style="color: #ff69b4;">X</span> = digits.data / 16.
+<span style="color: #ff69b4;">X_tsne</span> = TSNE().fit_transform(X)
+<span style="color: #ff69b4;">X_pca</span> = PCA(n_components=2).fit_transform(X)
+</pre>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/pca-digits.png" alt="pca-digits.png" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/tsne-digits.png" alt="tsne-digits.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>First PCA embedding, which is kind of a mess</li>
+<li>Then t-SNE embedding, which separates much nicer</li>
+<li>Can help understand the data</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgdeadbc3">
+<h3 id="orgdeadbc3"></h3>
+
+<div class="figure">
+<p><img src="./assets/tsne-embeddings-digits.png" alt="tsne-embeddings-digits.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Different transformation (it's a random algorithm)</li>
+<li>This time with some of the digit images shown</li>
+<li>Notice that some digits get grouped into multiple clusters based on
+how they're written</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org57f028a">
+<h3 id="org57f028a">Tuning t-SNE perplexity</h3>
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/tsne-tuning-2.png" alt="tsne-tuning-2.png" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="./assets/tsne-tuning-5.png" alt="tsne-tuning-5.png" />
+</p>
+</div>
+</div>
+<div class="column" style="float:right; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/tsne-tuning-30.png" alt="tsne-tuning-30.png" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="./assets/tsne-tuning-300.png" alt="tsne-tuning-300.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Important parameter: perplexity</li>
+<li>Intuitively: bandwidth of neighbors to consider</li>
+<li>(low perplexity: only close neighbors)</li>
+<li>smaller datasets try lower perplexity</li>
+<li>original authors say 30 always works well.</li>
+<li>but depends on the dataset somewhat</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgc0ceeff">
+<h3 id="orgc0ceeff"></h3>
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/tsne-moons.png" alt="tsne-moons.png" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./assets/tsne-perplexity.png" alt="tsne-perplexity.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Same for synthetic two moons dataset</li>
+<li>Again perplexity=30 seems to work well</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgbbe382d">
+<h3 id="orgbbe382d">Play around online</h3>
+<p>
+<a href="http://distill.pub/2016/misread-tsne/">http://distill.pub/2016/misread-tsne/</a>
+</p>
+<aside class="notes">
+<ul>
+<li>Interactive javascript visualizations</li>
+<li>Really cool to see how the outcome of t-SNE changes on different
+datasets</li>
+<li>BTW, t-SNE is much slower than PCA</li>
+<li>Also you can't really use this as to transform the test set, there
+are weird hacky things to do but it's not in sklearn yet and not
+straightforward</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org1c16568">
+<h2 id="org1c16568">Discriminant Analysis</h2>
+<aside class="notes">
+<ul>
+<li>In particular <b>linear</b> DA</li>
+<li>It's a classifier, and can also be used for dimensionality reduction</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orga58b44e">
+<h3 id="orga58b44e">Linear Discriminant Analysis aka Fisher Discriminant</h3>
+<font size=6>
+<p>
+\[    P(y=k | X) = \frac{P(X | y=k) P(y=k)}{P(X)} = \frac{P(X | y=k) P(y = k)}{ \sum_{l} P(X | y=l) \cdot P(y=l)}\]
+</p>
+<p>
+\[ p(X | y=k) = \frac{1}{(2\pi)^n |\Sigma|^{1/2}}\exp\left(-\frac{1}{2} (X-\mu_k)^t \Sigma^{-1} (X-\mu_k)\right) \]
+</p>
+<p>
+\[    \log\left(\frac{P(y=k|X)}{P(y=l | X)}\right) = 0 \Leftrightarrow (\mu_k-\mu_l)\Sigma^{-1} X = \frac{1}{2} (\mu_k^t \Sigma^{-1} \mu_k - \mu_l^t \Sigma^{-1} \mu_l) \]
+</p>
+</font>
+<aside class="notes">
+<ul>
+<li>Generative model: assumes each class has Gaussian distribution</li>
+<li>First eq is Bayes rule, then expand over all classes</li>
+<li>Basically we're fitting a Gaussian to each class, but we're sharing
+the covariance matrix</li>
+<li>For each class, estimate mean, then compute covariance matrix</li>
+<li>Very fast: only compute means and invert covariance matrix (works
+well if n_features &lt;&lt; n_samples)</li>
+<li>Last line is just writing it in an equivalent way</li>
+<li>Leads to linear decision boundary.</li>
+<li>Imagine: transform space by covariance matrix (rotate and stretch),
+then nearest centroid</li>
+<li>No parameters to tune!</li>
+<li>Don't confuse with Latent Dirichlet Allocation (LDA)</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org1605f0e">
+<h3 id="org1605f0e">Quadratic Discriminant Analysis</h3>
+<p>
+\[ p(X | y=k) = \frac{1}{(2\pi)^n |\Sigma_k|^{1/2}}\exp\left(-\frac{1}{2} (X-\mu_k)^t \Sigma_k^{-1} (X-\mu_k)\right) \]
+</p>
+<aside class="notes">
+<ul>
+<li>Each class is Gaussian, but separate covariance matrices!</li>
+<li>More flexible (quadratic decision boundary), but less robust: have less points per covariance matrix.</li>
+<li>Can't think of it as transformation of the space.</li>
+<li>Many more parameters; harder to fit</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org0fa303a">
+<h3 id="org0fa303a">Comparison</h3>
+
+<div class="figure">
+<p><img src="./assets/linear-vs-quadratic-discriminant-analysis.png" alt="linear-vs-quadratic-discriminant-analysis.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>If the two features have same covariance matrices, LDA does fine</li>
+<li>Otherwise QDA does better</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orga16a8a4">
+<h3 id="orga16a8a4">Discriminants and PCA</h3>
+<ul>
+<li>Both fit Gaussian model</li>
+<li>PCA for the whole data</li>
+<li>LDA multiple Gaussians with shared covariance</li>
+<li>Can use LDA to transform space</li>
+<li>At most as many components as there are classes - 1 (needs
+between-class variance)</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>Can use it as a linear classifier (but probably use logreg instead)</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org861d681">
+<h3 id="org861d681">PCA vs Linear Discriminants</h3>
+
+<div class="figure">
+<p><img src="./assets/pca-lda.png" alt="pca-lda.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Example with PCA vs. LDA</li>
+<li>Three classes, synthetic datasets</li>
+<li>LDA needs only one dimension, the interesting one</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orga7c4c62">
+<h3 id="orga7c4c62">Data where PCA failed</h3>
+
+<div class="figure">
+<p><img src="./assets/pca-fail.png" alt="pca-fail.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Remember where PCA failed</li>
+<li>In this case LDA immediately finds the best component</li>
+<li>Note this is actually supervised, in case you didn't catch it before</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgf0a57b0">
+<h2 id="orgf0a57b0">Summary</h2>
+<ul>
+<li>PCA good for visualization, exploring correlations</li>
+<li>PCA can sometimes help with classification as regularization or for
+feature extraction</li>
+<li>Manifold learning makes nice pictures</li>
+<li>LDA is a supervised alternative to PCA</li>
+
+</ul>
+<aside class="notes">
+<p>
+LDA also yields a rotation of the input space
+</p>
+
+</aside>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="https://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c/t',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.05,
+minScale: 0.20,
+maxScale: 15.00,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: '0.0',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+,pdfSeparateFragments: false});
+</script>
+</body>
+</html>
