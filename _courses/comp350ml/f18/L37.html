@@ -550,6 +550,10 @@ class: spacious
 - Ward (default in sklearn)
   - Smallest increase in within-cluster variance
   - Leads to more equally sized clusters.
+- Centroid Method
+  - Smallest distance between centroids
+  - Not in sklearn...
+- https://onlinecourses.science.psu.edu/stat505/node/143/  
 
 ???
 
@@ -722,6 +726,7 @@ class: center, middle
 ???
 - similar to kmean
 - assign point a probability of being drawn from that distrubtion
+- EM = expectation maximization
 ---
 
 `$$ p(\mathbf{x}) = \sum_{j=1}^k \pi_k \mathcal{N}(\mathbf{x}, \mu_k, \Sigma_k) $$`
@@ -838,19 +843,23 @@ print(gmm.score_samples(X).shape)
 ]
 
 ???
-- prob. of a point coming from each component
-- log likelihood of all data vs. each sample (on right)
+- prob. of a point coming from each component (predict_proba)
+- log likelihood of all data vs. each sample (on right, code)
 ---
 # Covariance restrictions
 
 ![:scale 100%](assets/covariance_types.png)
 ???
-- In high dimensions or with few samples, fitting the whole (n_features ** 2) covariance matrix can be unstable.
+- In high dimensions or with few samples, fitting the whole
+  (n_features ** 2) covariance matrix can be unstable (need lots of
+  data).
 - We can restrict it to be spherical, diagonal, tied or full.
 - Becoming closer to kmeans by doing this
 - spherical very fast
 - diag: diagonal covariance matrix (variance along x- and y-axis)
-- tied: assume all clusters have same covariance matrix
+- tied: assume all clusters have same covariance matrix (similar to LDA, but unsupervised)
+- Probably only use if you know ahead of time that each cluster has similar shape
+- Can think of this as controlling overfitting/flexibility
 ---
 class:center
 # GMM vs KMeans
