@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NMF & Outlier Detection</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Garamond);
+      @import url(https://fonts.googleapis.com/css?family=Muli:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      body {
+        font-family: 'Muli';
+        font-size: 140%;
+      }
+      h1, h2 {
+        font-family: 'Garamond';
+        font-weight: normal;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      .remark-slide-content h1 {
+        font-size: 70px;
+        text-align: center;
+      }
+      .remark-slide-content p, .remark-slide-content li {
+        font-size:30px;
+        line-height: 1.4;
+      }
+      .remark-code {
+        font-size:30px;
+      }
+      .remark-slide-content p {
+          margin: 5px;
+      }
+      .remark-slide-container .spacious p,
+      .remark-slide-container .spacious li{
+          margin-bottom: 50px;
+          margin-top: 50px;
+      }
+      .remark-slide-container .spacious h1{
+          margin-bottom: 50px;
+      }
+      .remark-slide-container .some-space p,
+      .remark-slide-container .some-space li,
+      .remark-slide-container .some-space h1{
+          margin-bottom: 30px;
+      }
+      .reset-column {
+          overflow: auto;
+          width: 100%;
+      }
+      .remark-slide-content .compact p, .remark-slide-content .compact li, .remark-slide-content .compact pre, .remark-slide-content .compact .MathJax_Display{
+          font-size: 30px;
+          line-height: 1.1;
+          display: block;
+          margin: 2px 0;
+      }
+      .padding-top {
+          padding-top: 100px;
+      }
+      .remark-slide-content .smaller p, .remark-slide-content .smaller li,
+      .remark-slide-content .smaller .remark-code, .remark-slide-content .smaller a{
+          font-size: 25px;
+      }
+      .normal {
+          font-size: 30px;
+      }
+      .quote_author {
+          display: block;
+          text-align: right;
+          margin-top: 20px;
+          font-size: 30px;
+          font-family: 'Garamond';
+      }
+      .larger, .larger .remark-code {
+          font-size: 40px;
+      }
+      .largest, .largest .remark-code {
+          font-size: 50px;
+      }
+      .left-column, .right-column {
+          width: 48%;
+      }
+      .right-column{
+          float: right;
+      }
+      .left-column{
+          float: left;
+      }
+      .narrow-right-column {
+          float: right;
+          width: 32%
+      }
+      .wide-left-column {
+          float: left;
+          width: 65%
+      }
+      .invisible {
+          visibility: hidden
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# NMF and Outlier detection
+
+Based on slides by Andreas Müller
+???
+---
+class: center, middle
+
+# Non-Negative Matrix Factorization
+
+???
+- Does dimensionality reduction but also related to clustering
+- One algorithm in a family of "matrix factorization" algorithms
+---
+
+# Matrix Factorization
+
+<br />
+
+.center[
+![:scale 90%](images/matrix_factorization.png)
+]
+
+???
+- i.e., splitting up a matrix into multiple (usually smaller or simpler) matrices
+- (explain dimensions of X, A, B)
+- A gives new representations of the n samples with the k new components
+- B tells you how the original features make up the k new components
+---
+# Matrix Factorization
+
+<br>
+
+.center[
+![:scale 90%](images/matrix_factorization_2.png)
+]
+
+???
+- 
+---
+# PCA
+
+<br>
+
+.center[
+![:scale 80%](images/pca.png)
+]
+???
+- PCA actually does this already! (mentioned mathematically)
+- B describes how the original features get rotated, projected
+- A is the projection of the data into this new space
+- Basically, given X, you're trying to find A and B so that their
+  product equals X (as close as possible, for some metric of closeness)
+- Mathematically, PCA restricts rows of B so that they are orthogonal
+- And restricts the "rank" to be k.
+- Then finding A and B that is closest to X is PCA in terms of squared loss
+---
+class:spacious
+# Other Matrix Factorizations
+    
+- PCA: principal components orthogonal, minimize
+squared loss
+
+- Sparse PCA: components orthogonal and sparse
+
+- ICA: independent components
+
+- Non-negative matrix factorization (NMF): latent representation and
+latent features are nonnegative.
+
+???
+- Other variants change the restrictions on A and B
+- And what you are trying to optimize
+- Won't spend time on the others
+- Sparse: usually easier to interpret components b/c simpler
+- ICA: tries to make sure that predictions given by B are statistically independent
+- Also factor analysis and many more
+- NMF is used a lot in practice; easy entry positive number
+---
+# NMF
+
+<br />
+
+.center[
+![:scale 80%](images/nmf.png)
+]
+
+???
+- By convention called H and W
+- Want to find a product as close as possible to X
+- But why?
+---
+class: spacious
+
+# Why NMF?
+
+--
+
+- Meaningful signs
+
+???
+- Signs were meaningless in PCA
+- Made it a bit hard to interpret
+- Especially when you tried to interpret multiple components together
+- e.g., one subtracts from another?
+- In NMF all positive: all components combine into result simply
+
+--
+
+- Positive weights
+
+--
+
+- No “cancellation” like in PCA
+
+???
+- Can be viewed as “soft clustering”: each point is positive linear
+  combination of weights.
+
+
+--
+
+- Can learn over-complete representation
+
+???
+
+- Can learn more components than features! Extract really interesting
+  features. Generating new features.
+- (n_components > n_features) by asking for sparsity (in either W or H)
+
+---
+.center[
+PCA (ordered by projection, not eigenvalue)
+
+![:scale 70%](images/pca_projection.png)
+]
+
+.center[
+NMF (ordered by hidden representation)
+![:scale 70%](images/nmf_hid_rep.png)
+]
+
+???
+- NMF and PCA on digits dataset
+- Expressed as linear combination of PCA and NFM components
+- Ordered by which components are most important for each sample
+- Note PCA has components subtracted! Hard to interpret
+- Esp. after first components, hard to see how later components relate
+  to 0/1
+- With NMF, everything is positive
+- Easy to see how components add together to get 0
+---
+# Downsides of NMF
+
+- Can only be applied to non-negative data
+
+???
+- If data has negative entries, cannot rep it
+- Q: Why?
+- We're representing by a sum of positive entries - can never make
+  neg. val
+- You could just shift your data to make it all positive
+- But this is not going to work well b/c 0 has a special meaning here
+- you need it to mean the absence of signal
+--
+
+- Interpretability is hit or miss
+
+???
+- Depends a lot of application/data
+--
+
+- Non-convex optimization, requires initialization
+
+???
+- In other words, requires too long to solve exactly
+- Fall back on heuristics, not global optimum
+- Depending on init, get different local optimum
+
+--
+
+- Components not orthogonal
+
+???
+- Can't think about it terms of projections like PCA
+--
+
+.center[
+![:scale 60%](images/nmf_downsides.png)
+]
+???
+- number of components completely changes what components you find
+---
+
+.center[
+NMF with 20 components on MNIST
+
+![:scale 60%](images/nmf_20_mnist.png)
+]
+
+.center[
+NMF with 5 components on MNIST
+
+![:scale 60%](images/nmf_5_mnist.png)
+]
+
+???
+- Pretty different results with diff. num. components
+- With even more components would get even smaller strokes
+---
+class:spacious
+# Applications of NMF
+
+- Text analysis (next topic)
+
+- Signal processing
+
+- Speech and Audio (see <a href="https://librosa.github.io/librosa/generated/librosa.decompose.decompose.html#librosa.decompose.decompose">librosa</a>)
+
+- Source separation
+
+- Gene expression analysis
+
+???
+- Cool application is separating text conversations or instrumental/voice audio
+---
+class:center,middle
+# Outlier Detection
+
+???
+- Shifting gears to outlier detection
+
+---
+# Motivation
+.padding-top[
+.left-column[
+![:scale 100%](images/outlier_detection.png)
+]
+
+.right-column[
+![:scale 100%](images/novelty_detection.png)
+]
+]
+???
+- Outlier: Find points that are “different” within the training set (and in the future).
+- “Novelty detection” - no outliers in the training set.
+- Outliers are not labeled! (otherwise it’s just imbalanced classification)
+- Often outlier detection and novelty detection used interchangeably in practice.
+- Novelty example might by cybersecurity especially when looking for new threats
+---
+class:spacious
+# Applications
+
+- Fraud detection (credit cards, click fraud, ...)
+
+- Network failure detection
+
+- Intrusion detection in networks
+
+- Defect detection (engineering etc…)
+
+- News, Intelligence
+
+???
+- usual assumption: all outliers are different in a different way.
+- mostly talk about outlier, similar methods for novelty
+
+---
+class:spacious
+# Basic idea
+
+- Model data distribution $p(X)$
+
+--
+
+- Outlier: $p(X) < \varepsilon$
+
+--
+
+- For outlier detection: be robust in modelling $p(X)$
+
+???
+- Learning method must be able to handle outliers
+- Task is generally ill-defined (unless you know the real data
+  distribution). How do you measure how well you're doing? No way to
+  know recall.
+- If you have ground truth, just do imbalanced classification (class
+0: inlier, class 1: outlier)
+- Sometimes people use classification datasets for outlier detection:
+  that's a bit strange.
+- Similar to fact that no clearly defined solution to what should be a
+cluster, also no clearly defined solution to what should be considered
+an outlier
+
+---
+# Elliptic Envelope
+
+`$$p(X) = \mathcal{N}(\mu, \Sigma)$$`
+
+.center[
+![:scale 60%](images/elliptic_envelope.png)
+]
+
+???
+- Simplest distribution is normal/gaussian distribution
+- Fits a gaussian to the data
+- Which points are not fit well? These are outliers
+- i.e., finds robust estimate of covariance matrix and mean
+- What you expected the data to look like is black, another
+  distribution (outliers) in red (but you don't learn that distribution)
+- Notice some overlap here
+- Requires a parameter: what percentage of data do you expect to be outliers?
+- Finds covariance matrix with lowest determinant that covers x% of
+  data (however much you expect to be inliers)
+- red circles are contours of distribution we found
+- blue are from distribution of data
+- notice blue is too big in y direction 
+---
+# Elliptic Envelope
+
+- Preprocessing with PCA might help sometimes.
+
+.smaller[
+```python
+from sklearn.covariance import EllipticEnvelope
+ee = EllipticEnvelope(contamination=.1).fit(X)
+pred = ee.predict(X)
+print(pred)
+print(np.mean(pred == -1))
+```]
+
+.smaller[
+```python
+[ 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
+  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
+  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
+  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
+ -1  1  1  1 -1 -1  1 -1  1  1 -1  1 -1 -1 -1  1  1 -1 -1 -1 -1  1 -1  1  1]
+0.104
+
+```]
+
+???
+- -1 for outlier
+- There is another method to get a score of how much each point is an outlier
+- Then could pick some threshold after exploring your data, e.g., visualizing
+
+---
+# Failure-case: Non-Gaussian Data
+
+.center[
+![:scale 80%](images/elliptic_envelope_plot.png)
+]
+
+???
+- Obviously if not gaussian we will fail, like here
+- gives you 10% of the data furthest away from the mean
+- Could do mixtures of gaussians obviously! 
+- Fit multiple gaussians (how many) but make sure to do it robustly
+
+---
+class: center, spacious
+# Kernel Density
+
+
+![:scale 80%](images/kde_vs_histogram.png)
+
+???
+- KDE
+- Non-parametric density model
+- Gaussian blob on each data point
+- Have as many components as data points
+- kernel here is windowing function
+- Doesn’t work well in high dimensions
+- Must pick how wide the kernel is
+---
+class:center
+
+# Kernel Bandwidth
+
+![:scale 50%](images/kde_bandwidth.png)
+
+???
+- Need to adjust kernel bandwidth
+- Unsupervised model, so how to pick kernel bandwidth?
+- cross-validation can be used to pick the bandwidth (based on
+  probabilities), but:
+- Q: if there's outliers in the training data, could go wrong?
+- A: they will influence choice of best kernel bandwith, intuitively
+  makes bigger
+- With higher dimensions need more and more data points to fill space
+with kernel windows
+
+---
+
+.smaller[
+```python
+kde = KernelDensity(bandwidth=3)
+kde.fit(X_train_noise)
+pred = kde.score_samples(X_train_noise)
+pred = (pred > np.percentile(pred, 10)).astype(int)
+```]
+
+.center[
+![:scale 70%](images/kernel_density_bw3.png)
+]
+???
+- For low dimensions can work well
+- Maybe use crossval to decide on bandwith
+- Look at score samples to see probabilities of points
+
+---
+
+# One Class SVM
+
+- Also uses Gaussian kernel to cover data
+
+- Only select support vectors (not all points)
+
+- Specify outlier ratio (contamination) via nu
+
+
+.smaller[
+```python
+from sklearn.svm import OneClassSVM
+scaler = StandardScaler()
+X_train_noise_scaled = scaler.fit_transform(X_train_noise)
+oneclass = OneClassSVM(nu=.1).fit(X_train_noise_scaled)
+pred = oneclass.predict(X_train_noise_scaled)
+```]
+
+???
+- More sophisticated version of KDE
+- Need to adjust kernel bandwidth
+- Should use RBF kernel, linear hard to interpret
+- nu is "training mistakes"
+
+---
+.center[
+![:scale 80%](images/one_class_svm_plot.png)
+]
+
+???
+- Somewhat reasonable, probably would be better if I made nu smaller
+- Here I don't get probability estimates, so can't use crossval to help
+
+---
+class:center,middle
+
+# Isolation Forests
+
+???
+- Also nonparametric, also no probability estimate
+- But no parameters to tune
+---
+# Idea
+
+- Outliers are easy to isolate from the rest
+
+.center[
+![:scale 80%](images/isolation_forests.png)
+]
+
+
+???
+- Much easier to split off something far away from others!
+- Build many random trees
+- How deep (path length) do we need to go to separate a point?
+- If deep, neighborhood is probably deep, so not outlier
+- If shallow, easy to separate, so probably outlier
+
+---
+class:center,middle
+.left-column[
+![:scale 100%](images/isolation_forests.png)
+]
+
+.right-column[
+![:scale 100%](images/avgpathlen_numtrees.png)
+]
+
+???
+- Scores start to stabilize with more trees
+- Kind of trying to model the density of the data
+
+---
+# Normalizing the Path Length
+
+Average path length of unsuccessful search in Binary Search Tree:
+
+`$$ c(n) = 2H(n-1) - \left(\frac{2(n-1)}{n}\right) \text{  (H = Harmonic number)}$$` 
+
+
+
+`$$ s(x,n) = 2^{-\frac{E(h(x))}{c(n)}} \text{   (h = depth in tree)}$$` 
+
+
+- s &lt; 0.5 : definite inlier
+
+- s close to 1: outlier
+
+???
+- More data points -> probably need to go deeper for each point
+- Need to take this into account
+- Changing number of expected outliers only changes threshold to this
+score function, not really as important
+
+---
+
+class:spacious
+
+# Building the forest
+
+- Subsample dataset for each tree
+
+- Default sample size of 256 works surprisingly well
+
+- Stop growing tree at depth log_2(sample size)
+
+- No bootstrapping
+
+- More trees are better – default 100
+
+- Need to specify contamination rate
+
+???
+- Q: What will the height of the tree be? A: 8
+- These are tuning parameters, but the default tends to work well!
+
+---
+.center[![:scale 90%](images/building_forest_1.png)]
+???
+- Seemed to work pretty well. Toy dataset, so...
+
+---
+.center[![:scale 90%](images/building_forest_2.png)]
+???
+- Plotting of score for each data point
+- Not as smooth as other models
+---
+class:spacious
+# Other density based-models
+
+- PCA
+- GMMs
+- Robust PCA (not in sklearn)
+- Any other probabilistic model - “robust” is better.
+
+???
+- robust only needed for outlier detection, not novelty detection.
+
+--- 
+
+.center[ ![:scale 60%](images/other_density_models_1.png) ]
+
+.center[
+![:scale 60%](images/other_density_models_2.png)
+]
+
+.center[
+![:scale 60%](images/other_density_models_3.png)
+]
+???
+- Comparison of some of the models
+- Datasets: isotropic, two close gaussians, two further away gaussians
+---
+class:spacious
+# Summary
+
+- Isolation Forest works great!
+
+- Density models are great if they are correct.
+
+- Estimating bandwidth can be tricky in the
+unsupervised setting.
+
+- Validation of results often requires manual inspection.
+
+???
+- A lot depends on whether your outliers are different in the same way, or each is different in a unique way
+- If different in same way, can run outlier detection, then use these
+  as labels for classification to build a new outlier detection model
+- Otherwise need to use outlier detection directly  
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <script>
+    // Config Remark
+    remark.macros['scale'] = function (percentage) {
+        var url = this;
+		return '<img src="https://amueller.github.io/COMS4995-s18/slides/aml-18-040218-nmf-outlier-detection/' + url +  '" style="width: ' + percentage + '" />';
+    };
+    config_remark = {
+        highlightStyle: 'magula',
+        highlightSpans: true,
+        highlightLines: true,
+        ratio: "16:9"
+    };
+      var slideshow = remark.create(config_remark);
+    // Configure MathJax
+    MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'] /* removed 'code' entry*/
+    }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i = 0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+    </script>
+  </body>
+</html>
