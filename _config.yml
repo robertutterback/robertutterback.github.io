@@ -77,7 +77,7 @@ highlighter: pygments
 include: ['_pages']
 
 # Gems
-plugins:
+plugins_dir:
     - jekyll-paginate
     - jekyll/scholar
     - jemoji
