@@ -9,6 +9,7 @@ description: Course materials.
 
 * <a href="{{ site.baseurl }}/courses/comp210/s19/">COMP 210: Object-Oriented Programming</a>
 * <a href="{{ site.baseurl }}/courses/comp345/s19/">COMP 345: Operating Systems</a>
+* <a href="https://jlmayfield.github.io/teaching/COMP401-402/comp402-syllabus.pdf">COMP 402: Senior Project Implementation</a>
 
 ### Fall 2018
 
