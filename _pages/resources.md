@@ -23,6 +23,7 @@ it will likely be useful to all CS students.
 * Visualize the code you write using [Python
   Tutor](http://pythontutor.com/). Despite the name, you can program
   in Python, Java, JavaScript, C++, and more!
+* A collection of [resources](https://github.com/charlax/professional-programming) for programmers.  
 
 ### General Learning
 
