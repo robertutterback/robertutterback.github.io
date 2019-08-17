@@ -5,6 +5,11 @@ title: Teaching
 description: Course materials.
 ---
 
+### Fall 2019
+
+* <a href="{{ site.baseurl }}/courses/comp152/f19/">COMP 152: Object-Oriented Data Structures and Algorithms</a> (new course)
+* <a href="{{ site.baseurl }}/courses/comp325/f19/">COMP 325: Organization of Programming Languages</a>
+
 ### Spring 2019
 
 * <a href="{{ site.baseurl }}/courses/comp210/s19/">COMP 210: Object-Oriented Programming</a>
@@ -15,7 +20,7 @@ description: Course materials.
 
 * <a href="{{ site.baseurl }}/courses/comp220/f18/">COMP 220: Data Structures</a>
 * <a href="{{ site.baseurl }}/courses/comp230/f18/">COMP 230: Computer Architecture and Organization</a>
-* <a href="{{ site.baseurl }}/courses/comp350ml/f18/">COMP 350 (and MATH 350): Applied Machine Learning</a>
+* <a href="{{ site.baseurl }}/courses/comp350ml/f18/">COMP 350 (and MATH 350): Applied Machine Learning</a> (new course)
 
 ### Spring 2018
 
@@ -28,7 +33,7 @@ description: Course materials.
 * <a href="{{ site.baseurl }}/courses/comp230/f17/">COMP 230: Computer Architecture and Organization</a>
 * <a href="{{ site.baseurl }}/courses/comp325/f17/">COMP 325: Organization of Programming Languages</a>
 
-### Previous
+### Older
 
 * (Spring 2017) [CSE 347: Analysis of Algorithms](http://www.cse.wustl.edu/~bjuba/cse347/s17/) [(WUSTL)](http://www.wustl.edu)
 * (Fall 2016, guest lecturer): [CSE 341: Parallel and Sequential Algorithms](http://www.classes.cec.wustl.edu/~cse341/web/) [(WUSTL)](http://www.wustl.edu)
