@@ -16,5 +16,4 @@ s19:
 
 f19:
   office_hours: M 2-4. T 9-11. Th 9-10. F 2-3. By appointment (see the schedule on my webpage).
-  feedback_form: |
-    <iframe width="640px" height= "480px" src= "https://forms.office.com/Pages/ResponsePage.aspx?id=2CUxPywZP0ec1n97FfYhs8Yn_tnrj59Js226l2OfoDlUOUU5NDNGUkMxNFJLUUJLWE9MWldHMFY3TS4u&embed=true" frameborder= "0" marginwidth= "0" marginheight= "0" style= "border: none; max-width:100%; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen> </iframe>
+  feedback_form: https://forms.office.com/Pages/ResponsePage.aspx?id=2CUxPywZP0ec1n97FfYhs8Yn_tnrj59Js226l2OfoDlUOUU5NDNGUkMxNFJLUUJLWE9MWldHMFY3TS4u
