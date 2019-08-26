@@ -19,11 +19,19 @@ it will likely be useful to all CS students.
 * [Teach Yourself CS](https://teachyourselfcs.com) is another list of resources. It's aimed
   toward self-taught software engineers, but the materials could be
   very useful if you're struggling in a particular course.
-* Get better at using the shell with with [CMD Challenge](https://cmdchallenge.com/).  
+* Get better at using the shell with with [CMD Challenge](https://cmdchallenge.com/).
 * Visualize the code you write using [Python
   Tutor](http://pythontutor.com/). Despite the name, you can program
   in Python, Java, JavaScript, C++, and more!
-* A collection of [resources](https://github.com/charlax/professional-programming) for programmers.  
+* A collection of [resources](https://github.com/charlax/professional-programming) for programmers.
+* Programming interviews are notoriously difficult. There's little
+  evidence to suggest they lead to good hiring decisions, yet I don't
+  think they will change anytime soon. In the meantime, get some
+  practice at the [Tech Interview
+  Handbook](https://yangshun.github.io/tech-interview-handbook/). It
+  gets easier with practice.
+* [Here](https://github.com/videogamepreservation) is a fun collection
+  of video game source code from real, commercial games.
 
 ### General Learning
 
