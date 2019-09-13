@@ -32,6 +32,8 @@ it will likely be useful to all CS students.
   gets easier with practice.
 * [Here](https://github.com/videogamepreservation) is a fun collection
   of video game source code from real, commercial games.
+* [100+ Project Ideas](https://dev.to/mibzman/100-project-ideas-oda)
+  for programmers or those learning to program.
 
 ### General Learning
 
