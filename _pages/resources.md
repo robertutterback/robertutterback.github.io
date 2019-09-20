@@ -34,6 +34,7 @@ it will likely be useful to all CS students.
   of video game source code from real, commercial games.
 * [100+ Project Ideas](https://dev.to/mibzman/100-project-ideas-oda)
   for programmers or those learning to program.
+* [The Interview Study Guide for Software Engineers](https://dev.to/seattledataguy/the-interview-study-guide-for-software-engineers-764)  
 
 ### General Learning
 
