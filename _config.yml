@@ -90,6 +90,7 @@ scholar:
   sort_by: year
   order: descending
   source: /_bibliography/
+  repository: /assets/papers/
   bibliography: papers.bib
   bibliography_template: bib
   replace_strings: true
