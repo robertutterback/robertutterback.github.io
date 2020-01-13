@@ -5,6 +5,13 @@ title: Teaching
 description: Course materials.
 ---
 
+### Spring 2020
+
+* <a href="{{ site.baseurl }}/courses/comp288/s20/">COMP 288: Competitive Programming</a>
+* <a href="{{ site.baseurl }}/courses/comp151/s20/">COMP 151: Intro to Programming</a>
+* <a href="{{ site.baseurl }}/courses/comp340/s20/">COMP 340: Analysis of Algorithms</a>
+* <a href="https://jlmayfield.github.io/teaching/COMP401-402/comp402-syllabus.pdf">COMP 402: Senior Project Implementation</a>
+
 ### Fall 2019
 
 * <a href="{{ site.baseurl }}/courses/comp152/f19/">COMP 152: Object-Oriented Data Structures and Algorithms</a> (new course)
