@@ -5,6 +5,12 @@ title: Teaching
 description: Course materials.
 ---
 
+### Fall 2020
+
+* <a href="{{ site.baseurl }}/courses/comp152/f20/">COMP 152: Object-Oriented Data Structures and Algorithms</a>
+* <a href="{{ site.baseurl }}/courses/comp347/f20/">COMP 347: Applied Machine Learning</a>
+* <a href="{{ site.baseurl }}/courses/intg101/f20/">INTG 101: Introduction to the Liberal Arts</a>
+
 ### Spring 2020
 
 * <a href="{{ site.baseurl }}/courses/comp288/s20/">COMP 288: Competitive Programming</a>
