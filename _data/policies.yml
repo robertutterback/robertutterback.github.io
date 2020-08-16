@@ -8,11 +8,28 @@ your solutions with no penalty. However, you may use at most 2 on any
 individual assignment. The whole point here is to give you some
 flexibility that allows for things like illnesses, long trips, and the
 like. I am unlikely to grant further extensions."
+
+late_days_ila_v1: "You have each been allotted a *total* of *5* late
+days. You may apply these to any homework assignment as you see fit,
+with no penalty. However, you may use at most 2 on any individual
+assignment. The whole point here is to give you some flexibility that
+allows for things like illnesses, long trips, and the like. I am
+unlikely to grant further extensions. Late days cannot be applied to
+in-class assignments. Late assignments (beyond any applied late days)
+will be subject to a half-letter grade reduction for every 0-24 hour
+period that the assignment is late."
   
 syllabus_deviation_v1: "This syllabus is subject to change based on
 specific class needs, especially the
 [schedule](#schedule). Significant deviations will be discussed in
 class."
+
+syllabus_deviation_v2: "This syllabus is subject to change based on
+specific class needs, especially the
+[schedule](#schedule). Significant deviations will be discussed in
+class. Individual exceptions to the policies and schedule are granted
+only in cases of true emergency. Please make arrangements with me if
+an emergency arises."
 
 cheating_v1: "Monmouth College's official policy on academic dishonesty can be found [here](http://ou.monmouthcollege.edu/life/residence-life/scots-guide/academic-regulations.aspx). **You** are responsible for reading and complying with that policy.<br/><br/>
 
@@ -22,7 +39,7 @@ as judged by the instructor. Minimally, a violation will result in an
 “F” or 0 points on the assignment in question. Additionally, the
 student’s course grade may be lowered by one letter grade. In severe
 cases, the student will be assigned a course grade of “F” and
-dismissed from the class. All cases of academic dishonesty will be
+dismissed from the class. All cases of academic dishonesty *must* be
 reported to the Associate Dean who may decide to recommend further
 action to the Admissions and Academic Status Committee, including
 suspension or dismissal. It is assumed that students will educate
@@ -100,7 +117,11 @@ expectations_v1: |
       guide me through your thought process.
 
 
-electronics_v1: "Do not use your phone in class. Keep it on silent or leave it at home. Any computer or tablet usage should be related to the course. Other usage is rude and distracting to others."
+electronics_v1: "Do not use your phone or other devices in class
+except where necessary. Any computer or tablet usage should be related
+to the course. If a device is not being used for Zoom or Socrative it
+should be put away and turned on silent. Other usage is rude and
+distracting to others."
 
 services_v1: |
   * The [**Teaching and Learning
@@ -188,7 +209,7 @@ gradescale_std_v1: |
   You are always welcome to challenge a grade that you feel is unfair or
   calculated incorrectly. Mistakes made in your favor will never be
   corrected to lower your grade. Mistakes made not in your favor will
-  be corrected. *Basically, after the initial grading your score can
+  be corrected. Basically, after the initial grading your score can
   only go up as the result of a challenge*.
 
 services_v3: |
@@ -214,4 +235,36 @@ services_v3: |
     Bros. Bagels. They can be reached at 309-457-2252 or via email at
     ssas@monmouthcollege.edu.
 
+services_v4: |
+  * **Mental Health and Counseling Services**: Monmouth College provides cost-free, professional
+    mental health counseling to support you and to help you manage
+    challenges that may impact your personal and academic success.
+    The Counseling Center is located in the upper level of Poling
+    Hall, offices 204 and 216, and the hours are Monday-Friday, 8:30
+    AM -- 5:00 PM.  To request a confidential appointment on-line,
+    [click here](https://titanium.monmouthcollege.edu) or email [the
+    center](mailto:counselingcenter@monmouthcollege.edu), [Cindy
+    Beadles](mailto:cbeadles@monmouthcollege.edu) or [Tom
+    Caudill](mailto:tcaudill@monmouthcollege.edu).
 
+  * [**Student Success and Accessibility
+    Services**](http://ou.monmouthcollege.edu/academics/teaching-learning-center/)
+    offers FREE resources to assist Monmouth College students with
+    their academic success. Programs include supplemental instruction
+    for difficult classes, drop-in and appointment tutoring, and
+    individual academic coaching. The office is here to help students
+    excel academically, since everyone can work toward better grades,
+    practice stronger study skills, and mange their time better.
+    
+  * [**Accessibility
+    Services**](http://ou.monmouthcollege.edu/life/disability-services/default.aspx):
+    If you have a disability or had academic accommodations in high
+    school or another college, you may be eligible for academic
+    accommodations at Monmouth College under the Americans with
+    Disabilities Act (ADA). Monmouth College is committed to equal
+    educational access. To discuss any of the services offered, please
+    call or visit Student Success and Accessibility Services. SSAS is
+    located in the ACE space on the first floor of Hewes Library,
+    opposite Einstein Bros. Bagels. They can be reached at
+    309-457-2257 or via email at
+    [ssas@monmouthcollege.edu](mailto:ssas@monmouthcollege.edu).
