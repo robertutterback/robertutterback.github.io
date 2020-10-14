@@ -16,8 +16,8 @@ news: true
 social: true
 ---
 
-I am an assistant professor in the department of Mathematics and
-Computer Science at [Monmouth
+I am an assistant professor in the department of Mathematics,
+Statistics, and Computer Science at [Monmouth
 College](http://www.monmouthcollege.edu). I got my Ph.D. in Computer
 Science from [Washington University in
 St. Louis](http://www.wustl.edu) under [Kunal
@@ -27,5 +27,5 @@ and computer science from [Truman State
 University](http://www.truman.edu). My research involves both
 theoretical and systems aspects of parallel computing, including
 scheduling, runtime systems, and dynamic program analysis. I am also
-interested in theoretical computer science, computer science
-education, and data science.
+interested in interdisciplinary data science, especially machine
+learning for text analysis.
