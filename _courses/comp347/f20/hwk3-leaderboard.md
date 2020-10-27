@@ -5,8 +5,9 @@ catalog-desc: (todo) Using statistics to design algorithms that can learn from d
 semester: f20
 ---
 
-| Team Name | Best R^2 |
-|-----------+----------|
-| sau       |    0.691 |
-| QBnMG     |    0.629 |
-| SnPCS     |    0.549 |
+| Team Name                | Best R^2 |
+|--------------------------|----------|
+| sau                      | 0.691    |
+| QBnMG                    | 0.629    |
+| The Algorithm Initiative | 0.613    |
+| SnPCS                    | 0.549    |
