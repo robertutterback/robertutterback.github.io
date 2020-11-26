@@ -6,8 +6,7 @@ semester: f20
 ---
 
 | Team Name                | Best R^2 |
-|--------------------------|----------|
-| sau                      | 0.691    |
-| QBnMG                    | 0.629    |
-| The Algorithm Initiative | 0.613    |
-| SnPCS                    | 0.549    |
+|--------------------------+----------|
+| QBnMG                    |    0.914 |
+| The Algorithm Initiative |    0.832 |
+| SnPCS                    |    0.549 |
