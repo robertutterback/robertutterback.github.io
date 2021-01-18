@@ -5,6 +5,13 @@ title: Teaching
 description: Course materials.
 ---
 
+### Spring 2021
+
+* <a href="{{ site.baseurl }}/courses/comp152/s21/">COMP 152: Object-Oriented Data Structures and Algorithms</a>
+* <a href="{{ site.baseurl }}/courses/comp310/s21/">COMP 310: Database Theory and Design</a>
+* <a href="{{ site.baseurl }}/courses/data240/s21/">DATA 240: Data Science Applications</a>
+* <a href="{{ site.baseurl }}/courses/comp402/s21/syllabus.pdf">COMP 402: Senior Project Implementation</a>
+
 ### Fall 2020
 
 * <a href="{{ site.baseurl }}/courses/comp152/f20/">COMP 152: Object-Oriented Data Structures and Algorithms</a>
