@@ -39,7 +39,7 @@ as judged by the instructor. Minimally, a violation will result in an
 “F” or 0 points on the assignment in question. Additionally, the
 student’s course grade may be lowered by one letter grade. In severe
 cases, the student will be assigned a course grade of “F” and
-dismissed from the class. All cases of academic dishonesty *must* be
+dismissed from the class. All cases of academic dishonesty **must** be
 reported to the Associate Dean who may decide to recommend further
 action to the Admissions and Academic Status Committee, including
 suspension or dismissal. It is assumed that students will educate
@@ -116,18 +116,17 @@ expectations_v1: |
       show your work! Even if you do not know a particular answer,
       guide me through your thought process.
 
-zoom_v1: |
-  If the instructor's video is turned on, yours should be,
-  too. Any computer, tablet, or phone usage should be directly related
-  to the course, e.g., Zoom or Socrative. Anything else is rude and
-  distracting to others. Inappropriate use of devices, or not turning
-  your video on, will result in a low participation grade.
+zoom_v1: "If the instructor's video is turned on, yours should be,
+too. Any computer, tablet, or phone usage should be directly related
+to the course, e.g., Zoom or Socrative. Anything else is rude and
+distracting to others. Inappropriate use of devices, or not turning
+your video on, will result in a low participation grade.
 
-  To fully participate in class, you should plan to attend each Zoom
-  session on a laptop or desktop computer, NOT a tablet or phone. This
-  will allow you to take part in any live-coding exercises with the
-  rest of the class. Please let the instructor know ahead of time if
-  this is not possible for any particular class meeting.
+To fully participate in class, you should plan to attend each Zoom
+session on a laptop or desktop computer, NOT a tablet or phone. This
+will allow you to take part in any live-coding exercises with the rest
+of the class. Please let the instructor know ahead of time if this is
+not possible for any particular class meeting."
 
 electronics_v1: "Do not use your phone or other devices in class
 except where necessary. Any computer or tablet usage should be related
