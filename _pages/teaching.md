@@ -10,7 +10,10 @@ description: Course materials.
 * <a href="{{ site.baseurl }}/courses/comp152/s21/">COMP 152: Object-Oriented Data Structures and Algorithms</a>
 * <a href="{{ site.baseurl }}/courses/comp310/s21/">COMP 310: Database Theory and Design</a>
 * <a href="{{ site.baseurl }}/courses/data240/s21/">DATA 240: Data Science Applications</a>
-* <a href="{{ site.baseurl }}/courses/comp402/s21/syllabus.pdf">COMP 402: Senior Project Implementation</a>
+* <a href="{{ site.baseurl }}/courses/data401/s21/">DATA 401: Senior
+  Project Research</a> (1st half-semester)
+* <a href="{{ site.baseurl }}/courses/data401/s21/">DATA 402: Senior
+  Project Implementation</a> (2nd half-semester)
 
 ### Fall 2020
 
