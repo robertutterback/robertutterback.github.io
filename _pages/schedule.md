@@ -5,15 +5,18 @@ title: Schedule
 description: #Materials for courses you taught. Replace this text with your description.
 ---
 
-This is my calendar of classes, meetings, office hours, and other
-college events. If you need to meet with me (outside of office
-hours), 
 <!-- Calendly link widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript"></script>
-<a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/robertutterback/30min'});return false;">click here to schedule a meeting</a>
+<!-- link here, but moved below -->
 <!-- Calendly link widget end -->
-, or just email me a few of the open slots you find on the calendar below. 
+
+This is my calendar of classes, meetings, office hours, and other
+college events. If you need to meet with me (outside of office hours),
+<button><a href="" onclick="Calendly.initPopupWidget({url:
+'https://calendly.com/robertutterback/30min'});return false;">click
+here to schedule a meeting</a></button>, or just email me a few of the
+open slots you find on the calendar below.
 
 During the spring 2021 semester, all my classes, meetings, and office
 hours will be held virtually using [this Zoom
