@@ -1,6 +1,6 @@
 ---
 layout: class
-title: "COMP 310, Spring 2021, Homework 1""
+title: "COMP 310, Spring 2021, Homework 1"
 semester: s21
 ---
 
