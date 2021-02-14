@@ -27,9 +27,7 @@
             {% endif %}
           {% endif %}
         {% else %}
-          {% unless entry.author_array.length == 0 %}
-            and
-          {% endunless %}
+          and
           {% if author.last == site.scholar.last_name %}
             <em>{{author.last}}, {{author.first}}</em>
           {% else %}
