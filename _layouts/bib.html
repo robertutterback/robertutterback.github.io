@@ -19,8 +19,7 @@
         {% assign author = entry.author_array[0] %}
         {{author}}
         {% if author.last == site.scholar.last_name %}<em>{% endif %}
-        {{author.last}}
-        {% if author.first %}, {{author.first}}{% endif %}
+        {{author.last}}{% if author.first != "" %}, {{author.first}}{% endif %}
         {% if author.last == site.scholar.last_name %}</em>{% endif %}
       {% else %}
       {% for author in entry.author_array %}
