@@ -15,8 +15,16 @@
   {% else %}
     <span class="title"><a href="{{entry.url}}">{{entry.title}}</a></span>
     <span class="author">
+      {% if entry.author_array.size == 1 %}
+        {% assign author = entry.author_array[0] %}
+        {% if author.last == site.scholar.last_name %}
+          <em>{{author}}</em>
+        {% else %}
+          {{author}}
+        {% endif %}
+      {% else %}
       {% for author in entry.author_array %}
-        {% unless forloop.last and entry.author_array.size > 1 %}
+        {% unless forloop.last %}
           {% if author.last == site.scholar.last_name %}
             <em>{{author.last}}, {{author.first}}</em>,
           {% else %}
@@ -39,6 +47,7 @@
           {% endif %}
         {% endunless %}
       {% endfor %}
+      {% endif %}
     </span>
 
     <span class="periodical">
@@ -47,7 +56,7 @@
     {% elsif entry.type == "inproceedings" %}
       <em>In {{entry.booktitle}}</em>
     {% elsif entry.howpublished %}
-       <em>{{entry.howpublished}}</em>
+       <em>{{entry.howpublished}}</em><br/>
     {% endif %}
     {% if entry.year %}
       {{entry.year}}
