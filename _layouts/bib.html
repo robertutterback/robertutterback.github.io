@@ -17,7 +17,6 @@
     <span class="author">
       {% if entry.author_array.size == 1 %}
         {% assign author = entry.author_array[0] %}
-        {{author}}
         {% if author.last == site.scholar.last_name %}<em>{% endif %}
         {{author.last}}{% if author.first != "" %}, {{author.first}}{% endif %}
         {% if author.last == site.scholar.last_name %}</em>{% endif %}
