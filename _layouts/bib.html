@@ -17,11 +17,10 @@
     <span class="author">
       {% if entry.author_array.size == 1 %}
         {% assign author = entry.author_array[0] %}
-        {% if author.last == site.scholar.last_name %}
-          <em>{{author.last}}, {{author.first}}</em>
-        {% else %}
-          {{author.last}}, {{author.first}}
-        {% endif %}
+        {% if author.last == site.scholar.last_name %}<em>{% endif %}
+        {{author.last}}
+        {% if author.first %}, {{author.first}}{% endif %}
+        {% if author.last == site.scholar.last_name %}</em>{% endif %}
       {% else %}
       {% for author in entry.author_array %}
         {% unless forloop.last %}
