@@ -16,7 +16,7 @@
     <span class="title"><a href="{{entry.url}}">{{entry.title}}</a></span>
     <span class="author">
       {% for author in entry.author_array %}
-        {% unless forloop.last %}
+        {% unless forloop.last and entry.author_array.size > 1 %}
           {% if author.last == site.scholar.last_name %}
             <em>{{author.last}}, {{author.first}}</em>,
           {% else %}
