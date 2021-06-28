@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html>
+	<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Robert Utterback | COMP/MATH 350: Applied Machine Learning, Fall 2018</title>
+<meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+">
+
+     <link rel="shortcut icon" href="https://robertutterback.github.io/assets/img/favicon.ico">
+		 <link rel="stylesheet" href="https://robertutterback.github.io/assets/css/main.css">
+		 <!-- <link rel="shortcut icon" href="/assets/img/favicon.ico"> -->
+     <!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+
+     <link rel="canonical" href="https://robertutterback.github.io/courses/comp350ml/f18/">
+</head>
+
+	<body>
+		<style type="text/css">
+			.schedule {
+			width: 100%;
+			}
+			table {  
+			width: auto;
+			margin: auto;
+			}
+			blockquote {
+			padding: .35rem;
+			font: 12px;
+			}
+			blockquote footer {
+			font-size: 8px;
+			}
+		</style>
+		<div class="course-content">
+			<div class="wrapper">
+				<header class="post-header">
+					<h1 class="post-title">COMP/MATH 350: Applied Machine Learning, Fall 2018</h1>
+					<!-- <h5 class="class-description">(todo) Using statistics to design algorithms that can learn from data.</h5> -->
+				</header>
+				<p><em>This syllabus is subject to change based on specific class needs, especially the <a href="#schedule">schedule</a>. Significant deviations will be discussed in class.</em></p>
+
+<ul id="markdown-toc">
+  <li><a href="#logistics" id="markdown-toc-logistics">Logistics</a></li>
+  <li>
+<a href="#content" id="markdown-toc-content">Content</a>    <ul>
+      <li><a href="#description" id="markdown-toc-description">Description</a></li>
+      <li><a href="#topics" id="markdown-toc-topics">Topics</a></li>
+      <li><a href="#learning-objectives" id="markdown-toc-learning-objectives">Learning Objectives</a></li>
+      <li><a href="#sources" id="markdown-toc-sources">Sources</a></li>
+    </ul>
+  </li>
+  <li><a href="#policies" id="markdown-toc-policies">Policies</a></li>
+  <li>
+<a href="#assessment" id="markdown-toc-assessment">Assessment</a>    <ul>
+      <li><a href="#assignments" id="markdown-toc-assignments">Assignments</a></li>
+      <li><a href="#grading" id="markdown-toc-grading">Grading</a></li>
+      <li><a href="#workload" id="markdown-toc-workload">Workload</a></li>
+    </ul>
+  </li>
+  <li><a href="#schedule" id="markdown-toc-schedule">Schedule</a></li>
+  <li><a href="#monmouth-college-services" id="markdown-toc-monmouth-college-services">Monmouth College Services</a></li>
+</ul>
+
+<h3 id="logistics">Logistics</h3>
+
+<ul>
+  <li>Class meetings: MTWF 2:00 PM - 2:50 PM in CSB 303</li>
+  <li>Instructor: Robert Utterback
+    <ul>
+      <li>Office: CSB 342</li>
+      <li>Phone: 309.457.2202</li>
+      <li>Website: <a href="https://robertutterback.github.io">https://robertutterback.github.io</a>
+</li>
+      <li>Email: <a href="mailto:rutterback@monmouthcollege.edu">rutterback@monmouthcollege.edu</a>
+</li>
+      <li>Office hours: M 9-10 AM. Tu 3-4 PM. W 3-4 PM. Th 9-11 AM. F 9-10 AM. By appointment (see the schedule on my webpage)</li>
+    </ul>
+  </li>
+  <li>Website: <a href="https://robertutterback.github.io/courses/comp350ml/f18/">https://robertutterback.github.io/courses/comp350ml/f18/</a>
+</li>
+  <li>Credits: 1 course credit</li>
+  <li>Prerequisites: COMP 160 and MATH 260.</li>
+  <li>Feedback: At any time during the course you can use
+<a href="https://goo.gl/forms/h6qZWP7i8AzIgbZj1">this</a> to provide
+anonymous suggestions, criticism, praise, etc.</li>
+</ul>
+
+<h3 id="content">Content</h3>
+
+<h4 id="description">Description</h4>
+
+<p>An introduction to the hot topics of machine learning, data science
+and data mining. The course aims to supply students with a useful
+toolbox of machine learning techniques that can be applied to
+real-life data. Techniques may include logistic and linear regression,
+SVMs, decision trees, neural networks, and clustering. The focus will
+be on developing important skills in preparing data and selecting and
+evaluating models, though we will delve into the mathematical
+intuition behind each model.</p>
+
+<h4 id="topics">Topics</h4>
+
+<p>Possible topics include:</p>
+
+<ul>
+  <li>Python for data science and visualization</li>
+  <li>Linear models for regression</li>
+  <li>Linear models for classification</li>
+  <li>Preprocessing, feature selection and engineering</li>
+  <li>Support vector machines</li>
+  <li>Trees, forests, and ensembles</li>
+  <li>Gradient boosting</li>
+  <li>Model Evaluation and Selection</li>
+  <li>Dimensionality reduction</li>
+  <li>Clustering</li>
+  <li>Word embeddings</li>
+  <li>Neural Networks</li>
+</ul>
+
+<h4 id="learning-objectives">Learning Objectives</h4>
+
+<ul>
+  <li>An understanding of the types of machine learning and the intuition behind the techniques listed above</li>
+  <li>An ability to analyze real-world data and prepare it for learning/mining via data cleaning</li>
+  <li>An ability to add, remove, and modify data features and evaluate their effect on ML models</li>
+  <li>An ability to compare and evaluate the performance of several ML models on a particular dataset</li>
+  <li>An ability to communicate algorithmic findings and effectively present results through visualization</li>
+</ul>
+
+<h4 id="sources">Sources</h4>
+
+<p>The required course textbook is:</p>
+
+<p>Kuhn, Max and Johnson, Kjell. <em>Applied Predictive
+Modeling</em>. Springer. 2013. ISBN-13: 978-1-4614-6848-6.</p>
+
+<p>I also recommend, but do not require:</p>
+
+<p>Guido, Sarah and Muller, Andreas. <em>Introduction to Machine Learning
+with Python</em>. O’Reilly. 2016. ISBN-13: 978-1449369415.</p>
+
+<p>Goodfellow, Ian and Bengio, Yoshua and Courville, Aaron. <em>Deep
+Learning</em>. MIT Press. 2016. ISBN: 9780262035613.</p>
+
+<h3 id="policies">Policies</h3>
+
+<ul>
+  <li>
+    <p><strong>Late assignments</strong>: You have each been allotted a <em>total</em> of <em>5</em> late days. You may apply these to any problem sets you see fit and turn in your solutions with no penalty. However, you may use at most 2 on any individual assignment. The whole point here is to give you some flexibility that allows for things like illnesses, long trips, and the like. I am unlikely to grant further extensions.</p>
+  </li>
+  <li>
+    <p><strong>Academic dishonesty</strong>: Monmouth College’s official policy on academic dishonesty can be found <a href="http://ou.monmouthcollege.edu/life/residence-life/scots-guide/academic-regulations.aspx">here</a>. <strong>You</strong> are responsible for reading and complying with that policy.<br><br>
+<em>In this course, any violation of the academic honesty policy will have varying consequences depending on the severity of the infraction as judged by the instructor. Minimally, a violation will result in an “F” or 0 points on the assignment in question. Additionally, the student’s course grade may be lowered by one letter grade. In severe cases, the student will be assigned a course grade of “F” and dismissed from the class. All cases of academic dishonesty <strong>must</strong> be reported to the Associate Dean who may decide to recommend further action to the Admissions and Academic Status Committee, including suspension or dismissal. It is assumed that students will educate themselves regarding what is considered to be academic dishonesty, so excuses or claims of ignorance will not mitigate the consequences of any violations</em></p>
+  </li>
+  <li>
+    <p><strong>Collaboration</strong>: We encourage you to make use of the resources available to you – it is fine to seek help from a friend, tutor, instructor, internet, etc. However, <em>copying of answers and any act worth of the label “cheating” is never permissible</em>! In addition to listing your sources and collaborators, you should be producing your own writeup in your own words. By “your own words,” we mean you should be producing the text yourself, without some external aid. Verbatim copying of text is specifically disallowed, but so is taking a source and rearranging some phrases and changing some variable names to create a derivative version! Such behavior is definitely NOT “using your own words.” It does not matter if you helped contribute to this source text with others, since then you are still not the sole author of the text.
+The point of collaborating on an assignment is not to produce a jointly authored set of solutions, since that violates the course policies. Instead, it is to help you solve the problems, which sometimes involve a bit of creativity. After you have jointly come up with the ideas you need to solve the problems, though, you should part ways with your group and sit down to do the writing by yourself.
+I also advise against sharing the writeup you submit with others, since if someone else uses your text as a source for their own solution (with or without your permission), you will also be implicated in the violation of the academic integrity policy. In any case, if two nearly identical solutions are received, we have no way of tell which is the original, and the policy is to not award credit for either submission.</p>
+  </li>
+  <li>
+    <p><strong>Electronic devices</strong>: Do not use your phone or other devices in class except where necessary. Any computer or tablet usage should be related to the course. If a device is not being used for Zoom or Socrative it should be put away and turned on silent. Other usage is rude and distracting to others.</p>
+  </li>
+  <li>
+    <p><strong>General expectations</strong>: In short, I expect you to be respectful of others and take
+responsibility for your own learning. You are here to learn, so work
+hard and be professional.</p>
+
+    <ul>
+      <li>
+        <p>Just attending class is not sufficient to truly learn the
+material. Read the text, use the resources available at Monmouth
+College, and go beyond the material.</p>
+      </li>
+      <li>
+        <p>If you miss class, you are responsible for everything covered on
+ that day.  College is, in some sense, your job. Take pride in
+ creating quality work. Staple your assignments, label problems, and
+ present your answers neatly and orderly.</p>
+      </li>
+      <li>
+        <p>Your job is to convince me that you have learned the material –
+show your work! Even if you do not know a particular answer,
+guide me through your thought process.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="assessment">Assessment</h3>
+
+<h4 id="assignments">Assignments</h4>
+
+<p>The course workload is as follows:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Category</th>
+      <th style="text-align: right">Number of Assignments</th>
+      <th style="text-align: right">Final Grade Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Homework</td>
+      <td style="text-align: right">5–7</td>
+      <td style="text-align: right">50%</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Midterm</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">20%</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Final</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">20%</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Participation</td>
+      <td style="text-align: right">-</td>
+      <td style="text-align: right">10%</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Most (probably all) homework assignments will involve
+programming. Each exam focuses primarily, but not necessarily
+exclusively, on material covered since the previous exam. In other
+words, the final exam may include one or two questions from first-half
+material.</p>
+
+<p>Your participation grade is based on a variety of activities. During
+class I will often make sure of the
+<a href="https://socrative.com/">Socrative</a> app, so you’ll need to install
+this on your phones. Participating in Socrative questions and with
+in-class group activities is required for a decent participation
+grade; a full grade also includes asking questions either in class or
+in office hours.</p>
+
+<h4 id="grading">Grading</h4>
+
+<p>Your final grade is based on a weighted average of particular
+assignment categories, with weights shown above. You can estimate your
+current grade based on your scores and these weights. You may always
+visit the instructor <em>outside of class</em> to discuss your current
+standing.</p>
+
+<p>This courses uses a standard grading scale. Assignments and final
+grades will not be curved except in rare cases when its deemed
+necessary by the instructor. Percentage grades translate to letter
+grades as follows:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Score</th>
+      <th style="text-align: center">Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">94–100</td>
+      <td style="text-align: center">A</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">90–93</td>
+      <td style="text-align: center">A-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">88–89</td>
+      <td style="text-align: center">B+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">82–87</td>
+      <td style="text-align: center">B</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">80–81</td>
+      <td style="text-align: center">B-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">78–79</td>
+      <td style="text-align: center">C+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">72–77</td>
+      <td style="text-align: center">C</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">70–71</td>
+      <td style="text-align: center">C-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">68–69</td>
+      <td style="text-align: center">D+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">62–67</td>
+      <td style="text-align: center">D</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">60–61</td>
+      <td style="text-align: center">D-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0–59</td>
+      <td style="text-align: center">F</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You are always welcome to challenge a grade that you feel is unfair or
+calculated incorrectly. Mistakes made in your favor will never be
+corrected to lower your grade. Mistakes made not in your favor will
+be corrected. Basically, after the initial grading your score can
+only go up as the result of a challenge*.</p>
+
+<h4 id="workload">Workload</h4>
+
+<p>The weekly workload for this course will vary by student and over the
+semester, but on average should be about 12 hours per week. The follow
+table provides a rough estimate of the distribution of this time over
+different course components for a 16 week semester.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Category</th>
+      <th style="text-align: right">Total Time</th>
+      <th style="text-align: right">Time/Week (Hours)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Lectures</td>
+      <td style="text-align: right">55</td>
+      <td style="text-align: right">3.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Homework</td>
+      <td style="text-align: right">72</td>
+      <td style="text-align: right">4.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Exam Study</td>
+      <td style="text-align: right">27</td>
+      <td style="text-align: right">1.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Reading+Unstructured Study</td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right">2.5</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right">12</td>
+    </tr>
+  </tfoot>
+</table>
+
+<h3 id="schedule">Schedule</h3>
+<p>The following <strong>tentative</strong> calendar should give you a feel for how
+work is distributed throughout the semester. Assignments and events
+are listed in the week they are due or when they occur. <em>This calendar
+is subject to change based on the circumstances of the course</em>.</p>
+
+<!-- (let* ((start-date (org-read-date nil nil "2018-08-21")) -->
+<!--        (end-date (org-read-date nil nil "2018-12-05")) -->
+<!--        (days (list "Mon" "Tue" "Wed" "Fri")) -->
+<!--        (current start-date)) -->
+<!--   (while (string< current end-date) -->
+<!--     (let* ((time (org-time-string-to-time current)) -->
+<!--            (day (format-time-string "%a" time))) -->
+<!--       (if (member day days) -->
+<!--           (princ (concat (format-time-string "%a %m/%d" time) "\n")))) -->
+<!--     (setq current (org-read-date nil nil "++1" nil (org-time-string-to-time current)))))-->
+
+<table class="schedule">
+  <thead>
+    <tr>
+      <th style="text-align: left">Date</th>
+      <th style="text-align: center">Topic</th>
+      <th style="text-align: right">Assignment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Wed 08/22 (Week 1)</td>
+      <td style="text-align: center">
+<a href="./L01.html">Intro, What is Machine Learning</a> <a href="./L01.pdf">(pdf)</a>
+</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 08/24</td>
+      <td style="text-align: center"><a href="./L02.html">ML Principles; Python</a></td>
+      <td style="text-align: right">Do a Python tutorial, e.g. <a href="https://docs.python.org/3/tutorial/index.html">this one</a>
+</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Mon 08/27 (Week 2)</td>
+      <td style="text-align: center"><a href="./L03.html">Essential Python Libraries</a></td>
+      <td style="text-align: right">
+<a href="./hwk1.ipynb">HWK 1</a> out</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tue 08/28</td>
+      <td style="text-align: center"><a href="./L04.html">Python Visualization Basics</a></td>
+      <td style="text-align: right">Read APM 1-2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 08/29</td>
+      <td style="text-align: center"><a href="./casestudies.ipynb">Classification and Regression Case Studies</a></td>
+      <td style="text-align: right">Read IMLP 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 08/31</td>
+      <td style="text-align: center"><a href="./L06.html">Model Complexity and Sources of Error</a></td>
+      <td style="text-align: right">Read APM 4.1-4.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Mon 09/03 (Week 3)</td>
+      <td style="text-align: center"><a href="./L07.html">Model Tuning</a></td>
+      <td style="text-align: right">Read APM 4.3-4.4</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tue 09/04</td>
+      <td style="text-align: center"><a href="./L08.html">Comparing Models</a></td>
+      <td style="text-align: right">Read 5.1-5.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 09/05</td>
+      <td style="text-align: center"><a href="./L09.html">Linear and Ridge Regression</a></td>
+      <td style="text-align: right">HWK 1 due <a href="https://monmouthcollege-my.sharepoint.com/:u:/r/personal/rutterback_monmouthcollege_edu/Documents/comp350-f18/hwk1-sol.ipynb?csf=1&amp;e=94Pyb7">(Solutions)</a>, <a href="./hwk2.ipynb">HWK 2</a> out, Read APM 6.1-6.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 09/07</td>
+      <td style="text-align: center"><a href="./L10.html">Understanding Regularization</a></td>
+      <td style="text-align: right">Read APM 6.4</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Mon 09/10 (Week 4)</td>
+      <td style="text-align: center"><a href="./L11.html">Linear Models for (Binary) Classification</a></td>
+      <td style="text-align: right">Read APM 12.1-12.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tue 09/11</td>
+      <td style="text-align: center"><a href="./L12.html">Multiclass Classification</a></td>
+      <td style="text-align: right">Read 12.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 09/12</td>
+      <td style="text-align: center"><a href="./L13.html">Computational Considerations; SGD</a></td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 09/14</td>
+      <td style="text-align: center"><a href="./L14.html">Scaling Data</a></td>
+      <td style="text-align: right">Read APM Ch 3</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Mon 09/17 (Week 5)</td>
+      <td style="text-align: center">Review and HWK 2 Questions</td>
+      <td style="text-align: right">
+<a href="./hwk3.ipynb">HWK 3</a> out</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tue 09/18</td>
+      <td style="text-align: center"><a href="./L16.html">Processing Pipelines and Feature Engineering</a></td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 09/19</td>
+      <td style="text-align: center"><a href="./L17.html">Feature Engineering</a></td>
+      <td style="text-align: right">HWK 2 due <a href="https://monmouthcollege-my.sharepoint.com/:u:/g/personal/rutterback_monmouthcollege_edu/ERC9gmeflYRNlLrt_RPTO1EBTf-5ePV1FW70TOQ-nfTneQ?e=685WXP">(Solutions)</a>,</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 09/21</td>
+      <td style="text-align: center"><a href="./L18.html">Imputation</a></td>
+      <td style="text-align: right">Read APM 3.4</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Mon 09/24 (Week 6)</td>
+      <td style="text-align: center"><a href="./L19.html">Feature Selection</a></td>
+      <td style="text-align: right">Read APM 19</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tue 09/25</td>
+      <td style="text-align: center">Support Vector Machines (no slides)</td>
+      <td style="text-align: right">Read APM 7.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 09/26</td>
+      <td style="text-align: center"><a href="./L21.html">SVM Kernels</a></td>
+      <td style="text-align: right">Read APM 13.4</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 09/28</td>
+      <td style="text-align: center"><a href="./L22.html">Trees and Forests</a></td>
+      <td style="text-align: right">Read APM 8-1-8.2, 14.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Mon 10/01 (Week 7)</td>
+      <td style="text-align: center">Homework 2 Review and <a href="./L23.html">Random Forests</a>
+</td>
+      <td style="text-align: right">Read 8.4-8.5, 14.3-14.4</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tue 10/02</td>
+      <td style="text-align: center"><a href="./L24.html">Ensembles and Gradient Boosting</a></td>
+      <td style="text-align: right">Read 8.6, 14.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 10/03</td>
+      <td style="text-align: center"><a href="./L25.html">Stacking</a></td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 10/05</td>
+      <td style="text-align: center"><a href="./L26.html">Calibration</a></td>
+      <td style="text-align: right">HWK 3 checkpoint due, <a href="https://monmouthcollege-my.sharepoint.com/:b:/g/personal/rutterback_monmouthcollege_edu/EbIjcISlIExKgNopUjr6rmUB4qa5DPS9RpBDz3PfrbIkEA?e=sLuNfS">Practice Midterm</a> out</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Mon 10/08 (Week 8)</td>
+      <td style="text-align: center">Review</td>
+      <td style="text-align: right"><a href="https://monmouthcollege-my.sharepoint.com/:b:/g/personal/rutterback_monmouthcollege_edu/EZ7V7WW2LctBv_LeclDZwiUBZStks08yWp_oVXF-kX_C8A?e=r2oFQ9">Practice Midterm Solutions</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tue 10/09</td>
+      <td style="text-align: center">Review</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 10/10</td>
+      <td style="text-align: center">Midterm <a href="https://monmouthcollege-my.sharepoint.com/:b:/g/personal/rutterback_monmouthcollege_edu/Ebp8zO36Yg1JiRcY4TtXoGABImlxVDrQfYFbvEGhPhsgXA?e=ZmXqWm">(Solutions)</a>
+</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">(10/12–10/15)</td>
+      <td style="text-align: center">(Fall Break)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tue 10/16 (Week 9)</td>
+      <td style="text-align: center">Midterm Review</td>
+      <td style="text-align: right">HWK 3 due <a href="https://www.youtube.com/watch?v=aircAruvnKk&amp;list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi">(Solutions)</a>
+</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 10/17</td>
+      <td style="text-align: center">Mean, Median, Mode</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 10/19</td>
+      <td style="text-align: center"><a href="./L32.html">Model Evaluation Metrics</a></td>
+      <td style="text-align: right">Read APM 11 &amp; 5</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Mon 10/22 (Week 10)</td>
+      <td style="text-align: center"><a href="./L33.html">Imbalanced Data</a></td>
+      <td style="text-align: right">Read APM 16</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tue 10/23</td>
+      <td style="text-align: center"><a href="./L34.html">Synthetic Data Generation</a></td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">(Wed 10/24)</td>
+      <td style="text-align: center">(Mentoring Day – No class)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 10/26</td>
+      <td style="text-align: center"><a href="./L35.html">Dimensionality Reduction</a></td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Mon 10/29 (Week 11)</td>
+      <td style="text-align: center">(Class Cancelled)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tue 10/30</td>
+      <td style="text-align: center">Dimensionality Reduction (continued)</td>
+      <td style="text-align: right">Read IMLP 142-157, 165-170, <a href="./hwk4.ipynb">HWK 4</a> out</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 10/31</td>
+      <td style="text-align: center">(Class Cancelled)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 11/02</td>
+      <td style="text-align: center"><a href="./L37.html">Clustering</a></td>
+      <td style="text-align: right">Read IMLP 170-193</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Mon 11/05 (Week 12)</td>
+      <td style="text-align: center">(Class Cancelled)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tue 11/06</td>
+      <td style="text-align: center">Mixture Models and <a href="./L38.html">Clustering Evaluation</a>
+</td>
+      <td style="text-align: right">Read IMLP 193-211</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 11/07</td>
+      <td style="text-align: center"><a href="./L38.html">Unsupervised Clustering Evaluation</a></td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 11/09</td>
+      <td style="text-align: center">More Clustering Evaluation</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Mon 11/12 (Week 13)</td>
+      <td style="text-align: center"><a href="./L40.html">NMF and Outlier Detection</a></td>
+      <td style="text-align: right">Read IMLP 158-170</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tue 11/13</td>
+      <td style="text-align: center"><a href="./L41.html">Working with text data</a></td>
+      <td style="text-align: right">Read IMLP 325-336</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 11/14</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right">Read IMLP 337-349</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 11/16</td>
+      <td style="text-align: center"><a href="./L42.html">LSA</a></td>
+      <td style="text-align: right">HWK 4 due, Read IMLP 349-358</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Mon 11/19 (Week 14)</td>
+      <td style="text-align: center"><a href="./L42.html">Topic Models</a></td>
+      <td style="text-align: right">
+<a href="./hwk5.ipynb">HWK 5</a> out</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tue 11/20</td>
+      <td style="text-align: center"><a href="./L43.html">Word and document embeddings</a></td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">(11/21–11/25)</td>
+      <td style="text-align: center">(Thanksgiving Break)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Mon 11/26 (Week 15)</td>
+      <td style="text-align: center">(Class Cancelled)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tue 11/27</td>
+      <td style="text-align: center"><a href="./L44.html">Neural networks</a></td>
+      <td style="text-align: right">Skim <a href="http://www.deeplearningbook.org/contents/mlp.html">DL Ch. 6</a>
+</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 11/28</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right">Read APM 7.1 and 13.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 11/30</td>
+      <td style="text-align: center"><a href="./L45.html">NN in Practice</a></td>
+      <td style="text-align: right">
+<a href="./hwk6.pdf">HWK 6</a> out</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Mon 12/03 (Week 16)</td>
+      <td style="text-align: center"><a href="./L46.html">Advanced NN</a></td>
+      <td style="text-align: right">Watch <a href="https://www.youtube.com/watch?v=aircAruvnKk&amp;list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi">these</a>, <a href="./finalp.pdf">Practice Final</a>
+</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tue 12/04</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 12/05</td>
+      <td style="text-align: center">Review</td>
+      <td style="text-align: right"><a href="https://monmouthcollege-my.sharepoint.com/:b:/g/personal/rutterback_monmouthcollege_edu/Eaz695i92_xFiK96cET2gfcBaPRWKqnbCieymixPg_wioQ?e=8E8gvL">Practice Final Solutions</a></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td style="text-align: left">Tue 12/11 3:00 PM</td>
+      <td style="text-align: center">Final Exam</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tfoot>
+</table>
+
+<h3 id="monmouth-college-services">Monmouth College Services</h3>
+
+<ul>
+  <li>
+    <p>The <a href="http://ou.monmouthcollege.edu/academics/teaching-learning-center/">Teaching and Learning
+Center</a>
+offers FREE resources to assist Monmouth College students with
+their academic success. Programs include supplemental instruction
+for difficult classes, drop-in and appointment tutoring, and
+individual academic coaching. The TLC is here to help students
+excel academically. TLC services are not just for struggling
+students, but can assist all students to get better grades,
+practice stronger study skills, and manage time.</p>
+
+    <p>Make an appointment with Kam Williams, Director of Academic
+Support Programs and Student Disability Services, at the TLC on
+the 2nd floor of Poling Hall. The department phone number is
+457-2257, or contact the department online at
+http://ou.monmouthcollege.edu/academics/teaching-learning-center/. They
+can also be reached via email at: tlc@monmouthcollege.edu</p>
+  </li>
+  <li>
+    <p><a href="http://ou.monmouthcollege.edu/life/disability-services/default.aspx">Disability Support
+Services</a>:
+If you have a disability or had academic accommodations in high
+school or another college, you may be eligible for academic
+accommodations at Monmouth College under the Americans with
+Disabilities Act (ADA). Monmouth College is committed to equal
+educational access.</p>
+
+    <p>Students can meet with Kam Williams about accommodations at the
+Teaching and Learning Center (TLC). The TLC is located on the 2nd
+floor of Poling Hall. For more information, call 309-457-2257 or
+connect online at
+http://ou.monmouthcollege.edu/life/disability-services/default.aspx.</p>
+  </li>
+</ul>
+
+<!-- Local Variables: -->
+<!-- eval: (orgtbl-mode) -->
+<!-- End: -->
+
+			</div>
+		</div>
+		<!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="https://robertutterback.github.io/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+<!-- <script src="/assets/js/katex.js"></script> -->
+<script src="https://robertutterback.github.io/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/academicons.min.css">
+
+<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"> -->
+
+
+<!-- Google Analytics -->
+<!-- <script> -->
+<!-- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!-- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!-- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!-- })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!-- ga('create', 'UA-XXXXXXXX-X', 'auto'); -->
+<!-- ga('send', 'pageview'); -->
+<!-- </script> -->
+
+	</body>
+</html>

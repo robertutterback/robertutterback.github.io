@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Robert Utterback | DATA 402: Senior Project Implementation, Spring 2021</title>
+<meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+">
+
+     <link rel="shortcut icon" href="https://robertutterback.github.io/assets/img/favicon.ico">
+		 <link rel="stylesheet" href="https://robertutterback.github.io/assets/css/main.css">
+		 <!-- <link rel="shortcut icon" href="/assets/img/favicon.ico"> -->
+     <!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+
+     <link rel="canonical" href="https://robertutterback.github.io/courses/data402/s21/">
+</head>
+
+	<body>
+		<style type="text/css">
+			.schedule {
+			width: 100%;
+			}
+			table {  
+			width: auto;
+			margin: auto;
+			}
+			blockquote {
+			padding: .35rem;
+			font: 12px;
+			}
+			blockquote footer {
+			font-size: 8px;
+			}
+		</style>
+		<div class="course-content">
+			<div class="wrapper">
+				<header class="post-header">
+					<h1 class="post-title">DATA 402: Senior Project Implementation, Spring 2021</h1>
+					<!-- <h5 class="class-description">(todo)</h5> -->
+				</header>
+				<p><em>This syllabus is subject to change based on specific class needs, especially the <a href="#schedule">schedule</a>. Significant deviations will be discussed in class. Individual exceptions to the policies and schedule are granted only in cases of true emergency. Please make arrangements with me if an emergency arises.</em></p>
+
+<ul id="markdown-toc">
+  <li><a href="#logistics" id="markdown-toc-logistics">Logistics</a></li>
+  <li><a href="#content-and-goals" id="markdown-toc-content-and-goals">Content and Goals</a></li>
+  <li><a href="#attendance-and-expectations" id="markdown-toc-attendance-and-expectations">Attendance and Expectations</a></li>
+  <li><a href="#course-deliverables" id="markdown-toc-course-deliverables">Course Deliverables</a>    <ul>
+      <li><a href="#checkpoint-presentations" id="markdown-toc-checkpoint-presentations">Checkpoint Presentations</a></li>
+      <li><a href="#scholars-day-posters--final-presentations" id="markdown-toc-scholars-day-posters--final-presentations">Scholar’s Day Posters &amp; Final Presentations</a></li>
+      <li><a href="#completed-project" id="markdown-toc-completed-project">Completed Project</a></li>
+      <li><a href="#project-bibliography" id="markdown-toc-project-bibliography">Project Bibliography</a></li>
+    </ul>
+  </li>
+  <li><a href="#grading" id="markdown-toc-grading">Grading</a>    <ul>
+      <li><a href="#course-engagement-and-workload-expectations" id="markdown-toc-course-engagement-and-workload-expectations">Course Engagement and Workload Expectations</a></li>
+    </ul>
+  </li>
+  <li><a href="#schedule" id="markdown-toc-schedule">Schedule</a></li>
+</ul>
+
+<h2 id="logistics">Logistics</h2>
+
+<ul>
+  <li>Class meetings:
+    <ul>
+      <li>Schedule: M 4:00 PM - 4:50 PM</li>
+      <li>Location: <a href="https://monmouthcollege.zoom.us/j/94254252224">Class Zoom Room</a></li>
+    </ul>
+  </li>
+  <li>Instructors:
+    <ul>
+      <li>Robert Utterback
+        <ul>
+          <li>Physical Office: CSB 342</li>
+          <li><a href="https://monmouthcollege.zoom.us/j/8038366952">Personal Zoom Room</a></li>
+          <li>Office Phone: 309.457.2202</li>
+          <li>Website: <a href="https://robertutterback.github.io">https://robertutterback.github.io</a></li>
+          <li>Email: rutterback at MONMOUTHCOLLEGE dot EDU</li>
+        </ul>
+      </li>
+      <li>Marjorie Bond
+        <ul>
+          <li>Physical Office: CSB 350</li>
+          <li>Office Phone: 309.457.2338</li>
+          <li>Email: mebond at MONMOUTHCOLLEGE dot EDU</li>
+        </ul>
+      </li>
+      <li>Yevgeniy Ptukhin
+        <ul>
+          <li>Physical Office: CSB 345</li>
+          <li>Office Phone: 309.457.2247</li>
+          <li>Email: yptukhin at MONMOUTHCOLLEGE dot EDU</li>
+        </ul>
+      </li>
+      <li>James <em>Logan</em> Mayfield
+        <ul>
+          <li>Physical Office: CSB 344</li>
+          <li>Office Phone: 309.457.2200</li>
+          <li>Email: lmayfield at MONMOUTHCOLLEGE dot EDU</li>
+          <li>Website: <a href="http://jlmayfield.github.io">jlmayfield.github.io</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Course Website: <a href="https://robertutterback.github.io/courses/data402/s21/">https://robertutterback.github.io/courses/data402/s21/</a></li>
+  <li>Credits: 0.5 course credits</li>
+  <li>Prerequisites: DATA 401.</li>
+  <li>Feedback: At any time during the course you can use
+<a href="https://forms.office.com/Pages/ResponsePage.aspx?id=2CUxPywZP0ec1n97FfYhs8Yn_tnrj59Js226l2OfoDlUN0k1T08zN1c3SzhXSFZYVERLUEdZNzZHTy4u">this</a> to provide
+anonymous suggestions, criticism, praise, etc.</li>
+</ul>
+
+<h2 id="content-and-goals">Content and Goals</h2>
+
+<p><strong>Note</strong>: This is a compressed version of DATA 402 designed to be run
+in a half-semester.</p>
+
+<p>The senior project is the culminating experience of a student’s major
+in Computer Science and draws upon everything the student has learned
+over the course of their studies. The project itself is a means to an
+end and not the ultimate goal of the capstone experience. Sufficiently
+interesting and complex projects rely on an abundance of existing
+research and fundamental principles of computing. The project is,
+from this perspective, a concrete instantiation of these ideas and
+principles. By carrying out the project and presenting their work to
+technical and non-technical audiences students can demonstrate their
+understanding and mastery of some core element of the computing
+sciences as it appears in the real world context of their project.</p>
+
+<p>Students are ultimately working towards pinpointing general, abstract,
+or theoretical concepts that support their project and clearly
+articulating how their work is a specific instance of these
+concepts. An important part of this process is the identification of
+seminal scholarly work that addresses the concept and its
+applications. Students too often attempt to reinvent the wheel in the
+course of their capstone work. Occasionally they’re unaware that the
+wheel already exists. The emphasis on fundamentals is about
+identifying the wheels, the documents that lay out the general
+principles of those wheels, and focusing on applying those principles
+to the specific needs of the project. In doing so the student will
+better understand where their work sits in the broad spectrum of
+computing and can present it as such.</p>
+
+<p>DATA 402 is focused on the implementation of the plans proposed by the
+student in DATA 401 and the identification of the concrete
+instantiation of fundamental principles of data science at play within
+the various facets of the project. Each student in the class will give
+checkpoint presentations on a semiregular basis in order to receive
+feedback from peers and faculty regarding the current state of student
+projects and their understanding of the project’s underlying
+fundamentals. Towards the end of the semester, students will use their
+project as the basis for a Scholar’s Day poster and accompanying
+presentation.</p>
+
+<h2 id="attendance-and-expectations">Attendance and Expectations</h2>
+
+<p>Students in this course are expected to be respectful of their peers
+and the instructor. As this course is comprised entirely of student
+presentations, it is crucial that all students are always present and
+always on time. Failure to arrive on time and be a productive member
+of the course will have a detrimental effect on the final grade and
+leaves a bad impression with faculty that are likely targets for job
+and graduate school recommendations.</p>
+
+<h2 id="course-deliverables">Course Deliverables</h2>
+
+<p>The following elements of DATA 401 contribute to the overall capstone grade:</p>
+
+<ul>
+  <li>Checkpoint presentations</li>
+  <li>A Scholar’s Day poster</li>
+  <li>A final presentation</li>
+  <li>A publicly available, completed project</li>
+  <li>A bibliography of foundational work</li>
+</ul>
+
+<h3 id="checkpoint-presentations">Checkpoint Presentations</h3>
+
+<p>The class will meet for regular project checkpoints. At these
+checkpoints each student will give a 5–7 minute presentation that
+covers:</p>
+
+<!-- TODO: put this in a separate css file. -->
+<style type="text/css">
+    ol ol { list-style-type: lower-alpha; }
+</style>
+
+<ol>
+  <li>The state of the project (1–2 minutes):
+    <ol>
+      <li>The expected state for this checkpoint based off the current time line</li>
+      <li>The actual state with a demonstration of progress</li>
+      <li>The expected state for the next checkpoint</li>
+    </ol>
+  </li>
+  <li>Fundamentals (4–5 minutes)
+    <ol>
+      <li>Concepts, theories, and abstract principles</li>
+      <li>Seminal research and literature</li>
+      <li>Project specific instantiations</li>
+    </ol>
+  </li>
+</ol>
+
+<p>It is important to note that the bulk of each presentation is
+dedicated to the presentation of data science fundamentals as they
+appear in the project. The goal is to get accustomed to presenting the
+project in the context of a larger issue in as opposed to simply
+presenting the project.</p>
+
+<h3 id="scholars-day-posters--final-presentations">Scholar’s Day Posters &amp; Final Presentations</h3>
+
+<p>By the midpoint of the semester students will have identified at least
+one fundamental principle that acts as a cornerstone of their
+project. One of these principles will become the subject of the
+Scholar’s Day poster. It is important that students understand that
+<em>the project is not the subject of the poster but the vehicle by which
+the actual subject is presented</em>.</p>
+
+<p>The poster is to be done in the standard scientific research
+style. The CSB is ripe with examples of this kind of poster. Students
+will begin submitting drafts of their posters beginning shortly after
+midterm, and the final posters will be presented as a part of the
+Scholar’s Day poster session.</p>
+
+<p>The final presentation will be a 7–-10 minute self-evaluation and
+debrief about your capstone experience. During this time you should
+briefly discuss the final state of your project, what you think went
+well this semester, what could have gone better, and what advice you
+might have for current and future 401/402 students as they begin
+working on their project.</p>
+
+<h3 id="completed-project">Completed Project</h3>
+
+<p>By the end of the semester each student must have a completed
+project. It may not entail everything proposed in DATA 401 but it
+should be complete by some measurable sense of the word. For example,
+it may be a rough prototype of the proposed project or lack some of
+the originally proposed features, but still carries out some clearly
+identifiable part of the project as proposed. What is important is that
+it stands on its own and that the student presents it as such. Too
+often students lament the features they didn’t get to and
+overemphasize what the project might have been as opposed to what it
+finally ended up being.</p>
+
+<p>In a normal semester, the final version of the project must be
+submitted to the instructors by Scholar’s Day. During this compressed
+semester, we will allow changes until the deadline specified in the
+calendar below. However, the project must be complete <em>enough</em> by
+Scholar’s Day to allow a suitable poster and presentation.</p>
+
+<p>In addition to submitting their work to the instructors, students must
+also find a means of making their work publicly available. Standard
+paths to this include, but are not limited to:</p>
+
+<ul>
+  <li>Making the project Open-Source and hosting the code on a site like
+Github.</li>
+  <li>Making a completed application available on an app-store or some
+similar means of distribution.</li>
+  <li>Uploading a paper to a pre-print archive.</li>
+  <li>Submitting a paper for publication.</li>
+  <li>Hosing a website on a public server.</li>
+</ul>
+
+<p>The exact means by which projects are made publicly accessible must be
+approved by the instructors ahead of time. Projects must be publicly
+accessible by Scholar’s Day, even if some unfinished work remains.</p>
+
+<h3 id="project-bibliography">Project Bibliography</h3>
+
+<p>The poster and presentation are in-depth demonstrations of the
+students ability to connect their work to a singular larger issues in
+computing. This bibliography is a demonstration of the student’s
+ability to continue this practice across a broader range of issues as
+they relate to their the project. Over the course of DATA 401 and DATA
+402 students should have accumulated several key texts related to the
+foundational data science that underlies their project. The project
+bibliography should list and cite all of these sources. Some of these
+will be cited on the poster and presentation, some will
+not. Multifaceted projects will rely on many different ideas and
+should thereby have a lengthier bibliography. More constrained
+projects might have shorter bibliographies as a reflection of their
+narrower focus. Either way, the bibliography should accurately reflect
+the breadth and scope of the project.</p>
+
+<h2 id="grading">Grading</h2>
+
+<p>At the completion of this course, the grade for both DATA 401 and
+DATA 402 is determined. Students will typically receive the same grade
+in both courses to reflect the work throughout the capstone project
+and not in one individual phase of the project. Grades will be
+determined based on the following items:</p>
+
+<ul>
+  <li>Appropriateness of project difficulty</li>
+  <li>DATA 401 checkpoints</li>
+  <li>DATA 401 Technical Presentation</li>
+  <li>DATA 401 Proposal Poster</li>
+  <li>DATA 401 Written Proposal</li>
+  <li>DATA 401 Proposal Presentation</li>
+  <li>DATA 402 Checkpoint Presentations</li>
+  <li>DATA 402 Scholar’s Day Research Poster</li>
+  <li>DATA 402 Final Presentation</li>
+  <li>A Completed Project</li>
+  <li>A Project Bibliography</li>
+</ul>
+
+<p>The following examples provide an idea of what we are looking for in
+the above items. <strong>These are rough guidelines only!</strong> Assessment
+can vary considerably depending on the project.</p>
+
+<ul>
+  <li><strong>A/A-/B+ range</strong>. Steady progress is made (more or less) from start
+to finish. The student takes ownership of the project and approaches
+it the right way, with an occasional mishap. The real key is that
+<strong>progress can be explained and justified by the student</strong>.</li>
+  <li><strong>B range</strong>. Attempts are made to explain/justify work, but
+explanations often lack a certain level of understanding. Students
+with projects in this range are clearly saying what they think they
+need to say, sometimes reciting technical information taken verbatim
+from various sources.</li>
+  <li><strong>B-/C+ range</strong>. Little to no real planning and research in 401. An
+idea is proposed and the student talks a lot about what they want to
+do, but they never really engage in the problems they’ll encounter
+when developing the project. But the student regroups in 402,
+working the right way and providing some level of understanding in
+their work.</li>
+  <li><strong>C range</strong>. Little to no real planning and research in 401 that
+carries through to 402. The student is unable to explain and justify
+their work beyond showing that something happens. Something works,
+but there are lots of bugs or missing features, sometimes including
+large components.</li>
+  <li><strong>C- range or worse</strong> Little appreciable progress throughout 401
+and 402. The student is unable to explain what they did, nor what is
+really going on in the code. The code works sometimes but not most
+times. The student shows clear signs of stringing together code or
+material from other sources with no understanding.</li>
+</ul>
+
+<h3 id="course-engagement-and-workload-expectations">Course Engagement and Workload Expectations</h3>
+
+<p>The weekly workload for this course will vary by student but on
+average should be about 6–8 hours per week. Since class meetings are
+only scheduled for 1 hour a week, we expect students to dedicate at
+least 5–7 hours a week towards the development of their project
+proposal and implementation. This time can include research, coding,
+writing, meeting with professors, and so forth. Being a capstone
+project, it is likely that your weekly work will occasionally exceed
+the expected amount – everything takes longer than you think!</p>
+
+<h2 id="schedule">Schedule</h2>
+
+<p>Checkpoint presentations will occur on roughly a weekly basis. Unless
+otherwise specified, the topics listed below are the topics of
+checkpoint presentations. These topics correspond to some or all of
+sections of the final proposal. <em>This calendar is subject to change
+based on the circumstances of the course.</em></p>
+
+<p>Because this course is being compressed and combined with DATA 401 in
+a single semester, both schedules are given below.</p>
+
+<table class="schedule">
+  <thead>
+    <tr>
+      <th>Week</th>
+      <th>Date</th>
+      <th>Checkpoint</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><l4></l4></td>
+      <td><l18></l18></td>
+      <td><l35></l35></td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>01/25 – 01/29</td>
+      <td>Initial Meeting</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>02/01 – 02/05</td>
+      <td>Project Ideas/Background</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>02/08 – 02/12</td>
+      <td>Foundations/Tech talk proposal</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>02/15 – 02/19</td>
+      <td>Tech Talk</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>02/22 – 02/26</td>
+      <td>Features &amp; Specifications, Plan &amp; Timeline</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>03/01 – 03/05</td>
+      <td>Proposal checkpoint.</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>03/08 – 03/12</td>
+      <td>Proposal Due. Proposal Presentation.</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>03/15 – 03/19</td>
+      <td>(No checkpoint)</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>03/22 – 03/26</td>
+      <td>Implementation checkpoint 1.</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>03/29 – 03/31</td>
+      <td>Implementation checkpoint 2.</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>04/05 – 04/09</td>
+      <td>Implementation checkpoint 3. Poster draft.</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>04/12 – 04/16</td>
+      <td>Implementation checkpoint 4. Poster draft.</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>04/19 – 04/23</td>
+      <td>Implementation checkpoint 5. Poster draft.</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>04/26 – 04/30</td>
+      <td>Scholar’s Day? Poster due.</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>05/03 – 05/05</td>
+      <td>Implementation checkpoint 6. Bibliography due.</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>16</td>
+      <td>05/08</td>
+      <td>Final presentations.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Local Variables: -->
+<!-- eval: (orgtbl-mode) -->
+<!-- End: -->
+
+			</div>
+		</div>
+		<!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="https://robertutterback.github.io/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+<!-- <script src="/assets/js/katex.js"></script> -->
+<script src="https://robertutterback.github.io/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/academicons.min.css">
+
+<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"> -->
+
+
+<!-- Google Analytics -->
+<!-- <script> -->
+<!-- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!-- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!-- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!-- })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!-- ga('create', 'UA-XXXXXXXX-X', 'auto'); -->
+<!-- ga('send', 'pageview'); -->
+<!-- </script> -->
+
+	</body>
+</html>

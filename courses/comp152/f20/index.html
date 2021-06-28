@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Robert Utterback | COMP 152: Object-Oriented Data Structures and Algorithms, Fall 2020</title>
+<meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+">
+
+     <link rel="shortcut icon" href="https://robertutterback.github.io/assets/img/favicon.ico">
+		 <link rel="stylesheet" href="https://robertutterback.github.io/assets/css/main.css">
+		 <!-- <link rel="shortcut icon" href="/assets/img/favicon.ico"> -->
+     <!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+
+     <link rel="canonical" href="https://robertutterback.github.io/courses/comp152/f20/">
+</head>
+
+	<body>
+		<style type="text/css">
+			.schedule {
+			width: 100%;
+			}
+			table {  
+			width: auto;
+			margin: auto;
+			}
+			blockquote {
+			padding: .35rem;
+			font: 12px;
+			}
+			blockquote footer {
+			font-size: 8px;
+			}
+		</style>
+		<div class="course-content">
+			<div class="wrapper">
+				<header class="post-header">
+					<h1 class="post-title">COMP 152: Object-Oriented Data Structures and Algorithms, Fall 2020</h1>
+					<!-- <h5 class="class-description">A continuation of COMP 151 that explores the essential data structures and algorithms of modern computing, including lists, stacks, queues, heaps, and trees. Students will design, analyze, and build programs that implement and utilize these data structures to solve computational problems, including a thorough survey of sorting and search algorithms. These theoretical constructs are complemented by exposure to good software development practices, including data abstraction via abstract data types and object-oriented software design. Strong emphasis is put on analyzing and evaluating how implementation choices made by the programmer impact overall program performance and maintainability.</h5> -->
+				</header>
+				<p><em>This syllabus is subject to change based on specific class needs, especially the <a href="#schedule">schedule</a>. Significant deviations will be discussed in class. Individual exceptions to the policies and schedule are granted only in cases of true emergency. Please make arrangements with me if an emergency arises.</em></p>
+
+<ul id="markdown-toc">
+  <li><a href="#logistics" id="markdown-toc-logistics">Logistics</a></li>
+  <li><a href="#content" id="markdown-toc-content">Content</a>    <ul>
+      <li><a href="#description" id="markdown-toc-description">Description</a></li>
+      <li><a href="#sources" id="markdown-toc-sources">Sources</a></li>
+      <li><a href="#topics" id="markdown-toc-topics">Topics</a></li>
+      <li><a href="#programming-environment" id="markdown-toc-programming-environment">Programming Environment</a></li>
+    </ul>
+  </li>
+  <li><a href="#assessment" id="markdown-toc-assessment">Assessment</a>    <ul>
+      <li><a href="#assignments-and-workload" id="markdown-toc-assignments-and-workload">Assignments and Workload</a></li>
+      <li><a href="#grading" id="markdown-toc-grading">Grading</a></li>
+    </ul>
+  </li>
+  <li><a href="#policies" id="markdown-toc-policies">Policies</a></li>
+  <li><a href="#schedule" id="markdown-toc-schedule">Schedule</a></li>
+  <li><a href="#monmouth-college-services" id="markdown-toc-monmouth-college-services">Monmouth College Services</a></li>
+  <li><a href="#student-learning-outcomes" id="markdown-toc-student-learning-outcomes">Student Learning Outcomes</a></li>
+</ul>
+
+<h2 id="logistics">Logistics</h2>
+
+<ul>
+  <li>Class meetings:
+    <ul>
+      <li>Class: MWF 8:00 am - 9:50 AM (virtual: <em>Zoom room</em>, in-person: CSB 323)</li>
+      <li>Lab: W 2:00 pm - 3:50 PM (virtual: <em>Zoom room</em>, in-person: CSB 309)</li>
+    </ul>
+  </li>
+  <li>Instructor: Robert Utterback
+    <ul>
+      <li><a href="https://monmouthcollege.zoom.us/j/8038366952">Zoom Room</a></li>
+      <li>Office: CSB 342</li>
+      <li>Phone: 309.457.2202</li>
+      <li><a href="https://robertutterback.github.io">Website</a></li>
+      <li><a href="mailto:rutterback@monmouthcollege.edu">Email</a></li>
+      <li>Office hours: M 1-2. Tu 10-12. W 4-5. Th 12-1. F 1-2. OR by appointment (see schedule on my webpage). Office hours and appointments will be held exclusively online for the fall 2020 semester – use my personal Zoom room listed above.</li>
+    </ul>
+  </li>
+  <li>Course Website:
+    <ul>
+      <li>Main page: <a href="https://robertutterback.github.io/courses/comp152/f20/">https://robertutterback.github.io/courses/comp152/f20/</a></li>
+      <li><a href="https://lms.monmouthcollege.edu/moodle/course/view.php?id=3356">Moodle</a>
+will be used for quizzes, exams, and possibly some assignments.</li>
+    </ul>
+  </li>
+  <li>Credits: 1 course credit</li>
+  <li>Prerequisites: A C or better in COMP151 or COMP161.</li>
+  <li>Feedback: At any time during the course you can use
+<a href="https://forms.office.com/Pages/ResponsePage.aspx?id=2CUxPywZP0ec1n97FfYhs8Yn_tnrj59Js226l2OfoDlUMjZKOFBXQU1YSkFYS0xSQ0xVU1FVNlFKWC4u">this</a> form to provide
+anonymous suggestions, criticism, praise, etc.</li>
+</ul>
+
+<h2 id="content">Content</h2>
+
+<h3 id="description">Description</h3>
+
+<p>Data structures continues the study of abstraction and programming
+through a focused study of data structures, algorithms, and abstract
+data types. The primary focus of this course is the design and
+development of algorithms and programs using data abstraction and
+information hiding via abstract data types <em>ADTs</em>. Data abstraction
+is absolutely fundamental to good programming practice and the
+management of large scale problems and data sets. This course is
+designed to round out a student’s understanding of basic computer
+science concepts while strengthening the program design and
+development skills through continued use of an object-oriented design
+methodology.</p>
+
+<p>It is imperative that programmers and program designers be able to
+determine which of the many solutions available is the best for their
+specific task. Throughout the course, students will focus on to making
+solid quantitative and qualitative judgments about program efficiency
+and overall program design choices. Gone are the days when “it
+works” is a good enough assessment for the quality of a program.</p>
+
+<p>Students will explore the ideas and concepts brought up in class and
+homework assignments during the weekly lab session. In addition to
+hands on exercises, lab sessions will be used to explore current,
+relevant research in computer science.</p>
+
+<h3 id="sources">Sources</h3>
+
+<p>The course textbook will be:</p>
+
+<ul>
+  <li>Goodrich, Michael T. and Tamassia, Robert and Goldwasser, Michael H. <em>Data Structures and Algorithms in Python</em>. Wiley. 2013. ISBN-13:
+978-1-118-29027-9.</li>
+</ul>
+
+<p>Other sources will be posted on this webpage as needed.</p>
+
+<h3 id="topics">Topics</h3>
+
+<p>The course aims to cover most of chapters 1-8 and parts of chapters
+9-12. Other elements may be covered as time allows. The topics include, but
+are not limited to:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>- Review of Python fundamentals</td>
+      <td>- Object-Oriented Design Basics and Patterns</td>
+    </tr>
+    <tr>
+      <td>- Experimental and Asymptotic Algorithm Analysis</td>
+      <td>- Recursion</td>
+    </tr>
+    <tr>
+      <td>- Arrays and Sequence Data Types</td>
+      <td>- Stacks, Queues, Deques, and Priority Queues</td>
+    </tr>
+    <tr>
+      <td>- Abstract Data Types</td>
+      <td>- Linked Data Structures</td>
+    </tr>
+    <tr>
+      <td>- Binary Search Trees and Tree Traversal Algorithms</td>
+      <td>- Maps and Dictionaries</td>
+    </tr>
+    <tr>
+      <td>- Sorting, Searching, and Selection Algorithms</td>
+      <td>- Graph Algorithms (as time allows)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="programming-environment">Programming Environment</h3>
+
+<p>This course uses Python 3 and <a href="https://repl.it">repl.it</a>, an online IDE
+service. Students will receive, complete, and submit assignments all
+via the website. Students can also complete assignments on their local
+machines (I recommend the <a href="https://www.anaconda.com">Anaconda</a>
+software package) or on the departmental server, but all assignment
+submissions must be done through <a href="https://repl.it">repl.it</a> unless otherwise
+specified.</p>
+
+<h2 id="assessment">Assessment</h2>
+
+<h3 id="assignments-and-workload">Assignments and Workload</h3>
+<p>The weekly workload for this course will vary by student and by week
+but should be about 14 hours per week on average. The following table
+provides a rough estimate of the distribution of time over different
+course components for a 16 week semester, as well as detailing the
+type, amount, and relative value of all assignments.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Amount</th>
+      <th>Final Grade Weight</th>
+      <th>Total Time</th>
+      <th>Time/Week (Hours)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Lectures</td>
+      <td>41</td>
+      <td>10% (Participation)</td>
+      <td>-</td>
+      <td>2.25</td>
+    </tr>
+    <tr>
+      <td>Labs</td>
+      <td>8–10</td>
+      <td>15%</td>
+      <td>-</td>
+      <td>2.75</td>
+    </tr>
+    <tr>
+      <td>Homework</td>
+      <td>8–10</td>
+      <td>15%</td>
+      <td>48</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>Exam Study</td>
+      <td>-</td>
+      <td>-</td>
+      <td>16</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Exams</td>
+      <td>3–4</td>
+      <td>30%</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Projects</td>
+      <td>2</td>
+      <td>30%</td>
+      <td>48</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>Reading+Unstructured Study</td>
+      <td>-</td>
+      <td>-</td>
+      <td> </td>
+      <td>2</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>14</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Homework assignments will always either precede a lab to prepare for
+it or follow a lab to complete it. Each exam will focus primarily, but
+not necessarily exclusively, on the material covered since the
+previous exam.</p>
+
+<h3 id="grading">Grading</h3>
+<p>Lab and homework assignments are graded on a simple 3 point scale,
+marked with (in decreasing order) a check-plus, check, or check
+minus. Your final grade for these two assignment categories is then
+based on the respective averages.</p>
+
+<p>Your participation grade is based on a variety of activities. During
+class I will often make use of the <a href="https://socrative.com">Socrative</a>
+app, so you’ll need to install this on your phones. Participating in
+Socrative questions and with in-class group activities is required for
+a decent participation grade; an A includes asking questions either in
+class or in office hours.</p>
+
+<p>Your final grade is based on a weighted average of particular
+assignment categories. You can estimate your current grade based on
+your scores and these weights. You may always visit the instructor
+outside of class to discuss your current standing. Assignments and
+final grades use a standard grading scale shown below and will not
+be curved except in rare cases when deemed necessary by the
+instructor.</p>
+
+<p>This courses uses a standard grading scale. Assignments and final
+grades will not be curved except in rare cases when its deemed
+necessary by the instructor. Percentage grades translate to letter
+grades as follows:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Score</th>
+      <th style="text-align: center">Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">94–100</td>
+      <td style="text-align: center">A</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">90–93</td>
+      <td style="text-align: center">A-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">88–89</td>
+      <td style="text-align: center">B+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">82–87</td>
+      <td style="text-align: center">B</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">80–81</td>
+      <td style="text-align: center">B-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">78–79</td>
+      <td style="text-align: center">C+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">72–77</td>
+      <td style="text-align: center">C</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">70–71</td>
+      <td style="text-align: center">C-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">68–69</td>
+      <td style="text-align: center">D+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">62–67</td>
+      <td style="text-align: center">D</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">60–61</td>
+      <td style="text-align: center">D-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0–59</td>
+      <td style="text-align: center">F</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You are always welcome to challenge a grade that you feel is unfair or
+calculated incorrectly. Mistakes made in your favor will never be
+corrected to lower your grade. Mistakes made not in your favor will
+be corrected. Basically, after the initial grading your score can
+only go up as the result of a challenge*.</p>
+
+<p>You are always welcome to challenge a grade that you feel is unfair or
+calculated incorrectly. Mistakes made in your favor will never be
+corrected to lower your grade. Mistakes made not in your favor will be
+corrected. <em>Basically, after the initial grading your score can only
+go up as the result of a challenge.</em></p>
+
+<h2 id="policies">Policies</h2>
+
+<ul>
+  <li>
+    <p><strong>Late assignments</strong>: You have each been allotted a <em>total</em> of <em>5</em> late days. You may apply these to any problem sets you see fit and turn in your solutions with no penalty. However, you may use at most 2 on any individual assignment. The whole point here is to give you some flexibility that allows for things like illnesses, long trips, and the like. I am unlikely to grant further extensions.</p>
+  </li>
+  <li>
+    <p><strong>Academic dishonesty</strong>: Monmouth College’s official policy on academic dishonesty can be found <a href="http://ou.monmouthcollege.edu/life/residence-life/scots-guide/academic-regulations.aspx">here</a>. <strong>You</strong> are responsible for reading and complying with that policy.<br /><br />
+<em>In this course, any violation of the academic honesty policy will have varying consequences depending on the severity of the infraction as judged by the instructor. Minimally, a violation will result in an “F” or 0 points on the assignment in question. Additionally, the student’s course grade may be lowered by one letter grade. In severe cases, the student will be assigned a course grade of “F” and dismissed from the class. All cases of academic dishonesty <strong>must</strong> be reported to the Associate Dean who may decide to recommend further action to the Admissions and Academic Status Committee, including suspension or dismissal. It is assumed that students will educate themselves regarding what is considered to be academic dishonesty, so excuses or claims of ignorance will not mitigate the consequences of any violations</em></p>
+  </li>
+  <li>
+    <p><strong>Collaboration</strong>: We encourage you to make use of the resources available to you – it is fine to seek help from a friend, tutor, instructor, internet, etc. However, <em>copying of answers and any act worth of the label “cheating” is never permissible</em>! In addition to listing your sources and collaborators, you should be producing your own writeup in your own words. By “your own words,” we mean you should be producing the text yourself, without some external aid. Verbatim copying of text is specifically disallowed, but so is taking a source and rearranging some phrases and changing some variable names to create a derivative version! Such behavior is definitely NOT “using your own words.” It does not matter if you helped contribute to this source text with others, since then you are still not the sole author of the text.
+The point of collaborating on an assignment is not to produce a jointly authored set of solutions, since that violates the course policies. Instead, it is to help you solve the problems, which sometimes involve a bit of creativity. After you have jointly come up with the ideas you need to solve the problems, though, you should part ways with your group and sit down to do the writing by yourself.
+I also advise against sharing the writeup you submit with others, since if someone else uses your text as a source for their own solution (with or without your permission), you will also be implicated in the violation of the academic integrity policy. In any case, if two nearly identical solutions are received, we have no way of tell which is the original, and the policy is to not award credit for either submission.</p>
+  </li>
+  <li>
+    <p><strong>Electronic devices</strong>: Do not use your phone or other devices in class except where necessary. Any computer or tablet usage should be related to the course. If a device is not being used for Zoom or Socrative it should be put away and turned on silent. Other usage is rude and distracting to others.</p>
+  </li>
+  <li>
+    <p><strong>General expectations</strong>: In short, I expect you to be respectful of others and take
+responsibility for your own learning. You are here to learn, so work
+hard and be professional.</p>
+
+    <ul>
+      <li>
+        <p>Just attending class is not sufficient to truly learn the
+material. Read the text, use the resources available at Monmouth
+College, and go beyond the material.</p>
+      </li>
+      <li>
+        <p>If you miss class, you are responsible for everything covered on
+ that day.  College is, in some sense, your job. Take pride in
+ creating quality work. Staple your assignments, label problems, and
+ present your answers neatly and orderly.</p>
+      </li>
+      <li>
+        <p>Your job is to convince me that you have learned the material –
+show your work! Even if you do not know a particular answer,
+guide me through your thought process.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="schedule">Schedule</h2>
+<p>The following <strong>tentative</strong> calendar should give you a feel for how
+work is distributed throughout the semester. Assignments and events
+are listed in the week they are due or when they occur. <em>This calendar
+is subject to change based on the circumstances of the course</em>.</p>
+
+<p><strong>Note</strong>: All readings should be done <strong>before</strong> the class period in
+which they are listed below.</p>
+
+<table class="schedule">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Topic</th>
+      <th>Assignments and Readings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Wed 08/19 (Week 1)</td>
+      <td>Logistics, Overview</td>
+      <td>1.1-1.3</td>
+    </tr>
+    <tr>
+      <td>Wed 08/19 (lab)</td>
+      <td>Lab 1: Python Basics with Turtle</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 08/21</td>
+      <td>Python Review</td>
+      <td>1.4-1.5</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Mon 08/24 (Week 2)</td>
+      <td>Advanced Python Features</td>
+      <td>1.6-1.9</td>
+    </tr>
+    <tr>
+      <td>Wed 08/26</td>
+      <td>Review Exercises</td>
+      <td>1.10-1.11</td>
+    </tr>
+    <tr>
+      <td>Wed 08/26 (lab)</td>
+      <td>Lab 2: Using Sets and Dictionaries</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 08/28</td>
+      <td>Classes</td>
+      <td>2.1-2.3</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Mon 08/31 (Week 3)</td>
+      <td>Inheritance</td>
+      <td>2.4</td>
+    </tr>
+    <tr>
+      <td>Wed 09/02</td>
+      <td>Containment vs. Extention; Misc. OOP</td>
+      <td>2.5-2.6</td>
+    </tr>
+    <tr>
+      <td>Wed 09/02 (lab)</td>
+      <td>Lab 3: Object-Oriented Turtle</td>
+      <td><a href="labhwk3.pdf">Assignment PDF</a></td>
+    </tr>
+    <tr>
+      <td>Fri 09/04</td>
+      <td>Exam 1</td>
+      <td> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Mon 09/07 (Week 4)</td>
+      <td>Experimental Performance Analysis</td>
+      <td>3.1</td>
+    </tr>
+    <tr>
+      <td>Wed 09/09</td>
+      <td>Big-O</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <td>Wed 09/09 (lab)</td>
+      <td>Lab 4: Prefix Sums</td>
+      <td><a href="lab4.pdf">Assignment PDF</a></td>
+    </tr>
+    <tr>
+      <td>Fri 09/11</td>
+      <td>Analysis Exercises</td>
+      <td>3.3</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Mon 09/14 (Week 5)</td>
+      <td>Justification and Proof</td>
+      <td>3.4</td>
+    </tr>
+    <tr>
+      <td>Wed 09/16</td>
+      <td>Big-O and proof Examples</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Wed 09/16 (lab)</td>
+      <td>Hwk 5: Big-O Practice</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 09/18</td>
+      <td>Common Python Bugs</td>
+      <td><a href="https://inventwithpython.com/blog/2012/07/09/16-common-python-runtime-errors-beginners-find/">Handout 1</a>, <a href="http://www.globalnerdy.com/wp-content/uploads/2020/08/my-code-isnt-working.jpg">Handout 2</a></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Mon 09/21 (Week 6)</td>
+      <td>Recursive Functions</td>
+      <td>4.1</td>
+    </tr>
+    <tr>
+      <td>Wed 09/23</td>
+      <td>Recurrences</td>
+      <td>4.2-4.3</td>
+    </tr>
+    <tr>
+      <td>Wed 09/23 (lab)</td>
+      <td>Lab 5/Hwk 6: Recursion</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 09/25</td>
+      <td>Exam 2</td>
+      <td> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Mon 09/28 (Week 7)</td>
+      <td>More Recursion</td>
+      <td>4.4</td>
+    </tr>
+    <tr>
+      <td>Wed 09/30</td>
+      <td>Recursive Design</td>
+      <td>4.5</td>
+    </tr>
+    <tr>
+      <td>Wed 09/30 (lab)</td>
+      <td>Lab 6/Hwk 7: Recurrences</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 10/02</td>
+      <td>Arrays</td>
+      <td>5.1-5.2</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Mon 10/05 (Week 8)</td>
+      <td>Dynamic Array Analysis</td>
+      <td>5.3</td>
+    </tr>
+    <tr>
+      <td>Wed 10/07</td>
+      <td>Sequence Type Operations</td>
+      <td>5.4-5.5</td>
+    </tr>
+    <tr>
+      <td>Wed 10/07 (lab)</td>
+      <td>Lab 7/ Hwk 8: Dynamic Arrays</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 10/09</td>
+      <td>(No class – Pseudo-fall break)</td>
+      <td> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Mon 10/12 (Week 9)</td>
+      <td>Stacks</td>
+      <td>6.1</td>
+    </tr>
+    <tr>
+      <td>Wed 10/14</td>
+      <td>Queues</td>
+      <td>6.2</td>
+    </tr>
+    <tr>
+      <td>Wed 10/14 (lab)</td>
+      <td>Lab 8 and Project 1: RPN Calculator</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 10/16</td>
+      <td>Double-Ended Queues</td>
+      <td>6.3</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Mon 10/19 (Week 10)</td>
+      <td>Singly-linked Lists</td>
+      <td>7.1</td>
+    </tr>
+    <tr>
+      <td>Wed 10/21</td>
+      <td>Circularly-linked lists</td>
+      <td>7.2</td>
+    </tr>
+    <tr>
+      <td>Wed 10/21 (lab)</td>
+      <td>Free Lab for Project 1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 10/23</td>
+      <td>Doubly-linked lists</td>
+      <td>7.3</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Mon 10/26 (Week 11)</td>
+      <td>Binary Trees</td>
+      <td>8.1-8.2</td>
+    </tr>
+    <tr>
+      <td>Wed 10/28</td>
+      <td>Binary Tree Implementation</td>
+      <td>8.3</td>
+    </tr>
+    <tr>
+      <td>Wed 10/28 (lab)</td>
+      <td>Lab 10: Trees</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 10/30</td>
+      <td>Exam 3</td>
+      <td> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Mon 11/02 (Week 12)</td>
+      <td>Tree Traversals</td>
+      <td>8.4</td>
+    </tr>
+    <tr>
+      <td>Wed 11/04</td>
+      <td>Priority Queues</td>
+      <td>9.1-9.3</td>
+    </tr>
+    <tr>
+      <td>Wed 11/04 (lab)</td>
+      <td>Lab 11: Heaps and Heapsort</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 11/06</td>
+      <td>Heapify, Sorting</td>
+      <td>9.4</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Mon 11/09 (Week 13)</td>
+      <td>Maps: Naive Implementations</td>
+      <td>10.1,10.3</td>
+    </tr>
+    <tr>
+      <td>Wed 11/11</td>
+      <td>Hash Tables, plus related structures</td>
+      <td>10.2, 10.5</td>
+    </tr>
+    <tr>
+      <td>Wed 11/11 (lab)</td>
+      <td>Project 2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 11/13</td>
+      <td>Binary Search Trees</td>
+      <td>11.1-11.2</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Mon 11/16 (Week 14)</td>
+      <td>AVL Trees</td>
+      <td>11.3</td>
+    </tr>
+    <tr>
+      <td>Wed 11/18</td>
+      <td>Merge Sort</td>
+      <td>12.1-12.2</td>
+    </tr>
+    <tr>
+      <td>Wed 11/18 (lab)</td>
+      <td>(Free lab for Project 2)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 11/20</td>
+      <td>Quicksort and more</td>
+      <td>12.3-12.4</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Mon 11/23 (Week 15)</td>
+      <td>Exam Review</td>
+      <td> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Wed 12/02</td>
+      <td> </td>
+      <td><strong>Project 2 Due</strong> at midnight</td>
+    </tr>
+    <tr>
+      <td><strong>TBD</strong></td>
+      <td><strong>Exam 4 (Final)</strong></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="monmouth-college-services">Monmouth College Services</h2>
+
+<ul>
+  <li>
+    <p><strong>Mental Health and Counseling Services</strong>: Monmouth College provides cost-free, professional
+mental health counseling to support you and to help you manage
+challenges that may impact your personal and academic success.
+The Counseling Center is located in the upper level of Poling
+Hall, offices 204 and 216, and the hours are Monday-Friday, 8:30
+AM – 5:00 PM.  To request a confidential appointment on-line,
+<a href="https://titanium.monmouthcollege.edu">click here</a> or email <a href="mailto:counselingcenter@monmouthcollege.edu">the
+center</a>, <a href="mailto:cbeadles@monmouthcollege.edu">Cindy
+Beadles</a> or <a href="mailto:tcaudill@monmouthcollege.edu">Tom
+Caudill</a>.</p>
+  </li>
+  <li>
+    <p><a href="http://ou.monmouthcollege.edu/academics/teaching-learning-center/"><strong>Student Success and Accessibility
+Services</strong></a>
+offers FREE resources to assist Monmouth College students with
+their academic success. Programs include supplemental instruction
+for difficult classes, drop-in and appointment tutoring, and
+individual academic coaching. The office is here to help students
+excel academically, since everyone can work toward better grades,
+practice stronger study skills, and mange their time better.</p>
+  </li>
+  <li>
+    <p><a href="http://ou.monmouthcollege.edu/life/disability-services/default.aspx"><strong>Accessibility
+Services</strong></a>:
+If you have a disability or had academic accommodations in high
+school or another college, you may be eligible for academic
+accommodations at Monmouth College under the Americans with
+Disabilities Act (ADA). Monmouth College is committed to equal
+educational access. To discuss any of the services offered, please
+call or visit Student Success and Accessibility Services. SSAS is
+located in the ACE space on the first floor of Hewes Library,
+opposite Einstein Bros. Bagels. They can be reached at
+309-457-2257 or via email at
+<a href="mailto:ssas@monmouthcollege.edu">ssas@monmouthcollege.edu</a>.</p>
+  </li>
+</ul>
+
+<h2 id="student-learning-outcomes">Student Learning Outcomes</h2>
+
+<p>This course covers a variety of knowledge areas as categorized by the
+ACM/IEEE-CS Task Force on Computing Curricula. Note that not all of
+these areas are introduced in this course; some are touched upon
+previously and others will be developed further in later courses. At
+the end of the course, students should achieve the following learning
+outcomes with the specific level of mastery:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Knowledge Unit</th>
+      <th>Learning Outcome with Level of Mastery</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Basic Analysis</td>
+      <td>- In the context of specific algorithms, identify the characteristics of data and/or other conditions or assumptions that lead to different behaviors. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Explain what is meant by “best”, “average”, and “worst” case behavior of an algorithm. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- In the context of specific algorithms, identify the characteristics of data and/or other conditions or assumptions that lead to different behaviors.</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Perform empirical studies to validate hypotheses about runtime stemming from mathematical analysis. Run algorithms on various input sizes and compare performance. [Assessment]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Determine informally the time and space complexity of simple algorithms. [Usage]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Understand the formal definition of big O. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- List and contrast standard complexity classes. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Give examples that illustrate time-space trade-offs of algorithms. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Use big O notation formally to give asymptotic upper bounds on time and space complexity of algorithms. [Usage]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Algorithmic Strategies</td>
+      <td>- Have facility mapping pseudocode to implementation, implementing examples of algorithmic strategies from scratch, and applying them to specific problems. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Use a divide-and-conquer algorithm to solve an appropriate problem. [Usage]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Fundamental Data Structures and Algorithms</td>
+      <td>- Implement simple search algorithms and explain the differences in their time complexities. [Usage, Assessment]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Discuss factors other than computational efficiency that influence the choice of algorithms, such as programming time, maintainability, and the use of application-specific patterns in the input data. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Be able to implement common quadratic and $O(n \log n)$ sorting algorithms. [Usage]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Demonstrate the ability to evaluate algorithms, to select from a range of possible options, to provide justification for that selection, and to implement the algorithm in a particular context. [Usage, Assessment]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Fundamentals</td>
+      <td>- Explain the concept of modeling and the use of abstraction that allows the use of a machine to solve a problem. [Familiarity]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Basics of Counting</td>
+      <td>- Perform computations involving modular arithmetic. [Usage]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Processing</td>
+      <td>- Analyze simple problem statements to identify relevant information and select appropriate processing to solve the problem. [Assessment]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Identify the issues impacting correctness and efficiency of a computation [Familiarity]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Defensive Programming</td>
+      <td>- Demonstrate the identification and graceful handling of error conditions. [Usage]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Graphs and Trees</td>
+      <td>- Demonstrate different traversal methods for trees [and graphs], including pre, post, and in-order traversal of trees. [Usage]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Model a variety of real-world problems in computer science using appropriate forms of [graphs and] trees, such as representing … a hierarchical file system. [Usage]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Data Modeling</td>
+      <td>- Describe the main concepts of the OO model such as object identity, type constructors, encapsulation, inheritance, polymorphism, and versioning. [Familiarity]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Object-Oriented Programming</td>
+      <td>- Compare and contrast the procedural and object-oriented approach. Understand both as defining a matrix of operations and variants. [Assessment]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Use subclassing to design simple class hierarchies that allow code to be reused for distinct subclasses. [Usage]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Algorithms and Design</td>
+      <td>- Determine whether a recursive or iterative solution is most appropriate for a problem. [Assessment]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Implement a divide-and-conquer algorithm for solving a problem. [Usage]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Apply the technique of decomposition to break a problem into smaller pieces. [Usage]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Implement a coherent abstract data type, with loose coupling between components and behavior. [Usage]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Discuss the importance of algorithms in the problem-solving process. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Discuss how a problem may be solved by multiple algorithms, each with different properties. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Implement, test, and debug simple recursive functions. [Usage]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Fundamental Programming Concepts</td>
+      <td>- Analyze and explain the behavior of simple problems involving the fundamental programming constructs. [Assessment]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Identify the base case and the general case of a recursively-defined problem. [Assessment]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Fundamental Data Structures</td>
+      <td>- Discuss the appropriate use of built-in data structures. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Describe common applications for each data structure in the topic list. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Write programs that use each of the following data structures: arrays, strings, linked lists, stacks, queues, sets, and maps. [Usage]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Compare alternative implementations of data structures with respect to performance. [Assessment]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Choose the appropriate data structures for modeling a given problem. [Assessment]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Development Methods</td>
+      <td>- Trace the execution of a variety of code segments and write summaries of their computations. [Assessment]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Apply a variety of strategies to the testing and debugging of simple programs. [Usage]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Construct and debug programs using the standard libraries available with the chosen programming language. [Usage]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Apply consistent documentation and program style standards that contribute to the readability and maintainability of software.</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Software Construction</td>
+      <td>- Construct models of the design of a simple software system that are appropriate for the paradigm used to design it. [Usage]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Professional Communication</td>
+      <td>- Evaluate written technical documentation to detect problems of various kinds. [Assessment]</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Local Variables: -->
+<!-- eval: (orgtbl-mode) -->
+<!-- End: -->
+
+			</div>
+		</div>
+		<!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="https://robertutterback.github.io/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+<!-- <script src="/assets/js/katex.js"></script> -->
+<script src="https://robertutterback.github.io/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/academicons.min.css">
+
+<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"> -->
+
+
+<!-- Google Analytics -->
+<!-- <script> -->
+<!-- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!-- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!-- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!-- })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!-- ga('create', 'UA-XXXXXXXX-X', 'auto'); -->
+<!-- ga('send', 'pageview'); -->
+<!-- </script> -->
+
+	</body>
+</html>
