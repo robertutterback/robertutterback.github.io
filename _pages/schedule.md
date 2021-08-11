@@ -26,4 +26,4 @@ recognize.
 
 <!-- I'm normally on campus from about 8 AM to 5 PM. -->
 
-<iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showPrint=0&amp;showCalendars=0&amp;mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=robertu13%40gmail.com&amp;color=%23711616&amp;color=%235229A3&amp;src=mcfacultycolloquia%40gmail.com&amp;color=%23853104&amp;ctz=America%2FChicago" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+<iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showPrint=0&amp;showCalendars=0&amp;mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=robertu13%40gmail.com&amp;color=%23711616&amp;color=%235229A3&amp;src=mcfacultycolloquia%40gmail.com&amp;color=%23853104&amp;ctz=America%2FChicago;src=cnV0dGVyYmFja0Btb25tb3V0aGNvbGxlZ2UuZWR1&amp;color=%234285F4" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
