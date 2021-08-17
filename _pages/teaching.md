@@ -5,6 +5,13 @@ title: Teaching
 description: Course materials.
 ---
 
+### Fall 2021
+
+* <a href="{{ site.baseurl }}/courses/comp151/f21/">COMP 151: Intro to Programming</a>
+* <a href="{{ site.baseurl }}/courses/comp235/f21/">COMP 235: Introduction to Systems Programming</a>
+* <a href="{{ site.baseurl }}/courses/comp325/f21/">COMP 325: Organization of Programming Languages</a>
+* <a href="{{ site.baseurl }}/courses/comp401/f21/">COMP 401: Senior Project Research</a>
+
 ### Spring 2021
 
 * <a href="{{ site.baseurl }}/courses/comp152/s21/">COMP 152: Object-Oriented Data Structures and Algorithms</a>
