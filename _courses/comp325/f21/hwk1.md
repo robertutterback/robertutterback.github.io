@@ -4,9 +4,9 @@ title: "COMP 325, Fall 2021, Homework 1"
 semester: f21
 ---
 
-# Homework 1: "Arithmetic" Mystery Language[^1]
+## "Arithmetic" Mystery Language[^1]
 
-### Due Friday, August 27 by the start of class (10 AM). Submit via Gradescope.
+#### Due Friday, August 27 by the start of class (10 AM). Submit via Gradescope.
 
 First, you should get acquainted with the mystery languages by
 [reading the
