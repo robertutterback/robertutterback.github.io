@@ -13,9 +13,9 @@ First, you should get acquainted with the mystery languages by
 documentation](https://github.com/shriram/mystery-languages). Then go
 ahead and explore the "arithmetic" family of languages.
 
-Your goal for this and mystery languages is to find the difference
-between the languages. You will be given a specification of the
-language's syntax, as well as a very general, sometimes vague
+Your goal for this (and all) mystery languages is to find the
+difference between the languages. You will be given a specification of
+the language's syntax, as well as a very general, sometimes vague
 description of the language's semantics, generally focused on one
 specific feature. There will be several implementations of the
 language, each of which implements that specific feature in a
