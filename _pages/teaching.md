@@ -11,6 +11,7 @@ description: Course materials.
 * <a href="{{ site.baseurl }}/courses/comp235/f21/">COMP 235: Introduction to Systems Programming</a>
 * <a href="{{ site.baseurl }}/courses/comp325/f21/">COMP 325: Organization of Programming Languages</a>
 * <a href="{{ site.baseurl }}/courses/comp401/f21/">COMP 401: Senior Project Research</a>
+* <a href="{{ site.baseurl }}/courses/data401/f21/">DATA 401: Senior Project Research</a>
 
 ### Spring 2021
 
