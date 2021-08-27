@@ -4,7 +4,7 @@ title: "COMP 325, Fall 2021, Program 1"
 semester: f21
 ---
 
-## "Arithmetic" Mystery Language[^1]
+## Intro to Pyret
 
 ### Due Friday, September 3 by midnight. Submit via Gradescope.
 
