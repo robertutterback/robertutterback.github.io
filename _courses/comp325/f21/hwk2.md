@@ -6,7 +6,7 @@ semester: f21
 
 ## "Conditionals" Mystery Language[^1]
 
-#### Due Monday, September 07 by the start of class (10 AM). Submit via Gradescope.
+#### Due Monday, September 06 by the start of class (10 AM). Submit via Gradescope.
 
 Complete the "Conditionals" mystery language (`#lang mystery-languages/conditionals`).
 
