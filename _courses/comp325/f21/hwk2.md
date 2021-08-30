@@ -10,9 +10,7 @@ semester: f21
 
 Complete the "Conditionals" mystery language (`#lang mystery-languages/conditionals`).
 
-Reminder: First, you should get acquainted with the mystery languages by
-[reading the
-documentation](https://github.com/shriram/mystery-languages). Then go
-ahead and explore the "arithmetic" family of languages.
+Reminder: You can find a brief description of this family of languages
+at [the documentation](https://github.com/shriram/mystery-languages).
 
 [^1]: This assignment, like most in this course, comes from Brown University's Programming Languages course.
