@@ -5,6 +5,13 @@ title: Teaching
 description: Course materials.
 ---
 
+### Spring 2022
+
+* <a href="{{ site.baseurl }}/courses/comp151/s22/">COMP 151: Intro to Programming</a>
+* <a href="{{ site.baseurl }}/courses/comp337/s22/">COMP 337: Computer Communications</a>
+* <a href="{{ site.baseurl }}/courses/comp402/s22/">COMP 402: Senior Project Implementation</a>
+* <a href="{{ site.baseurl }}/courses/data402/s22/">DATA 402: Senior Project Implementation</a>
+
 ### Fall 2021
 
 * <a href="{{ site.baseurl }}/courses/comp151/f21/">COMP 151: Intro to Programming</a>
