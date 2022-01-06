@@ -18,8 +18,8 @@ college events. If you need to meet with me (outside of office hours),
 here to schedule a meeting</a></button>, or just email me a few of the
 open slots you find on the calendar below.
 
-During the spring 2021 semester, all my classes, meetings, and office
-hours will be held virtually using [this Zoom
+During the spring 2022 semester, my office hours and most appointments
+will be held virtually using [this Zoom
 room](https://monmouthcollege.zoom.us/j/8038366952). Please make sure
 your Zoom name is your own; I will not allow in names I do not
 recognize.
