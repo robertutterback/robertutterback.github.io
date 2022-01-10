@@ -9,8 +9,8 @@ description: Course materials.
 
 * <a href="{{ site.baseurl }}/courses/comp151/s22/">COMP 151: Intro to Programming</a>
 * <a href="{{ site.baseurl }}/courses/comp337/s22/">COMP 337: Computer Communications</a>
-* <a href="{{ site.baseurl }}/courses/comp402/s22/">COMP 402: Senior Project Implementation</a>
-* <a href="{{ site.baseurl }}/courses/data402/s22/">DATA 402: Senior Project Implementation</a>
+<!-- * <a href="{{ site.baseurl }}/courses/comp402/s22/">COMP 402: Senior Project Implementation</a> -->
+<!-- * <a href="{{ site.baseurl }}/courses/data402/s22/">DATA 402: Senior Project Implementation</a> -->
 
 ### Fall 2021
 
@@ -18,7 +18,7 @@ description: Course materials.
 * <a href="{{ site.baseurl }}/courses/comp235/f21/">COMP 235: Introduction to Systems Programming</a>
 * <a href="{{ site.baseurl }}/courses/comp325/f21/">COMP 325: Organization of Programming Languages</a>
 * <a href="{{ site.baseurl }}/courses/comp401/f21/">COMP 401: Senior Project Research</a>
-* <a href="{{ site.baseurl }}/courses/data401/f21/">DATA 401: Senior Project Research</a>
+<!-- * <a href="{{ site.baseurl }}/courses/data401/f21/">DATA 401: Senior Project Research</a> -->
 
 ### Spring 2021
 
