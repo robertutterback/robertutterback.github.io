@@ -5,6 +5,26 @@ title: Teaching
 description: Course materials.
 ---
 
+<!-- ### Spring 2023 -->
+
+<!-- * <a href="{{ site.baseurl }}/courses/comp152/s23/">COMP 152: Object-Oriented Data Structures and Algorithms</a> -->
+<!-- * <a href="{{ site.baseurl }}/courses/comp345/s23/">COMP 345: Operating Systems</a> -->
+<!-- * <a href="{{ site.baseurl }}/courses/comp401/s22/">COMP 402: Senior Project Research</a> -->
+<!-- * <a href="{{ site.baseurl }}/courses/comp402/s22/">COMP 402: Senior Project Implementation</a> -->
+
+### Fall 2022
+
+* <a href="{{ site.baseurl }}/courses/comp235/f22/">COMP 235: Introduction to Systems Programming</a>
+* <a href="{{ site.baseurl }}/courses/math260/f22/">MATH 260: Discrete Mathematics</a>
+* <a href="{{ site.baseurl }}/courses/comp347/f22/">COMP 347: Applied Machine Learning</a>
+<!-- * <a href="{{ site.baseurl }}/courses/comp401/f22/">COMP 401: Senior Project Research</a> -->
+<!-- * <a href="{{ site.baseurl }}/courses/data401/f22/">DATA 401: Senior Project Research</a> -->
+<!-- * <a href="{{ site.baseurl }}/courses/data402/f22/">DATA 402: Senior Project Implementation</a> -->
+
+### Summer 2022
+
+* <a href="{{ site.baseurl }}/courses/data401/su22/">DATA 401: Senior Project Research</a>
+
 ### Spring 2022
 
 * <a href="{{ site.baseurl }}/courses/comp151/s22/">COMP 151: Intro to Programming</a>
