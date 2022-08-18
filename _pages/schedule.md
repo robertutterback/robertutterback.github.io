@@ -2,7 +2,7 @@
 layout: page
 permalink: /schedule/
 title: Schedule
-description: #Materials for courses you taught. Replace this text with your description.
+description: Public schedule and info about how to schedule a meeting with me.
 ---
 
 <!-- Calendly link widget begin -->
@@ -18,11 +18,11 @@ college events. If you need to meet with me (outside of office hours),
 here to schedule a meeting</a></button>, or just email me a few of the
 open slots you find on the calendar below.
 
-During the spring 2022 semester, my office hours and most appointments
-will be held virtually using [this Zoom
-room](https://monmouthcollege.zoom.us/j/8038366952). Please make sure
-your Zoom name is your own; I will not allow in names I do not
-recognize.
+Although I typically plan to meet in my office, I'm happy to meet via
+Zoom by request.
+
+<!-- Please make sure your Zoom name is your own; I will not allow in names -->
+<!-- I do not recognize. -->
 
 <!-- I'm normally on campus from about 8 AM to 5 PM. -->
 
