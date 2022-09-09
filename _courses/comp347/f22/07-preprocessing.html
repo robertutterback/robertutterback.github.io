@@ -1,0 +1,2487 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Preprocessing</title>
+<meta name="author" content="Robert Utterback (based on slides by Andreas Muller)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./revealjs/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./revealjs/dist/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+<link rel="stylesheet" href="./revealjs/plugin/highlight/zenburn.css"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h2>Preprocessing</h2><h4>09/09/2022</h4><h5>Robert Utterback (based on slides by Andreas Muller)</h5>
+</section>
+
+<section>
+<section id="slide-orga056a1c">
+<h2 id="orga056a1c">Preprocessing</h2>
+<aside class="notes">
+<p>
+Today we’ll talk about preprocessing and maybe a little feature
+engineering (note the relationship). What we’re talking about today
+mostly applies to linear models, and not to tree-based models, but it
+also applies to neural nets and kernel SVMs.
+</p>
+
+</aside>
+</section>
+<section id="slide-org466cf86">
+<h3 id="org466cf86"></h3>
+
+<div id="orgd2ebe47" class="figure">
+<p><img src="./assets/boston_housing_scatter.png" alt="boston_housing_scatter.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Let’s go back to the boston housing dataset. The idea was to predict
+house prices. Here are the features on the x axis and the response, so
+price, on the y axis.
+</p>
+
+<p>
+What are some thing you can notice? (concentrated distributions,
+skewed distibutions, discrete variable, linear and non-linear effects,
+different scales)
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org1b3f89f">
+<h2 id="org1b3f89f">Scaling</h2>
+<div class="outline-text-2" id="text-org1b3f89f">
+</div>
+</section>
+<section id="slide-orgcc762e2">
+<h3 id="orgcc762e2"></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >plt.figure()
+plt.boxplot(X)
+plt.xticks(np.arange(1, X.shape[1] + 1), features,
+		   rotation=30, ha="right")
+plt.ylabel("MEDV")
+</code></pre>
+</div>
+
+
+<div id="org78f5284" class="figure">
+<p><img src="assets/bostonbox.png" alt="bostonbox.png" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+Let’s start with the different scales.
+</p>
+
+<p>
+Many models want data that is on the same scale. KNearestNeighbors: If
+the distance in TAX is between 300 and 400 then the distance
+difference in CHAS doesn’t matter!
+</p>
+
+<p>
+Linear models: the different scales mean different penalty. L2 is the same for all!
+</p>
+
+<p>
+We can also see non-gaussian distributions here btw!
+</p>
+
+<p>
+Code: <code>ha</code> is "horizontal alignment", just says which point should be
+the anchor when rotating
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb5f6b0b">
+<h3 id="orgb5f6b0b">Scaling and Distances</h3>
+
+<div id="orge2bb676" class="figure">
+<p><img src="./assets/knn_scaling.png" alt="knn_scaling.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Here is an example of the importance of scaling using a distance-based
+algorithm, K nearest neighbors. My favorite toy dataset with two
+classes in two dimensions. The scatter plots look identical, but on
+the left hand side, the two axes have very different scales. The x
+axis has much larger values than the y axis. On the right hand side, I
+used standard scaler and so both features have zero mean and unit
+variance. So what do you think will happen if I use k nearest
+neighbors here? Let's see
+</p>
+
+</aside>
+</section>
+<section id="slide-org7abd9ff">
+<h3 id="org7abd9ff">Scaling and Distances</h3>
+
+<div id="org13225aa" class="figure">
+<p><img src="./assets/knn_scaling2.png" alt="knn_scaling2.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+As you can see, the difference is quite dramatic. Because the X axis
+has such a larger magnitude on the left-hand side, only distances
+along the x axis matter. However, the important feature for this task
+is the y axis. So the important feature gets entirely ignored because
+of the different scales. And usually the scales don't have any
+meaning - it could be a matter of changing meters to kilometers.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgbc528a8">
+<h3 id="orgbc528a8">Ways to Scale Data</h3>
+
+<div id="org8a915d0" class="figure">
+<p><img src="./assets/scaling_plots.png" alt="scaling_plots.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+StandardScaler: subtract mean, divide by standard deviation.
+</p>
+
+<p>
+MinMaxScaler: subtract minimum, divide by range. Afterwards between 0 and 1.
+</p>
+
+<p>
+Robust Scaler: uses median and quantiles, therefore robust to outliers. Similar to StandardScaler.
+</p>
+
+<p>
+Normalizer: only considers angle, not length. Helpful for histograms, not that often used. Operates on rows, not columns!
+</p>
+
+<p>
+StandardScaler is usually good, but doesn’t guarantee particular min and max values
+</p>
+
+</aside>
+</section>
+<section id="slide-org79a70a4">
+<h3 id="org79a70a4">Sparse Data</h3>
+<ul>
+<li>Data with many zeros &#x2014; only store non-zero entries</li>
+<li>Subtracting anything will make data "dense" &#x2014; often can't fit in memory</li>
+<li>Only scale, don't center (<code>MaxAbsScaler</code>)</li>
+
+</ul>
+<aside class="notes">
+<p>
+You have to be careful if you have sparse data. Sparse data is data
+where most entries of the data-matrix X are zero – often only 1% or
+less are not zero.
+</p>
+
+<p>
+You can store this efficiently by only storing the nonzero
+elements. Subtracting the mean results in all features becoming
+non-zero!
+</p>
+
+<p>
+So don’t subtract anything, but you can still scale. MaxAbsScaler
+scales between -1 and 1 by dividing with the maximum absolute value
+for each feature.
+</p>
+
+<p>
+Part of me thinks this is bad design: the "sparse" data structures
+needn't assume 0 as the missing value. You should be able to set
+whatever the missing values are, and algorithms can use this. But
+there may be some technical details I can't yet see.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgf6c0232">
+<h3 id="orgf6c0232">Standard Scaler Example</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.preprocessing import StandardScaler
+X_train, X_test, y_train, y_test = \
+	train_test_split(X, y, random_state=0)
+scaler = StandardScaler()
+scaler.fit(X_train)
+X_train_scaled = scaler.transform(X_train)
+
+ridge = Ridge().fit(X_train_scaled, y_train)
+X_test_scaled = scaler.transform(X_test)
+print("{:.2f}".format(ridge.score(X_test_scaled, y_test)))
+</code></pre>
+</div>
+
+<pre class="example">
+0.63
+</pre>
+
+
+<aside class="notes">
+<p>
+Here’s how you do the scaling with StandardScaler in scikit-learn. Similar interface to models, but “transform” instead of “predict”. “transform” is always used when you want a new representation of the data.
+</p>
+
+<p>
+Fit on training set, transform training set, fit ridge on scaled data, transform test data, score scaled test data.
+</p>
+
+<p>
+The fit computes mean and standard deviation on the training set, transform subtracts the mean and the standard deviation.
+</p>
+
+<p>
+We fit on the training set and apply transform on both the training and the test set. That means the training set mean gets subtracted from the test set, not the test-set mean. That’s quite important.
+</p>
+
+</aside>
+</section>
+<section id="slide-org3eb429e">
+<h3 id="org3eb429e">Importance of Scaling</h3>
+
+<div id="org478463b" class="figure">
+<p><img src="./assets/no_separate_scaling.png" alt="no_separate_scaling.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Here’s an illustration why this is important using the min-max scaler. Left is the original data. Center is what happens when we fit on the training set and then transform the training and test set using this transformer. The data looks exactly the same, but the ticks changed. Now the data has a minimum of zero and a maximum of one on the training set. That’s not true for the test set, though. No particular range is ensured for the test-set. It could even be outside of 0 and 1. But the transformation is consistent with the transformation on the training set, so the data looks the same.
+</p>
+
+<p>
+On the right you see what happens when you use the test-set minimum and maximum for scaling the test set. That’s what would happen if you’d fit again on the test set. Now the test set also has minimum at 0 and maximum at 1, but the data is totally distorted from what it was before. So don’t do that.
+</p>
+
+</aside>
+</section>
+<section id="slide-org072bb5c">
+<h3 id="org072bb5c">Scikit-Learn API</h3>
+
+<div id="orgf1e8914" class="figure">
+<p><img src="./assets/sklearn_api.png" alt="sklearn_api.png" />
+</p>
+</div>
+
+<p>
+Shortcuts:
+</p>
+<ul>
+<li><code>est.fit_transform(X) == est.fit(X).transform(X)</code> (mostly)</li>
+<li><code>est.fit_predict(X) == est.fit(X).predict(X)</code> (mostly)</li>
+
+</ul>
+
+<aside class="notes">
+<p>
+Here’s a summary of the scikit-learn methods. All models have a fit method which takes the training data X<sub>train</sub>. If the model is supervised, such as our classification and regression models, they also take a y<sub>train</sub> parameter. The scalers don’t use a y<sub>train</sub> because they don’t use the labels at all – you could say they are unsupervised methods, but arguably they are not really learning methods at all. Models (also known as estimators in scikit-learn) to make a prediction of a target variable, you use the predict method, as in classification and regression. If you want to create a new representation of the data, a new kind of X, then you use the transform method, as we did with scaling. The transform method is also used for preprocessing, feature extraction and feature selection, which we’ll see later. All of these change X into some new form. There’s two important shortcuts. To fit an estimator and immediately transform the training data, you can use fit<sub>transform</sub>. That’s often more efficient then using first fit and then transform. The same goes for fit<sub>predict</sub>.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org1ae3121">
+<h3 id="org1ae3121"></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >scores = cross_val_score(RidgeCV(), X_train, y_train, cv=10)
+print2(np.mean(scores), np.std(scores))
+</code></pre>
+</div>
+
+<pre class="example">
+(0.717, 0.125)
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >scores = cross_val_score(RidgeCV(), X_train_scaled, y_train, cv=10)
+print2(np.mean(scores), np.std(scores))
+</code></pre>
+</div>
+
+<pre class="example">
+(0.718, 0.127)
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >scores = cross_val_score(KNeighborsRegressor(), X_train, y_train, cv=10)
+print2(np.mean(scores), np.std(scores))
+</code></pre>
+</div>
+
+<pre class="example">
+(0.499, 0.146)
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >scores = cross_val_score(KNeighborsRegressor(), X_train_scaled, y_train, cv=10)
+print2(np.mean(scores), np.std(scores))
+</code></pre>
+</div>
+
+<pre class="example">
+(0.750, 0.106)
+</pre>
+
+
+<aside class="notes">
+<p>
+Let’s apply the scaler to the Boston housing data.
+</p>
+
+<p>
+First I used the StandardScaler to scale the training data. Then I applied ten-fold cross-validation to evaluate the Ridge model on the data with and without scaling. I used RidgeCV which automatically picks alpha for me. With and without scaling we get an R<sup>2</sup> of about .72, so no difference. Often there is a difference for Ridge, but not in this case.
+</p>
+
+<p>
+If we use KneighborsRegressor instead, we see a big difference. Without scaling R<sup>2</sup> is about .5, and with scaling it’s .75. That makes sense since we saw that for distance calculations basically all features are dominated by the TAX feature.
+</p>
+
+<p>
+However, there is a bit of a problem with the analysis we did here. Can you see it?
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org717d6e7">
+<h2 id="org717d6e7">Preprocessing with Pipelines</h2>
+<div class="outline-text-2" id="text-org717d6e7">
+</div>
+</section>
+<section id="slide-org0d1f839">
+<h3 id="org0d1f839">A Common Error</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >print(X.shape)
+</code></pre>
+</div>
+
+<div class="VERBATIM" id="orga195fed">
+<pre class="example">
+(100, 10000)
+</pre>
+
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" ># select most informative 5% of features
+from sklearn.feature_selection import SelectPercentile, f_regression
+select = SelectPercentile(score_func=f_regression, percentile=5)
+select.fit(X, y)
+X_selected = select.transform(X)
+print(X_selected.shape)
+</code></pre>
+</div>
+
+<div class="VERBATIM" id="org9cfd9cd">
+<pre class="example">
+(100, 500)
+</pre>
+
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >np.mean(cross_val_score(Ridge(), X_selected, y))
+</code></pre>
+</div>
+
+<div class="VERBATIM" id="orgad9b664">
+<pre class="example">
+0.90
+</pre>
+
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >ridge = Ridge().fit(X_selected, y)
+X_test_selected = select.transform(X_test)
+ridge.score(X_test_selected, y_test)
+</code></pre>
+</div>
+
+<div class="VERBATIM" id="org33e4008">
+<pre class="example">
+-0.18
+</pre>
+
+</div>
+</section>
+<section id="slide-orgedae5e2">
+<h3 id="orgedae5e2">Leaking Information</h3>
+<div class="column" style="float:left; width: 50%">
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" ># BAD!
+select.fit(X, y)  # includes the cv test parts!
+X_sel = select.transform(X)
+scores = []
+for train, test in cv.split(X, y):
+    ridge = Ridge().fit(X_sel[train], y[train])
+    score = ridge.score(X_sel[test], y[test])
+    scores.append(score)
+</code></pre>
+</div>
+</font>
+</div>
+<div class="column" style="float:left; width: 50%">
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" ># GOOD!
+scores = []
+for train, test in cv.split(X, y):
+    select.fit(X[train], y[train])
+    X_sel_train = select.transform(X[train])
+    ridge = Ridge().fit(X_sel_train, y[train])
+    X_sel_test = select.transform(X[test])
+    score = ridge.score(X_sel_test, y[test])
+    scores.append(score)
+</code></pre>
+</div>
+</font>
+</div>
+<p>
+Need to include preprocessing in cross-validation!
+</p>
+<aside class="notes">
+<p>
+What we did was we trained the scaler on the training data, and then applied cross-validation to the scaled data. Tha’s what’s show on the left. The problem is that we use the information of all of the training data for scaling, so in particular the information in the test fold. This is also known as information leakage. If we apply our model to new data, this data will not have been used to do the scaling, so our cross-validation will give us a biased result that might be too optimistic.
+</p>
+
+<p>
+On the right you can see how we should do it: we should only use the training part of the data to find the mean and standard deviation, even in cross-validation. That means that for each split in the cross-validation, we need to scale the data a bit differently. This basically means the scaling should happen inside the cross-validation loop, not outside.
+</p>
+
+<p>
+In practice, estimating mean and standard deviation is quite robust and you will not see a big difference between the two methods. But for other preprocessing steps that we’ll see later, this might make a huge difference. So we should get it right from the start.
+</p>
+
+</aside>
+</section>
+<section id="slide-org9c2dfc2">
+<h3 id="org9c2dfc2">Leaking Information</h3>
+<div class="column" style="float:left; width: 50%">
+<p>
+Information leak:
+<img src="./assets/cv_info_leak.png" alt="cv_info_leak.png" />
+</p>
+</div>
+<div class="column" style="float:left; width: 50%">
+<p>
+No information leak:
+<img src="./assets/cv_no_info_leak.png" alt="cv_no_info_leak.png" />
+</p>
+</div>
+
+<ul>
+<li>Need to include preprocessing in cross-validation!</li>
+
+</ul>
+<aside class="notes">
+<p>
+What we did was we trained the scaler on the training data, and then applied cross-validation to the scaled data. Tha’s what’s show on the left. The problem is that we use the information of all of the training data for scaling, so in particular the information in the test fold. This is also known as information leakage. If we apply our model to new data, this data will not have been used to do the scaling, so our cross-validation will give us a biased result that might be too optimistic.
+</p>
+
+<p>
+On the right you can see how we should do it: we should only use the training part of the data to find the mean and standard deviation, even in cross-validation. That means that for each split in the cross-validation, we need to scale the data a bit differently. This basically means the scaling should happen inside the cross-validation loop, not outside.
+</p>
+
+<p>
+In practice, estimating mean and standard deviation is quite robust and you will not see a big difference between the two methods. But for other preprocessing steps that we’ll see later, this might make a huge difference. So we should get it right from the start.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgbf61bf2">
+<h3 id="orgbf61bf2"></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >X, y = boston.data, boston.target
+X_train, X_test, y_train, y_test = \
+	train_test_split(X, y, random_state=0)
+scaler = StandardScaler()
+scaler.fit(X_train)
+X_train_scaled = scaler.transform(X_train)
+ridge = Ridge().fit(X_train_scaled, y_train)
+
+X_test_scaled = scaler.transform(X_test)
+print2(ridge.score(X_test_scaled, y_test))
+</code></pre>
+</div>
+
+<pre class="example">
+(0.635)
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.pipeline import make_pipeline
+pipe = make_pipeline(StandardScaler(), Ridge())
+pipe.fit(X_train, y_train)
+print2(pipe.score(X_test, y_test))
+</code></pre>
+</div>
+
+<pre class="example">
+(0.635)
+</pre>
+
+
+<aside class="notes">
+<p>
+Now I want to show you how to do preprocessing and crossvalidation right with scikit-learn.
+</p>
+
+<p>
+At the top here you see the workflow for scaling the data and then applying ridge again. Fit the scaler on the training set, transform on the training set, fit ridge on the training set, transform the test set, and evaluate the model.
+</p>
+
+<p>
+Because this is such a common pattern, scikit-learn has a tool to make this easier, the pipeline. The pipeline is an estimator that allows you to chain multiple transformations of the data before you apply a final model.
+</p>
+
+<p>
+You can build a pipeline using the make<sub>pipeline</sub> function. Just provide as parameters all the estimators. All but the last one need to have a transform method. Here we only have two steps: the standard scaler and ridge.
+</p>
+
+<p>
+make<sub>pipeline</sub> returns an estimator that does both steps at once. We can call fit on it to fit first the scaler and then ridge on the scaled data, and when we call score, it transforms the data and then evaluates the model.
+</p>
+
+</aside>
+</section>
+<section id="slide-org53fbc6d">
+<h3 id="org53fbc6d">Pipelines</h3>
+
+<div id="org1b9754e" class="figure">
+<p><img src="./assets/pipeline.png" alt="pipeline.png" height="500px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Let’s dive a bit more into the pipeline. Here is an illustration of what happens with three steps, T1, T2 and Classifier. Imagine T1 to be a scaler and T2 to be any other transformation of the data.
+</p>
+
+<p>
+If we call fit on this pipeline, it will first call fit on the first step with the input X. Then it will transform the input X to X1, and use X1 to fit the second step, T2. Then it will use T2 to transform the data from X1 to X2. Then it will fit the classifier on X2.
+</p>
+
+<p>
+If we call predict on some data X’, say the test set, it will call transform on T1, creating X’1. Then it will use T2 to transform X’1 into X’2, and call the predict method of the classifier on X’2. This sounds a bit complicated, but it’s really just doing “the right thing” to apply multiple transformation steps.
+</p>
+
+</aside>
+</section>
+<section id="slide-org517d3e2">
+<h3 id="org517d3e2">Undoing our feature selection mistake</h3>
+<div class="column" style="float:left; width: 50%">
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" ># BAD!
+select.fit(X, y)  # includes the cv test parts!
+X_sel = select.transform(X)
+scores = []
+for train, test in cv.split(X, y):
+    ridge = Ridge().fit(X_sel[train], y[train])
+    score = ridge.score(X_sel[test], y[test])
+    scores.append(score)
+</code></pre>
+</div>
+<p>
+Same as:
+</p>
+<div class="org-src-container">
+
+<pre   ><code class="python" >select.fit(X, y)
+X_selected = select.transform(X, y)
+np.mean(cross_val_score(Ridge(), X_selected, y))
+</code></pre>
+</div>
+<div class="VERBATIM" id="org401daf0">
+<p>
+0.90
+</p>
+
+</div>
+</font>
+</div>
+<div class="column" style="float:left; width: 50%">
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" ># GOOD!
+scores = []
+for train, test in cv.split(X, y):
+    select.fit(X[train], y[train])
+    X_sel_train = select.transform(X[train])
+    ridge = Ridge().fit(X_sel_train, y[train])
+    X_sel_test = select.transform(X[test])
+    score = ridge.score(X_sel_test, y[test])
+    scores.append(score)
+</code></pre>
+</div>
+<p>
+Same as:
+</p>
+<div class="org-src-container">
+
+<pre   ><code class="python" >pipe = make_pipeline(select, Ridge())
+np.mean(cross_val_score(pipe, X, y))
+</code></pre>
+</div>
+<div class="VERBATIM" id="org7bbb1cf">
+<p>
+-0.079
+</p>
+
+</div>
+</font>
+</div>
+<aside class="notes">
+<p>
+How does that help with the cross-validation problem? Because now all steps are contain in pipeline, we can simply pass the whole pipeline to crossvalidation, and all processing will happen inside the cross-validation loop. That solve the data leakage problem.
+</p>
+
+<p>
+Here you can see how we can build a pipeline using a standard scaler and kneighborsregressor and pass it to cross-validation.
+</p>
+
+</aside>
+</section>
+<section id="slide-org680de5a">
+<h3 id="org680de5a">Naming Steps</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.pipeline import make_pipeline
+knn_pipe = make_pipeline(StandardScaler(),
+                         KNeighborsRegressor())
+print(knn_pipe)
+</code></pre>
+</div>
+
+<pre class="example">
+Pipeline(steps=[('standardscaler', StandardScaler()),
+                ('kneighborsregressor', KNeighborsRegressor())])
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.pipeline import Pipeline
+pipe = Pipeline((("scaler", StandardScaler()),
+                 ("regressor", KNeighborsRegressor)))
+</code></pre>
+</div>
+<aside class="notes">
+<p>
+But let’s talk a bit more about pipelines, because they are great. The
+pipeline has an attribute called steps, which &#x2014; contains its
+steps. Steps is a list of tuples, where the first entry is a string
+and the second is an estimator (model). The string is the “name” that
+is assigned to this step in the pipeline. You can see here that our
+first step is called “standardscaler” in all lower case letters, and
+the second is called kneighborsregressor, also all lower case letters.
+</p>
+
+<p>
+By default, step names are just lowercased classnames. You can also name the steps yourself using the Pipeline class directly. Then you can specify the steps as tuples of name and estimator. make<sub>pipeline</sub> is just a shortcut to generate the names automatically.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgf3c2135">
+<h3 id="orgf3c2135">Pipeline and GridSearchCV</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >knn_pipe = make_pipeline(StandardScaler(),
+                         KNeighborsRegressor())
+param_grid = \
+    {'kneighborsregressor__n_neighbors': range(1, 10)}
+grid = GridSearchCV(knn_pipe, param_grid, cv=10)
+grid.fit(X_train, y_train)
+print(grid.best_params_)
+print2(grid.score(X_test, y_test))
+</code></pre>
+</div>
+
+<pre class="example">
+{'kneighborsregressor__n_neighbors': 7}
+(0.600)
+</pre>
+
+
+<aside class="notes">
+<p>
+These names are important for using pipelines with gridsearch. Recall that for using GridSearchCV you need to specify a parameter grid as a dictionary, where the keys are the parameter names. If you are using a pipeline inside GridSearchCV, you need to specify not only the parameter name, but also the step name – because multiple steps could have a parameter with the same name.
+</p>
+
+<p>
+The way to do this is to use the stepname, then two underscores, and then the parameter name, as the key for the param<sub>grid</sub> dictionary.
+</p>
+
+<p>
+You can see that the bestparams will have this same format.
+</p>
+
+<p>
+This way you can tune the parameters of all steps in a pipeline at once!
+</p>
+
+<p>
+And you don’t have to worry about leaking information, since all transformations are contained in the pipeline.
+</p>
+
+<p>
+You should always use pipelines for preprocessing. Not only does it make your code shorter, it also makes it less likely that you have bugs.
+</p>
+
+</aside>
+</section>
+<section id="slide-org0a6c426">
+<h3 id="org0a6c426">Going wild with Pipelines</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.datasets import load_diabetes
+diabetes = load_diabetes()
+X_train, X_test, y_train, y_test = train_test_split(
+    diabetes.data, diabetes.target, random_state=0)
+from sklearn.preprocessing import PolynomialFeatures
+pipe = make_pipeline(
+    StandardScaler(),
+    PolynomialFeatures(),
+    Ridge())
+param_grid = {'polynomialfeatures__degree': [1, 2, 3],
+              'ridge__alpha': [0.001, 0.01, 0.1, 1, 10, 100]}
+grid = GridSearchCV(pipe, param_grid=param_grid,
+                    n_jobs=-1, return_train_score=True)
+grid.fit(X_train, y_train)
+</code></pre>
+</div>
+</section>
+<section id="slide-org8ecaf08">
+<h3 id="org8ecaf08">Wilder</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >pipe = Pipeline([('scaler', StandardScaler()),
+                 ('regressor', Ridge())])
+param_grid = {'scaler': [StandardScaler(), MinMaxScaler(),
+                         'passthrough'],
+              'regressor': [Ridge(), Lasso()],
+              'regressor__alpha': np.logspace(-3, 3, 7)}
+grid = GridSearchCV(pipe, param_grid)
+grid.fit(X_train, y_train)
+grid.score(X_test, y_test)
+</code></pre>
+</div>
+<aside class="notes">
+<p>
+Don't necessarily need/want to do this stuff; often you need to
+manually be running and looking at results so you can customize it.
+</p>
+
+</aside>
+</section>
+<section id="slide-org7050ff9">
+<h3 id="org7050ff9">Wildest</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.tree import DecisionTreeRegressor
+pipe = Pipeline([('scaler', StandardScaler()),
+                 ('regressor', Ridge())])
+# check out searchgrid for more convenience
+param_grid = [{'regressor': [DecisionTreeRegressor()],
+               'regressor__max_depth': [2, 3, 4],
+               'scaler': ['passthrough']},
+              {'regressor': [Ridge()],
+               'regressor__alpha': [0.1, 1],
+               'scaler': [StandardScaler(), MinMaxScaler(),
+                          'passthrough']}
+             ]
+grid = GridSearchCV(pipe, param_grid)
+grid.fit(X_train, y_train)
+</code></pre>
+</div>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orga65bbd0">
+<h2 id="orga65bbd0">Feature Distributions</h2>
+<aside class="notes">
+<p>
+Now that we discussed scaling and pipelines, let’s talk about some
+more preprocessing methods. One important aspect is dealing with
+different input distributions.
+</p>
+
+</aside>
+</section>
+<section id="slide-org482f466">
+<h3 id="org482f466">Transformed Features</h3>
+
+<div id="org46f5b19" class="figure">
+<p><img src="./assets/boston_box_transformed.png" alt="boston_box_transformed.png" height="500px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Here is a box plot of the boston housing data after transforming it
+with the standard scaler. Even though the mean and standard deviation
+are the same for all features, the distributions are quite
+different. You can see very concentrated distributions like Crim and
+B, and very skewed distribuations like RAD and Tax (and also crim and
+B).
+</p>
+
+<p>
+Many models, in particular linear models and neural networks, work better if the features are approximately normal distributed.
+</p>
+
+<p>
+Let’s also check out the histograms of the data to see a bit better what’s going on.
+</p>
+
+</aside>
+</section>
+<section id="slide-org6720416">
+<h3 id="org6720416">Transformed Histograms</h3>
+
+<div id="orgd428825" class="figure">
+<p><img src="./assets/boston_hist.png" alt="boston_hist.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Clearly CRIM and ZN and B are very peaked, and LSTAT and DIS and Age
+are very asymmetric. Sometimes you can use a hack like applying a
+logarithm to the data to get better behaved values. There is slightly
+more rigorous technique though.
+</p>
+
+<p>
+Q: If I wanted to apply log to a vector, how could I do that?
+A: np.log(x)
+If you want to apply it to many data points, loop over them and apply it
+</p>
+
+</aside>
+</section>
+<section id="slide-org60fbdf1">
+<h3 id="org60fbdf1">Power Transformations</h3>
+<div class="column" style="float:left; width: 60%">
+<div>
+\begin{equation}
+bc_\lambda(x) = 
+\begin{cases}
+\frac{x^\lambda - 1}{\lambda} & \text{ if $\lambda \ne 0$}\\
+\log(x) & \text{ if $\lambda =0$}\\
+\end{cases}
+\end{equation}
+
+</div>
+
+<p>
+Only applicable for positive \(x\)!
+</p>
+</div>
+<div class="column" style="float:left; width: 40%">
+
+<div id="orga97b052" class="figure">
+<p><img src="./assets/boxcox.png" alt="boxcox.png" height="300px" />
+</p>
+</div>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.preprocessing import PowerTransformer
+pt = PowerTransformer(method='box-cox')
+# for any data: Yeo-Johnson
+pt.fit(X)
+</code></pre>
+</div>
+<aside class="notes">
+<p>
+The Box-Cox transformation is a family of univariate functions to
+transform your data, parametrized by a parameter lambda. For lamda=1
+the function is the identity, for lambda = 2 it is square, lambda =0
+is log and there is many other functions in between. For a given
+dataset, a separate parameter lambda is determined for each feature,
+by minimizing the skewdness of the data (making skewdness close to
+zero, not close to -inf), so it is more “gaussian”. The skewdness of a
+function is a measure of the asymmetry of a function and is 0 for
+functions that are symmetric around their mean. Unfortunately the
+Box-Cox transformation is only applicable to positive features.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgd7cc10f">
+<h3 id="orgd7cc10f">Box-Cox on Boston</h3>
+<div class="column" style="float:left; width: 70%">
+
+<div id="org1781f81" class="figure">
+<p><img src="./assets/boston_hist.png" alt="boston_hist.png" height="200px" />
+</p>
+</div>
+
+<div id="org1553ff2" class="figure">
+<p><img src="./assets/boston_hist_boxcox.png" alt="boston_hist_boxcox.png" height="200px" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 30%">
+<p>
+Before
+</p>
+
+<br/>
+<br/>
+<br/>
+<p>
+After
+</p>
+</div>
+<aside class="notes">
+<p>
+Here are the histograms of the original data and the transformed data. The title of each subplot shows the estimated lambda. If the lambda is close to 1, the transformation didn’t change much. If it is away from 1, there was a significant transformation.
+</p>
+
+<p>
+You can clearly see the effect on “CRIM” which was approximately log-transformed, and lstat and nox which were approximately transformed by sqrt.
+</p>
+
+<p>
+For the binary CHAS the transformation doesn’t make a lot of sense, though.
+</p>
+
+</aside>
+</section>
+<section id="slide-org3bb657a">
+<h3 id="org3bb657a">Box-Cox Scatter</h3>
+<div class="column" style="float:left; width: 70%">
+
+<div id="org67c8e72" class="figure">
+<p><img src="./assets/boston_housing_scatter.png" alt="boston_housing_scatter.png" height="200px" />
+</p>
+</div>
+
+<div id="orga74bcf7" class="figure">
+<p><img src="./assets/boston_bc_scaled_scatter.png" alt="boston_bc_scaled_scatter.png" height="200px" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 30%">
+<p>
+Before
+</p>
+
+<br/>
+<br/>
+<br/>
+<p>
+After
+</p>
+</div>
+
+<aside class="notes">
+<p>
+Here is a comparison of the feature vs response plot before and after the box-cox transformation.
+</p>
+
+<p>
+The dis, lstat and crim relationships now look a bit more obvious and linear.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org31f6517">
+<h2 id="org31f6517">Categorical Variables</h2>
+<aside class="notes">
+<p>
+
+</p>
+
+</aside>
+</section>
+<section id="slide-org1ecad58">
+<h3 id="org1ecad58">Categorical Variables</h3>
+<div class="org-src-container">
+
+<pre  id="smallcode" ><code class="python" >df = pd.DataFrame({
+    'boro': ['Manhattan', 'Queens', 'Manhattan', 'Brooklyn', 'Brooklyn', 'Bronx'],
+    'salary': [103, 89, 142, 54, 63, 219],
+    'vegan': ['No', 'No','No','Yes', 'Yes', 'No']})
+</code></pre>
+</div>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>boro</th>
+      <th>salary</th>
+      <th>vegan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Manhattan</td>
+      <td>103</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Queens</td>
+      <td>89</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Manhattan</td>
+      <td>142</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Brooklyn</td>
+      <td>54</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Brooklyn</td>
+      <td>63</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Bronx</td>
+      <td>219</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+<aside class="notes">
+<p>
+Before we can apply a machine learning algorithm, we first need to think about how we represent our data.
+</p>
+
+<p>
+Earlier, I said x &isin; R<sup>n</sup>. That’s not how you usually get data. Often data has units, possibly different units for different sensors, it has a mixture of continuous values and discrete values, and different measurements might be on totally different scales.
+</p>
+
+<p>
+First, let me explain how to deal with discrete input variables, also known as categorical features. They come up in nearly all applications.
+</p>
+
+<p>
+Scikit-learn requires you to explicitly handle these, and assumes in general that all your input is continuous numbers. This is different from how many libraries in R do it, which deal with categorical variables implicitly.
+</p>
+
+</aside>
+</section>
+<section id="slide-org846f9ef">
+<h3 id="org846f9ef">Ordinal Encoding</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >df['boro_ordinal'] = df.boro.astype("category").cat.codes
+</code></pre>
+</div>
+
+<div class="column" style="float:left; width: 50%">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>boro</th>
+      <th>salary</th>
+      <th>vegan</th>
+      <th>boro_ordinal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Manhattan</td>
+      <td>103</td>
+      <td>No</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Queens</td>
+      <td>89</td>
+      <td>No</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Manhattan</td>
+      <td>142</td>
+      <td>No</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Brooklyn</td>
+      <td>54</td>
+      <td>Yes</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Brooklyn</td>
+      <td>63</td>
+      <td>Yes</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Bronx</td>
+      <td>219</td>
+      <td>No</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="column" style="float:right; width: 50%">
+
+<div class="r-stack">
+
+<div id="orga3d59a5" class="figure">
+<p><img src="./assets/boro_ordinal.png" alt="boro_ordinal.png" class="fragment (appear)" />
+</p>
+</div>
+
+
+<div id="orgda4b0ce" class="figure">
+<p><img src="./assets/boro_ordinal_classification.png" alt="boro_ordinal_classification.png" class="fragment (appear)" />
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="slide-org0b1adf2">
+<h3 id="org0b1adf2">One-Hot (Dummy) Encoding</h3>
+<div class="column" style="float:left; width: 50%">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>boro</th>
+      <th>salary</th>
+      <th>vegan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Manhattan</td>
+      <td>103</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Queens</td>
+      <td>89</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Manhattan</td>
+      <td>142</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Brooklyn</td>
+      <td>54</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Brooklyn</td>
+      <td>63</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Bronx</td>
+      <td>219</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+<div class="column" style="float:right; width: 50%">
+
+<div class="org-src-container">
+
+<pre  id="smallcode" ><code class="python" >pd.get_dummies(df)
+</code></pre>
+</div>
+
+<table border="1" class="dataframe bigtable">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>salary</th>
+      <th>boro_Bronx</th>
+      <th>boro_Brooklyn</th>
+      <th>boro_Manhattan</th>
+      <th>boro_Queens</th>
+      <th>vegan_No</th>
+      <th>vegan_Yes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>103</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>89</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>142</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>54</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>63</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>219</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+<aside class="notes">
+<p>
+Instead, we add one new feature for each category,
+</p>
+
+<p>
+And that feature encodes whether a sample belongs to this category or not.
+</p>
+
+<p>
+That’s called a one-hot encoding, because only one of the three features in this example is active at a time.
+</p>
+
+<p>
+You could actually get away with n-1 features, but in machine learning that usually doesn’t matter
+</p>
+
+<p>
+One way to do is with Pandas. Here I have an example of a data frame where I have the boroughs of New York as a categorical variable and variable saying whether they are vegan. One to get the dummies is to get dummies on this data frame. This will create new columns, it will actually replace borough column by four columns that correspond to the four different values. The get<sub>dummies</sub> applies transformation to all columns that have a dtype that's either object or categorical.
+</p>
+
+<p>
+In this case we didn't actually want to transform the target variable vegan.
+</p>
+
+</aside>
+</section>
+<section id="slide-org563e568">
+<h3 id="org563e568">One-Hot (Dummy) Encoding</h3>
+<div class="column" style="float:left; width: 50%">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>boro</th>
+      <th>salary</th>
+      <th>vegan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Manhattan</td>
+      <td>103</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Queens</td>
+      <td>89</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Manhattan</td>
+      <td>142</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Brooklyn</td>
+      <td>54</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Brooklyn</td>
+      <td>63</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Bronx</td>
+      <td>219</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+<div class="column" style="float:right; width: 50%">
+
+<div class="org-src-container">
+
+<pre  id="smallcode" ><code class="python" >pd.get_dummies(df, columns=['boro'])
+</code></pre>
+</div>
+
+<table border="1" class="dataframe bigtable">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>salary</th>
+      <th>vegan</th>
+      <th>boro_Bronx</th>
+      <th>boro_Brooklyn</th>
+      <th>boro_Manhattan</th>
+      <th>boro_Queens</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>103</td>
+      <td>No</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>89</td>
+      <td>No</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>142</td>
+      <td>No</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>54</td>
+      <td>Yes</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>63</td>
+      <td>Yes</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>219</td>
+      <td>No</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+
+<aside class="notes">
+<p>
+We can specify selectively which columns to apply the encoding to.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org891e178">
+<h3 id="org891e178">One-Hot (Dummy) Encoding</h3>
+<div class="column" style="float:left; width: 50%">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>boro</th>
+      <th>salary</th>
+      <th>vegan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Manhattan</td>
+      <td>103</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Queens</td>
+      <td>89</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Manhattan</td>
+      <td>142</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Brooklyn</td>
+      <td>54</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Brooklyn</td>
+      <td>63</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Bronx</td>
+      <td>219</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+<div class="column" style="float:right; width: 50%">
+
+<div class="org-src-container">
+
+<pre  id="smallcode" ><code class="python" >pd.get_dummies(df_ordinal, columns=['boro'])
+</code></pre>
+</div>
+
+<table border="1" class="dataframe bigtable">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>salary</th>
+      <th>vegan</th>
+      <th>boro_0</th>
+      <th>boro_1</th>
+      <th>boro_2</th>
+      <th>boro_3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>103</td>
+      <td>No</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>89</td>
+      <td>No</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>142</td>
+      <td>No</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>54</td>
+      <td>Yes</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>63</td>
+      <td>Yes</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>219</td>
+      <td>No</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+<aside class="notes">
+<p>
+This also helps if the variable was already encoded using
+integers. Sometimes, someone has already encoded the categorical
+variables to integers like here. So here this is exactly the same
+information only except instead of strings you have them numbered. If
+you call the get<sub>dummies</sub> on this nothing happens because none of them
+are object data types or categorical data types. If you want to look
+at the One Hot Encoding, you can explicitly pass columns equal and
+this will transform into boro<sub>1</sub>, boro<sub>2</sub>, boro<sub>3</sub>. In this case
+get<sub>dummies</sub> usually wouldn't do anything, but we can tell it which
+variables are categorical and it will dummy encode those for us.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org891e178-split">
+
+<div class="column" style="float:left; width: 50%">
+<font size=6>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >df = pd.DataFrame({
+    'boro': ['Manhattan', 'Queens', 'Manhattan',
+             'Brooklyn', 'Brooklyn', 'Bronx'],
+    'salary': [103, 89, 142, 54, 63, 219],
+    'vegan': ['No', 'No','No','Yes', 'Yes', 'No']})
+df_dummies = pd.get_dummies(df, columns=['boro'])
+</code></pre>
+</div>
+
+<table border="1" class="dataframe bigtable">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>salary</th>
+      <th>vegan</th>
+      <th>boro_Bronx</th>
+      <th>boro_Brooklyn</th>
+      <th>boro_Manhattan</th>
+      <th>boro_Queens</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>103</td>
+      <td>No</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>89</td>
+      <td>No</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>142</td>
+      <td>No</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>54</td>
+      <td>Yes</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>63</td>
+      <td>Yes</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>219</td>
+      <td>No</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+</font>
+</div>
+<div class="column" style="float:left; width: 50%">
+<font size=6>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >df = pd.DataFrame({
+    'boro': ['Brooklyn', 'Manhattan', 'Brooklyn',
+             'Queens', 'Brooklyn', 'Staten Island'],
+    'salary': [61, 146, 142, 212, 98, 47],
+    'vegan': ['Yes', 'No','Yes','No', 'Yes', 'No']})
+df_dummies = pd.get_dummies(df, columns=['boro'])
+</code></pre>
+</div>
+
+<table border="1" class="dataframe bigtable">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>salary</th>
+      <th>vegan</th>
+      <th>boro_Brooklyn</th>
+      <th>boro_Manhattan</th>
+      <th>boro_Queens</th>
+      <th>boro_Staten Island</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>61</td>
+      <td>Yes</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>146</td>
+      <td>No</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>142</td>
+      <td>Yes</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>212</td>
+      <td>No</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>98</td>
+      <td>Yes</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>47</td>
+      <td>No</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+
+</font>
+</div>
+
+
+<aside class="notes">
+<p>
+If someone else gives you a new data set and in this new data set
+there is Staten Island, Manhattan, Bronx and Brooklyn. So new dataset
+doesn't have anyone from Queens. So now you transform this with
+get<sub>dummies</sub>, you get something that has the same shape as the original
+data but actually, the last column means something completely
+different. Because now the last column is Staten Island, not
+Queens. If someone gives you separate training and test data sets, if
+you call get<sub>dummies</sub>, you don't know that the columns correspond
+actually to the same thing. Unless you take care of the names,
+unfortunately, scikit-learn completely ignores column names.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org7ec70b8">
+<h3 id="org7ec70b8">Pandas Categorial Columns</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >df = pd.DataFrame({
+    'boro': ['Manhattan', 'Queens', 'Manhattan',
+             'Brooklyn', 'Brooklyn', 'Bronx'],
+    'salary': [103, 89, 142, 54, 63, 219],
+    'vegan': ['No', 'No','No','Yes', 'Yes', 'No']})
+df['boro'] = pd.Categorical(df.boro,
+                            categories=['Manhattan', 'Queens', 'Brooklyn',
+                                        'Bronx', 'Staten Island'])
+pd.get_dummies(df, columns=['boro'])
+</code></pre>
+</div>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>salary</th>
+      <th>vegan</th>
+      <th>boro_Manhattan</th>
+      <th>boro_Queens</th>
+      <th>boro_Brooklyn</th>
+      <th>boro_Bronx</th>
+      <th>boro_Staten Island</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>103</td>
+      <td>No</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>89</td>
+      <td>No</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>142</td>
+      <td>No</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>54</td>
+      <td>Yes</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>63</td>
+      <td>Yes</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>219</td>
+      <td>No</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+<aside class="notes">
+<p>
+The way to fix this is by using Pandas categorical types. Since we
+know what the boroughs of Manhattan are, we can create Pandas
+categorical dtype, we can create this categorical dtype with the
+categories Manhattan, Queens, Brooklyn, Bronx, and Staten Island. So
+now I have my column here and I'm going to convert it to a categorical
+dtype. So now it will not actually store the strings. It will just
+internally store zero to four, and it will also store what are the
+possible values. If a call get<sub>dummies</sub> it will use all the possible
+values and for each of the possible values it will create a
+column. Even though Staten Island has not appeared in my dataset, it
+will still make a column for Staten Island. If I fix this categorical
+dtype I can apply it to the training and test data set and that'll
+make sure all the columns are always the same no matter what are the
+values are actually in the data set.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org56091aa">
+<h3 id="org56091aa"><code>OneHotEncoder</code></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.preprocessing import OneHotEncoder
+df = pd.DataFrame({'salary': [103, 89, 142, 54, 63, 219],
+                   'boro': ['Manhattan', 'Queens', 'Manhattan',
+                            'Brooklyn', 'Brooklyn', 'Bronx']})
+ce = OneHotEncoder().fit(df)
+print(ce.transform(df).toarray())
+</code></pre>
+</div>
+
+<pre class="example">
+[[0. 0. 0. 1. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 1. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 1. 0. 0. 0.]]
+</pre>
+
+
+<ul>
+<li>always transforms all columns!</li>
+
+</ul>
+
+<aside class="notes">
+<ul>
+<li>Fit-transform paradigm ensures train and test-set categories
+correspond.</li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-orgd3e7fee">
+<h3 id="orgd3e7fee"><code>OneHotEncoder</code> + <code>ColumnTransformer</code></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >categorical = df.dtypes == object
+preprocess = make_column_transformer(
+    (StandardScaler(), ~categorical),
+    (OneHotEncoder(), categorical))
+model = make_pipeline(preprocess, LogisticRegression())
+model
+</code></pre>
+</div>
+
+<pre class="example" id="org062561a">
+Pipeline(steps=[('columntransformer',
+                 ColumnTransformer(transformers=[('standardscaler',
+                                                  StandardScaler(),
+                                                  salary     True
+boro      False
+dtype: bool),
+                                                 ('onehotencoder',
+                                                  OneHotEncoder(),
+                                                  salary    False
+boro       True
+dtype: bool)])),
+                ('logisticregression', LogisticRegression())])
+</pre>
+
+<aside class="notes">
+<p>
+The way to use this with mixed type data is column transformer, which
+allows you to transforms only some of the columns. For example, you
+can call categorical encoder only on the categorical columns and call
+StandardScaler on the non-categorical columns, and then use that to
+preprocess your data. Right now using Pandas, make sure your column
+names match up, make everything to an integer, or use column
+transformer and everything is awesome.
+</p>
+
+<p>
+In contrast to basically all other estimators in sklearn, this uses
+the column information in pandas and allows you to slice out different
+columns based on column names, integer indices or boolean masks. In
+this example I'm constructing a boolean mask
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org9e80a54">
+<h3 id="org9e80a54"></h3>
+
+<div id="org8f8bda5" class="figure">
+<p><img src="./assets/column_transformer_schematic.png" alt="column_transformer_schematic.png" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+Here's a schematic of the column transformer. Most commonly you might
+want to separate continuous and categorical columns, but you can
+select any subsets of columns you like. They can also overlap. Or you
+can apply multiple transformations to the same set of columns. Let's
+say I want a scaled version of the data, but I also want to extract
+principal components. I can use the same column as inputs to multiple
+transformers, and the results will be concatenated.
+</p>
+
+<p>
+FIXME add code
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org381c336">
+<h3 id="org381c336">Dummy variables and colinearity</h3>
+<ul>
+<li>One-hot is redundant (last one is 1 – sum of others)</li>
+<li>Can introduce co-linearity</li>
+<li>Can drop one</li>
+<li>Choice which one matters for penalized models</li>
+<li>Keeping all can make the model more interpretable</li>
+
+</ul>
+</section>
+<section id="slide-orgd37f71b">
+<h3 id="orgd37f71b">Models Supporting Discrete Features</h3>
+<ul>
+<li>In principle:
+<ul>
+<li>All tree-based models, naive Bayes</li>
+
+</ul></li>
+<li>In scikit-learn:
+<ul>
+<li>Some Naive Bayes classifiers.</li>
+
+</ul></li>
+<li>In scikit-learn "soon":
+<ul>
+<li>Decision trees, random forests, gradient boosting</li>
+
+</ul></li>
+
+</ul>
+
+<aside class="notes">
+<p>
+In principle all tree-based models support categorical features, in
+scikit-learn none of them do, hopefully, soon they will. So what you
+can do is either you do the One Hot Encoder or you just encode this as
+integers and treat it as a continuous. If you have very high
+categorical variables with many levels, maybe it keeping it as an
+integer might make more sense.
+</p>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-org44b3125">
+<h2 id="org44b3125">Target Encoding (Impact Encoding)</h2>
+
+<div id="org85bbb78" class="figure">
+<p><img src="./assets/zip_code_prices.png" alt="zip_code_prices.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org8b9121c">
+<h3 id="org8b9121c">Target Encoding (Impact Encoding)</h3>
+<ul>
+<li>For high cardinality categorical features</li>
+<li>Instead of 70 one-hot variables, one “response encoded” variable.</li>
+<li>For regression: "average price in zip code”</li>
+<li>Binary classification: “building in this zip code have a likelihood p for class 1”</li>
+<li>Multiclass: One feature per class &#x2013; probability distribution</li>
+
+</ul>
+
+<aside class="notes">
+<p>
+So there's also another way to encode categorical variables that is
+often used, I like to call it target-Based Encoding. It's basically
+for very high cardinality categorical features. For example, if you
+have categorical feature it's all US states and you don't have a lot
+of samples or if you have categorical features that's all US zip
+codes, if you have all different things, you don't want to do One Hot
+Encoding. So you get 50 new features, which if you don't have a lot of
+data would be a lot of features. So instead, you can use one single
+variable, it basically encodes the response. So for regression, it
+would be people in this state have an average response of
+that. Obviously you don't want to do this on the test set basically or
+you want to do this on the whole dataset for each level of the
+categorical variable, you want to find out what is the mean response
+and just use this as the future value. So you get one single
+future. For binary classification, you can just use the fraction of
+people that are classified as Class One. For multi-class, you usually
+do the percentage or fraction of people in each of the classes. So in
+multi-class, you get one new feature per class and you count for each
+state how many people in this state are classified for each of them.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org30a4156">
+<h3 id="org30a4156">More encodings for categorical features:</h3>
+<p>
+<a href="http://contrib.scikit-learn.org/categorical-encoding/">http://contrib.scikit-learn.org/categorical-encoding/</a>
+</p>
+
+</section>
+<section id="slide-org4866d75">
+<h3 id="org4866d75">Load data, include ZIP code</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.datasets import fetch_openml
+data = fetch_openml("house_sales", as_frame=True)
+X = data.frame.drop(['date', 'price'], axis=1)
+y = data.frame['price']
+X_train, X_test, y_train, y_test = train_test_split(X, y)
+X_train.columns
+</code></pre>
+</div>
+
+<pre class="example">
+Index(['bedrooms', 'bathrooms', 'sqft_living', 'sqft_lot', 'floors',
+       'waterfront', 'view', 'condition', 'grade', 'sqft_above',
+       'sqft_basement', 'yr_built', 'yr_renovated', 'zipcode', 'lat', 'long',
+       'sqft_living15', 'sqft_lot15'],
+      dtype='object')
+</pre>
+
+
+</section>
+<section id="slide-org4866d75-split">
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >X_train.head()
+</code></pre>
+</div>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>bedrooms</th>
+      <th>bathrooms</th>
+      <th>sqft_living</th>
+      <th>sqft_lot</th>
+      <th>floors</th>
+      <th>...</th>
+      <th>zipcode</th>
+      <th>lat</th>
+      <th>long</th>
+      <th>sqft_living15</th>
+      <th>sqft_lot15</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5945</th>
+      <td>4.0</td>
+      <td>2.25</td>
+      <td>1810.0</td>
+      <td>9240.0</td>
+      <td>2.0</td>
+      <td>...</td>
+      <td>98055.0</td>
+      <td>47.4362</td>
+      <td>-122.187</td>
+      <td>1660.0</td>
+      <td>9240.0</td>
+    </tr>
+    <tr>
+      <th>8423</th>
+      <td>3.0</td>
+      <td>2.50</td>
+      <td>1600.0</td>
+      <td>2788.0</td>
+      <td>2.0</td>
+      <td>...</td>
+      <td>98031.0</td>
+      <td>47.4034</td>
+      <td>-122.187</td>
+      <td>1720.0</td>
+      <td>3605.0</td>
+    </tr>
+    <tr>
+      <th>13488</th>
+      <td>4.0</td>
+      <td>2.50</td>
+      <td>1720.0</td>
+      <td>8638.0</td>
+      <td>2.0</td>
+      <td>...</td>
+      <td>98003.0</td>
+      <td>47.2704</td>
+      <td>-122.313</td>
+      <td>1870.0</td>
+      <td>7455.0</td>
+    </tr>
+    <tr>
+      <th>20731</th>
+      <td>2.0</td>
+      <td>2.25</td>
+      <td>1240.0</td>
+      <td>705.0</td>
+      <td>2.0</td>
+      <td>...</td>
+      <td>98027.0</td>
+      <td>47.5321</td>
+      <td>-122.073</td>
+      <td>1240.0</td>
+      <td>750.0</td>
+    </tr>
+    <tr>
+      <th>2358</th>
+      <td>3.0</td>
+      <td>2.00</td>
+      <td>1280.0</td>
+      <td>13356.0</td>
+      <td>1.0</td>
+      <td>...</td>
+      <td>98042.0</td>
+      <td>47.3715</td>
+      <td>-122.074</td>
+      <td>1590.0</td>
+      <td>8071.0</td>
+    </tr>
+  </tbody>
+</table>
+
+</section>
+<section id="slide-org4866d75-split">
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >import category_encoders as ce
+te = ce.TargetEncoder(cols='zipcode').fit(X_train,  y_train)
+te.transform(X_train).head()
+</code></pre>
+</div>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>bedrooms</th>
+      <th>bathrooms</th>
+      <th>sqft_living</th>
+      <th>sqft_lot</th>
+      <th>floors</th>
+      <th>...</th>
+      <th>zipcode</th>
+      <th>lat</th>
+      <th>long</th>
+      <th>sqft_living15</th>
+      <th>sqft_lot15</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5945</th>
+      <td>4.0</td>
+      <td>2.25</td>
+      <td>1810.0</td>
+      <td>9240.0</td>
+      <td>2.0</td>
+      <td>...</td>
+      <td>305061.113861</td>
+      <td>47.4362</td>
+      <td>-122.187</td>
+      <td>1660.0</td>
+      <td>9240.0</td>
+    </tr>
+    <tr>
+      <th>8423</th>
+      <td>3.0</td>
+      <td>2.50</td>
+      <td>1600.0</td>
+      <td>2788.0</td>
+      <td>2.0</td>
+      <td>...</td>
+      <td>303052.073892</td>
+      <td>47.4034</td>
+      <td>-122.187</td>
+      <td>1720.0</td>
+      <td>3605.0</td>
+    </tr>
+    <tr>
+      <th>13488</th>
+      <td>4.0</td>
+      <td>2.50</td>
+      <td>1720.0</td>
+      <td>8638.0</td>
+      <td>2.0</td>
+      <td>...</td>
+      <td>290589.201970</td>
+      <td>47.2704</td>
+      <td>-122.313</td>
+      <td>1870.0</td>
+      <td>7455.0</td>
+    </tr>
+    <tr>
+      <th>20731</th>
+      <td>2.0</td>
+      <td>2.25</td>
+      <td>1240.0</td>
+      <td>705.0</td>
+      <td>2.0</td>
+      <td>...</td>
+      <td>618687.511785</td>
+      <td>47.5321</td>
+      <td>-122.073</td>
+      <td>1240.0</td>
+      <td>750.0</td>
+    </tr>
+    <tr>
+      <th>2358</th>
+      <td>3.0</td>
+      <td>2.00</td>
+      <td>1280.0</td>
+      <td>13356.0</td>
+      <td>1.0</td>
+      <td>...</td>
+      <td>314250.081967</td>
+      <td>47.3715</td>
+      <td>-122.074</td>
+      <td>1590.0</td>
+      <td>8071.0</td>
+    </tr>
+  </tbody>
+</table>
+
+</section>
+<section id="slide-org4866d75-split">
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >y_train.groupby(X_train.zipcode).mean()[X_train.head().zipcode]
+</code></pre>
+</div>
+
+<pre class="example">
+zipcode
+98055.0    305061.113861
+98031.0    303052.073892
+98003.0    290589.201970
+98027.0    618687.511785
+98042.0    314250.081967
+Name: price, dtype: float64
+</pre>
+
+</section>
+<section id="slide-orgfc0b6fc">
+<h3 id="orgfc0b6fc">Results</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >X = data.frame.drop(['date', 'price', 'zipcode'], axis=1)
+scores = cross_val_score(Ridge(), X, y)
+print(f"{np.mean(scores):.2f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.69
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.compose import make_column_transformer
+from sklearn.preprocessing import OneHotEncoder
+X = data.frame.drop(['date', 'price'], axis=1)
+ct = make_column_transformer((OneHotEncoder(), ['zipcode']), remainder='passthrough')
+pipe_ohe = make_pipeline(ct, Ridge())
+scores = cross_val_score(pipe_ohe, X, y)
+print(f"{np.mean(scores):.2f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.53
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >pipe_target = make_pipeline(ce.TargetEncoder(cols='zipcode'), Ridge())
+scores = cross_val_score(pipe_target, X, y)
+print(f"{np.mean(scores):.2f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.79
+</pre>
+</section>
+</section>
+</div>
+</div>
+<script src="./revealjs/dist/reveal.js"></script>
+<script src="./revealjs/plugin/highlight/highlight.js"></script>
+<script src="./revealjs/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealHighlight, RevealNotes],
+slideNumber:true, hash:true
+});
+
+</script>
+</body>
+</html>

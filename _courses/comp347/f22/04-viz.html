@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Visualization in Python</title>
+<meta name="author" content="Robert Utterback (based on slides by Andreas Muller)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./revealjs/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./revealjs/dist/theme/moon.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+<link rel="stylesheet" href="./revealjs/plugin/highlight/zenburn.css"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h2>Visualization in Python</h2><h4>09/02/2022</h4>
+</section>
+
+<section>
+<section id="slide-orgf0b17cd">
+<h2 id="orgf0b17cd">Data Visualization Tips</h2>
+<div class="outline-text-2" id="text-orgf0b17cd">
+</div>
+</section>
+<section id="slide-org0a3a640">
+<h3 id="org0a3a640">Why?</h3>
+<ol>
+<li>For us:
+Explore data, make hypotheses, find trends</li>
+
+<li>For others:
+Communicate data or findings</li>
+
+</ol>
+
+<aside class="notes">
+<p>
+In real life, always think about <b>why</b> you are making a particular visualization. What's the conclusion?
+</p>
+
+</aside>
+</section>
+<section id="slide-org81dc2aa">
+<h3 id="org81dc2aa">Show the Data</h3>
+<blockquote >
+<p>
+Above else, show the data. Maximize the data-ink ratio.
+</p>
+</blockquote>
+<ul>
+<li>Edward Tufte</li>
+
+</ul>
+<aside class="notes">
+<p>
+Everything on screen should be important. Fewer static elements, e.g. table lines
+</p>
+
+</aside>
+</section>
+<section id="slide-orgf35c0ad">
+<h3 id="orgf35c0ad">Visual Channels</h3>
+<div class="column" style="float:left; width: 50%">
+
+<div id="org885eb60" class="figure">
+<p><img src="./assets/visual_channels.png" alt="visual_channels.png" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div id="org2a771b1" class="figure">
+<p><img src="./assets/visual_channels2.png" alt="visual_channels2.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<p>
+Lots of ways to show info. There are others, but these are in order of how good they are (studies). Hue turns out not to be very good, though maybe if you can vary the brightness if might be okay.
+Some pop out more than others.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgd806a46">
+<h3 id="orgd806a46">Colormaps</h3>
+<ul>
+<li>Map quantities from number to color</li>
+<li>Whenever you use color, you use one</li>
+
+</ul>
+</section>
+<section id="slide-org8c44926">
+<h4 id="org8c44926">Sequential</h4>
+
+<div id="org980a476" class="figure">
+<p><img src="./assets/cm_sequential.png" alt="cm_sequential.png" />
+</p>
+</div>
+
+<ul>
+<li>From one hue (or saturation) to another</li>
+<li>Also change lightness</li>
+<li>Good for extremes</li>
+<li>Little contrast in middle</li>
+
+</ul>
+</section>
+<section id="slide-orgc9ff61e">
+<h4 id="orgc9ff61e">Diverging</h4>
+
+<div id="org98e3564" class="figure">
+<p><img src="./assets/cm_diverging.png" alt="cm_diverging.png" />
+</p>
+</div>
+
+<ul>
+<li>Focus point in middle</li>
+<li>Great for neutral point + deviations, e.g. profits</li>
+
+</ul>
+</section>
+<section id="slide-orgf333fe5">
+<h4 id="orgf333fe5">Qualitative</h4>
+
+<div id="org2ff610c" class="figure">
+<p><img src="./assets/cm_qualitative.png" alt="cm_qualitative.png" />
+</p>
+</div>
+
+<ul>
+<li>Show discrete values</li>
+<li>good contrast</li>
+
+</ul>
+
+</section>
+<section id="slide-org12dfb24">
+<h4 id="org12dfb24">Perceptually Uniform Sequential</h4>
+
+<div id="orgfc1788f" class="figure">
+<p><img src="./assets/cm_pus.png" alt="cm_pus.png" />
+</p>
+</div>
+
+<ul>
+<li>Carefully designed to show quantitative info</li>
+
+</ul>
+</section>
+<section id="slide-org3335217">
+<h4 id="org3335217">Miscellaneous</h4>
+
+<div id="org7b498db" class="figure">
+<p><img src="./assets/cm_misc.png" alt="cm_misc.png" />
+</p>
+</div>
+
+<ul>
+<li>Lots of others</li>
+<li>Colorful&#x2026;but actually not that good</li>
+
+</ul>
+</section>
+<section id="slide-orge8c8356">
+<h4 id="orge8c8356">Problems</h4>
+
+<div id="orge20ccd3" class="figure">
+<p><img src="./assets/cmeval_gray.png" alt="cmeval_gray.png" height="500px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+So what’s the problem with these other colormaps. This is an evaluation of the grey color map. Let's look at the panels on the right first. There are three heat maps here. So each pixel here represents a floating point value on some scale. On the left you see at the top the perceived changes in the color map, using a model of the human visual system. You can see that it's pretty constant. And at the bottom left you can see the the color map as a path in the 3d color space. This space is not RGB, it's a CIE color space that corresponds more to how humans perceive color. In the RGB space, humans can detect finer nuances in green than in red, for example.
+</p>
+
+<p>
+Each color map is a path in this 3d space. And ideally, you'd like this to be a smooth path, and you'd like the speed to be constant. The perceptual contrast at the top is something like the derivative, or speed, of the color map going through the perceptual space.
+</p>
+
+</aside>
+</section>
+<section id="slide-org0c1e9f2">
+<h4 id="org0c1e9f2">Problems</h4>
+
+<div id="org0cdfb15" class="figure">
+<p><img src="./assets/cmeval_jet.png" alt="cmeval_jet.png" height="500px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Now let’s look at this in the jet color map. you see that green ring that looks like it has some boundary? Or the red core? Where are these in the greyscale? They are not there, because the are not in the data. So why does it look like there are edges? here is the color map, and this shows the differences in perceived color. You see these spikes? that’s where we perceive edges, because the color map has edges! Also here is the colormap converted to greyscale, say if someone printed it. and below are the brightness deltas. Do you see something? It’s not monotonous. It doesn’t go from dark to bright, it backs up on itself.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb7de5fd">
+<h4 id="orgb7de5fd">Problems</h4>
+
+<div id="org7b23fed" class="figure">
+<p><img src="./assets/cmeval_green.png" alt="cmeval_green.png" height="500px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+And here’s one of the perceptual uniform colormaps In comparison. You can see that there’s a bit more detail then in the gray one, but no artificial contours appear. That’s because there are no perceptual edges. Also, the change in brightness is constant, so if you convert it to greyscale, you just got the greyscale colormap back. The other plots here show how it looks for various forms of color-blindness, and the path of the colormap in a perceptual 3d color space. I posted a cool video explaining way more details on this on the course website.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org630b444">
+<h2 id="org630b444">matplotlib</h2>
+<div class="outline-text-2" id="text-org630b444">
+</div>
+</section>
+<section id="slide-org011d6f6">
+<h3 id="org011d6f6">Alternatives</h3>
+<ul>
+<li>pandas: convenience plotting</li>
+<li>seaborn: good for complex statistical plots</li>
+<li>bokeh: produces visualizations for browser</li>
+<li>ggplot translations/interfaces: based on famous <code>R</code> plotting library</li>
+
+</ul>
+<aside class="notes">
+<p>
+Both pandas plotting and seaborn build on matplotlib. 
+</p>
+
+</aside>
+</section>
+<section id="slide-orgdb174ae">
+<h3 id="orgdb174ae">matplotlib in Jupyter</h3>
+<div class="column" style="float:left; width: 50%">
+<p>
+<code>%matplotlib inline</code>
+</p>
+<ul>
+<li>sends png to browser</li>
+<li>static image (e.g., no zooming)</li>
+<li>no changes to previous figures</li>
+
+</ul>
+</div>
+<div class="column" style="float:left; width: 50%">
+<p>
+<code>%matplotlib notebook</code>
+</p>
+<ul>
+<li>interactive widget</li>
+<li>can update previous figures</li>
+<li>need to create separate figures explicitly</li>
+
+</ul>
+</div>
+</section>
+<section id="slide-orgb5d570c">
+<h3 id="orgb5d570c">Figures and Axes</h3>
+
+<div id="orgb017d50" class="figure">
+<p><img src="./assets/figure_axis.png" alt="figure_axis.png" height="350px" />
+</p>
+</div>
+<ul>
+<li>figure: one window or image file</li>
+<li>axes: one drawing area + coordinate system</li>
+
+</ul>
+<aside class="notes">
+<p>
+A figure can have multiple axes, i.e. subplots. You draw on axes. By default, a fig has one. This figure has two.
+</p>
+
+</aside>
+</section>
+<section id="slide-org8afd57b">
+<h3 id="org8afd57b">Creating Figures and Axes</h3>
+<ol>
+<li><code>fig = plt.figure()</code>
+<ul>
+<li>Create figure with 1 set of axes</li>
+<li>Can add more later</li>
+<li>Sets "current" figure</li>
+
+</ul></li>
+<li><code>fig, ax = plt.subplots(n, m)</code>
+<ul>
+<li>Creates figure with \(n\) x \(m\) axes (regular grid)</li>
+
+</ul></li>
+<li>Just plot!
+<ul>
+<li>Automatically creates figure</li>
+<li>Future plot commands will draw on that</li>
+
+</ul></li>
+
+</ol>
+<aside class="notes">
+<p>
+So if you want a second figure, you’ll have to create it explicitly, for example using the plt.figure command. 
+</p>
+
+</aside>
+</section>
+<section id="slide-org3be825d">
+<h3 id="org3be825d">More axes</h3>
+<div class="column" style="float:left; width: 65%">
+<div class="org-src-container">
+
+<pre   ><code class="python" >import matplotlib.pyplot as plt
+
+# ax = plt.subplot(n, m, i)
+# places ax at position i in n x m grid
+# (1-based index)
+ax11 = plt.subplot(2, 2, 1)
+ax21 = plt.subplot(2, 2, 2)
+ax12 = plt.subplot(2, 2, 3)
+ax22 = plt.subplot(2, 2, 4)
+
+# OR:
+# fig, axes = plt.subplots(2, 2)
+# ax11, ax21, ax12, ax22 = axes.ravel()
+</code></pre>
+</div>
+
+</div>
+<div class="column" style="float:left; width: 35%">
+
+<div id="org5a9842c" class="figure">
+<p><img src="assets/subplot1.png" alt="subplot1.png" height="350px" />
+</p>
+</div>
+
+</div>
+
+<aside class="notes">
+<p>
+Can also add axes one subplot at a time. The first two numbers specify
+a imaginary grid for the whole figure, let’s say I want a 2 by 2
+grid. The third number is at which position in that grid I want my
+figure created.
+</p>
+
+<p>
+You could create all of them at the same time with the subplot
+commands, but there are two reason why you might choose not to.
+</p>
+
+</aside>
+</section>
+<section id="slide-org86c83f6">
+<h3 id="org86c83f6">More axes</h3>
+<div class="column" style="float:left; width: 65%">
+<div class="org-src-container">
+
+<pre   ><code class="python" >import matplotlib.pyplot as plt
+
+# ax = plt.subplot(n, m, i)
+# places ax at position i in n x m grid
+# (1-based index)
+ax11 = plt.subplot(2, 2, 1)
+ax21 = plt.subplot(2, 2, 2)
+ax2 = plt.subplot(2, 1, 2)
+</code></pre>
+</div>
+
+</div>
+<div class="column" style="float:left; width: 35%">
+
+<div id="org2b70914" class="figure">
+<p><img src="assets/subplot2.png" alt="subplot2.png" height="350px" />
+</p>
+</div>
+
+</div>
+
+<aside class="notes">
+<p>
+The first one is that the grid you specify doesn’t need to be the actual grid. It just tells the single subplot about where it should be. So you can create all kinds of different layouts. For example, I can create a 2 by 2 plot where the second row is a single axes, by telling it it should be at the second position for a 2 by 1 plot. This allows me to create irregular grids, which is often quite useful.
+</p>
+
+</aside>
+</section>
+<section id="slide-org4b2df34">
+<h3 id="org4b2df34">Two Interfaces</h3>
+<ul>
+<li>Stateful: applies to "current" figure and axes</li>
+<li>Object oriented: explicitly use object</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre   ><code class="python" >sin = np.sin(np.linspace(-4, 4, 100))
+plt.subplot(2, 2, 1)
+plt.plot(sin)
+plt.subplot(2, 2, 2)
+plt.plot(sin, c='r')
+
+fig, axes = plt.subplots(2, 2)
+axes[0, 0].plot(sin)
+axes[0, 1].plot(sin, c='r')
+</code></pre>
+</div>
+<aside class="notes">
+<p>
+OO seems a bit more logically clean to me, though stateful is often very convenient.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb1dfb5a">
+<h3 id="orgb1dfb5a">Two interfaces</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >plt.title
+plt.xlim, plt.ylim
+plt.xlabel, plt.ylabel
+plt.xticks, plt.yticks
+ax = plt.gca()   # get current axes
+fig = plt.gcf()  # get current figure
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre   ><code class="python" >ax.set_title
+ax.set_xlim, ax.set_ylim
+ax.set_xlabel, ax.set_ylabel
+ax.set_xticks, ax.set_yticks (&amp; ax.set_xtick_labels)
+</code></pre>
+</div>
+<aside class="notes">
+<p>
+Top: stateful plus conversion to OO
+Bot: OO
+</p>
+
+</aside>
+</section>
+<section id="slide-org966e97c">
+<h3 id="org966e97c">plot</h3>
+<div class="org-src-container">
+
+<pre  id="tinycode" ><code class="python" >import matplotlib.pyplot as plt
+import numpy as np
+data = np.sin(np.linspace(-4,4,100))
+fig, ax = plt.subplots(2, 4, figsize=(10,5))
+ax[0,0].plot(data)
+ax[0,1].plot(range(100), data) # same as above
+ax[0,2].plot(np.linspace(-4,4,100),data)
+ax[0,3].plot(data[::10], 'o')
+ax[1,0].plot(data, c='r')
+ax[1,1].plot(data, '--')
+ax[1,2].plot(data, lw=3)
+ax[1,3].plot(data[::10], '--o')
+plt.tight_layout() # makes stuff fit - usually works
+</code></pre>
+</div>
+
+
+<div id="orgd22efee" class="figure">
+<p><img src="assets/bigsinplot.png" alt="bigsinplot.png" height="365px" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+Clearly plot it the most important one. Plot allows you to do line plots and scatter plots. If you give a single variable, it will plot it against it’s index, if you provide two, it will plot them against each other. By default, plot creates a line-plot, but you can also use “o” to create a scatterplot. You can change the appearance of the line in many ways, including width, color, dashing and markers.
+</p>
+
+<p>
+One thing that I find slightly annoying and that always trips me off is that in subplots, it's rows, then columns, while the figure size is width, then height.
+</p>
+
+</aside>
+</section>
+<section id="slide-orga5ccada">
+<h3 id="orga5ccada">scatter</h3>
+<div class="org-src-container">
+
+<pre  id="smallcode" ><code class="python" >x = np.random.uniform(size=50)
+y = x + np.random.normal(0, .1, size=50) # add noise
+fig, ax = plt.subplots(2, 2, figsize=(5,5),
+					   subplot_kw={'xticks': (), 'yticks': ()})
+ax[0,0].scatter(x,y)
+ax[0,0].set_title("scatter")
+ax[0,1].plot(x,y,'o')
+ax[0,1].set_title("plot")
+ax[1,0].scatter(x,y, c=x-y, cmap='bwr', edgecolor='k')
+ax[1,1].scatter(x,y, c=x-y, s=np.abs(np.random.normal(scale=20, size=50)),
+				cmap='bwr', edgecolor='k')
+plt.tight_layout()
+</code></pre>
+</div>
+
+<div id="org3884026" class="figure">
+<p><img src="assets/scatter.png" alt="scatter.png" height="365px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+While plot can create scatter plots, those are quite limited. the scatter function allows you to do scatter plots that not only encode the position of the points, but visualizes additional variables via color or size. In the bottom left, I colored the points by their distance to the diagonal, in the bottom right, I also added random size variations. Here I also used “subplot<sub>kw</sub>” which allows you to specify some arguments for all subplots in a figure. I use it here to remove the ticks.
+</p>
+
+</aside>
+</section>
+<section id="slide-org964f588">
+<h3 id="org964f588">histogram</h3>
+<div class="org-src-container">
+
+<pre  id="smallcode" ><code class="python" >fig, ax = plt.subplots(1, 3, figsize=(10,3))
+ax[0].hist(np.random.normal(size=1000))
+ax[1].hist(np.random.normal(size=1000), bins=100)
+ax[2].hist(np.random.normal(size=1000), bins="auto")
+</code></pre>
+</div>
+
+<div id="orgbf489d4" class="figure">
+<p><img src="assets/hist.png" alt="hist.png" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+Histogram has columns over continuous variables, bar chart over categorical variables.
+</p>
+
+<p>
+Histograms are clearly also important. By default, histograms have ten
+bins, which is never right. You can adjust the number of bins, and I
+usually try to find the point when it will be too fine. There’s also a
+heuristic for finding the binsize which you can use with bins=”auto”
+</p>
+
+</aside>
+</section>
+<section id="slide-org82f1b77">
+<h3 id="org82f1b77">bars</h3>
+
+<div id="orgc70de90" class="figure">
+<p><img src="./assets/matplotlib_bar.png" alt="matplotlib_bar.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+For barcharts, you always need to provide the position of the bar as
+well as the length. Usually that’s done via a range. If you use
+ticklabels, it’s usually a good idea to rotate them so you can
+actually read them. But I don’t really like tilting my head, so I
+often prefer horizontal bar-charts, which work the same way. The way I
+specified the positions here, the first bar is at the bottom. We could
+flip the axes or change the position if we wanted it at the top.
+</p>
+
+<p>
+You can use <code>barh</code> to flip the bars 90 degrees.
+</p>
+
+</aside>
+</section>
+<section id="slide-org377289c">
+<h3 id="org377289c">heatmaps</h3>
+
+<div id="orgf6f77a0" class="figure">
+<p><img src="./assets/matplotlib_heatmap.png" alt="matplotlib_heatmap.png" height="550px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+You can plot heatmaps with the imshow command. Previous to matplotlib v2 this automatically enabled interpolation, which you can see at the top right. Interpolation might hide data or might give the impression of more data then there is, by showing a smooth transition. You should always disable interpolation for heatmaps. At the bottom you can see some results with a gray colormap and with a diverging color map. Here, the background is zero and it makes sense to represent the neutral differently. So I ensured that white is mapped to zero, and we can clearly distinguish positive from negative entries, which is much harder with the other color maps. Doing colorbars on multiple axes can be tricky. You need to store the matplotlib image that is returned by imshow in an object, and then call the colorbar command with the image and the axes to which you want to attach the colorbar.
+</p>
+
+</aside>
+</section>
+<section id="slide-org765e6b4">
+<h3 id="org765e6b4">Overplotting</h3>
+
+<div id="org4060902" class="figure">
+<p><img src="./assets/matplotlib_overplotting.png" alt="matplotlib_overplotting.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+A command that I discovered way too late is the hexgrid. Hexgrids basically allow two-dimensional density maps. If you have a lot of points, a scatterplot can become too crowded to understand what’s going on. You can work around that a bit by using the alpha value, but that often throws away a lot of information. A better way is to use a hexgrid and plot the density in each grid cell directly. That also allows the use of arbitrary colormaps. Using hexgrids also allows you to map the density, for example using a logarithm, if the differences in density are very large between different regions.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgd6593d4">
+<h3 id="orgd6593d4">Hexgrids</h3>
+
+<div id="org1c038f9" class="figure">
+<p><img src="./assets/matplotlib_hexgrid.png" alt="matplotlib_hexgrid.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+A command that I discovered way too late is the hexgrid. Hexgrids basically allow two-dimensional density maps. If you have a lot of points, a scatterplot can become too crowded to understand what’s going on. You can work around that a bit by using the alpha value, but that often throws away a lot of information. A better way is to use a hexgrid and plot the density in each grid cell directly. That also allows the use of arbitrary colormaps. Using hexgrids also allows you to map the density, for example using a logarithm, if the differences in density are very large between different regions.
+</p>
+
+</aside>
+</section>
+<section id="slide-orga639260">
+<h3 id="orga639260">twinx and twiny</h3>
+
+<div id="orgd770da4" class="figure">
+<p><img src="./assets/matplotlib_twinx.png" alt="matplotlib_twinx.png" height="450px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+The last thing I want to mention is twin axes. Here I show two time
+series, the number of math PhDs awarded in the us and the revenue made
+by arcades in the US. If I plot them both in the same coordinate
+system, the number of PhDs will look just flat, because it lives on a
+completely different scale. Using the object oriented interface, I can
+create a twin x axis for the revenue to show both time series with
+their own scales.
+</p>
+
+<p>
+Note the <code>line1,</code> python let's you return multiple values. Here is wants to return multiple values, and if you only assign it to one variable, that variable becomes a list storing all the returned values. We can say we only want the first one with the comma.
+</p>
+
+</aside>
+</section>
+<section id="slide-org0464a74">
+<h3 id="org0464a74">Gallery</h3>
+<p>
+Gallery: <a href="http://matplotlib.org/gallery.html">http://matplotlib.org/gallery.html</a>
+</p>
+
+<p>
+Plotting commands summary: <a href="http://matplotlib.org/api/pyplot_summary.html">http://matplotlib.org/api/pyplot_summary.html</a>
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="./revealjs/dist/reveal.js"></script>
+<script src="./revealjs/plugin/highlight/highlight.js"></script>
+<script src="./revealjs/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealHighlight, RevealNotes],
+slideNumber:true
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Applied Machine Learning</title>
+<meta name="author" content="Robert Utterback"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./revealjs/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./revealjs/dist/theme/moon.css" id="theme"/>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Applied Machine Learning</h1><p class="subtitle"></p>
+<h2 class="author">Robert Utterback</h2><h2 class="date">08/24/2022</h2>
+</section>
+<section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#/slide-org5a34947">1. Logistics</a></li>
+<li><a href="#/slide-orgaa0540b">2. Machine Learning vs. Coding</a></li>
+<li><a href="#/slide-orgf71806f">3. What is Machine Learning?</a></li>
+<li><a href="#/slide-org9cd55aa">4. Types of Machine Learning</a></li>
+<li><a href="#/slide-org1e8ecfc">5. Supervised Learning</a></li>
+<li><a href="#/slide-org57e4317">6. Overview of the course</a></li>
+</ul>
+</div>
+</div>
+</section>
+<section>
+<section id="slide-org5a34947">
+<h2 id="org5a34947"><span class="section-number-2">1.</span> Logistics</h2>
+<ul>
+<li class="fragment appear">Course website: <a href="https://robertutterback.github.io/courses/comp347/f22">https://robertutterback.github.io/courses/comp347/f22</a></li>
+
+</ul>
+<aside class="notes">
+<p>
+Also, the slides will be available online. I'm trying out a different
+way of making slides, so there may be some adjustment time there.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgaa0540b">
+<h2 id="orgaa0540b"><span class="section-number-2">2.</span> Machine Learning vs. Coding</h2>
+<aside class="notes">
+<p>
+(see other slides)
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgf71806f">
+<h2 id="orgf71806f"><span class="section-number-2">3.</span> What is Machine Learning?</h2>
+<aside class="notes">
+<p>
+Machine learning is about extracting knowledge from data. It is
+closely related to statistics and optimization, but ML is focused on
+prediction.
+</p>
+
+<p>
+Given a large dataset, we seek to learn how to make decisions about
+future observations. With normal programming you directly write the
+if/else statements that handle all the cases for the input. But for ML
+the input is the dataset, and an ML algorithm turns this into a
+program that makes decisions for future observations.
+</p>
+
+</aside>
+</section>
+<section id="slide-org8d54add">
+<h3 id="org8d54add"><span class="section-number-3">3.1.</span> </h3>
+<aside class="notes">
+<p>
+Tons of ML on Facebook news feed:
+</p>
+<ul>
+<li>Ads (which ones and how much to charge)</li>
+<li>Ranking of posts from friends</li>
+<li>Birthdays</li>
+<li>Trending topics</li>
+<li>Apps and people to connect with</li>
+
+</ul>
+
+</aside>
+
+<div id="org3bc275f" class="figure">
+<p><img src="./assets/fb1.png" alt="fb1.png" height="600px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+TODO: resize this image???!
+</p>
+
+</aside>
+</section>
+<section id="slide-org71cba27">
+<h3 id="org71cba27"><span class="section-number-3">3.2.</span> </h3>
+<aside class="notes">
+<p>
+Finding faces in images, figuring out specific faces, etc.
+</p>
+
+</aside>
+
+<div id="org3d2a68f" class="figure">
+<p><img src="./assets/fb2.png" alt="fb2.png" />
+</p>
+</div>
+</section>
+<section id="slide-orgccc7341">
+<h3 id="orgccc7341"><span class="section-number-3">3.3.</span> </h3>
+<aside class="notes">
+<p>
+Selecting interesting pictures from an uploaded album.
+</p>
+
+</aside>
+
+<div id="orga71712b" class="figure">
+<p><img src="./assets/fb3.png" alt="fb3.png" height="600px" />
+</p>
+</div>
+</section>
+<section id="slide-org4145896">
+<h3 id="org4145896"><span class="section-number-3">3.4.</span> </h3>
+<aside class="notes">
+<p>
+Spotify - trying to recommend songs, related artists, etc.
+</p>
+
+</aside>
+
+<div id="org542009f" class="figure">
+<p><img src="./assets/spotify.png" alt="spotify.png" />
+</p>
+</div>
+</section>
+<section id="slide-orgabcdd3d">
+<h3 id="orgabcdd3d"><span class="section-number-3">3.5.</span> </h3>
+<aside class="notes">
+<p>
+Ranking the list of products for search results. (plus ads)
+</p>
+
+</aside>
+
+<div id="org2f823b0" class="figure">
+<p><img src="./assets/amazon1.png" alt="amazon1.png" />
+</p>
+</div>
+</section>
+<section id="slide-org59240d3">
+<h3 id="org59240d3"><span class="section-number-3">3.6.</span> </h3>
+<aside class="notes">
+<p>
+Ads, default choices (paperback vs. hardcover vs. kindle), frequently bought together, default seller
+</p>
+
+</aside>
+
+<div id="org55afb4b" class="figure">
+<p><img src="./assets/amazon2.png" alt="amazon2.png" />
+</p>
+</div>
+</section>
+<section id="slide-orgd8ba582">
+<h3 id="orgd8ba582"><span class="section-number-3">3.7.</span> </h3>
+<aside class="notes">
+<p>
+But also important application in science. Personalized cancer treatment, medical diagnosis, drug discovery, discovering particles (higgs boson) and planets. The data from telescopes would be much different than this artist illustration: a single pixel for star and planet. You can find exoplanets by seeing the pixel occasionally dim. But there's too much data to do it by hand; ML.
+</p>
+
+</aside>
+
+<div id="org5339840" class="figure">
+<p><img src="./assets/science.png" alt="science.png" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org9cd55aa">
+<h2 id="org9cd55aa"><span class="section-number-2">4.</span> Types of Machine Learning</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+</section>
+<section id="slide-orgf56caf9">
+<h3 id="orgf56caf9"><span class="section-number-3">4.1.</span> Types of Machine Learning</h3>
+<ul>
+<li>Supervised</li>
+<li>Unsupervised</li>
+<li>Reinforcement</li>
+
+</ul>
+<aside class="notes">
+<p>
+A taxonomy of ML categories. Three main: supervised learning, unsupervised learning and reinforcement learning. We'll focus on supervised, but also do a little unsupervised.
+</p>
+
+</aside>
+</section>
+<section id="slide-org89abee2">
+<h3 id="org89abee2"><span class="section-number-3">4.2.</span> Supervised Learning</h3>
+<p>
+\((x_i,y_i) \propto p(x,y)\) i.i.d
+</p>
+
+<p>
+\(x_i \in \mathbb{R}^p\)
+</p>
+
+<p>
+\(y_i \in \mathbb{R}\)
+</p>
+
+<p>
+\(f(x_i) \approx y_i\)
+</p>
+<aside class="notes">
+<p>
+In supervised learning, the dataset we learn form is input-output pairs (x<sub>i</sub>, y<sub>i</sub>), where x<sub>i</sub> is some n<sub>dimensional</sub> input, or feature vector, and y<sub>i</sub> is the desired output we want to learn. Generally, we assume these samples are drawn from some unknown joint distribution p(x, y). In statistics, x<sub>i</sub> might be called independent variables and y<sub>i</sub> dependent variable. What does iid mean? We say they are drawn iid, which stands for independent identically distributed. In other words, the x<sub>i</sub>, y<sub>i</sub> pairs are independent and all come from the same distribution p. You can think of this as there being some process that goes from x<sub>i</sub> to y<sub>i</sub>, but that we don’t know. We write this as a probability distribution and not as a function since even if there is a real process creating y from x, this process might not be deterministic. The goal is to learn a function f so that for new inputs x for which we don’t observe y, f(x) is close to y. This approach is very similar to function approximation. The name supervised comes from the fact that during learning, a supervisor gives you the correct answers y<sub>i</sub>.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgc95e641">
+<h3 id="orgc95e641"><span class="section-number-3">4.3.</span> Examples of Supervised Learning</h3>
+<ul>
+<li>Testing for diabetes</li>
+<li>Classifying terrain of satellite image</li>
+<li>Automate manual labor</li>
+
+</ul>
+<aside class="notes">
+<p>
+Here are some examples of supervised learning. Given an array of test results from a patient, does this patient have diabetes? The x<sub>i</sub> would be the different test results, and y<sub>i</sub> would be diabetes or no diabetes. Given a piece of a satellite image, what is the terrain in this image? Here x<sub>i</sub> would be the pixels of the image, and y<sub>i</sub> would be the terrain types.
+</p>
+
+<p>
+This is often used to automate manual labor. For example, you might annotate part of a dataset manually, then learn a machine learning model from this annotations, and use the model to annotate the rest of your data.
+</p>
+
+</aside>
+</section>
+<section id="slide-org3217188">
+<h3 id="org3217188"><span class="section-number-3">4.4.</span> Unsupervised Learning</h3>
+<p>
+\(x_i \propto p(x)\) i.i.d
+</p>
+
+<p style="text-align:left">
+Learn about \(p\).
+</p>
+<aside class="notes">
+<p>
+In unsupervised machine learning, we are just given data points x<sub>i</sub>, that are assumed to be drawn from an unknown distribution. Usually we want to learn something about these, such as whether they lie on a low-dimensional subspace, or whether the data clusters in several groups, or find ways to represent the distribution compactly. The goal in unsupervised learning is often much less clear than in supervised learning, and there is no-one providing a “correct” answers and no supervisor.
+</p>
+
+<p>
+Common examples of unsupervised learning is discovering topics in news articles or on twitter, or grouping data into clusters for easier analysis. Another one is outlier detection, where you ask "does this data look normal" which is important for fraud detection and security systems.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb5d97bc">
+<h3 id="orgb5d97bc"><span class="section-number-3">4.5.</span> Reinforcement Learning</h3>
+<div class="column" style="float:left; width: 50%">
+
+<div id="org9a2b81e" class="figure">
+<p><img src="./assets/alpha_go.png" alt="alpha_go.png" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div id="org64ef3ad" class="figure">
+<p><img src="./assets/robot.gif" alt="robot.gif" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<p>
+Reinforcement learning has been in the news recently. Alpha go beat the world champion in go. Reinforcement learning is about an agent learning to interact with an environment, with some ultimate goal. The environment could be a go board, and the goal to win the game. For self-driving cars, the the environment could be roads, sensed by cameras and laser sensors, and the goal would be to get you somewhere quickly and safely. Or, the environment could be a social media platform, and the goal could be to provide you such great content that you never remove your eyes from your phone again!
+</p>
+
+</aside>
+</section>
+<section id="slide-orga9cd08f">
+<h3 id="orga9cd08f"><span class="section-number-3">4.6.</span> Reinforcement Learning</h3>
+<ul>
+<li>Working with an environment, not a dataset</li>
+<li>Action influence the environment</li>
+<li>Can't look at all possible situation</li>
+<li>no separate data collection and learning</li>
+
+</ul>
+<aside class="notes">
+<p>
+Reinforcement learning is quite different in that you usually don’t work with a dataset – you work with a whole world. This can be a video game, a simulation, or the real world. The actions of the agent influence which part of the world they see and which situations they encounter, and it’s usually impossible to look at all possible situations, even for something as limited as a go board. This means in reinforcement learning you can not separate data collection and learning, which you can do for unsupervised and supervised learning. There will be no reinforcement learning in this class, as the techniques are quite different, and real-world use of this technique is still quite limited.
+</p>
+
+</aside>
+</section>
+<section id="slide-org2d06be4">
+<h3 id="org2d06be4"><span class="section-number-3">4.7.</span> Other Kinds of Learning</h3>
+<ul>
+<li>Semi-supervised</li>
+<li>Active Learning</li>
+<li>Forecasting</li>
+<li>&#x2026;</li>
+
+</ul>
+<aside class="notes">
+<p>
+There are other kinds of learning that are somewhere between the three kinds I just explained. Semi-supervised learning for example is a combination of supervised and unsupervised learning. Active learning is somewhere between reinforcement learning and supervised learning. There are also many kinds of supervised learning where the assumption that data points are independent is dropped, for example for time series analysis and forecasting. 
+</p>
+
+<p>
+Supervised learning is probably not going to give us superhuman
+general artificial intelligence. But it's pretty good at solving
+science and business problems, so it's what we'll focus on.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org1e8ecfc">
+<h2 id="org1e8ecfc"><span class="section-number-2">5.</span> Supervised Learning</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+</section>
+<section id="slide-org7c431d5">
+<h3 id="org7c431d5"><span class="section-number-3">5.1.</span> Classification and Regression</h3>
+<div class="column" style="float:left; width: 50%">
+<p>
+Classification
+</p>
+<ul>
+<li>target \(y\) discrete</li>
+<li>Will you pass the class?</li>
+
+</ul>
+</div>
+
+<div class="column" style="float:left; width: 50%">
+<p>
+Regression
+</p>
+<ul>
+<li>Target \(y\) continuous</li>
+<li>How many points will you get on the final?</li>
+
+</ul>
+</div>
+<aside class="notes">
+<p>
+Two basic kinds of supervised learning: classification and
+regression. If y is continuous, then it’s regression, and if y is
+discrete, it’s classification.
+</p>
+
+<p>
+Predicting whether you will pass the class =&gt; "yes" and "no" answers =&gt; classification
+Predicting points on final exam =&gt; continuous number output =&gt; regression
+</p>
+
+<p>
+This can be generalized to outputting more than one variable, but we'll be able to formulate all (most?) our problems as having a single output.
+</p>
+
+</aside>
+</section>
+<section id="slide-org150c84a">
+<h3 id="org150c84a"><span class="section-number-3">5.2.</span> Generalization</h3>
+<p>
+Not only \(f(x_i) \approx y_i\),
+</p>
+
+<p>
+also for new data: \(f(x) \approx y\)
+</p>
+<aside class="notes">
+<p>
+For both regression and classification, it’s important to keep in mind the concept of generalization. Let’s say we have a regression task. We have features, that is data vectors x<sub>i</sub> and targets y<sub>i</sub> drawn from a joint distribution. We now want to learn a function f, such that f(x) is approximately y, not on this training data, but on new data drawn from this distribution. This is what’s called generalization, and this is a core distinction to function approximation. In principle we don’t care about how well we do on x<sub>i</sub>, we only care how well we do on new samples from the distribution.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb706644">
+<h3 id="orgb706644"><span class="section-number-3">5.3.</span> Relationship to Statistics</h3>
+<div class="column" style="float:left; width: 50%">
+<p>
+Statistics
+</p>
+
+<ul>
+<li>model first</li>
+<li>inference emphasis</li>
+
+</ul>
+</div>
+<div class="column" style="float:left; width: 50%">
+<p>
+Machine Learning
+</p>
+
+<ul>
+<li>data first</li>
+<li>prediction emphasis</li>
+
+</ul>
+</div>
+<aside class="notes">
+<p>
+It's helpful to position machine learning in relation to statistics. The line between them is pretty blurry.
+</p>
+
+<p>
+Statistics is usually about inference. Given a sample, make an
+inference about the whole population. You might also have a specific
+model of how the process behind your question works.
+</p>
+
+<p>
+On the other hand, machine learning is about prediction and generalization. We want to learn from past data to predict outcomes on future, unseen data.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org57e4317">
+<h2 id="org57e4317"><span class="section-number-2">6.</span> Overview of the course</h2>
+<ul>
+<li>Infrastructure and basic tools</li>
+<li>Basics with end-to-end Case Studies</li>
+<li>Classification</li>
+<li>Training Models (optimizing)</li>
+<li>Support Vector Machines</li>
+<li>Decision Trees &amp; Ensembles</li>
+<li>Dimensionality Reduction</li>
+<li>Unsupervised Learning</li>
+<li>Working with Text Data</li>
+<li>Neural Networks &amp; Deep Learning</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="./revealjs/dist/reveal.js"></script>
+<script src="./revealjs/plugin/markdown/markdown.js"></script>
+<script src="./revealjs/plugin/zoom/zoom.js"></script>
+<script src="./revealjs/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown, RevealZoom, RevealNotes],
+slideNumber:true
+});
+
+</script>
+</body>
+</html>

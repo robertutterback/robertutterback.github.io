@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Python Libraries for ML</title>
+<meta name="author" content="Robert Utterback (based on slides by Andreas Muller)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./revealjs/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./revealjs/dist/theme/moon.css" id="theme"/>
+
+<link rel="stylesheet" href="./revealjs/plugin/highlight/zenburn.css"/></head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h2>Python Libraries for ML</h2><h4>08/29/22</h4>
+</section>
+<aside class="notes">
+<p>
+TEST!
+</p>
+
+</aside>
+
+<section>
+<section id="slide-org7625e5d">
+<h2 id="org7625e5d">Advanced Python</h2>
+<ul>
+<li>List comprehensions</li>
+<li>Doc strings and help()</li>
+<li>Exceptions</li>
+
+</ul>
+<aside class="notes">
+<p>
+Maybe start with a simple Socrative T/F: do they know list
+comprehensions? Just to make sure they all know Socrative.
+</p>
+
+</aside>
+</section>
+<section id="slide-org7aab8e4">
+<h3 id="org7aab8e4">Bad Imports</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from matplotlib.pyplot import *
+from statistics import *
+from numpy import *
+</code></pre>
+</div>
+<p>
+Bad imports!
+</p>
+<ul>
+<li>Hide functionality</li>
+<li>Where did that function come from?</li>
+
+</ul>
+</section>
+<section id="slide-org6d87525">
+<h3 id="org6d87525">Good imports</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >import matplotlib.pyplot as plt
+import statistics as stat
+import numpy as np
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org863d5a4">
+<h2 id="org863d5a4">Essential Libraries</h2>
+<div class="outline-text-2" id="text-org863d5a4">
+</div>
+</section>
+<section id="slide-org718891c">
+<h3 id="org718891c">Anaconda</h3>
+<p>
+Nice distribution that includes:
+</p>
+<ul>
+<li>Scikit-learn</li>
+<li>Numpy</li>
+<li>Scipy</li>
+<li>matplotlib</li>
+<li>pandas</li>
+<li>Jupyter Notebook</li>
+
+</ul>
+</section>
+<section id="slide-orgc452c64">
+<h3 id="orgc452c64">Scikit-learn</h3>
+<ul>
+<li>Widely used, open source machine learning library</li>
+<li>You will need to read the documentation sometimes</li>
+<li><a href="http://scikit-learn.org">http://scikit-learn.org</a></li>
+
+</ul>
+</section>
+<section id="slide-orgc57dcac">
+<h3 id="orgc57dcac">Numpy</h3>
+<ul>
+<li>Important library for scientific computing</li>
+<li>Data structures like multidimensional arrays</li>
+<li>Lots of linear algebra functions</li>
+<li>Random number generators</li>
+<li>etc.</li>
+
+</ul>
+</section>
+<section id="slide-orga60d061">
+<h3 id="orga60d061">Numpy arrays</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >import numpy as np
+x = np.array([[1,2,3],[4,5,6]])
+print("x:\n{}".format(x))
+</code></pre>
+</div>
+
+<pre class="example">
+x:
+[[1 2 3]
+ [4 5 6]]
+</pre>
+
+</section>
+<section id="slide-orgeea32e2">
+<h3 id="orgeea32e2">Scipy</h3>
+<ul>
+<li>Collection of scientific computing functions</li>
+<li>Advanced linear algebra</li>
+<li>function optimization</li>
+<li>Signal processing</li>
+<li>Statistical distributions</li>
+
+</ul>
+</section>
+<section id="slide-org06e9883">
+<h3 id="org06e9883">Scipy sparse matrices</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from scipy import sparse
+
+# 2D NumPy array, identity matrix
+eye = np.eye(4)
+print("NumPy array:\n{}".format(eye))
+</code></pre>
+</div>
+
+<pre class="example">
+NumPy array:
+[[1. 0. 0. 0.]
+ [0. 1. 0. 0.]
+ [0. 0. 1. 0.]
+ [0. 0. 0. 1.]]
+</pre>
+
+</section>
+<section id="slide-org9d4dfce">
+<h3 id="org9d4dfce">Scipy sparse matrices</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >sm = sparse.csr_matrix(eye)
+print("SciPy sparse CSR matrix:\n{}".format(sm))
+</code></pre>
+</div>
+
+<pre class="example">
+SciPy sparse CSR matrix:
+  (0, 0)	1.0
+  (1, 1)	1.0
+  (2, 2)	1.0
+  (3, 3)	1.0
+</pre>
+
+</section>
+<section id="slide-orgd970084">
+<h3 id="orgd970084">matplotlib</h3>
+<ul>
+<li>Scientific plotting library</li>
+<li>Line charts, histograms, scatter plots, etc.</li>
+
+</ul>
+</section>
+<section id="slide-org259ad37">
+<h3 id="org259ad37">Line plot</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >import numpy as np
+import matplotlib.pyplot as plt
+
+# Generate sequence from -10 to 10, 100 steps in between
+x = np.linspace(-10, 10, 100)
+y = np.sin(x)
+plt.plot(x, y, marker="x")
+</code></pre>
+</div>
+
+
+<div id="org4f88039" class="figure">
+<p><img src="assets/lineplot.png" alt="lineplot.png" height="350px" />
+</p>
+</div>
+</section>
+<section id="slide-org3af1021">
+<h3 id="org3af1021">Pandas</h3>
+<ul>
+<li>Data "wrangling" and analysis library</li>
+<li><code>DataFrame</code> data structure, modeled on <code>R</code>'s <code>DataFrame</code></li>
+<li>Basically a table, like an Excel spreadsheet as a varaible</li>
+<li>pandas can read in many file formats, e.g., SQL, Excel files, CSV</li>
+
+</ul>
+</section>
+<section id="slide-org627dbf3">
+<h3 id="org627dbf3">Tables</h3>
+<div class="org-src-container">
+
+<pre  id="pandastable" ><code class="jupyter-python" >import pandas as pd
+# create simple dataset
+data = {'Name': ["John", "Anna", "Peter", "Linda"],
+      	'Location': ["New York", "Paris", "Berlin", "London"],
+	      'Age': [24, 13, 53, 33]
+       }
+
+data_pandas = pd.DataFrame(data)
+data_pandas
+</code></pre>
+</div>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Location</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>John</td>
+      <td>New York</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Anna</td>
+      <td>Paris</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Peter</td>
+      <td>Berlin</td>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Linda</td>
+      <td>London</td>
+      <td>33</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</section>
+<section id="slide-orgaaec764">
+<h3 id="orgaaec764">Tables</h3>
+<div class="org-src-container">
+
+<pre   ><code class="jupyter-python" >data_pandas[data_pandas.Age &gt; 30]
+</code></pre>
+</div>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Location</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>Peter</td>
+      <td>Berlin</td>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Linda</td>
+      <td>London</td>
+      <td>33</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</section>
+<section id="slide-orge73a0e0">
+<h3 id="orge73a0e0">Jupyter Notebook</h3>
+<ul>
+<li>Interactive environment for editing/running code</li>
+<li>Mix text and code</li>
+<li>Run code and display results immediately</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="./revealjs/dist/reveal.js"></script>
+<script src="./revealjs/plugin/highlight/highlight.js"></script>
+<script src="./revealjs/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealHighlight, RevealNotes],
+slideNumber:true
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+.reveal p {
+    /* text-align: left !important; */
+}
+
+.reveal h1.title {
+    font-size: 2em;
+}
+/* .reveal h2 { */
+/* 		font-size: 1em; */
+/* } */
+.reveal section h2.author {
+    font-size: 1em;
+}
+.reveal section h2.date {
+    font-size: 0.75em;
+}
+
+.slide-header {
+    font-size: 20px !important;
+    position: absolute;
+    top: 0;
+    right: 0
+}
+
+.reveal pre#smallcode {
+    font-size: 0.45em;
+}
+
+.reveal pre#tinycode {
+    font-size: 0.3em;
+}
+
+.reveal td {
+    font-size: 20px !important;
+}
+
+img {
+    border-style: none !important;
+    box-shadow: none !important;
+}
+
+.reveal section {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.reveal pre {
+    box-shadow: none !important;
+}
+
+.reveal th {
+    font-size: 20px !important;
+}
+
+.smallimgs img {
+    height: 125px !important;
+}
+.reveal table.bigtable th, .reveal table.bigtable td {
+		font-size: 0.3em !important;
+}
