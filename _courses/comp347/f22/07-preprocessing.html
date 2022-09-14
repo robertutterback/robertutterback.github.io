@@ -23,8 +23,8 @@
 </section>
 
 <section>
-<section id="slide-orga056a1c">
-<h2 id="orga056a1c">Preprocessing</h2>
+<section id="slide-org2231c1c">
+<h2 id="org2231c1c">Preprocessing</h2>
 <aside class="notes">
 <p>
 Today we’ll talk about preprocessing and maybe a little feature
@@ -35,10 +35,10 @@ also applies to neural nets and kernel SVMs.
 
 </aside>
 </section>
-<section id="slide-org466cf86">
-<h3 id="org466cf86"></h3>
+<section id="slide-org8bb0f57">
+<h3 id="org8bb0f57"></h3>
 
-<div id="orgd2ebe47" class="figure">
+<div id="org6e0cc51" class="figure">
 <p><img src="./assets/boston_housing_scatter.png" alt="boston_housing_scatter.png" />
 </p>
 </div>
@@ -59,13 +59,13 @@ different scales)
 </section>
 </section>
 <section>
-<section id="slide-org1b3f89f">
-<h2 id="org1b3f89f">Scaling</h2>
-<div class="outline-text-2" id="text-org1b3f89f">
+<section id="slide-org0d6a263">
+<h2 id="org0d6a263">Scaling</h2>
+<div class="outline-text-2" id="text-org0d6a263">
 </div>
 </section>
-<section id="slide-orgcc762e2">
-<h3 id="orgcc762e2"></h3>
+<section id="slide-org7d32d95">
+<h3 id="org7d32d95"></h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >plt.figure()
@@ -77,7 +77,7 @@ plt.ylabel("MEDV")
 </div>
 
 
-<div id="org78f5284" class="figure">
+<div id="org98d6a81" class="figure">
 <p><img src="assets/bostonbox.png" alt="bostonbox.png" />
 </p>
 </div>
@@ -108,10 +108,10 @@ the anchor when rotating
 
 </aside>
 </section>
-<section id="slide-orgb5f6b0b">
-<h3 id="orgb5f6b0b">Scaling and Distances</h3>
+<section id="slide-orgcef95f2">
+<h3 id="orgcef95f2">Scaling and Distances</h3>
 
-<div id="orge2bb676" class="figure">
+<div id="org040c43c" class="figure">
 <p><img src="./assets/knn_scaling.png" alt="knn_scaling.png" />
 </p>
 </div>
@@ -129,10 +129,10 @@ neighbors here? Let's see
 
 </aside>
 </section>
-<section id="slide-org7abd9ff">
-<h3 id="org7abd9ff">Scaling and Distances</h3>
+<section id="slide-org99c2dcf">
+<h3 id="org99c2dcf">Scaling and Distances</h3>
 
-<div id="org13225aa" class="figure">
+<div id="org811615b" class="figure">
 <p><img src="./assets/knn_scaling2.png" alt="knn_scaling2.png" />
 </p>
 </div>
@@ -148,10 +148,10 @@ meaning - it could be a matter of changing meters to kilometers.
 
 </aside>
 </section>
-<section id="slide-orgbc528a8">
-<h3 id="orgbc528a8">Ways to Scale Data</h3>
+<section id="slide-orge9027b9">
+<h3 id="orge9027b9">Ways to Scale Data</h3>
 
-<div id="org8a915d0" class="figure">
+<div id="org414651b" class="figure">
 <p><img src="./assets/scaling_plots.png" alt="scaling_plots.png" />
 </p>
 </div>
@@ -178,8 +178,8 @@ StandardScaler is usually good, but doesn’t guarantee particular min and max v
 
 </aside>
 </section>
-<section id="slide-org79a70a4">
-<h3 id="org79a70a4">Sparse Data</h3>
+<section id="slide-org9e25f8c">
+<h3 id="org9e25f8c">Sparse Data</h3>
 <ul>
 <li>Data with many zeros &#x2014; only store non-zero entries</li>
 <li>Subtracting anything will make data "dense" &#x2014; often can't fit in memory</li>
@@ -214,8 +214,8 @@ there may be some technical details I can't yet see.
 
 </aside>
 </section>
-<section id="slide-orgf6c0232">
-<h3 id="orgf6c0232">Standard Scaler Example</h3>
+<section id="slide-orgf069c05">
+<h3 id="orgf069c05">Standard Scaler Example</h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >from sklearn.preprocessing import StandardScaler
@@ -255,10 +255,10 @@ We fit on the training set and apply transform on both the training and the test
 
 </aside>
 </section>
-<section id="slide-org3eb429e">
-<h3 id="org3eb429e">Importance of Scaling</h3>
+<section id="slide-org7992d40">
+<h3 id="org7992d40">Importance of Scaling</h3>
 
-<div id="org478463b" class="figure">
+<div id="org7799a26" class="figure">
 <p><img src="./assets/no_separate_scaling.png" alt="no_separate_scaling.png" />
 </p>
 </div>
@@ -273,10 +273,10 @@ On the right you see what happens when you use the test-set minimum and maximum 
 
 </aside>
 </section>
-<section id="slide-org072bb5c">
-<h3 id="org072bb5c">Scikit-Learn API</h3>
+<section id="slide-org0d232a6">
+<h3 id="org0d232a6">Scikit-Learn API</h3>
 
-<div id="orgf1e8914" class="figure">
+<div id="org09bf595" class="figure">
 <p><img src="./assets/sklearn_api.png" alt="sklearn_api.png" />
 </p>
 </div>
@@ -298,8 +298,8 @@ Here’s a summary of the scikit-learn methods. All models have a fit method whi
 </aside>
 
 </section>
-<section id="slide-org1ae3121">
-<h3 id="org1ae3121"></h3>
+<section id="slide-org0129170">
+<h3 id="org0129170"></h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >scores = cross_val_score(RidgeCV(), X_train, y_train, cv=10)
@@ -369,20 +369,20 @@ However, there is a bit of a problem with the analysis we did here. Can you see 
 </section>
 </section>
 <section>
-<section id="slide-org717d6e7">
-<h2 id="org717d6e7">Preprocessing with Pipelines</h2>
-<div class="outline-text-2" id="text-org717d6e7">
+<section id="slide-org456ac9c">
+<h2 id="org456ac9c">Preprocessing with Pipelines</h2>
+<div class="outline-text-2" id="text-org456ac9c">
 </div>
 </section>
-<section id="slide-org0d1f839">
-<h3 id="org0d1f839">A Common Error</h3>
+<section id="slide-org2d7b5b7">
+<h3 id="org2d7b5b7">A Common Error</h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >print(X.shape)
 </code></pre>
 </div>
 
-<div class="VERBATIM" id="orga195fed">
+<div class="VERBATIM" id="org84a191e">
 <pre class="example">
 (100, 10000)
 </pre>
@@ -400,7 +400,7 @@ print(X_selected.shape)
 </code></pre>
 </div>
 
-<div class="VERBATIM" id="org9cfd9cd">
+<div class="VERBATIM" id="org25c9d12">
 <pre class="example">
 (100, 500)
 </pre>
@@ -413,7 +413,7 @@ print(X_selected.shape)
 </code></pre>
 </div>
 
-<div class="VERBATIM" id="orgad9b664">
+<div class="VERBATIM" id="org70a3ff6">
 <pre class="example">
 0.90
 </pre>
@@ -428,15 +428,15 @@ ridge.score(X_test_selected, y_test)
 </code></pre>
 </div>
 
-<div class="VERBATIM" id="org33e4008">
+<div class="VERBATIM" id="orge16ef8f">
 <pre class="example">
 -0.18
 </pre>
 
 </div>
 </section>
-<section id="slide-orgedae5e2">
-<h3 id="orgedae5e2">Leaking Information</h3>
+<section id="slide-org6a1a71e">
+<h3 id="org6a1a71e">Leaking Information</h3>
 <div class="column" style="float:left; width: 50%">
 <font size=6>
 <div class="org-src-container">
@@ -488,8 +488,8 @@ In practice, estimating mean and standard deviation is quite robust and you will
 
 </aside>
 </section>
-<section id="slide-org9c2dfc2">
-<h3 id="org9c2dfc2">Leaking Information</h3>
+<section id="slide-org759b30a">
+<h3 id="org759b30a">Leaking Information</h3>
 <div class="column" style="float:left; width: 50%">
 <p>
 Information leak:
@@ -522,8 +522,8 @@ In practice, estimating mean and standard deviation is quite robust and you will
 
 </aside>
 </section>
-<section id="slide-orgbf61bf2">
-<h3 id="orgbf61bf2"></h3>
+<section id="slide-orgfbaa428">
+<h3 id="orgfbaa428"></h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >X, y = boston.data, boston.target
@@ -581,10 +581,10 @@ make<sub>pipeline</sub> returns an estimator that does both steps at once. We ca
 
 </aside>
 </section>
-<section id="slide-org53fbc6d">
-<h3 id="org53fbc6d">Pipelines</h3>
+<section id="slide-org3e66e72">
+<h3 id="org3e66e72">Pipelines</h3>
 
-<div id="org1b9754e" class="figure">
+<div id="org1444f1c" class="figure">
 <p><img src="./assets/pipeline.png" alt="pipeline.png" height="500px" />
 </p>
 </div>
@@ -603,8 +603,8 @@ If we call predict on some data X’, say the test set, it will call transform o
 
 </aside>
 </section>
-<section id="slide-org517d3e2">
-<h3 id="org517d3e2">Undoing our feature selection mistake</h3>
+<section id="slide-orgd6cc7af">
+<h3 id="orgd6cc7af">Undoing our feature selection mistake</h3>
 <div class="column" style="float:left; width: 50%">
 <font size=6>
 <div class="org-src-container">
@@ -629,7 +629,7 @@ X_selected = select.transform(X, y)
 np.mean(cross_val_score(Ridge(), X_selected, y))
 </code></pre>
 </div>
-<div class="VERBATIM" id="org401daf0">
+<div class="VERBATIM" id="org4c9e472">
 <p>
 0.90
 </p>
@@ -661,7 +661,7 @@ Same as:
 np.mean(cross_val_score(pipe, X, y))
 </code></pre>
 </div>
-<div class="VERBATIM" id="org7bbb1cf">
+<div class="VERBATIM" id="org2cb9e2e">
 <p>
 -0.079
 </p>
@@ -680,8 +680,8 @@ Here you can see how we can build a pipeline using a standard scaler and kneighb
 
 </aside>
 </section>
-<section id="slide-org680de5a">
-<h3 id="org680de5a">Naming Steps</h3>
+<section id="slide-orgde49808">
+<h3 id="orgde49808">Naming Steps</h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >from sklearn.pipeline import make_pipeline
@@ -721,8 +721,8 @@ By default, step names are just lowercased classnames. You can also name the ste
 
 </aside>
 </section>
-<section id="slide-orgf3c2135">
-<h3 id="orgf3c2135">Pipeline and GridSearchCV</h3>
+<section id="slide-org23a1312">
+<h3 id="org23a1312">Pipeline and GridSearchCV</h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >knn_pipe = make_pipeline(StandardScaler(),
@@ -769,8 +769,8 @@ You should always use pipelines for preprocessing. Not only does it make your co
 
 </aside>
 </section>
-<section id="slide-org0a6c426">
-<h3 id="org0a6c426">Going wild with Pipelines</h3>
+<section id="slide-org37ffc82">
+<h3 id="org37ffc82">Going wild with Pipelines</h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >from sklearn.datasets import load_diabetes
@@ -790,8 +790,8 @@ grid.fit(X_train, y_train)
 </code></pre>
 </div>
 </section>
-<section id="slide-org8ecaf08">
-<h3 id="org8ecaf08">Wilder</h3>
+<section id="slide-org7b24eeb">
+<h3 id="org7b24eeb">Wilder</h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >pipe = Pipeline([('scaler', StandardScaler()),
@@ -813,8 +813,8 @@ manually be running and looking at results so you can customize it.
 
 </aside>
 </section>
-<section id="slide-org7050ff9">
-<h3 id="org7050ff9">Wildest</h3>
+<section id="slide-org3c2a112">
+<h3 id="org3c2a112">Wildest</h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >from sklearn.tree import DecisionTreeRegressor
@@ -834,12 +834,11 @@ grid.fit(X_train, y_train)
 </code></pre>
 </div>
 
-
 </section>
 </section>
 <section>
-<section id="slide-orga65bbd0">
-<h2 id="orga65bbd0">Feature Distributions</h2>
+<section id="slide-org98c4fea">
+<h2 id="org98c4fea">Feature Distributions</h2>
 <aside class="notes">
 <p>
 Now that we discussed scaling and pipelines, let’s talk about some
@@ -849,10 +848,10 @@ different input distributions.
 
 </aside>
 </section>
-<section id="slide-org482f466">
-<h3 id="org482f466">Transformed Features</h3>
+<section id="slide-org9a66853">
+<h3 id="org9a66853">Transformed Features</h3>
 
-<div id="org46f5b19" class="figure">
+<div id="orgf731077" class="figure">
 <p><img src="./assets/boston_box_transformed.png" alt="boston_box_transformed.png" height="500px" />
 </p>
 </div>
@@ -876,10 +875,10 @@ Let’s also check out the histograms of the data to see a bit better what’s g
 
 </aside>
 </section>
-<section id="slide-org6720416">
-<h3 id="org6720416">Transformed Histograms</h3>
+<section id="slide-org3041964">
+<h3 id="org3041964">Transformed Histograms</h3>
 
-<div id="orgd428825" class="figure">
+<div id="orgbe2a7e9" class="figure">
 <p><img src="./assets/boston_hist.png" alt="boston_hist.png" />
 </p>
 </div>
@@ -899,8 +898,8 @@ If you want to apply it to many data points, loop over them and apply it
 
 </aside>
 </section>
-<section id="slide-org60fbdf1">
-<h3 id="org60fbdf1">Power Transformations</h3>
+<section id="slide-org29cf3ba">
+<h3 id="org29cf3ba">Power Transformations</h3>
 <div class="column" style="float:left; width: 60%">
 <div>
 \begin{equation}
@@ -919,7 +918,7 @@ Only applicable for positive \(x\)!
 </div>
 <div class="column" style="float:left; width: 40%">
 
-<div id="orga97b052" class="figure">
+<div id="org4f580db" class="figure">
 <p><img src="./assets/boxcox.png" alt="boxcox.png" height="300px" />
 </p>
 </div>
@@ -949,16 +948,16 @@ Box-Cox transformation is only applicable to positive features.
 
 </aside>
 </section>
-<section id="slide-orgd7cc10f">
-<h3 id="orgd7cc10f">Box-Cox on Boston</h3>
+<section id="slide-orga6ebe38">
+<h3 id="orga6ebe38">Box-Cox on Boston</h3>
 <div class="column" style="float:left; width: 70%">
 
-<div id="org1781f81" class="figure">
+<div id="org6551d16" class="figure">
 <p><img src="./assets/boston_hist.png" alt="boston_hist.png" height="200px" />
 </p>
 </div>
 
-<div id="org1553ff2" class="figure">
+<div id="org4bed09f" class="figure">
 <p><img src="./assets/boston_hist_boxcox.png" alt="boston_hist_boxcox.png" height="200px" />
 </p>
 </div>
@@ -990,16 +989,16 @@ For the binary CHAS the transformation doesn’t make a lot of sense, though.
 
 </aside>
 </section>
-<section id="slide-org3bb657a">
-<h3 id="org3bb657a">Box-Cox Scatter</h3>
+<section id="slide-org7c129d8">
+<h3 id="org7c129d8">Box-Cox Scatter</h3>
 <div class="column" style="float:left; width: 70%">
 
-<div id="org67c8e72" class="figure">
+<div id="orgcb3d8b3" class="figure">
 <p><img src="./assets/boston_housing_scatter.png" alt="boston_housing_scatter.png" height="200px" />
 </p>
 </div>
 
-<div id="orga74bcf7" class="figure">
+<div id="orgb0db6b3" class="figure">
 <p><img src="./assets/boston_bc_scaled_scatter.png" alt="boston_bc_scaled_scatter.png" height="200px" />
 </p>
 </div>
@@ -1030,8 +1029,8 @@ The dis, lstat and crim relationships now look a bit more obvious and linear.
 </section>
 </section>
 <section>
-<section id="slide-org31f6517">
-<h2 id="org31f6517">Categorical Variables</h2>
+<section id="slide-org417532a">
+<h2 id="org417532a">Categorical Variables</h2>
 <aside class="notes">
 <p>
 
@@ -1039,8 +1038,8 @@ The dis, lstat and crim relationships now look a bit more obvious and linear.
 
 </aside>
 </section>
-<section id="slide-org1ecad58">
-<h3 id="org1ecad58">Categorical Variables</h3>
+<section id="slide-org7a958a0">
+<h3 id="org7a958a0">Categorical Variables</h3>
 <div class="org-src-container">
 
 <pre  id="smallcode" ><code class="python" >df = pd.DataFrame({
@@ -1117,8 +1116,8 @@ Scikit-learn requires you to explicitly handle these, and assumes in general tha
 
 </aside>
 </section>
-<section id="slide-org846f9ef">
-<h3 id="org846f9ef">Ordinal Encoding</h3>
+<section id="slide-org9870525">
+<h3 id="org9870525">Ordinal Encoding</h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >df['boro_ordinal'] = df.boro.astype("category").cat.codes
@@ -1186,21 +1185,21 @@ Scikit-learn requires you to explicitly handle these, and assumes in general tha
 
 <div class="r-stack">
 
-<div id="orga3d59a5" class="figure">
+<div id="org01df037" class="figure">
 <p><img src="./assets/boro_ordinal.png" alt="boro_ordinal.png" class="fragment (appear)" />
 </p>
 </div>
 
 
-<div id="orgda4b0ce" class="figure">
+<div id="org71fe27d" class="figure">
 <p><img src="./assets/boro_ordinal_classification.png" alt="boro_ordinal_classification.png" class="fragment (appear)" />
 </p>
 </div>
 </div>
 </div>
 </section>
-<section id="slide-org0b1adf2">
-<h3 id="org0b1adf2">One-Hot (Dummy) Encoding</h3>
+<section id="slide-org8383660">
+<h3 id="org8383660">One-Hot (Dummy) Encoding</h3>
 <div class="column" style="float:left; width: 50%">
 <table border="1" class="dataframe">
   <thead>
@@ -1366,8 +1365,8 @@ In this case we didn't actually want to transform the target variable vegan.
 
 </aside>
 </section>
-<section id="slide-org563e568">
-<h3 id="org563e568">One-Hot (Dummy) Encoding</h3>
+<section id="slide-orgb0d4574">
+<h3 id="orgb0d4574">One-Hot (Dummy) Encoding</h3>
 <div class="column" style="float:left; width: 50%">
 <table border="1" class="dataframe">
   <thead>
@@ -1508,8 +1507,8 @@ We can specify selectively which columns to apply the encoding to.
 </aside>
 
 </section>
-<section id="slide-org891e178">
-<h3 id="org891e178">One-Hot (Dummy) Encoding</h3>
+<section id="slide-org5c890cb">
+<h3 id="org5c890cb">One-Hot (Dummy) Encoding</h3>
 <div class="column" style="float:left; width: 50%">
 <table border="1" class="dataframe">
   <thead>
@@ -1658,7 +1657,7 @@ variables are categorical and it will dummy encode those for us.
 </aside>
 
 </section>
-<section id="slide-org891e178-split">
+<section id="slide-org5c890cb-split">
 
 <div class="column" style="float:left; width: 50%">
 <font size=6>
@@ -1851,8 +1850,8 @@ unfortunately, scikit-learn completely ignores column names.
 </aside>
 
 </section>
-<section id="slide-org7ec70b8">
-<h3 id="org7ec70b8">Pandas Categorial Columns</h3>
+<section id="slide-org9240525">
+<h3 id="org9240525">Pandas Categorial Columns</h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >df = pd.DataFrame({
@@ -1965,8 +1964,8 @@ values are actually in the data set.
 </aside>
 
 </section>
-<section id="slide-org56091aa">
-<h3 id="org56091aa"><code>OneHotEncoder</code></h3>
+<section id="slide-org5c82ac9">
+<h3 id="org5c82ac9"><code>OneHotEncoder</code></h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >from sklearn.preprocessing import OneHotEncoder
@@ -2003,8 +2002,8 @@ correspond.</li>
 </aside>
 
 </section>
-<section id="slide-orgd3e7fee">
-<h3 id="orgd3e7fee"><code>OneHotEncoder</code> + <code>ColumnTransformer</code></h3>
+<section id="slide-orgc5da375">
+<h3 id="orgc5da375"><code>OneHotEncoder</code> + <code>ColumnTransformer</code></h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >categorical = df.dtypes == object
@@ -2016,7 +2015,7 @@ model
 </code></pre>
 </div>
 
-<pre class="example" id="org062561a">
+<pre class="example" id="org4390e0a">
 Pipeline(steps=[('columntransformer',
                  ColumnTransformer(transformers=[('standardscaler',
                                                   StandardScaler(),
@@ -2052,10 +2051,10 @@ this example I'm constructing a boolean mask
 </aside>
 
 </section>
-<section id="slide-org9e80a54">
-<h3 id="org9e80a54"></h3>
+<section id="slide-orgce14e10">
+<h3 id="orgce14e10"></h3>
 
-<div id="org8f8bda5" class="figure">
+<div id="org84194a3" class="figure">
 <p><img src="./assets/column_transformer_schematic.png" alt="column_transformer_schematic.png" />
 </p>
 </div>
@@ -2078,8 +2077,8 @@ FIXME add code
 </aside>
 
 </section>
-<section id="slide-org381c336">
-<h3 id="org381c336">Dummy variables and colinearity</h3>
+<section id="slide-org1edc106">
+<h3 id="org1edc106">Dummy variables and colinearity</h3>
 <ul>
 <li>One-hot is redundant (last one is 1 – sum of others)</li>
 <li>Can introduce co-linearity</li>
@@ -2089,8 +2088,8 @@ FIXME add code
 
 </ul>
 </section>
-<section id="slide-orgd37f71b">
-<h3 id="orgd37f71b">Models Supporting Discrete Features</h3>
+<section id="slide-org060de44">
+<h3 id="org060de44">Models Supporting Discrete Features</h3>
 <ul>
 <li>In principle:
 <ul>
@@ -2125,17 +2124,17 @@ integer might make more sense.
 </section>
 </section>
 <section>
-<section id="slide-org44b3125">
-<h2 id="org44b3125">Target Encoding (Impact Encoding)</h2>
+<section id="slide-org5f98ba3">
+<h2 id="org5f98ba3">Target Encoding (Impact Encoding)</h2>
 
-<div id="org85bbb78" class="figure">
+<div id="orge23d1ae" class="figure">
 <p><img src="./assets/zip_code_prices.png" alt="zip_code_prices.png" />
 </p>
 </div>
 
 </section>
-<section id="slide-org8b9121c">
-<h3 id="org8b9121c">Target Encoding (Impact Encoding)</h3>
+<section id="slide-org767a629">
+<h3 id="org767a629">Target Encoding (Impact Encoding)</h3>
 <ul>
 <li>For high cardinality categorical features</li>
 <li>Instead of 70 one-hot variables, one “response encoded” variable.</li>
@@ -2171,15 +2170,15 @@ state how many people in this state are classified for each of them.
 </aside>
 
 </section>
-<section id="slide-org30a4156">
-<h3 id="org30a4156">More encodings for categorical features:</h3>
+<section id="slide-org527c0c3">
+<h3 id="org527c0c3">More encodings for categorical features:</h3>
 <p>
 <a href="http://contrib.scikit-learn.org/categorical-encoding/">http://contrib.scikit-learn.org/categorical-encoding/</a>
 </p>
 
 </section>
-<section id="slide-org4866d75">
-<h3 id="org4866d75">Load data, include ZIP code</h3>
+<section id="slide-org2ccaeca">
+<h3 id="org2ccaeca">Load data, include ZIP code</h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >from sklearn.datasets import fetch_openml
@@ -2201,7 +2200,7 @@ Index(['bedrooms', 'bathrooms', 'sqft_living', 'sqft_lot', 'floors',
 
 
 </section>
-<section id="slide-org4866d75-split">
+<section id="slide-org2ccaeca-split">
 
 <div class="org-src-container">
 
@@ -2301,7 +2300,7 @@ Index(['bedrooms', 'bathrooms', 'sqft_living', 'sqft_lot', 'floors',
 </table>
 
 </section>
-<section id="slide-org4866d75-split">
+<section id="slide-org2ccaeca-split">
 
 <div class="org-src-container">
 
@@ -2403,7 +2402,7 @@ te.transform(X_train).head()
 </table>
 
 </section>
-<section id="slide-org4866d75-split">
+<section id="slide-org2ccaeca-split">
 
 <div class="org-src-container">
 
@@ -2422,8 +2421,8 @@ Name: price, dtype: float64
 </pre>
 
 </section>
-<section id="slide-orgfc0b6fc">
-<h3 id="orgfc0b6fc">Results</h3>
+<section id="slide-org6c4f90b">
+<h3 id="org6c4f90b">Results</h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >X = data.frame.drop(['date', 'price', 'zipcode'], axis=1)
@@ -2465,6 +2464,473 @@ print(f"{np.mean(scores):.2f}")
 <pre class="example">
 0.79
 </pre>
+
+</section>
+</section>
+<section>
+<section id="slide-org3e6e410">
+<h2 id="org3e6e410">Imputation</h2>
+<div class="outline-text-2" id="text-org3e6e410">
+</div>
+</section>
+<section id="slide-orgb909715">
+<h3 id="orgb909715">Dealing with missing values</h3>
+<aside class="notes">
+<p>
+"missing" reps: <code>None</code>, <code>pd.NA</code>, <code>NaN</code>, and more! 
+</p>
+
+<p>
+Two types: 1. missing at random &#x2013; missingness itself not
+informative. 2. Informative. Maybe someone didn't fill out a certain
+question on a form, and there may be a reason why they didn't fill it
+out.
+</p>
+
+<p>
+Only missing input. Missing outputs is different, where you don't know
+the true output/class for every data point.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgc04b061">
+<h3 id="orgc04b061"></h3>
+
+<div id="org779e720" class="figure">
+<p><img src="./assets/l18_01.png" alt="l18_01.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Data from iris, which is unrealistic but we can see it all
+One way to deal with this is just to drop the points with missing values.
+Or drop column if there's a column that has lots of missing values.
+</p>
+
+<p>
+Might be fine but (1) losing info, (2) what if you need to make
+predictions on new data that has missing values? Or maybe all the
+"hard" data points were the ones with missing values &#x2013; you'll think
+your accuracy is great, when in reality it's poor.
+</p>
+
+</aside>
+</section>
+<section id="slide-org542b53b">
+<h3 id="org542b53b"></h3>
+
+<div id="orgfca7104" class="figure">
+<p><img src="./assets/l18_02.png" alt="l18_02.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Build a model, fill in missing values from data in the other rows/columns.
+</p>
+
+<p>
+Then keep that model, apply it to anything in your test set (or in
+production).
+</p>
+
+<p>
+If missing all features, what can you do? Well, doesn't help building
+your main prediction model. But you need to think about what you might
+do in practice. Say you are suggesting items to purchase and you have
+a new user &#x2014; you have no feature values to use! Maybe use the
+average of all or something.
+</p>
+
+</aside>
+</section>
+<section id="slide-org94d6b9b">
+<h3 id="org94d6b9b">Imputation Methods</h3>
+<ul>
+<li>Mean/Median</li>
+<li>kNN</li>
+<li>Regression models</li>
+<li>Probabilistic models</li>
+
+</ul>
+<aside class="notes">
+<p>
+Mean/median of column.
+</p>
+
+<p>
+We'll talk about the first 3, just give some pointers to probabilistic
+models. These basically try to build a probabilistic model that has a
+high probability of generating the dataset (figuring out where the
+data comes from/how it is produced), then use that to fill in missing
+data.
+</p>
+
+</aside>
+</section>
+<section id="slide-orge7e7e5e">
+<h3 id="orge7e7e5e">Baseline: Dropping Columns</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.linear_model import LogisticRegressionCV
+X_train, X_test, y_train, y_test = \
+    train_test_split(X_, y, stratify=y)
+nan_columns = np.any(np.isnan(X_train), axis=0)
+X_drop_columns = X_train[:, ~nan_columns]
+scores = cross_val_score(LogisticRegressionCV(v=5), 
+                         X_drop_columns, y_train, cv=10)
+np.mean(scores)
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >0.772
+</code></pre>
+</div>
+
+<aside class="notes">
+<p>
+Again with Iris, which is a toy dataset. Just dropping all columns
+with ANY missing data.
+</p>
+
+</aside>
+</section>
+<section id="slide-org31e6e38">
+<h3 id="org31e6e38">Mean and Median</h3>
+
+<div id="orgfc728f3" class="figure">
+<p><img src="./assets/l18_03.png" alt="l18_03.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Now called <code>SimpleInputer</code>. Can do mean, median, most frequent, or
+constant.
+</p>
+
+<p>
+BTW, other transforms (e.g. scalers) will not let you use missing
+data, it will throw an error.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgd191f11">
+<h3 id="orgd191f11"></h3>
+
+<div id="org3085ae1" class="figure">
+<p><img src="./assets/l18_04.png" alt="l18_04.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Two other dimensions w/o missing data, not shown here. Just showing data in the other 2 dimensions.
+Original dataset has kind-of three clusters, green in the upper right.
+</p>
+
+<p>
+Data from iris, but just the two features that had values removed.
+Note how the green points have moved because we just set their values to the mean!
+</p>
+
+<p>
+Can do things like doing mean per class, although this is not done that often.
+</p>
+
+</aside>
+</section>
+<section id="slide-org6562558">
+<h3 id="org6562558"></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScalar
+nan_columns = np.any(np.isnan(X_train), axis = 0)
+X_drop_columns = X_train[:,~nan_columns]
+logreg = make_pipeline(StandardScalar(),
+                       LogisticRegression())
+scores = cross_val_score(logreg, X_drop_columns,
+                         y_train, cv = 10)
+print(np.mean(scores))
+
+mean_pipe = make_pipeline(SimpleImputer(), StandardScalar(),
+                          LogisticRegression())
+scores = cross_val_score(mean_pipe, X_train, y_train, cv=10)
+print(np.mean(scores))
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >0.794
+0.729
+</code></pre>
+</div>
+
+<aside class="notes">
+<p>
+Comparison of dropping columns vs. mean imputation. Actually in this case it's worse!
+If you just have a few missing values it might work okay.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgbc02932">
+<h3 id="orgbc02932">kNN Imputation</h3>
+<ul>
+<li>Find k nearest neighbors that have non-missing values.</li>
+<li>Fill in all missing values using the average of the neighbors.</li>
+
+</ul>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >sklearn.impute import KNNImputer
+imputer = KNNImputer(n_neighbors=2)
+imputer.fit_transform(X)
+</code></pre>
+</div>
+<aside class="notes">
+<p>
+For each data point, find nearest neighbors. Use average of neighbors
+to fill in missing values. 
+</p>
+
+<p>
+But if there's missing values, how do you compute distances?
+Q: Ideas?
+</p>
+
+</aside>
+</section>
+<section id="slide-orge96a8b2">
+<h3 id="orge96a8b2">kNN Imputation Code</h3>
+<div class="org-src-container">
+
+<pre  id="smallcode" ><code class="python" >distances = np.zeros((X_train.shape[0], X_train.shape[0]))
+for i, x1 in enumerate(X_train):
+    for j, x2 in enumerate(X_train):
+        dist = (x1 - x2) ** 2
+        nan_mask = np.isnan(dist)
+        distances[i, j] = dist[~nan_mask].mean() * X_train.shape[1]
+neighbors = np.argsort(distances, axis=1)[:, 1:]
+n_neighbors = 3
+X_train_knn = X_train.copy()
+for feature in range(X_train.shape[1]):
+    has_missing_value = np.isnan(X_train[:, feature])
+    for row in np.where(has_missing_value)[0]:
+        neighbor_features = X_train[neighbors[row], feature]
+        non_nan_neighbors = \
+            neighbor_features[~np.isnan(neighbor_features)]
+        X_train_knn[row, feature] = \
+            non_nan_neighbors[:n_neighbors].mean()
+</code></pre>
+</div>
+<aside class="notes">
+<p>
+Inefficient didactic implementation
+</p>
+
+<p>
+compute all pairwise distances; element-wise differences, squared (vector op)
+mean of all non-nan vals multiplied by #  features
+like mean Euclidean distance weighted by how many features are missing
+Kind of a heuristic for putting them on the scale
+</p>
+
+<p>
+Once the distances are computed, look at every feature and then every
+row (data point) that is missing that feature, compute the nearest
+neighbors that don't have that feature missing, then average their
+value for that feature.
+</p>
+
+<p>
+Pretty commonly used, but pretty slow (n<sup>2</sup> for distances)
+</p>
+
+</aside>
+</section>
+<section id="slide-org3812cac">
+<h3 id="org3812cac">kNN Imputation Plot</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >scores = cross_val_score(logreg, X_train_knn, y_train, cv=10)
+np.mean(scores)
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >0.849
+</code></pre>
+</div>
+
+
+<div id="org5a0d4b1" class="figure">
+<p><img src="./assets/l18_09.png" alt="l18_09.png" height="450px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Looks better than before, all points on the diagonal.
+</p>
+
+</aside>
+</section>
+<section id="slide-org33b8dbb">
+<h3 id="org33b8dbb">Model-Driven Imputation</h3>
+<ul>
+<li>Train regression model for missing values</li>
+<li>Possibly iterate: retrain after filling in</li>
+<li>Very flexible!</li>
+
+</ul>
+<aside class="notes">
+<ol>
+<li>Impute the missing values, say using the mean.</li>
+<li>Try to predict missing features using regression model trained on non-missing features.</li>
+<li>Repeat until things aren't changing much.</li>
+
+</ol>
+
+</aside>
+</section>
+<section id="slide-org0388f6f">
+<h3 id="org0388f6f">Model-driven imputation with RF</h3>
+<div class="org-src-container">
+
+<pre  id="smallcode" ><code class="python" >rf = RandomForestRegressor(n_estimators=100)
+X_imputed = X_train.copy()
+for i in range(10):
+    last = X_imputed.copy()
+    for feature in range(X_train.shape[1]):
+        inds_not_f = np.arange(X_train.shape[1])
+        inds_not_f = inds_not_f[inds_not_f != feature]
+        f_missing = np.isnan(X_train[:, feature])
+        rf.fit(X_imputed[~f_missing][:, inds_not_f],
+               X_train[~f_missing, feature])
+        X_imputed[f_missing, feature] = rf.predict(
+            X_imputed[f_missing][:, inds_not_f])
+    if (np.linalg.norm(last - X_imputed)) &lt; .5:
+        break
+scores = cross_val_score(logreg, X_imputed, y_train, cv=10)
+np.mean(scores)
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >0.855
+</code></pre>
+</div>
+
+<aside class="notes">
+<p>
+See IterativeImputer in sklearn, which is experimental&#x2026;
+</p>
+
+<p>
+Don't worry too much about what random forests does&#x2026;we'll talk about
+it later. Assumes we did imputation on X<sub>Train</sub> before, like mean.
+</p>
+
+<p>
+Note that we're using some predicted values to fit a model for missing
+values. Ex: we might have missing values in both feature 7
+and 42. When building our model for 7, we'll be using predicted data
+for 42, and vice versa when building for 42. So every iteration we
+hope our predictions will get better.
+</p>
+
+<p>
+Works better than NN in this case.
+</p>
+
+</aside>
+</section>
+<section id="slide-org32b4c84">
+<h3 id="org32b4c84">Imputation Method Comparison</h3>
+
+<div id="org146a855" class="figure">
+<p><img src="./assets/mean_knn_rf_comparison.png" alt="mean_knn_rf_comparison.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Not super obvious that regression is better than kNN.
+</p>
+
+</aside>
+</section>
+<section id="slide-org65f7995">
+<h3 id="org65f7995">Fancyimpute</h3>
+<ul>
+<li><code>!pip install fancyimpute</code></li>
+<li><code>sklearn</code>'s <code>IterativeImputer</code> can work well..</li>
+<li><code>fancyimpute</code> provides fancier features</li>
+
+</ul>
+<aside class="notes">
+<p>
+Used to talk about MICE (<code>IterativeImputer</code>) here, but that go
+transitioned into sklearn (though still experimental)
+</p>
+
+</aside>
+</section>
+<section id="slide-org087c393">
+<h3 id="org087c393"></h3>
+
+<div id="orgaafcc52" class="figure">
+<p><img src="./assets/fancy_impute_comparison.png" alt="fancy_impute_comparison.png" height="600px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Methods from fancyimpute. Soft impute does matrix factorization,
+similar to what you'd do in recommender systems, which we may or may
+not get to this semester.
+</p>
+
+</aside>
+</section>
+<section id="slide-orga331e47">
+<h3 id="orga331e47">Applying <code>fancyimpute</code></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from fancyimpute import IterativeImputer
+imputer = IterativeImputer(n_iter=5)
+X_complete = imputer.fit_transform(X_train)
+
+scores = cross_val_score(logreg, X_train_fancy_mice, 
+                         y_train, cv=10)
+np.mean(scores)
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >0.866
+</code></pre>
+</div>
+
+<aside class="notes">
+<p>
+Old code; use sklearn instead, unless you need one of fancyimpute's fancier features.
+</p>
+
+<p>
+This is cheating with the imputation, we're leaking information&#x2026;
+</p>
+
+<p>
+Q: What should we do instead? A: add our imputer into the pipeline
+</p>
+
+</aside>
 </section>
 </section>
 </div>
