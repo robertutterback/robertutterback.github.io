@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Model Evaluation</title>
+<meta name="author" content="Robert Utterback (based on slides by Andreas Muller)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./revealjs/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./revealjs/dist/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+<link rel="stylesheet" href="./revealjs/plugin/highlight/zenburn.css"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h2>Model Evaluation</h2><h4>09/14/2022</h4><h5>Robert Utterback (based on slides by Andreas Muller)</h5>
+</section>
+\(
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand{\E}{\mathop{\boldsymbol{E}}}
+\newcommand{\var}{\boldsymbol{Var}}
+\newcommand{\norm}[1]{\lvert\lvert#1\rvert\rvert}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\ltwo}[1]{\norm{#1}_2}
+\newcommand{\lone}[1]{\norm{#1}_1}
+\newcommand{\sgn}[1]{\text{sign}\left( #1 \right)}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\minw}{\min_{w \in \mathbb{R}^p}}
+\newcommand{\sumn}{\sum_{i=1}^n}
+\newcommand{\logloss}{\log{(\exp{(-y_iw^T\vec{x}_i)} + 1)}}
+\)
+
+<section>
+<section id="slide-org18279c5">
+<h2 id="org18279c5"></h2>
+<aside class="notes">
+<p>
+There's a lot more about classification we haven't covered.
+</p>
+
+<p>
+For one thing, evaluating classification models is actually not that
+straightforward, because you can make different types of errors.
+</p>
+
+<p>
+Then we need to consider multiclass classification; there are multiple ways to handle it.
+</p>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-org00f45b8">
+<h2 id="org00f45b8">Metrics for Binary Classification</h2>
+<aside class="notes">
+<p>
+We've talked a lot about "accuracy", but what is that actually?
+</p>
+
+<p>
+Draw the confusion matrix.
+</p>
+
+<p>
+Q: What is "accuracy", using these terms? 
+</p>
+
+</aside>
+</section>
+<section id="slide-org506aeec">
+<h3 id="org506aeec">Confusion Matrix</h3>
+
+<div id="org54913b8" class="figure">
+<p><img src="./assets/confusion_matrix.png" alt="confusion_matrix.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Diagonal divided by everything.
+</p>
+
+<p>
+Accuracy assumes all mistakes are equally important. But in reality it
+may be very different! Ex: it's much worse to say someone has cancer
+when they don't (false positive), than to miss it on a diagnostic exam
+(false negative)!
+</p>
+
+</aside>
+</section>
+<section id="slide-org3bab201">
+<h3 id="org3bab201">Positive vs. Negative</h3>
+<ul>
+<li>Pos. vs. Neg. is arbitrary!</li>
+<li>(But often minority class = positive)</li>
+
+</ul>
+</section>
+<section id="slide-org7d232ed">
+<h3 id="org7d232ed">Confusion Matrix in Python</h3>
+<div class="org-src-container">
+
+<pre  id="confmatrix" ><code class="python" >from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+data = load_breast_cancer()
+X_train, X_test, y_train, y_test = \
+    train_test_split(data.data, data.target,
+                     stratify=data.target, random_state=0)
+lr = LogisticRegression().fit(X_train, y_train)
+y_pred = lr.predict(X_test)
+cm = confusion_matrix(y_test, y_pred)
+print(cm)
+print(f"{lr.score(X_test, y_test):.3f}")
+ConfusionMatrixDisplay(confusion_matrix=cm).plot(cmap='gray_r')
+plt.savefig('img/bc_conf_matrix.png')
+</code></pre>
+</div>
+
+
+<div class="column" style="float:left; width: 50%">
+
+<pre class="example">
+[[48  5]
+ [ 5 85]]
+0.930
+</pre>
+
+
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div id="org01e8db4" class="figure">
+<p><img src="./img/bc_conf_matrix.png" alt="bc_conf_matrix.png" height="200em" style="&quot;margin: 0; padding: 0;&quot;" />
+</p>
+</div>
+</div>
+
+</section>
+<section id="slide-org10cfc9a">
+<h3 id="org10cfc9a">Problems with Accuracy</h3>
+<p>
+Data with 90% positives:
+</p>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.metrics import accuracy_score
+for y_pred in [y_pred_1, y_pred_2, y_pred_3]:
+    print(accuracy_score(y_true, y_pred))
+</code></pre>
+</div>
+
+<pre class="example" id="org6500cf3">
+0.9
+0.9
+0.9
+</pre>
+
+
+<div id="org5f4d9e3" class="figure">
+<p><img src="./assets/problems_with_accuracy.png" alt="problems_with_accuracy.png" height="200px" />
+</p>
+</div>
+
+<aside class="notes">
+<ul>
+<li>Imbalanced classes lead to hard-to-interpret accuracy.</li>
+<li>Accuracy doesn't tell you which confusion matrix you have, which
+might be pretty important</li>
+<li>pred_1: just always predict positive! Gets all negative samples wrong</li>
+<li>pred_2: Gets all negative correct, a few positives wrong</li>
+<li>pred_3: Gets half negatives correct, most positives</li>
+<li>For different applications there is a huge cost difference in these models!</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgc25bf8a">
+<h3 id="orgc25bf8a">Precision, Recall, \(F_1\) -score</h3>
+<font size=6>
+<ul>
+<li><b>Precision</b>, Positive Predictive Value (PPV):</li>
+
+</ul>
+
+<p>
+\[ \frac{\text{TP}}{\text{TP}+\text{FP}} \]
+</p>
+
+<ul>
+<li><b>Recall</b> (sensitivity, coverage, true positive rate)</li>
+
+</ul>
+<p>
+\[ \frac{\text{TP}}{\text{TP}+\text{FN}} \]
+</p>
+
+<ul>
+<li>\(F_1\) -score (harmonic mean of precision and recall)</li>
+
+</ul>
+
+<p>
+\[ 2 \frac{\text{precision} \cdot\text{recall}}{\text{precision}+\text{recall}} \]
+</p>
+</font>
+<aside class="notes">
+<p>
+All depend on definition of positive and negative.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgfd79751">
+<h3 id="orgfd79751">The Zoo</h3>
+
+<div id="orgfbe938b" class="figure">
+<p><img src="./assets/zoo.png" alt="zoo.png" height="450px" width="1000px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Comes from wikipedia page on precision and recall
+</p>
+
+</aside>
+</section>
+<section id="slide-org6d7134c">
+<h3 id="org6d7134c">Normalizing the confusion matrix</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >confusion_matrix(y_true, y_pred)
+</code></pre>
+</div>
+
+<div id="orgacb4417" class="figure">
+<p><img src="./assets/confusion_matrix2.png" alt="confusion_matrix2.png" height="200px" />
+</p>
+</div>
+
+<div class="column" style="float:left; width: 50%">
+
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" >confusion_matrix(y_true, y_pred, normalize='true') 
+</code></pre>
+</div>
+</font>
+
+
+<div id="org429eba4" class="figure">
+<p><img src="./assets/confusion_matrix_norm_true.png" alt="confusion_matrix_norm_true.png" height="200px" />
+</p>
+</div>
+
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" >confusion_matrix(y_true, y_pred, normalize='pred')
+</code></pre>
+</div>
+</font>
+
+
+<div id="orgf5a3cf9" class="figure">
+<p><img src="./assets/confusion_matrix_norm_pred.png" alt="confusion_matrix_norm_pred.png" height="200px" />
+</p>
+</div>
+</div>
+
+</section>
+<section id="slide-org4d51e20">
+<h3 id="org4d51e20"></h3>
+<div class="column" style="float:left; width: 50%">
+
+<div id="org2ee5eac" class="figure">
+<p><img src="./assets/confusion_matrix_col.png" alt="confusion_matrix_col.png" height="500px" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div id="orgcd2b4bb" class="figure">
+<p><img src="./assets/classification_report_1.png" alt="classification_report_1.png" />
+</p>
+</div>
+
+
+<div id="orgb9189e2" class="figure">
+<p><img src="./assets/classification_report_2.png" alt="classification_report_2.png" />
+</p>
+</div>
+
+
+<div id="org55b7210" class="figure">
+<p><img src="./assets/classification_report_3.png" alt="classification_report_3.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<p>
+Each model has different results for each class and metric.
+</p>
+
+</aside>
+</section>
+<section id="slide-org266323a">
+<h3 id="org266323a">Averaging strategies</h3>
+<font size=6>
+<ul>
+<li>"macro", "weighted", "micro" (multi-label), "samples" (multi-label)</li>
+
+</ul>
+
+<p>
+\[\text{macro }\frac{1}{\left|L\right|} \sum_{l \in L} R(y_l, \hat{y}_l)\]
+\[\text{weighted } \frac{1}{m} \sum_{l \in L} m_l R(y_l, \hat{y}_l)\]
+</p>
+</font>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >w = recall_score(y_test, pred, average='weighted')
+m = recall_score(y_test, pred, average='macro')
+print(f"Weighted average: {w:.3f}")
+print(f"Macro average: {m:.3f}")
+</code></pre>
+</div>
+
+<pre class="example" id="org5ea0713">
+Weighted average: 0.90
+Macro average: 0.50
+</pre>
+
+<aside class="notes">
+<ul>
+<li>One common way to approach multiclass: look at averages over binary metrics</li>
+<li>"micro" and "samples" have to do with multi-label prediction (each sample can have multiple labels)</li>
+<li>We won't have time to talk about that in this class</li>
+<li>Positive class is now label \(\ell\), negative is any other (like OVR)</li>
+<li>So you're summing over all those recall values</li>
+<li>Weighted weights by number of samples of that class, then divide by total # samples</li>
+<li>This last I think is what classification report has at bottom of previous slide</li>
+<li>Can also look at average precision instead of recall</li>
+<li>weighted takes into account class sizes, so if you really care about
+the smaller classes you might want to choose macro</li>
+<li>Let's say you have perfect recall for one class and 0 for the other.</li>
+<li>Macro recall would be 0.5, but for weighted would be 0.9 if 90% of data is positive.</li>
+<li>Choice comes down to: do you think each class should have equal weight or each sample should?</li>
+<li>Macro: each class is same, Weighted: each sample is same</li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-org705a262">
+<h3 id="org705a262">Balanced Accuracy</h3>
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" >balanced_accuracy_score(y_t, y_p) == recall_score(y_t, y_p, average='macro')
+</code></pre>
+</div>
+</font>
+
+<p>
+\[ \text{balanced_accuracy} = \frac12 \left( \frac{TP}{TP+FN} + \frac{TN}{TN+FP} \right) \]
+</p>
+
+<ul>
+<li>Always 0.5 for chance predictions</li>
+<li>Equal to accuracy for balanced datasets</li>
+
+</ul>
+</section>
+<section id="slide-org337545f">
+<h3 id="org337545f">Mammography Data</h3>
+<div class="column" style="float:left; width: 50%">
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.datasets import fetch_openml
+# mammography dataset https://www.openml.org/d/310
+data = fetch_openml('mammography', as_frame=True)
+X, y = data.data, data.target
+print(X.shape)
+</code></pre>
+</div>
+
+<pre class="example">
+(11183, 6)
+</pre>
+
+
+</font>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >print(y.value_counts())
+</code></pre>
+</div>
+
+<pre class="example">
+-1    10923
+1       260
+Name: class, dtype: int64
+</pre>
+
+
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div id="org87a5fe0" class="figure">
+<p><img src="./assets/mammography_data.png" alt="mammography_data.png" />
+</p>
+</div>
+</div>
+
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" ># make y boolean -- allows sklearn to determine positive class more easily
+X_train, X_test, y_train, y_test = train_test_split(X, y=='1', random_state=0)
+</code></pre>
+</div>
+</font>
+
+<aside class="notes">
+<p>
+I use this mammography data set, which is very imbalanced. This is a data set that has many samples, only six features and it's very imbalanced.
+</p>
+
+<p>
+The datasets are about mammography data, and whether there are calcium
+deposits in the breast. They are often mistaken for cancer, which is
+why it's good to detect them. Since its rigidly low dimensional, we
+can do a scatter plot. And we can see that these are much skewed
+distributions and there's really a lot more of one class than the
+other
+</p>
+
+</aside>
+</section>
+<section id="slide-org9376ab9">
+<h3 id="org9376ab9">Mammography Results</h3>
+<font size=6>
+<div class="column" style="float:left; width: 50%">
+<div class="org-src-container">
+
+<pre   ><code class="python" >svc = make_pipeline(StandardScaler(),
+                    SVC(C=100, gamma=0.1))
+svc.fit(X_train, y_train)
+print(f"{svc.score(X_test, y_test):.3f}")
+print(classification_report(y_test, svc.predict(X_test)))
+</code></pre>
+</div>
+
+<pre class="example">
+0.986
+              precision    recall  f1-score   support
+
+       False       0.99      1.00      0.99      2732
+        True       0.81      0.53      0.64        64
+
+    accuracy                           0.99      2796
+   macro avg       0.90      0.76      0.82      2796
+weighted avg       0.98      0.99      0.99      2796
+</pre>
+
+
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >rf = RandomForestClassifier()
+rf.fit(X_train, y_train)
+print(f"{rf.score(X_test, y_test):.3f}")
+print(classification_report(y_test, rf.predict(X_test)))
+</code></pre>
+</div>
+
+<pre class="example">
+0.987
+              precision    recall  f1-score   support
+
+       False       0.99      1.00      0.99      2732
+        True       0.85      0.53      0.65        64
+
+    accuracy                           0.99      2796
+   macro avg       0.92      0.76      0.82      2796
+weighted avg       0.99      0.99      0.99      2796
+</pre>
+
+
+</div>
+</font>
+</section>
+<section id="slide-org485fc10">
+<h3 id="org485fc10">Goal setting!</h3>
+<ul>
+<li>What do I want? What do I care about?</li>
+<li>Can I assign costs to the confusion matrix?</li>
+<li>What guarantees do we want to give?</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>(precision, recall, or something else)</li>
+<li>(i.e. a false positive costs me 10 dollars; a false negative, 100 dollars)</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org3ba2c40">
+<h3 id="org3ba2c40">Changing Thresholds</h3>
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" >data = load_breast_cancer()
+
+X_train, X_test, y_train, y_test = \
+    train_test_split(data.data, data.target,
+                     stratify=data.target, random_state=0)
+
+lr = LogisticRegression(solver='liblinear').fit(X_train, y_train)
+y_pred = lr.predict(X_test)
+
+print(classification_report(y_test, y_pred))
+</code></pre>
+</div>
+
+<pre class="example">
+              precision    recall  f1-score   support
+
+           0       0.91      0.92      0.92        53
+           1       0.96      0.94      0.95        90
+
+    accuracy                           0.94       143
+   macro avg       0.93      0.93      0.93       143
+weighted avg       0.94      0.94      0.94       143
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >y_pred = lr.predict_proba(X_test)[:, 1] &gt; .85
+
+print(classification_report(y_test, y_pred))
+</code></pre>
+</div>
+
+<pre class="example">
+              precision    recall  f1-score   support
+
+           0       0.85      1.00      0.92        53
+           1       1.00      0.90      0.95        90
+
+    accuracy                           0.94       143
+   macro avg       0.93      0.95      0.93       143
+weighted avg       0.95      0.94      0.94       143
+</pre>
+
+
+</font>
+<aside class="notes">
+<ul>
+<li>Change your prediction threshold! Normally you learn some decision
+function, and then you'll predict based on whether this is .5 or
+above (or different thresholds for different decision functions).</li>
+<li>If you change this you'll change precision/recall, trading off between them</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org7b5c78e">
+<h3 id="org7b5c78e">Precision-Recall curve</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >X, y = make_blobs(n_samples=(2500, 500), cluster_std=[7.0, 2],
+                  random_state=22)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y)
+
+svc = SVC(gamma=.05).fit(X_train, y_train)
+
+precision, recall, thresholds = precision_recall_curve(
+    y_test, svc.decision_function(X_test))
+</code></pre>
+</div>
+
+<aside class="notes">
+<p>
+Note that sklearn has a fairly recent addition, in the form of a
+plotting API for these sorts of things. I'm not going to show it, but
+you can look it up.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgcf42df7">
+<h3 id="orgcf42df7">Precision-Recall curve</h3>
+
+<div id="org4883a9a" class="figure">
+<p><img src="./assets/precision_recall_curve.png" alt="precision_recall_curve.png" height="600px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+
+</p>
+
+</aside>
+</section>
+<section id="slide-org65e4888">
+<h3 id="org65e4888">Comparing RF and SVC</h3>
+
+<div id="orga1d6496" class="figure">
+<p><img src="./assets/rf_vs_svc.png" alt="rf_vs_svc.png" height="600px" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Optimal is top right, with recall=precision=1</li>
+<li>RF is maybe a bit more stable for high precision</li>
+<li>But svc is better in the middle there</li>
+<li>This is a very fine-grained, manual approach</li>
+<li>Look at all models, pick which you want</li>
+<li>Not really feasible if you have a lot of models</li>
+<li>Can try to summarize the information with a single number</li>
+<li>So if you know you need, say, recall of 90%, look at the curves of
+each at that level and pick the best one</li>
+<li>But you may not have a particular goal&#x2026;</li>
+<li>So often what people do is compute the area under this curve, which
+is kind of like looking at all the thresholds at once</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org71eeefe">
+<h3 id="org71eeefe">Average Precision</h3>
+
+<div id="org04bf4e5" class="figure">
+<p><img src="./assets/avg_precision.png" alt="avg_precision.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Related to area under the precision-recall curve (with step interpolation)</li>
+<li>Step function integral of this curve, like an integral</li>
+<li>For each possible threshold, look at precision at that threshold
+times change in recall</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org6fafb8e">
+<h3 id="org6fafb8e">\(F_1\) vs Average Precision</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.metrics import f1_score
+rf_score = f1_score(y_test, rf.predict(X_test))
+print(f"f1_score of random forest: {rf_score:.3f}")
+svc_score = f1_score(y_test, svc.predict(X_test))
+print(f"f1_score of svc: {svc_score:.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+f1_score of random forest: 0.712
+f1_score of svc: 0.780
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.metrics import average_precision_score
+ap_rf = average_precision_score(
+    y_test,rf.predict_proba(X_test)[:, 1])
+ap_svc = average_precision_score(
+    y_test, svc.decision_function(X_test))
+print(f"Average precision of random forest: {ap_rf:.3f}")
+print(f"Average precision of svc: {ap_svc:.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+Average precision of random forest: 0.724
+Average precision of svc: 0.830
+</pre>
+
+
+<aside class="notes">
+<ul>
+<li>f1 score only looks at single (default) threshold</li>
+<li>So you can get different results, though in this case both tell you the same</li>
+<li>This does not give you a threshold!</li>
+<li>If you use the default threshold, you might get 0 accuracy!</li>
+<li>It does not pay attention to where the default threshold is!</li>
+<li>If all positive classes are ranked higher than negative classes, no
+matter how bad your accuracy actually is you may get a large area
+under the curve, i.e. AP only considers ranking!</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org553d3e2">
+<h3 id="org553d3e2">ROC Curve</h3>
+
+<div id="orgd30879e" class="figure">
+<p><img src="./assets/zoo.png" alt="zoo.png" />
+</p>
+</div>
+
+<p>
+\[ \text{FPR} = \frac{\text{FP}}{\text{FP}+\text{TN}}\]
+</p>
+
+<p>
+\[ \text{TPR} = \frac{\text{TP}}{\text{TP}+\text{FN}} = \text{recall}\]
+</p>
+<aside class="notes">
+<p>
+The ROC curve is similar but it looks at true and false positives rate. Defined here. (Explain)
+</p>
+
+</aside>
+</section>
+<section id="slide-orgbeb5ded">
+<h3 id="orgbeb5ded">ROC Curve</h3>
+
+<div id="org012621c" class="figure">
+<p><img src="./assets/roc_curve.png" alt="roc_curve.png" height="600px" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Can again look at this over all thresholds</li>
+<li>Ideal here is top <b>left</b>, false positive rate 0</li>
+<li>Random classifier or one that predicts everything as the same class
+will be a diagonal here</li>
+<li>No matter what class imbalance is</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org9637e2e">
+<h3 id="org9637e2e">ROC AUC</h3>
+<ul>
+<li>Area under ROC Curve</li>
+<li>Always .5 for random/constant prediction</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.metrics import roc_auc_score
+rf_auc = roc_auc_score(y_test, rf.predict_proba(X_test)[:,1],
+                       multi_class='ovr')
+svc_auc = roc_auc_score(y_test, svc.decision_function(X_test))
+print(f"AUC for random forest: {rf_auc:.3f}")
+print(f"AUC for SVC: {svc_auc:.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+AUC for random forest: 0.960
+AUC for SVC: 0.973
+</pre>
+
+
+<aside class="notes">
+<ul>
+<li>So if you look at the area under this curve, always .5 for random/constant predictions</li>
+<li>Easy to tell if you're better than random/constant</li>
+<li>ROC curve is usually much smoother than precision-recall</li>
+<li>In practice when people say AUC what they mean is ROC AUC</li>
+<li>Again a ranking threshold that takes all possible thresholds into
+account, same problem as before</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org746dd91">
+<h3 id="org746dd91">Summary of metrics for binary classification</h3>
+<p>
+Threshold-based:
+</p>
+<ul>
+<li>accuracy</li>
+<li>precision, recall, f1</li>
+
+</ul>
+
+<p>
+Ranking:
+</p>
+<ul>
+<li>average precision</li>
+<li>ROC AUC</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>accuracy misses things, precision and recall are better IF you look at both numbers</li>
+<li>ROC AUC is nice b/c you know what .5 means</li>
+<li>ROC AUC is very popular in practice</li>
+<li>You can use these metrics when doing cross-validation (but then
+probably something else to pick your threshold)</li>
+<li>i.e., use this score to decide which hyperparameters are better&#x2026;</li>
+<li>Remember for ranking: if all positive classes ranked higher than
+negative classes, you might get an AUC close to 1!</li>
+<li>Lots more to read/understand&#x2026;</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org32947ff">
+<h2 id="org32947ff">Multiclass Classification</h2>
+<div class="outline-text-2" id="text-org32947ff">
+</div>
+</section>
+<section id="slide-org25568ab">
+<h3 id="org25568ab">Hack: Reduction to Binary Classification</h3>
+<ul>
+<li>One vs. Rest</li>
+<li>One vs. One</li>
+
+</ul>
+<aside class="notes">
+<p>
+The slightly hacky way is using what's known as a reduction. We're
+doing a reduction like in math: reducing one problem to another. In
+this case we're reducing the problem of multi-class classification
+into several instances of the binary classification problem. And we
+already know how to deal with binary classification.
+</p>
+
+<p>
+There are two straight-forward ways to reduce multi-class to binary
+classification. the first is called one vs rest, the second one is
+called one-vs-one.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgdd0c28e">
+<h3 id="orgdd0c28e">One vs. Rest (OVR)</h3>
+<ul>
+<li>For 4 classes:
+<ul>
+<li>A vs. {B,C,D}, B vs. {A,C,D}, C vs. {A,B,D}, D vs. {A,B,C}</li>
+
+</ul></li>
+<li>In general:
+<ul>
+<li>\(c\) binary classifiers, each on all data points</li>
+
+</ul></li>
+
+</ul>
+<aside class="notes">
+<p>
+Let's start with One vs Rest. here, we learn one binary classifier for
+each class against the remaining classes. So let's say we have 4
+classes, called 1 to 4. First we learn a binary classifier of the
+points in class 1 vs the points in the classes 2, 3 and 4. Then, we do
+the same for class 2, and so on. The way we end up building as many
+classifiers as we have classes.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgc6a4148">
+<h3 id="orgc6a4148">Prediction with OVR</h3>
+<ul>
+<li>Pick class with highest score: \[ \hat{y} = \text{argmax}_{i \in Y} \vec{w}_i^T \vec{x} \]</li>
+<li>Unclear why it works, but works well.</li>
+
+</ul>
+<aside class="notes">
+<p>
+To make a prediction, we compute the decision function of all
+classifiers, say 4 in the example, on a new data point. The one with
+the highest score for the positive class, the single class, wins, and
+that class is predicted.
+</p>
+
+<p>
+It's a little bit unclear why this works as well as it does. Maybe
+there's some papers about that now, but I'm not sure.
+</p>
+
+<p>
+So in this case we have one coefficient vector w and one bias b for
+each class. (related to hwk 2)
+</p>
+
+</aside>
+</section>
+<section id="slide-org7464041">
+<h3 id="org7464041">OVR Prediction</h3>
+
+<div id="org9d37f33" class="figure">
+<p><img src="./assets/ovr_lines.png" alt="ovr_lines.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Here is an illustration of what that looks like. Unfortunately it's a
+bit hard to draw 4 classes in general position in 2 dimensions, so I
+only used 3 classes here. So each class has an associated coefficient
+vector and bias, corresponding to a line. The line tries to separate
+this class from the other two classes.
+</p>
+
+</aside>
+</section>
+<section id="slide-org80490f1">
+<h3 id="org80490f1">OVR Prediction Boundaries</h3>
+
+<div id="orgf5d00ca" class="figure">
+<p><img src="./assets/ovr_boundaries.png" alt="ovr_boundaries.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Here are the decision boundaries resulting from the these three binary
+classifiers. Basically what they say is that the line that is closest
+decides the class. What you can not see here is that each of the lines
+also have a magnitude associated with them. It's not only the
+direction of the normal vector that matters, but also the length. You
+can think of that as some form of uncertainty attached to the line.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb73e6ea">
+<h3 id="orgb73e6ea">One Vs. One (OVO)</h3>
+<ul>
+<li>A vs. B, A vs. C, A vs. D, B vs. C, B vs. D, C vs. D</li>
+<li>\({c\choose{2}} = \frac{c(c-1)}{2}\) binary classifiers
+<ul>
+<li>each trained on a fraction of the data</li>
+
+</ul></li>
+<li>Vote for highest positives
+<ul>
+<li>Classify on all classifiers</li>
+<li>Count how often each class was predicted</li>
+<li>Return most commonly predicted class</li>
+
+</ul></li>
+<li>Works well, but again a heuristic</li>
+
+</ul>
+<aside class="notes">
+<p>
+The other method of reduction is called one vs one. In one vs one, we
+build one binary model for each pair of classes. In the example of
+having four classes that is one for 1 vs 2, one for 1v3 and so on. So
+we end up with c * (c - 1) /2 binary classifiers. And each is trained
+only on the subset of the data that belongs to these classes.
+</p>
+
+<p>
+To make a prediction, we again apply all of the classifiers. For each
+class we count how often one of the classifiers predicted that class,
+and we predict the class with the most votes.
+</p>
+
+<p>
+Again, this is just a heuristic and there's not really a good
+theoretical explanation why this should work.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb46ef57">
+<h3 id="orgb46ef57">OVO Prediction</h3>
+
+<div id="org6eec120" class="figure">
+<p><img src="./assets/ovo_lines.png" alt="ovo_lines.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Here is an example for predicting on three classes in 2d using the
+one-vs-one heuristic. In the case of three classes, there's also three
+pairs. Three is a bit of a special case, with any more classes there
+would be more classifiers than classes.
+</p>
+
+<p>
+The dashed lines are colored according to the pair of classes they
+separate. So the green and blue line separates the green and blue
+classes. The data points belonging to the grey class were not used in
+building this model at all.
+</p>
+
+</aside>
+</section>
+<section id="slide-org3eb109d">
+<h3 id="org3eb109d">OVO Prediction Boundaries</h3>
+
+<div id="org6535575" class="figure">
+<p><img src="./assets/ovo_boundaries.png" alt="ovo_boundaries.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Looking at the predictions made by the one vs one classifier the
+correspondence to the binary decision boundaries is a bit more clear
+than for the one vs rest heuristic, because it only takes the actual
+boundaries into account, not the length of the normal vectors. That
+makes it easier to visualize the geometry, but it's also a bit of a
+downside of the method because it means it discards any notion of
+uncertainty that was present in the binary classifiers. The decision
+boundary for each class is given by the two lines that this class is
+involved in. So the grey class is bounded by the green and grey line
+and the blue and grey line.
+</p>
+
+<p>
+There is a triangle in the center in which there is one vote for each
+of the classes. In this implemenatation the tie is broken to just
+always predict the first class, which is the green one. That might not
+be the best tie breaking strategy, but this is a relatively rare case,
+in particular if there's more than three classes.
+</p>
+
+<p>
+OVR and OVO are general heuristics not restricted to linear
+models. They can be used whenever a binary model for classification
+needs to be extended to the multi-class case. For logistic regression,
+there is actually a natural extension of the formulation, and we don't
+have to resort to these hacks.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgfd07900">
+<h3 id="orgfd07900">OVR-OVO Comparison</h3>
+<div class="column" style="float:left; width: 50%">
+<p>
+OVR:
+</p>
+<ul>
+<li>\(c\) classifiers</li>
+<li>trained on imbalanced datasets of original size</li>
+<li>Retains some uncertainty estimates</li>
+
+</ul>
+</div>
+<div class="column" style="float:left; width: 50%">
+<p>
+OVO:
+</p>
+<ul>
+<li>\(c(c-1)/2\) classifiers</li>
+<li>trained on balanced subsets</li>
+<li>No uncertainty propagated</li>
+
+</ul>
+</div>
+<aside class="notes">
+<p>
+If original problem was balanced, that is&#x2026;
+</p>
+
+<p>
+OVR you are still returning a prediction probability, whereas OVO is
+just returning the winner of a vote.
+</p>
+
+</aside>
+</section>
+<section id="slide-org6be515c">
+<h3 id="org6be515c">Multinomial Logistic Regression</h3>
+<p>
+\[ p(y=i | x) = \frac{\e^{w_{i}^T \vec{x}}}{\sum_j \e^{w_{j}^T \vec{x}}} \]
+\[ \minw \sum_{i=1}^c \log(p(y=y_i | x_i)) \]
+\[ \hat{y} = \text{argmax}_{i \in Y} w_i \vec{x} \]
+</p>
+<ul>
+<li>Same prediction rule as OVR.</li>
+
+</ul>
+<aside class="notes">
+<p>
+The binary logistic regression case can be generalized to multinomial
+logistic regression, in which we model the probability that i is one
+of the classes using this formula, which is also known as softmax. The
+probability is proportional to e to the minus wtx which is the same as
+in the binary case. But now we need to normalize it so that the sum
+over all classes is one. So we just divide it by this sum.
+</p>
+
+</aside>
+</section>
+<section id="slide-org3a889ce">
+<h3 id="org3a889ce">In scikit-learn</h3>
+<ul>
+<li>OVO: Only SVC</li>
+<li>OVR: default for all linear models except <code>LogisticRegression</code></li>
+<li><code>clf.decision_function</code> \(=w^T x\)</li>
+<li><code>clf.predict_proba</code> gives probabilities for each class</li>
+<li><code>SVC(probability=True)</code> not great</li>
+
+</ul>
+<aside class="notes">
+<p>
+All models in sklearn have multiclass built in
+Logistic Regression decides based on the number of classes
+</p>
+
+<p>
+SVC(prob=True) does OVO SVM, then builds second model on top, really
+slow and probably not what you want.
+</p>
+
+</aside>
+</section>
+<section id="slide-org07ceae3">
+<h3 id="org07ceae3">Multiclass in Practice</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >iris = load_iris()
+X,y = iris.data, iris.target
+print(X.shape)
+print(np.bincount(y))
+
+logreg = LogisticRegression(multi_class="multinomial",
+                            random_state=0,
+                            solver="lbfgs").fit(X,y)
+linearsvm = LinearSVC().fit(X,y)
+print(logreg.coef_.shape)
+print(linearsvm.coef_.shape)
+</code></pre>
+</div>
+
+<pre class="example">
+(150, 4)
+[50 50 50]
+(3, 4)
+(3, 4)
+</pre>
+
+
+<aside class="notes">
+<p>
+OVR and multinomial, logreg produce one coef per class. Actually logreg would do this anyway.
+</p>
+
+<p>
+SVC would product same shape, but different semantics.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgf8f11ee">
+<h3 id="orgf8f11ee"></h3>
+
+<div id="org641fdbd" class="figure">
+<p><img src="./assets/logistic_coefs.png" alt="logistic_coefs.png" />
+</p>
+</div>
+<div class="org-src-container">
+
+<pre   ><code class="python" >logreg.coef_
+</code></pre>
+</div>
+
+<aside class="notes">
+<p>
+Interpreting the feature coefficients
+For each class we have a coefficient
+Tells you what the classifier has learned
+It's pretty interpretable, which is nice&#x2026;
+after centering data, without intercept
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org33b2225">
+<h2 id="org33b2225">Multi-class classification</h2>
+<aside class="notes">
+<p>
+
+</p>
+
+</aside>
+</section>
+<section id="slide-orgdef5b46">
+<h3 id="orgdef5b46">Confusion Matrix</h3>
+<font size=6>
+<div class="column" style="float:left; width: 50%">
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.datasets import load_digits
+from sklearn.metrics import accuracy_score
+
+digits = load_digits()
+# data is between 0 and 16
+X_train, X_test, y_train, y_test = \
+    train_test_split(digits.data / 16.,
+                     digits.target, random_state=0)
+lr = LogisticRegression().fit(X_train, y_train)
+pred = lr.predict(X_test)
+print(f"Accuracy: {accuracy_score(y_test, pred):.3f}")
+print(confusion_matrix(y_test, pred))
+</code></pre>
+</div>
+
+<pre class="example" id="org9995642">
+Accuracy: 0.962
+[[37  0  0  0  0  0  0  0  0  0]
+ [ 0 40  0  0  0  0  1  0  1  1]
+ [ 0  0 44  0  0  0  0  0  0  0]
+ [ 0  0  0 43  0  0  0  0  1  1]
+ [ 0  0  0  0 37  0  0  1  0  0]
+ [ 0  0  0  0  0 46  0  0  0  2]
+ [ 0  1  0  0  0  0 51  0  0  0]
+ [ 0  0  0  0  2  0  0 46  0  0]
+ [ 0  3  1  0  0  1  0  0 43  0]
+ [ 0  0  0  0  0  1  0  0  0 46]]
+</pre>
+
+
+</div>
+<div class="column" style="float:left; width: 50%">
+<div class="org-src-container">
+
+<pre   ><code class="python" >print(classification_report(y_test, pred))
+</code></pre>
+</div>
+
+<pre class="example" id="orgc5845d8">
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        37
+           1       0.91      0.93      0.92        43
+           2       0.98      1.00      0.99        44
+           3       1.00      0.96      0.98        45
+           4       0.95      0.97      0.96        38
+           5       0.96      0.96      0.96        48
+           6       0.98      0.98      0.98        52
+           7       0.98      0.96      0.97        48
+           8       0.96      0.90      0.92        48
+           9       0.92      0.98      0.95        47
+
+    accuracy                           0.96       450
+   macro avg       0.96      0.96      0.96       450
+weighted avg       0.96      0.96      0.96       450
+</pre>
+
+</div>
+</font>
+<aside class="notes">
+<ul>
+<li>Digits data set, 10 classes</li>
+<li>Again diagonal is correct, off-diagonal mistakes</li>
+<li>Bigger confusion matrix b/c the errors we can make are different</li>
+<li>e.g. can mistake a 9 for an 8 or a 0, two different errors</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org5306afd">
+<h3 id="org5306afd">Multi-class ROC AUC</h3>
+<ul>
+<li>Hand &amp; Till, 2001, one vs one</li>
+
+</ul>
+<p>
+\[ \frac{1}{c(c-1)}\sum_{j=1}^{c}\sum_{k \neq j}^{c} AUC(j,k)\]
+</p>
+<ul>
+<li>Provost &amp; Domingo, 2000, one vs rest</li>
+
+</ul>
+<p>
+\[ \frac{1}{c}\sum_{j=1}^{c}p(j) AUC(j,\text{rest}_j)\]
+</p>
+<aside class="notes">
+<ul>
+<li>You can do something similar for ROC AUC, though it's not quite yet in sklearn</li>
+<li>First one basically does OVO, iterate over all classes inside iteration over all other classes</li>
+<li>Look at AUC of one class versus the other class</li>
+<li>The other is basically OVR, AUC of one class versus all the other classes</li>
+<li>p(j) is basically number of samples in class j (so it's basically weighted)</li>
+<li>Can also do weighted OVO and unweighted OVR</li>
+<li>Not clear to me which is better here&#x2026;</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orga6e9fe7">
+<h3 id="orga6e9fe7">Summary of metrics for multiclass classification</h3>
+<p>
+Threshold-based:
+</p>
+
+<ul>
+<li>accuracy</li>
+<li>precision, recall, f1 (macro average, weighted)</li>
+
+</ul>
+
+<p>
+Ranking:
+</p>
+
+<ul>
+<li>OVR ROC AUC</li>
+<li>OVO ROC AUC</li>
+
+</ul>
+
+<aside class="notes">
+<ul>
+<li>Can do grid search over precision, recall, etc. all those we've covered</li>
+<li>Can also use ROC AUC averages, great for imbalanced problems</li>
+<li>But you have to pick multiple thresholds</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org2a0e5d1">
+<h2 id="org2a0e5d1">Picking Metrics</h2>
+<div class="outline-text-2" id="text-org2a0e5d1">
+</div>
+</section>
+<section id="slide-orge8f74a9">
+<h3 id="orge8f74a9">Picking metrics</h3>
+<ul>
+<li>Accuracy rarely what you want</li>
+<li>Problems are rarely balanced</li>
+<li>Find the right criterion for the task</li>
+<li>OR pick one arbitrarily, but at least think about it</li>
+<li>Emphasis on recall or precision?</li>
+<li>Which classes are the important ones?</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>Think about what your metrics are!</li>
+<li>If classes are balanced, okay to use accuracy. Otherwise, don't!</li>
+<li>THEN optimize your criterion.</li>
+<li>Maybe you need recall of x% or some other goal</li>
+<li>Which one is the "positive" class?</li>
+<li>Use default threshold or find some other threshold?</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgc58c4bd">
+<h3 id="orgc58c4bd">Using metrics in cross-validation</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >X, y = make_blobs(n_samples=(2500, 500), cluster_std=[7.0, 2],
+                  random_state=22)
+# default scoring for classification is accuracy
+scores_default = cross_val_score(SVC(gamma='auto'), X, y, cv=3)
+
+# providing scoring="accuracy" doesn't change the results
+explicit_accuracy =  cross_val_score(SVC(gamma='auto'), X, y,
+                                     scoring="accuracy", cv=3)
+# using ROC AUC
+roc_auc =  cross_val_score(SVC(gamma='auto'), X, y, scoring="roc_auc", cv=3)
+print(f"Default scoring: {scores_default}")
+print(f"Explicit accuracy scoring: {explicit_accuracy}")
+print(f"AUC scoring: {roc_auc}")
+</code></pre>
+</div>
+
+<pre class="example">
+Default scoring: [0.92  0.904 0.913]
+Explicit accuracy scoring: [0.92  0.904 0.913]
+AUC scoring: [0.93  0.885 0.923]
+</pre>
+
+
+<aside class="notes">
+<ul>
+<li>Easy to use this in sklearn, usually want to use for cross val</li>
+<li>Default is accuracy, can pass in string</li>
+<li>Same for GridSearchCV</li>
+<li>Will make GridSearchCV.score use your metric!</li>
+<li>You can also pass a <i>list</i> of strings to look at multiple values</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org29e7220">
+<h3 id="org29e7220">Built-in scoring</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.metrics import get_scorer_names
+print("\n".join(sorted(get_scorer_names())))
+</code></pre>
+</div>
+
+<div class="column" style="float:left; width: 40%">
+<pre class="example" id="orgfed95d0">
+accuracy
+adjusted_mutual_info_score
+adjusted_rand_score
+average_precision
+completeness_score
+explained_variance
+f1
+f1_macro
+f1_micro
+f1_samples
+f1_weighted
+fowlkes_mallows_score
+homogeneity_score
+</pre>
+</div>
+<div class="column" style="float:left; width: 40%">
+<pre class="example" id="orgfda2bbc">
+log_loss
+mean_absolute_error
+mean_squared_error
+median_absolute_error
+mutual_info_score
+neg_log_loss
+neg_mean_absolute_error
+neg_mean_squared_error
+neg_mean_squared_log_error
+neg_median_absolute_error
+normalized_mutual_info_score
+precision
+precision_macro
+</pre>
+</div>
+<div class="column" style="float:left; width: 20%">
+<pre class="example" id="orga36fa0f">
+precision_micro
+precision_samples
+precision_weighted
+r2
+recall
+recall_macro
+recall_micro
+recall_samples
+recall_weighted
+roc_auc
+v_measure_score
+</pre>
+</div>
+<aside class="notes">
+<ul>
+<li>List of all built-in scorers</li>
+<li>Some of these are for regression, some only for binary classification, some multiclass, etc.</li>
+<li>Why <code>neg_mean_squared_error</code> and <code>mean_squared_error</code></li>
+<li>The code is only one way, and higher is better. With <code>mean_squared_error</code> smaller is better!</li>
+<li>So use <code>neg_mean_squared_error</code>, similar for <code>log_loss</code></li>
+<li>Can also provide your own metric!</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgb760c88">
+<h3 id="orgb760c88">Providing you your own callable</h3>
+<ul>
+<li>Takes <code>estimator, X, y</code></li>
+<li>Returns score – higher is better (always!)</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre   ><code class="python" >def accuracy_scoring(est, X, y):
+      return (est.predict(X) == y).mean()
+</code></pre>
+</div>
+
+<aside class="notes">
+<ul>
+<li>Provide any callable object (typically a function)</li>
+<li>Must take in an estimator, data, and labels</li>
+<li>Here's the accuracy implementation</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org11fd853">
+<h3 id="org11fd853">You can access the model!</h3>
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.model_selection import GridSearchCV
+
+param_grid = {'C': np.logspace(-3, 2, 6),
+ 'gamma': np.logspace(-3, 2, 6) / X_train.shape[0]}
+grid = GridSearchCV(SVC(), param_grid=param_grid, cv=10)
+grid.fit(X_train, y_train)
+print(grid.best_params_)
+print(grid.score(X_test, y_test))
+print(len(grid.best_estimator_.support_))
+</code></pre>
+</div>
+
+<pre class="example">
+{'C': 10.0, 'gamma': 0.07423904974016332}
+0.9911111111111112
+498
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >def few_support_vectors(est, X, y):
+    acc = est.score(X, y)
+    frac_sv = len(est.support_) / np.max(est.support_)
+    # Just made this up, don't use
+    return acc / frac_sv
+
+param_grid = {'C': np.logspace(-3, 2, 6),
+ 'gamma': np.logspace(-3, 2, 6) / X_train.shape[0]}
+grid = GridSearchCV(SVC(), param_grid=param_grid, cv=10,
+                    scoring=few_support_vectors)
+grid.fit(X_train, y_train)
+print(grid.best_params_)
+print((grid.predict(X_test) == y_test).mean())
+print(len(grid.best_estimator_.support_))
+</code></pre>
+</div>
+
+<pre class="example">
+{'C': 100.0, 'gamma': 0.007423904974016332}
+0.9777777777777777
+405
+</pre>
+
+</font>
+<aside class="notes">
+<ul>
+<li>Silly example for illustration purposes</li>
+<li>Define a metric for SVM, that penalizes having a lot of support vectors</li>
+<li>Compute accuracy, then an approximation of fraction of support vectors</li>
+<li>You can look at any of the model variables you want!</li>
+<li>So then just set <code>scoring=your_func</code></li>
+<li>Notice it selects a bigger <code>C</code>, since that will give fewer support vectors</li>
+<li>Some models don't give probabilities, though!</li>
+<li>But that doesn't really matter, you just need to pick different
+thresholds between score functions</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+</div>
+</div>
+<script src="./revealjs/dist/reveal.js"></script>
+<script src="./revealjs/plugin/highlight/highlight.js"></script>
+<script src="./revealjs/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealHighlight, RevealNotes],
+slideNumber:true, hash:true
+});
+
+</script>
+</body>
+</html>
