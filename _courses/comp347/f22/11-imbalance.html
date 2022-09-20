@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Calibration &amp; Class Imbalance</title>
+<meta name="author" content="Robert Utterback (based on slides by Andreas Muller)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./revealjs/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./revealjs/dist/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+<link rel="stylesheet" href="./revealjs/plugin/highlight/zenburn.css"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h2>Calibration &amp; Class Imbalance</h2><h4>09/19/2022</h4><h5>Robert Utterback (based on slides by Andreas Muller)</h5>
+</section>
+\(
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand{\E}{\mathop{\boldsymbol{E}}}
+\newcommand{\var}{\boldsymbol{Var}}
+\newcommand{\norm}[1]{\lvert\lvert#1\rvert\rvert}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\ltwo}[1]{\norm{#1}_2}
+\newcommand{\lone}[1]{\norm{#1}_1}
+\newcommand{\sgn}[1]{\text{sign}\left( #1 \right)}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\minw}{\min_{w \in \mathbb{R}^p}}
+\newcommand{\sumn}{\sum_{i=1}^n}
+\newcommand{\logloss}{\log{(\exp{(-y_iw^T\vec{x}_i)} + 1)}}
+\)
+
+<section>
+<section id="slide-orgdd95e43">
+<h2 id="orgdd95e43">Calibration</h2>
+<ul>
+<li>Probabilities can be much more informative than labels:</li>
+<li>"The model predicted you don’t have cancer" vs "The model predicted you’re 40% likely to have cancer"</li>
+
+</ul>
+<aside class="notes">
+<p>
+Also builds on model on others, but the goal is to get accurate
+probability estimates - not just predictions. All models have some
+uncertainty about how well it will perform in the real world. It's
+important that this uncertainty estimate is accurate.
+</p>
+
+<p>
+Calibration lets us get probability estimates from any model. Remember
+SVM wasn't good at that. Even if your model does have estimates, you
+can use calibration to make sure these are actually good estimates
+(they might be off since the models are focused on prediction
+accuracy, not getting accurate prob. estimates).
+</p>
+
+</aside>
+</section>
+<section id="slide-orge8bcddd">
+<h3 id="orge8bcddd">Calibration curve (Reliability diagram)</h3>
+<div class="column" style="float:left; width: 50%">
+
+<div id="org17d4c5c" class="figure">
+<p><img src="./assets/prob_table.png" alt="prob_table.png" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div id="orgd064fd3" class="figure">
+<p><img src="./assets/calib_curve.png" alt="calib_curve.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>How to measure calibration (even without ground truth!)</li>
+<li>For binary classification only (much simpler)</li>
+<li>you can be calibrated and inaccurate!</li>
+<li>want to make sure you have a model that provides reasonable probabilities</li>
+<li>Given a predicted ranking or probability from a supervised classifier, bin predictions.</li>
+<li>Plot fraction of data that's positive in each bin.</li>
+<li>X axis here is not great, it's index of bin</li>
+<li>The bins here are 0.33, 0.66, 1</li>
+<li>Prevalence in the, say, .9 bin should be .9.</li>
+<li>i.e., what we want is a diagonal line</li>
+<li>So this is a pretty bad classifier</li>
+<li>Does NOT imply that a model is accurate</li>
+<li>For a binary model with a balanced dataset: always say .5 for all
+data points. Perfectly calibrated! But doesn't tell you anything
+about the data points!</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org81f4e5b">
+<h3 id="org81f4e5b"><code>calibration_curve</code> with sklearn</h3>
+<p>
+Using subsample of covertype dataset
+</p>
+<div class="column" style="float:left; width: 50%">
+<div class="org-src-container">
+
+<pre  id="tinycode" ><code class="python" >from sklearn.linear_model import LogisticRegressionCV
+print(X_train.shape)
+print(np.bincount(y_train))
+lr = LogisticRegressionCV().fit(X_train, y_train)
+# (52292, 54)
+# [19036 33256]
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  id="tinycode" ><code class="python" >lr.C_
+array([ 2.783])
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre  id="tinycode" ><code class="python" >print(lr.predict_proba(X_test)[:10])
+print(y_test[:10])
+# [[ 0.681  0.319]
+#  [ 0.049  0.951]
+#  [ 0.706  0.294]
+#  [ 0.537  0.463]
+#  [ 0.819  0.181]
+#  [ 0.     1.   ]
+#  [ 0.794  0.206]
+#  [ 0.676  0.324]
+#  [ 0.727  0.273]
+#  [ 0.597  0.403]]
+# [0 1 0 1 1 1 0 0 0 1]
+</code></pre>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+<div class="org-src-container">
+
+<pre  id="tinycode" ><code class="python" >from sklearn.calibration import calibration_curve
+probs = lr.predict_proba(X_test)[:, 1]
+prob_true, prob_pred = calibration_curve(y_test, probs, n_bins=5)
+print(prob_true)
+print(prob_pred)
+# [ 0.2    0.303  0.458  0.709  0.934]
+# [ 0.138  0.306  0.498  0.701  0.926]
+</code></pre>
+</div>
+
+
+<div id="orgb872ab0" class="figure">
+<p><img src="./assets/predprob_positive.png" alt="predprob_positive.png" height="300px" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Logreg tends to give good prob. estimates, i.e., be well calibrated</li>
+<li>Note: do this on test set, since of course we're good on training set</li>
+<li>Take probabilities for first class</li>
+<li>Using 5 bins, first bin is 0-0.2, would expect 0.1 positive samples,
+actually 0.2, so slightly miscalibrated, and so on</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org9e65fdf">
+<h3 id="org9e65fdf">Influence of number of bins</h3>
+
+<div id="orgf9efe7b" class="figure">
+<p><img src="./assets/influence_bins.png" alt="influence_bins.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>More bins gives you more resolution, but gives you more noise</li>
+<li>logreg is sometimes too sure, which you can see at the far right</li>
+<li>Works here because dataset is big</li>
+<li>Might become very noisy for larger datasets</li>
+<li>Usually	10 or 20 is enough</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org5c9152f">
+<h3 id="org5c9152f">Comparing Models</h3>
+
+<div id="orga5f87b5" class="figure">
+<p><img src="./assets/calib_curve_models.png" alt="calib_curve_models.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>No pruning on Decision tree, not great</li>
+<li>Interesting sigmoid shape for RF&#x2026;it is not certain enough!</li>
+<li>Want to fix this, i.e. trust the probs</li>
+<li>But first let's measure them</li>
+<li>Graph is nice, but we want an objective, numerical comparison</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org99093aa">
+<h3 id="org99093aa">Brier Score (for binary classification)</h3>
+<ul>
+<li>"mean squared error of probability estimate"</li>
+
+</ul>
+<p>
+\[ BS = \frac{\sum_{i=1}^{n} (\widehat{p} (y_i)-y_i)^{2}}{n}\]
+</p>
+
+<div id="org931a33d" class="figure">
+<p><img src="./assets/models_bscore.png" alt="models_bscore.png" height="250px" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Could also use log-loss</li>
+<li>y_i is 1 or 0</li>
+<li>\(\hat{p}\) is probability estimate</li>
+<li>Very bad if you predicted 0 when it's actually 1</li>
+<li>Smaller is better</li>
+<li>Shown here above the plots</li>
+<li>So RF is actually best here, b/c this is a measure of both accuracy and calibration</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org196bc43">
+<h3 id="org196bc43">Fixing it: Calibrating a classifier</h3>
+<ul>
+<li>Build another model, mapping classifier probabilities to better probabilities!</li>
+<li>1d model! (or more for multi-class)</li>
+
+</ul>
+
+<p>
+\[ f_{callib}(s(x)) \approx p(y)\]
+</p>
+
+<font size=6>
+<ul>
+<li>s(x) is score given by model, usually</li>
+<li>Can also work with models that don’t even provide probabilities!
+Need model for \(f_{callib}\), need to decide what data to train it
+on.</li>
+<li>Can train on training set \(\to\) Overfit</li>
+<li>Can train using cross-validation \(\to\) use data, slower</li>
+
+</ul>
+</font>
+<aside class="notes">
+<ul>
+<li>Similar to stacking! &#x2013; Build another model on top of prob. estimates</li>
+<li>1D function: maps this probability to something more accurate</li>
+<li>Two main methods</li>
+<li>Basically we are going to try to find some function that pulls the
+previous model to the diagonal in the plots we've seen</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orga92169b">
+<h3 id="orga92169b">Platt Scaling</h3>
+<ul>
+<li>Use a logistic sigmoid for \(f_{callib}\)</li>
+<li>Basically learning a 1d logistic regression</li>
+<li>(+ some tricks)</li>
+<li>Works well for SVMs</li>
+
+</ul>
+
+<p>
+\[f_{platt} = \frac{1}{1 + exp(-ws(x))}\]
+</p>
+<aside class="notes">
+<ul>
+<li>Let's you fix kind of a sigmoid shape, but not a lot to tune (just scalar w)</li>
+<li>In other words, we're generating a single new feature s(x)</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgbd65578">
+<h3 id="orgbd65578">Isotonic Regression</h3>
+<font size=6>
+<ul>
+<li>Very flexible way to specify \(f_{callib}\)</li>
+<li>Learns arbitrary monotonically increasing step-functions in 1d.</li>
+<li>Groups data into constant parts, steps in between.</li>
+<li>Optimum monotone function on training data (wrt mse).</li>
+
+</ul>
+</font>
+
+<div id="org6c65696" class="figure">
+<p><img src="./assets/isotonic_regression.png" alt="isotonic_regression.png" height="400px" />
+</p>
+</div>
+
+<aside class="notes">
+<ul>
+<li>non-parametric mapping</li>
+<li>Fits the monotone function that minimizes the squared error</li>
+<li>Find the piecewise constant function that is monotonous and minimizes error</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgcc3247f">
+<h3 id="orgcc3247f">Building the model</h3>
+<ul>
+<li>Using the training set is bad</li>
+<li>Either use hold-out set or cross-validation</li>
+<li>Cross-validation can be use as in stacking to make unbiased probability predictions, use that as training set.</li>
+
+</ul>
+<aside class="notes">
+<p>
+
+</p>
+
+</aside>
+</section>
+<section id="slide-org5a61303">
+<h3 id="org5a61303">CalibratedClassifierCV</h3>
+<div class="org-src-container">
+
+<pre  id="smallcode" ><code class="python" >from sklearn.calibration import CalibratedClassifierCV
+X_train_sub, X_val, y_train_sub, y_val = \
+    train_test_split(X_train, y_train,
+                     stratify=y_train, random_state=0)
+rf = RandomForestClassifier(n_estimators=100).fit(X_train_sub, y_train_sub)
+scores = rf.predict_proba(X_test)[:, 1]
+plot_calibration_curve(y_test, scores, n_bins=20)
+</code></pre>
+</div>
+
+
+<div id="org8337b23" class="figure">
+<p><img src="./assets/random_forest.png" alt="random_forest.png" height="350px" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Will use X_val to calibrate next</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org9e44b78">
+<h3 id="org9e44b78">Calibration on Random Forest</h3>
+<div class="org-src-container">
+
+<pre  id="smallcode" ><code class="python" >cal_rf = CalibratedClassifierCV(rf, cv="prefit",
+                                method='sigmoid')
+cal_rf.fit(X_val, y_val)
+scores_sigm = cal_rf.predict_proba(X_test)[:, 1]
+
+cal_rf_iso = CalibratedClassifierCV(rf, cv="prefit",
+                                    method='isotonic')
+cal_rf_iso.fit(X_val, y_val)
+scores_iso = cal_rf_iso.predict_proba(X_test)[:, 1]
+</code></pre>
+</div>
+
+
+<div id="org0499556" class="figure">
+<p><img src="./assets/types_callib.png" alt="types_callib.png" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+Not actually doing CV here, using "prefit"
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org919bda1">
+<h3 id="org919bda1">Cross-validated Calibration</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >cal_rf_iso_cv = CalibratedClassifierCV(rf, method='isotonic')
+cal_rf_iso_cv.fit(X_train, y_train)
+scores_iso_cv = cal_rf_iso_cv.predict_proba(X_test)[:, 1]
+</code></pre>
+</div>
+
+
+<div id="org08bb9b9" class="figure">
+<p><img src="./assets/types_callib_cv.png" alt="types_callib_cv.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Actually does cross-validation here</li>
+<li>For each fold, train separate model. Then use all the models and average them.</li>
+<li>kinda cheating, we have more trees now lol</li>
+<li>we use all the data, get good probabilities. just
+time-consuming. Ends up building more trees.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgec70ab9">
+<h3 id="orgec70ab9">Multi-Class Calibration</h3>
+
+<div id="org9f03fc4" class="figure">
+<p><img src="./assets/multi_class_calibration.png" alt="multi_class_calibration.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>per-class calibration</li>
+<li>Do for each class individually, then renormalize</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org93bd2ed">
+<h2 id="org93bd2ed">Class Imbalance</h2>
+<div class="outline-text-2" id="text-org93bd2ed">
+</div>
+</section>
+<section id="slide-orgcf9534a">
+<h3 id="orgcf9534a">Two sources of imbalance</h3>
+<ul>
+<li>Asymmetric cost</li>
+<li>Asymmetric data</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>We've already talked about different costs associated with the classes.</li>
+<li>e.g., predict cancer vs. non-cancer</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org1adf548">
+<h3 id="org1adf548">Why do we care?</h3>
+<ul>
+<li>Why should cost be symmetric?</li>
+<li>All data is imbalanced</li>
+<li>Detect rare events</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>No reason why FP and FN should have same cost, e.g., ad-prediction clickthrough rates</li>
+<li>Often data is very imbalanced, e.g., rare disease diagnosis, ad clickthrouth rates (0.01% or so)</li>
+<li>Balanced data is actually pretty rare</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org92cd24c">
+<h3 id="org92cd24c">Changing Thresholds</h3>
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" >data = load_breast_cancer()
+lr = LogisticRegression(solver='lbfgs', max_iter=10000)
+X_train, X_test, y_train, y_test = \
+    train_test_split(data.data, data.target,
+                     stratify=data.target, random_state=0)
+
+lr.fit(X_train, y_train)
+y_pred = lr.predict(X_test)
+
+print(classification_report(y_test, y_pred))
+</code></pre>
+</div>
+
+<pre class="example">
+              precision    recall  f1-score   support
+
+           0       0.91      0.92      0.92        53
+           1       0.96      0.94      0.95        90
+
+    accuracy                           0.94       143
+   macro avg       0.93      0.93      0.93       143
+weighted avg       0.94      0.94      0.94       143
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >y_pred = lr.predict_proba(X_test)[:, 1] &gt; .85
+
+print(classification_report(y_test, y_pred))
+</code></pre>
+</div>
+
+<pre class="example">
+              precision    recall  f1-score   support
+
+           0       0.84      1.00      0.91        53
+           1       1.00      0.89      0.94        90
+
+    accuracy                           0.93       143
+   macro avg       0.92      0.94      0.93       143
+weighted avg       0.94      0.93      0.93       143
+</pre>
+
+</font>
+<aside class="notes">
+<ul>
+<li>Talked about this last time</li>
+<li>Change threshold to shift precision vs. recall</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org95d10ac">
+<h3 id="org95d10ac">roc curve</h3>
+
+<div id="org250457b" class="figure">
+<p><img src="./assets/roc_svc_rf_curve.png" alt="roc_svc_rf_curve.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Visualizes basically at all possible thresholds</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org51e4251">
+<h3 id="org51e4251">remedies for the model</h3>
+<aside class="notes">
+<ul>
+<li>Today let's look at how to change the training/building of the model to take this imbalance into account</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgc6be18b">
+<h3 id="orgc6be18b">Mammography Data</h3>
+<div class="column" style="float:left; width: 50%">
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.datasets import fetch_openml
+data = fetch_openml('mammography', as_frame=True)
+X, y = data.data, data.target
+print(X.shape)
+</code></pre>
+</div>
+
+<pre class="example">
+(11183, 6)
+</pre>
+
+
+</font>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >print(y.value_counts())
+</code></pre>
+</div>
+
+<pre class="example">
+-1    10923
+1       260
+Name: class, dtype: int64
+</pre>
+
+
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div id="org2782bdc" class="figure">
+<p><img src="./assets/mammography_data.png" alt="mammography_data.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<p>
+Note: Split one slide to two due to size constraints?
+</p>
+<ul>
+<li>Example of very imbalanced data sets</li>
+<li>Don't need to use this package, can download from web</li>
+<li>Whether or not there are calcium deposits in the tissue</li>
+<li>Notice the very skewed distributions</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgea26673">
+<h3 id="orgea26673">Mammography Data</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >lr = LogisticRegression(solver='lbfgs')
+scores = cross_validate(lr, X_train, y_train, cv=10,
+                        scoring=('roc_auc', 'average_precision'))
+roc = scores['test_roc_auc'].mean()
+avep = scores['test_average_precision'].mean()
+print(f"{roc:.3f}, {avep:.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.918, 0.631
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >rf = RandomForestClassifier(n_estimators=100)
+scores = cross_validate(rf, X_train, y_train, cv=10,
+                        scoring=('roc_auc', 'average_precision'))
+roc = scores['test_roc_auc'].mean()
+avep = scores['test_average_precision'].mean()
+print(f"{roc:.3f}, {avep:.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.943, 0.738
+</pre>
+
+
+<aside class="notes">
+<ul>
+<li>Baseline models here</li>
+<li>This <code>cross_validate</code> lets you specify multiple scoring methods</li>
+<li>Returns dictionary of results</li>
+<li>Notice difference&#x2026;</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org51fd61c">
+<h3 id="org51fd61c">Mammography Data</h3>
+
+<div id="org4e5b49b" class="figure">
+<p><img src="./assets/mammography_features23.png" alt="mammography_features23.png" />
+</p>
+</div>
+<aside class="notes">
+nil
+</aside>
+</section>
+<section id="slide-org38ac3ee">
+<h3 id="org38ac3ee">Basic Approaches</h3>
+<div class="column" style="float:left; width: 50%">
+
+<div id="orgaf54eed" class="figure">
+<p><img src="./assets/basic_approaches.png" alt="basic_approaches.png" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+<p>
+Change the training procedure
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Want to better adapt to imbalance</li>
+<li>Can change data or training procedure</li>
+<li>Changing data easier</li>
+<li>Can add or remove samples, or both</li>
+<li>Lots of strategies for each</li>
+
+</ul>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-org735d05a">
+<h2 id="org735d05a">Change the Data: Sampling</h2>
+<div class="outline-text-2" id="text-org735d05a">
+</div>
+</section>
+<section id="slide-orge63f0a3">
+<h3 id="orge63f0a3">Scikit-learn vs. resampling</h3>
+
+<div id="orgcc4114b" class="figure">
+<p><img src="./assets/pipeline.png" alt="pipeline.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Unfortunately hard to add to sklearn (will be added eventually)</li>
+<li>The transform method only transforms X</li>
+<li>Pipelines work by chaining transforms</li>
+<li>To resample the data, we need to also change y</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgb147f45">
+<h3 id="orgb147f45">Imbalance-learn</h3>
+<p>
+<a href="http://imbalanced-learn.org">http://imbalanced-learn.org</a>
+</p>
+<div class="org-src-container">
+
+<pre   ><code class="python" >!pip install imbalanced-learn
+# or conda install ...
+</code></pre>
+</div>
+<p>
+Extends <code>sklearn</code> API
+</p>
+<aside class="notes">
+<ul>
+<li>Allows us to resample with a special pipeline</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgb78790b">
+<h3 id="orgb78790b">Sampler</h3>
+<ul>
+<li>To resample data sets, each sampler implements</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre   ><code class="python" >data_resampled, targets_resampled = obj.resample(data, targets)
+</code></pre>
+</div>
+<ul>
+<li>Fitting and sampling in one step:</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre   ><code class="python" >data_resampled, targets_resampled = \
+	obj.fit_resample(data, targets)
+</code></pre>
+</div>
+<ul>
+<li>In pipelines: sampling only done in fit!</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>Imbalance-learn extends scikit-learn interface with a "resample" method.</li>
+<li>Warning: used to be called "sample" and "fit_sample", but changed!</li>
+<li>Basically implements a bunch of sampler objects</li>
+<li>Which can be fit and then sampled</li>
+<li>Maybe you fit to estimate or get some info about the population,
+like learning how much you need to sample the majority/minority</li>
+<li>Imbalance-learn has a custom pipeline that allows resampling.</li>
+<li>We have special pipelines, sampling only done during "fit", when fitting the model</li>
+<li>Warning: not everything in imbalance-learn is multiclass!</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org6bc7caa">
+<h3 id="org6bc7caa">Random Undersampling</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from imblearn.under_sampling import RandomUnderSampler
+rus = RandomUnderSampler(replacement=False)
+X_train_subsample, y_train_subsample = \
+    rus.fit_resample(X_train, y_train)
+print(X_train.shape)
+print(X_train_subsample.shape)
+print(np.bincount(y_train_subsample))
+</code></pre>
+</div>
+
+<pre class="example">
+(8387, 6)
+(392, 6)
+[196 196]
+</pre>
+
+
+<aside class="notes">
+<ul>
+<li>Drop data from the majority class randomly</li>
+<li>Often until balanced</li>
+<li>Very fast training (data shrinks to 2x minority)</li>
+<li>Loses data!</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgfb89bb3">
+<h3 id="orgfb89bb3">Random Undersampling</h3>
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from imblearn.pipeline import make_pipeline as make_imb_pipeline
+undersample_pipe = make_imb_pipeline(
+    RandomUnderSampler(random_state=57), lr)
+scores = cross_validate(undersample_pipe,
+                        X_train, y_train, cv=10,
+                        scoring=('roc_auc', 'average_precision'))
+roc = scores['test_roc_auc'].mean()
+avep = scores['test_average_precision'].mean()
+print(f"{roc:.3f}, {avep:.3f}")
+# was 0.918, 0.631 without
+</code></pre>
+</div>
+
+<pre class="example">
+0.921, 0.580
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >undersample_pipe_rf = \
+    make_imb_pipeline(RandomUnderSampler(random_state=0),
+                      RandomForestClassifier(n_estimators=100))
+scores = cross_validate(undersample_pipe_rf,
+                        X_train, y_train, cv=10, 
+                        scoring=('roc_auc', 'average_precision'))
+roc = scores['test_roc_auc'].mean()
+avep = scores['test_average_precision'].mean()
+print(f"{roc:.3f}, {avep:.3f}")
+# was 0.943, 0.738 without
+</code></pre>
+</div>
+
+<pre class="example">
+0.945, 0.594
+</pre>
+
+
+</font>
+<aside class="notes">
+<ul>
+<li>imblearn pipelines</li>
+<li>Amazing that roc auc actually improved with a fraction of samples!</li>
+<li>As accurate with fraction of samples!</li>
+<li>Really good for large datasets</li>
+<li>Opposite is oversampling</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org0c9ca66">
+<h3 id="org0c9ca66">Random Oversampling</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from imblearn.over_sampling import RandomOverSampler
+ros = RandomOverSampler(random_state=0)
+X_train_oversample, y_train_oversample = \
+    ros.fit_resample(X_train, y_train)
+print(X_train.shape)
+print(X_train_oversample.shape)
+print(np.bincount(y_train_oversample))
+</code></pre>
+</div>
+
+<pre class="example">
+(8387, 6)
+(16382, 6)
+[8191 8191]
+</pre>
+
+
+<aside class="notes">
+<ul>
+<li>Repeat samples from the minority class randomly (with replacement)</li>
+<li>Often until balanced</li>
+<li>Mostly repeats&#x2026;</li>
+<li>Kind of weird&#x2026;</li>
+<li>Much slower (dataset grows to 2x majority)</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org0c9f161">
+<h3 id="org0c9f161">Random Oversampling</h3>
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" >oversample_pipe = make_imb_pipeline(
+    RandomOverSampler(random_state=0), lr)
+
+scores = cross_validate(oversample_pipe,
+                        X_train, y_train, cv=10,
+                        scoring=('roc_auc', 'average_precision'))
+roc = scores['test_roc_auc'].mean()
+avep = scores['test_average_precision'].mean()
+print(f"{roc:.3f}, {avep:.3f}")
+# was 0.918, 0.631 without
+</code></pre>
+</div>
+
+<pre class="example">
+0.925, 0.570
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >oversample_pipe_rf = \
+    make_imb_pipeline(RandomOverSampler(random_state=0),
+                      RandomForestClassifier(n_estimators=100))
+scores = cross_validate(oversample_pipe_rf,
+                        X_train, y_train, cv=10,
+                        scoring=('roc_auc', 'average_precision'))
+roc = scores['test_roc_auc'].mean()
+avep = scores['test_average_precision'].mean()
+print(f"{roc:.3f}, {avep:.3f}")
+# was 0.943, 0.738 without
+</code></pre>
+</div>
+
+<pre class="example">
+0.923, 0.708
+</pre>
+
+
+</font>
+<aside class="notes">
+<ul>
+<li>Logreg the same, Random Forest much worse than undersampling (about same as doing nothing)</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org9658f9d">
+<h3 id="org9658f9d">Curves for LogReg</h3>
+
+<div id="org7a41f52" class="figure">
+<p><img src="./assets/curves_logreg.png" alt="curves_logreg.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Left: Logreg ROC for orig, over, under</li>
+<li>Right: precision-recall curve</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org8dc658f">
+<h3 id="org8dc658f">Curves for Random Forest</h3>
+
+<div id="org843d905" class="figure">
+<p><img src="./assets/curves_rf.png" alt="curves_rf.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Left: RF ROC for orig, over, under</li>
+<li>Right: precision-recall curve</li>
+<li>Left: undersample seems best on left, but worst on right!</li>
+<li>Opposite for over!</li>
+<li>These are actually telling you similar things b/c TPR = recall.</li>
+<li>Though FPR is very different than precision</li>
+<li>But they are rotated and stretched in very different ways&#x2026;</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org2fd8215">
+<h3 id="org2fd8215">ROC or PR?</h3>
+<p>
+FPR or Precision?
+\[ \large\text{FPR} = \frac{\text{FP}}{\text{FP}+\text{TN}}\]
+\[ \large\text{Precision} = \frac{\text{TP}}{\text{TP}+\text{FP}}\]
+</p>
+<aside class="notes">
+<ul>
+<li>For imbalanced problems, FPR is not that interesting</li>
+<li>Typically TN will be much bigger (positives are rare), so FPR will be close to 0</li>
+<li>So Precision-Recall curve may be more informative</li>
+
+</ul>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-orgd3a35c1">
+<h2 id="orgd3a35c1">Change the Training</h2>
+<div class="outline-text-2" id="text-orgd3a35c1">
+</div>
+</section>
+<section id="slide-orgec6c791">
+<h3 id="orgec6c791">Class-weights</h3>
+<ul>
+<li>Instead of repeating samples, re-weight the loss function.</li>
+<li>Works for most models!</li>
+<li>Same effect as over-sampling (though not random), but not as
+expensive (dataset size the same).</li>
+
+</ul>
+<aside class="notes">
+<p>
+
+</p>
+
+</aside>
+</section>
+<section id="slide-org5cf0e30">
+<h3 id="org5cf0e30">Class-weights in linear models</h3>
+<p>
+\[\min_{w \in ℝ^{p}}-C \sum_{i=1}^n\log(\exp(-y_iw^T \textbf{x}_i) + 1) + ||w||_2^2\]
+\[ \min_{w \in \mathbb{R}^p} -C \sum_{i=1}^n c_{y_i} \log(\exp(-y_i w^T \mathbf{x}_i) + 1) + ||w||^2_2 \]
+Similar for linear and non-linear SVM
+</p>
+<aside class="notes">
+<ul>
+<li>Give a weight to each class</li>
+<li>They usually sum to 1, weights based on relative fraction of class in samples</li>
+<li>Intuition: think of repeating each sample c_y_i times</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org82029ed">
+<h3 id="org82029ed">Class weights in trees</h3>
+<p>
+Gini Index: 
+\[H_\text{gini}(X_m) = \sum_{k\in\mathcal{Y}} p_{mk} (1 - p_{mk})\]
+\[H_\text{gini}(X_m) = \sum_{k\in\mathcal{Y}} c_k p_{mk} (1 - p_{mk})\]
+Prediction:
+Weighted vote
+</p>
+<aside class="notes">
+<ul>
+<li>Change the tree-building procedure</li>
+<li>Similar to impurity</li>
+<li>Replacing the data points c_k many times</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgbfe3fd4">
+<h3 id="orgbfe3fd4">Using Class Weights</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >lr = LogisticRegression(solver='lbfgs',
+                        class_weight='balanced')
+scores = cross_validate(lr, X_train, y_train, cv=10,
+                        scoring=('roc_auc',
+                                 'average_precision'))
+roc = scores['test_roc_auc'].mean()
+avep = scores['test_average_precision'].mean()
+print(f"{roc:.3f}, {avep:.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.923, 0.564
+</pre>
+
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >rf = RandomForestClassifier(n_estimators=100,
+                            class_weight='balanced')
+scores = cross_validate(rf, X_train, y_train, cv=10,
+                        scoring=('roc_auc',
+                                 'average_precision'))
+roc = scores['test_roc_auc'].mean()
+avep = scores['test_average_precision'].mean()
+print(f"{roc:.3f}, {avep:.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+
+&gt;&gt;&gt; 0.915, 0.707
+</pre>
+
+
+
+<aside class="notes">
+<ul>
+<li>Can do this in sklearn</li>
+<li><code>balanced</code> makes populations have same size for all classes (intuitively)</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org7630228">
+<h3 id="org7630228">Ensemble Resampling</h3>
+<ul>
+<li>Random resampling separate for each instance in an ensemble!</li>
+<li>Paper: "Exploratory Undersampling for Class Imbalance Learning"</li>
+<li>Not in sklearn (yet)</li>
+<li>Easy with imblearn</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>I don't think in sklearn, but always check the latest documentation to be sure</li>
+<li>Idea: build ensemble, like bagging</li>
+<li>only you random undersampling for each classifier in your ensemble</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgd15a219">
+<h3 id="orgd15a219">Easy Ensemble with imblearn</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.tree import DecisionTreeClassifier
+tree = DecisionTreeClassifier(max_features='sqrt')
+from imblearn.ensemble import BalancedBaggingClassifier
+resampled_rf = \
+    BalancedBaggingClassifier(base_estimator=tree,
+                              n_estimators=100, random_state=0)
+scores = cross_validate(resampled_rf, X_train, y_train,
+                        cv=10,
+                        scoring=('roc_auc', 'average_precision'))
+roc = scores['test_roc_auc'].mean()
+avep = scores['test_average_precision'].mean()
+print(f"{roc:.3f}, {avep:.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.949, 0.668
+</pre>
+
+
+<aside class="notes">
+<ul>
+<li>As cheap as undersampling, but much better results than anything else!</li>
+<li>Each classifier built with random undersample of dataset</li>
+<li>Ensembles help again, b/c undersampling throws away a lot of data&#x2026;</li>
+<li>&#x2026;BUT we're doing the sampling over and over, so actually use a lot of the data</li>
+<li>(can also do oversampling)</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org37ae8cb">
+<h3 id="org37ae8cb"></h3>
+
+<div id="orge0b9cb2" class="figure">
+<p><img src="./assets/roc_vs_pr.png" alt="roc_vs_pr.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Comparison of curves again</li>
+<li>Better in some areas, at least better than understampling with low recall</li>
+<li>Plus much cheaper than oversampling</li>
+<li>Review: undersampling does sampling ONCE, then uses that to build models</li>
+<li>Easy Ensemble does the undersampling separately for each model that it builds</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgfcef1c2">
+<h2 id="orgfcef1c2">Smart resampling</h2>
+<p>
+(based on nearest neighbour heuristics from the 70's)
+</p>
+<aside class="notes">
+<ul>
+<li>Didn't have RFs in 70s</li>
+<li>Basically prune the dataset to make better predictions using kNN</li>
+<li>Now we can strategically prune majority-class samples (undersample)</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org8a037ae">
+<h3 id="org8a037ae">Edited Nearest Neighbours</h3>
+<ul>
+<li>Originally as heuristic for reducing dataset for KNN</li>
+<li>Remove all samples that are misclassified by KNN from training data
+(mode) or that have any point from other class as neighbor (all).</li>
+<li>"Cleans up" outliers and boundaries.</li>
+
+</ul>
+<aside class="notes">
+<p>
+
+</p>
+
+</aside>
+</section>
+<section id="slide-org410621d">
+<h3 id="org410621d">Edited Nearest Neighbours</h3>
+
+<div id="org2351b80" class="figure">
+<p><img src="./assets/edited_nearest_neighbour.png" alt="edited_nearest_neighbour.png" height="450px" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Synthetic dataset here, green is majority, blue is minority</li>
+<li>All majority samples near minority class are removed</li>
+<li>Basically, err on the side of the minority class</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org14343a6">
+<h3 id="org14343a6">Edited Nearest Neighbours</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from imblearn.under_sampling import EditedNearestNeighbours
+enn = EditedNearestNeighbours(n_neighbors=5)
+X_train_enn, y_train_enn = enn.fit_resample(X_train, y_train)
+
+enn_mode = EditedNearestNeighbours(kind_sel="mode", 
+                                   n_neighbors=5)
+X_train_enn_mode, y_train_enn_mode = \
+    enn_mode.fit_resample(X_train, y_train)
+</code></pre>
+</div>
+
+
+<div id="orgadc6102" class="figure">
+<p><img src="./assets/edited_nearest_neighbour_2.png" alt="edited_nearest_neighbour_2.png" height="300px" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>X axis: feature 3, y axis: feature 4</li>
+<li>Left: original, mid: mode, right: all</li>
+<li>Actually not many points are removed b/c this dataset is actually 6-dimensional</li>
+<li>Makes it harder to actually be close neighbor</li>
+<li>Intuition: Separate the class samples as much as possible</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org2d4714a">
+<h3 id="org2d4714a"></h3>
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" >enn_pipe = make_imb_pipeline(EditedNearestNeighbours(n_neighbors=5),
+                             LogisticRegression(solver='lbfgs'))
+scores = cross_val_score(enn_pipe, X_train, y_train, cv=10, scoring='roc_auc')
+print(f"{np.mean(scores):.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.921
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >enn_pipe_rf = make_imb_pipeline(EditedNearestNeighbours(n_neighbors=5),
+                                  RandomForestClassifier(n_estimators=100))
+scores = cross_val_score(enn_pipe_rf, X_train, y_train, cv=10, scoring='roc_auc')
+print(f"{np.mean(scores):.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.941
+</pre>
+
+</font>
+<aside class="notes">
+<ul>
+<li>For other dataset actually get similar results</li>
+<li>But didn't change the dataset that much here</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgcaeaa70">
+<h3 id="orgcaeaa70">Condensed Nearest Neighbors</h3>
+<ul>
+<li>Iteratively adds points to the data that are misclassified by KNN</li>
+<li>Focuses on the boundaries</li>
+<li>Usually removes many</li>
+
+</ul>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >from imblearn.under_sampling import CondensedNearestNeighbour
+cnn = CondensedNearestNeighbour()
+X_train_cnn, y_train_cnn = cnn.fit_resample(X_train, y_train)
+print(X_train_cnn.shape)
+print(np.bincount(y_train_cnn))
+</code></pre>
+</div>
+
+<pre class="example">
+(553, 6)
+[357 196]
+</pre>
+
+
+<aside class="notes">
+<ul>
+<li>Basically the opposite, interestingly</li>
+<li>Starts with empty set</li>
+<li>Focuses on boundaries (and outliers), removes points in the center
+of a class cluster</li>
+<li>Iteratively adds points to the majority class that are misclassifed by kNN</li>
+<li>i.e., look at all points misclassified, pick random one, add it to dataset</li>
+<li>Prunes it down quite a bit</li>
+<li>Better, but not perfectly balanced</li>
+<li>Intuition: force the model to differentiate the hard cases</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgb83fb74">
+<h3 id="orgb83fb74"></h3>
+
+<div id="org2b33132" class="figure">
+<p><img src="./assets/edited_condensed_nn.png" alt="edited_condensed_nn.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Comparison on synthetic dataset</li>
+<li>Reduces dataset a lot</li>
+<li>Though uses kNN, so for big dataset might be expensive</li>
+<li>Sometimes more expensive than your classifier</li>
+<li>Kind of what SVM does, choosing the support vectors</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgf3c6e93">
+<h3 id="orgf3c6e93"></h3>
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" >cnn_pipe = make_imb_pipeline(CondensedNearestNeighbour(),
+                             LogisticRegression(solver='lbfgs'))
+scores = cross_val_score(cnn_pipe, X_train, y_train, cv=10, scoring='roc_auc')
+print(f"{np.mean(scores):.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.916
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >rf = RandomForestClassifier(n_estimators=100, random_state=0)
+cnn_pipe = make_imb_pipeline(CondensedNearestNeighbour(), rf)
+scores = cross_val_score(cnn_pipe, X_train, y_train, cv=10, scoring='roc_auc')
+print(f"{np.mean(scores):.2f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.93
+</pre>
+
+</font>
+<aside class="notes">
+<ul>
+<li>Actually not used that much by themselves</li>
+<li>But used together with synthetic data generation</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org3f74494">
+<h2 id="org3f74494">Synthetic Sample Generation</h2>
+<aside class="notes">
+<ul>
+<li>Many methods, but most common is SMOTE&#x2026;</li>
+<li>Good for interviews&#x2026;</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org4faf9d4">
+<h3 id="org4faf9d4">Synthetic Minority Oversampling Technique (SMOTE)</h3>
+<ul>
+<li>Adds synthetic interpolated data to smaller class</li>
+<li>For each sample in minority class:
+<ul>
+<li>Pick random neighbor from k neighbors.</li>
+<li>Pick point on line connecting the two uniformly</li>
+<li>Repeat.</li>
+
+</ul></li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>Leads to very large datasets (oversampling)</li>
+<li>Might be slow in very high dimensions</li>
+<li>Can be combined with undersampling strategies</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org5f0ba29">
+<h3 id="org5f0ba29"></h3>
+
+<div id="org646151c" class="figure">
+<p><img src="./assets/smote.png" alt="smote.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Oversample until classes are balanced.</li>
+<li>This is generated dataset.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgd6df695">
+<h3 id="orgd6df695"></h3>
+
+<div id="org8868ada" class="figure">
+<p><img src="./assets/smote_3.png" alt="smote_3.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>This is on actual data, the mammography set.</li>
+<li>Right shows generated data</li>
+<li>Kind of fills in the "convex hull"</li>
+<li>Again, unclear whether higher dimensions will work well</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org42866c8">
+<h3 id="org42866c8"></h3>
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from imblearn.over_sampling import SMOTE
+smote_pipe = make_imb_pipeline(SMOTE(),
+                               LogisticRegression(solver='lbfgs'))
+scores = cross_val_score(smote_pipe, X_train, y_train,
+                         cv=10, scoring='roc_auc')
+print(f"{np.mean(scores):.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.922
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >smote_pipe_rf = \
+    make_imb_pipeline(SMOTE(),
+                      RandomForestClassifier(n_estimators=100))
+scores = cross_val_score(smote_pipe_rf,X_train,y_train,
+                         cv=10, scoring='roc_auc')
+print(f"{np.mean(scores):.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.943
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >param_grid = {'smote__k_neighbors': [3, 5, 7, 9, 11, 15, 31]}
+search = GridSearchCV(smote_pipe_rf, param_grid,
+                      cv=10, scoring="roc_auc")
+search.fit(X_train, y_train)
+print(f"{search.score(X_test, y_test):.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.959
+</pre>
+
+
+</font>
+<aside class="notes">
+<ul>
+<li>Can set how many neighbors you use</li>
+<li>Then it finds the centroid</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org94412ba">
+<h3 id="org94412ba"></h3>
+
+<div id="org6622920" class="figure">
+<p><img src="./assets/param_smote_k_neighbours.png" alt="param_smote_k_neighbours.png" />
+</p>
+</div>
+</section>
+<section id="slide-org055db13">
+<h3 id="org055db13"></h3>
+
+<div id="org414c2e0" class="figure">
+<p><img src="./assets/smote_k_neighbours.png" alt="smote_k_neighbours.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+
+</p>
+
+</aside>
+</section>
+</section>
+</div>
+</div>
+<script src="./revealjs/dist/reveal.js"></script>
+<script src="./revealjs/plugin/highlight/highlight.js"></script>
+<script src="./revealjs/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealHighlight, RevealNotes],
+slideNumber:true, hash:true
+});
+
+</script>
+</body>
+</html>

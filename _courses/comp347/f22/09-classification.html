@@ -37,8 +37,8 @@
 \)
 
 <section>
-<section id="slide-org18279c5">
-<h2 id="org18279c5"></h2>
+<section id="slide-org703d2dd">
+<h2 id="org703d2dd"></h2>
 <aside class="notes">
 <p>
 There's a lot more about classification we haven't covered.
@@ -58,8 +58,8 @@ Then we need to consider multiclass classification; there are multiple ways to h
 </section>
 </section>
 <section>
-<section id="slide-org00f45b8">
-<h2 id="org00f45b8">Metrics for Binary Classification</h2>
+<section id="slide-org8d2896d">
+<h2 id="org8d2896d">Metrics for Binary Classification</h2>
 <aside class="notes">
 <p>
 We've talked a lot about "accuracy", but what is that actually?
@@ -75,10 +75,10 @@ Q: What is "accuracy", using these terms?
 
 </aside>
 </section>
-<section id="slide-org506aeec">
-<h3 id="org506aeec">Confusion Matrix</h3>
+<section id="slide-org2461527">
+<h3 id="org2461527">Confusion Matrix</h3>
 
-<div id="org54913b8" class="figure">
+<div id="org606a8fa" class="figure">
 <p><img src="./assets/confusion_matrix.png" alt="confusion_matrix.png" />
 </p>
 </div>
@@ -96,16 +96,16 @@ when they don't (false positive), than to miss it on a diagnostic exam
 
 </aside>
 </section>
-<section id="slide-org3bab201">
-<h3 id="org3bab201">Positive vs. Negative</h3>
+<section id="slide-org652cd90">
+<h3 id="org652cd90">Positive vs. Negative</h3>
 <ul>
 <li>Pos. vs. Neg. is arbitrary!</li>
 <li>(But often minority class = positive)</li>
 
 </ul>
 </section>
-<section id="slide-org7d232ed">
-<h3 id="org7d232ed">Confusion Matrix in Python</h3>
+<section id="slide-org114b73f">
+<h3 id="org114b73f">Confusion Matrix in Python</h3>
 <div class="org-src-container">
 
 <pre  id="confmatrix" ><code class="python" >from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
@@ -136,15 +136,15 @@ plt.savefig('img/bc_conf_matrix.png')
 </div>
 <div class="column" style="float:left; width: 50%">
 
-<div id="org01e8db4" class="figure">
+<div id="orgd35cbb7" class="figure">
 <p><img src="./img/bc_conf_matrix.png" alt="bc_conf_matrix.png" height="200em" style="&quot;margin: 0; padding: 0;&quot;" />
 </p>
 </div>
 </div>
 
 </section>
-<section id="slide-org10cfc9a">
-<h3 id="org10cfc9a">Problems with Accuracy</h3>
+<section id="slide-org7862119">
+<h3 id="org7862119">Problems with Accuracy</h3>
 <p>
 Data with 90% positives:
 </p>
@@ -156,14 +156,14 @@ for y_pred in [y_pred_1, y_pred_2, y_pred_3]:
 </code></pre>
 </div>
 
-<pre class="example" id="org6500cf3">
+<pre class="example" id="org9c8f4e3">
 0.9
 0.9
 0.9
 </pre>
 
 
-<div id="org5f4d9e3" class="figure">
+<div id="org9adb02f" class="figure">
 <p><img src="./assets/problems_with_accuracy.png" alt="problems_with_accuracy.png" height="200px" />
 </p>
 </div>
@@ -182,8 +182,8 @@ might be pretty important</li>
 
 </aside>
 </section>
-<section id="slide-orgc25bf8a">
-<h3 id="orgc25bf8a">Precision, Recall, \(F_1\) -score</h3>
+<section id="slide-org1cf0293">
+<h3 id="org1cf0293">Precision, Recall, \(F_1\) -score</h3>
 <font size=6>
 <ul>
 <li><b>Precision</b>, Positive Predictive Value (PPV):</li>
@@ -218,10 +218,10 @@ All depend on definition of positive and negative.
 
 </aside>
 </section>
-<section id="slide-orgfd79751">
-<h3 id="orgfd79751">The Zoo</h3>
+<section id="slide-orgbb97718">
+<h3 id="orgbb97718">The Zoo</h3>
 
-<div id="orgfbe938b" class="figure">
+<div id="org8b39adc" class="figure">
 <p><img src="./assets/zoo.png" alt="zoo.png" height="450px" width="1000px" />
 </p>
 </div>
@@ -232,15 +232,15 @@ Comes from wikipedia page on precision and recall
 
 </aside>
 </section>
-<section id="slide-org6d7134c">
-<h3 id="org6d7134c">Normalizing the confusion matrix</h3>
+<section id="slide-org56f30b4">
+<h3 id="org56f30b4">Normalizing the confusion matrix</h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >confusion_matrix(y_true, y_pred)
 </code></pre>
 </div>
 
-<div id="orgacb4417" class="figure">
+<div id="org07847e5" class="figure">
 <p><img src="./assets/confusion_matrix2.png" alt="confusion_matrix2.png" height="200px" />
 </p>
 </div>
@@ -256,7 +256,7 @@ Comes from wikipedia page on precision and recall
 </font>
 
 
-<div id="org429eba4" class="figure">
+<div id="orge4e7d28" class="figure">
 <p><img src="./assets/confusion_matrix_norm_true.png" alt="confusion_matrix_norm_true.png" height="200px" />
 </p>
 </div>
@@ -273,37 +273,37 @@ Comes from wikipedia page on precision and recall
 </font>
 
 
-<div id="orgf5a3cf9" class="figure">
+<div id="orgf19d9d4" class="figure">
 <p><img src="./assets/confusion_matrix_norm_pred.png" alt="confusion_matrix_norm_pred.png" height="200px" />
 </p>
 </div>
 </div>
 
 </section>
-<section id="slide-org4d51e20">
-<h3 id="org4d51e20"></h3>
+<section id="slide-orge53bd25">
+<h3 id="orge53bd25"></h3>
 <div class="column" style="float:left; width: 50%">
 
-<div id="org2ee5eac" class="figure">
+<div id="org4d24677" class="figure">
 <p><img src="./assets/confusion_matrix_col.png" alt="confusion_matrix_col.png" height="500px" />
 </p>
 </div>
 </div>
 <div class="column" style="float:left; width: 50%">
 
-<div id="orgcd2b4bb" class="figure">
+<div id="org29bf9ee" class="figure">
 <p><img src="./assets/classification_report_1.png" alt="classification_report_1.png" />
 </p>
 </div>
 
 
-<div id="orgb9189e2" class="figure">
+<div id="orgf04138f" class="figure">
 <p><img src="./assets/classification_report_2.png" alt="classification_report_2.png" />
 </p>
 </div>
 
 
-<div id="org55b7210" class="figure">
+<div id="orgf8a0a3d" class="figure">
 <p><img src="./assets/classification_report_3.png" alt="classification_report_3.png" />
 </p>
 </div>
@@ -315,8 +315,8 @@ Each model has different results for each class and metric.
 
 </aside>
 </section>
-<section id="slide-org266323a">
-<h3 id="org266323a">Averaging strategies</h3>
+<section id="slide-org82f1b83">
+<h3 id="org82f1b83">Averaging strategies</h3>
 <font size=6>
 <ul>
 <li>"macro", "weighted", "micro" (multi-label), "samples" (multi-label)</li>
@@ -338,7 +338,7 @@ print(f"Macro average: {m:.3f}")
 </code></pre>
 </div>
 
-<pre class="example" id="org5ea0713">
+<pre class="example" id="org34f9c8c">
 Weighted average: 0.90
 Macro average: 0.50
 </pre>
@@ -365,8 +365,8 @@ the smaller classes you might want to choose macro</li>
 </aside>
 
 </section>
-<section id="slide-org705a262">
-<h3 id="org705a262">Balanced Accuracy</h3>
+<section id="slide-org5b2642c">
+<h3 id="org5b2642c">Balanced Accuracy</h3>
 <font size=6>
 <div class="org-src-container">
 
@@ -385,8 +385,8 @@ the smaller classes you might want to choose macro</li>
 
 </ul>
 </section>
-<section id="slide-org337545f">
-<h3 id="org337545f">Mammography Data</h3>
+<section id="slide-orgc3a7672">
+<h3 id="orgc3a7672">Mammography Data</h3>
 <div class="column" style="float:left; width: 50%">
 <font size=6>
 <div class="org-src-container">
@@ -422,7 +422,7 @@ Name: class, dtype: int64
 </div>
 <div class="column" style="float:left; width: 50%">
 
-<div id="org87a5fe0" class="figure">
+<div id="orgc2c921b" class="figure">
 <p><img src="./assets/mammography_data.png" alt="mammography_data.png" />
 </p>
 </div>
@@ -453,8 +453,8 @@ other
 
 </aside>
 </section>
-<section id="slide-org9376ab9">
-<h3 id="org9376ab9">Mammography Results</h3>
+<section id="slide-org50468aa">
+<h3 id="org50468aa">Mammography Results</h3>
 <font size=6>
 <div class="column" style="float:left; width: 50%">
 <div class="org-src-container">
@@ -493,14 +493,14 @@ print(classification_report(y_test, rf.predict(X_test)))
 </div>
 
 <pre class="example">
-0.987
+0.988
               precision    recall  f1-score   support
 
        False       0.99      1.00      0.99      2732
-        True       0.85      0.53      0.65        64
+        True       0.92      0.52      0.66        64
 
     accuracy                           0.99      2796
-   macro avg       0.92      0.76      0.82      2796
+   macro avg       0.95      0.76      0.83      2796
 weighted avg       0.99      0.99      0.99      2796
 </pre>
 
@@ -508,8 +508,8 @@ weighted avg       0.99      0.99      0.99      2796
 </div>
 </font>
 </section>
-<section id="slide-org485fc10">
-<h3 id="org485fc10">Goal setting!</h3>
+<section id="slide-orge082d88">
+<h3 id="orge082d88">Goal setting!</h3>
 <ul>
 <li>What do I want? What do I care about?</li>
 <li>Can I assign costs to the confusion matrix?</li>
@@ -525,8 +525,8 @@ weighted avg       0.99      0.99      0.99      2796
 
 </aside>
 </section>
-<section id="slide-org3ba2c40">
-<h3 id="org3ba2c40">Changing Thresholds</h3>
+<section id="slide-org07088f3">
+<h3 id="org07088f3">Changing Thresholds</h3>
 <font size=6>
 <div class="org-src-container">
 
@@ -587,8 +587,8 @@ above (or different thresholds for different decision functions).</li>
 
 </aside>
 </section>
-<section id="slide-org7b5c78e">
-<h3 id="org7b5c78e">Precision-Recall curve</h3>
+<section id="slide-org9095b82">
+<h3 id="org9095b82">Precision-Recall curve</h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >X, y = make_blobs(n_samples=(2500, 500), cluster_std=[7.0, 2],
@@ -612,10 +612,10 @@ you can look it up.
 
 </aside>
 </section>
-<section id="slide-orgcf42df7">
-<h3 id="orgcf42df7">Precision-Recall curve</h3>
+<section id="slide-orgf66ba41">
+<h3 id="orgf66ba41">Precision-Recall curve</h3>
 
-<div id="org4883a9a" class="figure">
+<div id="org782569f" class="figure">
 <p><img src="./assets/precision_recall_curve.png" alt="precision_recall_curve.png" height="600px" />
 </p>
 </div>
@@ -626,10 +626,10 @@ you can look it up.
 
 </aside>
 </section>
-<section id="slide-org65e4888">
-<h3 id="org65e4888">Comparing RF and SVC</h3>
+<section id="slide-org9bbaf01">
+<h3 id="org9bbaf01">Comparing RF and SVC</h3>
 
-<div id="orga1d6496" class="figure">
+<div id="orgadf6631" class="figure">
 <p><img src="./assets/rf_vs_svc.png" alt="rf_vs_svc.png" height="600px" />
 </p>
 </div>
@@ -652,10 +652,10 @@ is kind of like looking at all the thresholds at once</li>
 
 </aside>
 </section>
-<section id="slide-org71eeefe">
-<h3 id="org71eeefe">Average Precision</h3>
+<section id="slide-org6c858ac">
+<h3 id="org6c858ac">Average Precision</h3>
 
-<div id="org04bf4e5" class="figure">
+<div id="orgc6c43bd" class="figure">
 <p><img src="./assets/avg_precision.png" alt="avg_precision.png" />
 </p>
 </div>
@@ -670,8 +670,8 @@ times change in recall</li>
 
 </aside>
 </section>
-<section id="slide-org6fafb8e">
-<h3 id="org6fafb8e">\(F_1\) vs Average Precision</h3>
+<section id="slide-org190e2e3">
+<h3 id="org190e2e3">\(F_1\) vs Average Precision</h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >from sklearn.metrics import f1_score
@@ -683,8 +683,8 @@ print(f"f1_score of svc: {svc_score:.3f}")
 </div>
 
 <pre class="example">
-f1_score of random forest: 0.712
-f1_score of svc: 0.780
+f1_score of random forest: 0.683
+f1_score of svc: 0.800
 </pre>
 
 
@@ -701,8 +701,8 @@ print(f"Average precision of svc: {ap_svc:.3f}")
 </div>
 
 <pre class="example">
-Average precision of random forest: 0.724
-Average precision of svc: 0.830
+Average precision of random forest: 0.674
+Average precision of svc: 0.791
 </pre>
 
 
@@ -721,10 +721,10 @@ under the curve, i.e. AP only considers ranking!</li>
 
 </aside>
 </section>
-<section id="slide-org553d3e2">
-<h3 id="org553d3e2">ROC Curve</h3>
+<section id="slide-org9e1b172">
+<h3 id="org9e1b172">ROC Curve</h3>
 
-<div id="orgd30879e" class="figure">
+<div id="org909c7b1" class="figure">
 <p><img src="./assets/zoo.png" alt="zoo.png" />
 </p>
 </div>
@@ -743,10 +743,10 @@ The ROC curve is similar but it looks at true and false positives rate. Defined 
 
 </aside>
 </section>
-<section id="slide-orgbeb5ded">
-<h3 id="orgbeb5ded">ROC Curve</h3>
+<section id="slide-org7a20d1c">
+<h3 id="org7a20d1c">ROC Curve</h3>
 
-<div id="org012621c" class="figure">
+<div id="orgf78ec15" class="figure">
 <p><img src="./assets/roc_curve.png" alt="roc_curve.png" height="600px" />
 </p>
 </div>
@@ -762,8 +762,8 @@ will be a diagonal here</li>
 
 </aside>
 </section>
-<section id="slide-org9637e2e">
-<h3 id="org9637e2e">ROC AUC</h3>
+<section id="slide-org88a5d55">
+<h3 id="org88a5d55">ROC AUC</h3>
 <ul>
 <li>Area under ROC Curve</li>
 <li>Always .5 for random/constant prediction</li>
@@ -781,8 +781,8 @@ print(f"AUC for SVC: {svc_auc:.3f}")
 </div>
 
 <pre class="example">
-AUC for random forest: 0.960
-AUC for SVC: 0.973
+AUC for random forest: 0.944
+AUC for SVC: 0.958
 </pre>
 
 
@@ -799,8 +799,8 @@ account, same problem as before</li>
 
 </aside>
 </section>
-<section id="slide-org746dd91">
-<h3 id="org746dd91">Summary of metrics for binary classification</h3>
+<section id="slide-org03c7d58">
+<h3 id="org03c7d58">Summary of metrics for binary classification</h3>
 <p>
 Threshold-based:
 </p>
@@ -836,13 +836,13 @@ negative classes, you might get an AUC close to 1!</li>
 </section>
 </section>
 <section>
-<section id="slide-org32947ff">
-<h2 id="org32947ff">Multiclass Classification</h2>
-<div class="outline-text-2" id="text-org32947ff">
+<section id="slide-orgab8c7e1">
+<h2 id="orgab8c7e1">Multiclass Classification</h2>
+<div class="outline-text-2" id="text-orgab8c7e1">
 </div>
 </section>
-<section id="slide-org25568ab">
-<h3 id="org25568ab">Hack: Reduction to Binary Classification</h3>
+<section id="slide-orge383d0c">
+<h3 id="orge383d0c">Hack: Reduction to Binary Classification</h3>
 <ul>
 <li>One vs. Rest</li>
 <li>One vs. One</li>
@@ -865,8 +865,8 @@ called one-vs-one.
 
 </aside>
 </section>
-<section id="slide-orgdd0c28e">
-<h3 id="orgdd0c28e">One vs. Rest (OVR)</h3>
+<section id="slide-org97a2e72">
+<h3 id="org97a2e72">One vs. Rest (OVR)</h3>
 <ul>
 <li>For 4 classes:
 <ul>
@@ -892,8 +892,8 @@ classifiers as we have classes.
 
 </aside>
 </section>
-<section id="slide-orgc6a4148">
-<h3 id="orgc6a4148">Prediction with OVR</h3>
+<section id="slide-org52f7367">
+<h3 id="org52f7367">Prediction with OVR</h3>
 <ul>
 <li>Pick class with highest score: \[ \hat{y} = \text{argmax}_{i \in Y} \vec{w}_i^T \vec{x} \]</li>
 <li>Unclear why it works, but works well.</li>
@@ -919,10 +919,10 @@ each class. (related to hwk 2)
 
 </aside>
 </section>
-<section id="slide-org7464041">
-<h3 id="org7464041">OVR Prediction</h3>
+<section id="slide-org790a3b2">
+<h3 id="org790a3b2">OVR Prediction</h3>
 
-<div id="org9d37f33" class="figure">
+<div id="org13ad1d0" class="figure">
 <p><img src="./assets/ovr_lines.png" alt="ovr_lines.png" />
 </p>
 </div>
@@ -937,10 +937,10 @@ this class from the other two classes.
 
 </aside>
 </section>
-<section id="slide-org80490f1">
-<h3 id="org80490f1">OVR Prediction Boundaries</h3>
+<section id="slide-org2a67c35">
+<h3 id="org2a67c35">OVR Prediction Boundaries</h3>
 
-<div id="orgf5d00ca" class="figure">
+<div id="org987c706" class="figure">
 <p><img src="./assets/ovr_boundaries.png" alt="ovr_boundaries.png" />
 </p>
 </div>
@@ -956,8 +956,8 @@ can think of that as some form of uncertainty attached to the line.
 
 </aside>
 </section>
-<section id="slide-orgb73e6ea">
-<h3 id="orgb73e6ea">One Vs. One (OVO)</h3>
+<section id="slide-org8be95f8">
+<h3 id="org8be95f8">One Vs. One (OVO)</h3>
 <ul>
 <li>A vs. B, A vs. C, A vs. D, B vs. C, B vs. D, C vs. D</li>
 <li>\({c\choose{2}} = \frac{c(c-1)}{2}\) binary classifiers
@@ -997,10 +997,10 @@ theoretical explanation why this should work.
 
 </aside>
 </section>
-<section id="slide-orgb46ef57">
-<h3 id="orgb46ef57">OVO Prediction</h3>
+<section id="slide-orgadd45a8">
+<h3 id="orgadd45a8">OVO Prediction</h3>
 
-<div id="org6eec120" class="figure">
+<div id="orgac77ed3" class="figure">
 <p><img src="./assets/ovo_lines.png" alt="ovo_lines.png" />
 </p>
 </div>
@@ -1021,10 +1021,10 @@ building this model at all.
 
 </aside>
 </section>
-<section id="slide-org3eb109d">
-<h3 id="org3eb109d">OVO Prediction Boundaries</h3>
+<section id="slide-orgaa5a603">
+<h3 id="orgaa5a603">OVO Prediction Boundaries</h3>
 
-<div id="org6535575" class="figure">
+<div id="orgf1f6836" class="figure">
 <p><img src="./assets/ovo_boundaries.png" alt="ovo_boundaries.png" />
 </p>
 </div>
@@ -1060,8 +1060,8 @@ have to resort to these hacks.
 
 </aside>
 </section>
-<section id="slide-orgfd07900">
-<h3 id="orgfd07900">OVR-OVO Comparison</h3>
+<section id="slide-org9d22944">
+<h3 id="org9d22944">OVR-OVO Comparison</h3>
 <div class="column" style="float:left; width: 50%">
 <p>
 OVR:
@@ -1096,8 +1096,8 @@ just returning the winner of a vote.
 
 </aside>
 </section>
-<section id="slide-org6be515c">
-<h3 id="org6be515c">Multinomial Logistic Regression</h3>
+<section id="slide-org9411637">
+<h3 id="org9411637">Multinomial Logistic Regression</h3>
 <p>
 \[ p(y=i | x) = \frac{\e^{w_{i}^T \vec{x}}}{\sum_j \e^{w_{j}^T \vec{x}}} \]
 \[ \minw \sum_{i=1}^c \log(p(y=y_i | x_i)) \]
@@ -1119,8 +1119,8 @@ over all classes is one. So we just divide it by this sum.
 
 </aside>
 </section>
-<section id="slide-org3a889ce">
-<h3 id="org3a889ce">In scikit-learn</h3>
+<section id="slide-orgdd032e5">
+<h3 id="orgdd032e5">In scikit-learn</h3>
 <ul>
 <li>OVO: Only SVC</li>
 <li>OVR: default for all linear models except <code>LogisticRegression</code></li>
@@ -1142,8 +1142,8 @@ slow and probably not what you want.
 
 </aside>
 </section>
-<section id="slide-org07ceae3">
-<h3 id="org07ceae3">Multiclass in Practice</h3>
+<section id="slide-org88a5981">
+<h3 id="org88a5981">Multiclass in Practice</h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >iris = load_iris()
@@ -1179,10 +1179,10 @@ SVC would product same shape, but different semantics.
 
 </aside>
 </section>
-<section id="slide-orgf8f11ee">
-<h3 id="orgf8f11ee"></h3>
+<section id="slide-orgd666592">
+<h3 id="orgd666592"></h3>
 
-<div id="org641fdbd" class="figure">
+<div id="org35d52b3" class="figure">
 <p><img src="./assets/logistic_coefs.png" alt="logistic_coefs.png" />
 </p>
 </div>
@@ -1205,8 +1205,8 @@ after centering data, without intercept
 </section>
 </section>
 <section>
-<section id="slide-org33b2225">
-<h2 id="org33b2225">Multi-class classification</h2>
+<section id="slide-orga069f1a">
+<h2 id="orga069f1a">Multi-class classification</h2>
 <aside class="notes">
 <p>
 
@@ -1214,8 +1214,8 @@ after centering data, without intercept
 
 </aside>
 </section>
-<section id="slide-orgdef5b46">
-<h3 id="orgdef5b46">Confusion Matrix</h3>
+<section id="slide-org3c6c35a">
+<h3 id="org3c6c35a">Confusion Matrix</h3>
 <font size=6>
 <div class="column" style="float:left; width: 50%">
 <div class="org-src-container">
@@ -1235,7 +1235,7 @@ print(confusion_matrix(y_test, pred))
 </code></pre>
 </div>
 
-<pre class="example" id="org9995642">
+<pre class="example" id="org4c412bb">
 Accuracy: 0.962
 [[37  0  0  0  0  0  0  0  0  0]
  [ 0 40  0  0  0  0  1  0  1  1]
@@ -1258,7 +1258,7 @@ Accuracy: 0.962
 </code></pre>
 </div>
 
-<pre class="example" id="orgc5845d8">
+<pre class="example" id="org5bc7d10">
               precision    recall  f1-score   support
 
            0       1.00      1.00      1.00        37
@@ -1290,8 +1290,8 @@ weighted avg       0.96      0.96      0.96       450
 
 </aside>
 </section>
-<section id="slide-org5306afd">
-<h3 id="org5306afd">Multi-class ROC AUC</h3>
+<section id="slide-org48bec1e">
+<h3 id="org48bec1e">Multi-class ROC AUC</h3>
 <ul>
 <li>Hand &amp; Till, 2001, one vs one</li>
 
@@ -1320,8 +1320,8 @@ weighted avg       0.96      0.96      0.96       450
 
 </aside>
 </section>
-<section id="slide-orga6e9fe7">
-<h3 id="orga6e9fe7">Summary of metrics for multiclass classification</h3>
+<section id="slide-org6c81dd9">
+<h3 id="org6c81dd9">Summary of metrics for multiclass classification</h3>
 <p>
 Threshold-based:
 </p>
@@ -1354,13 +1354,13 @@ Ranking:
 </section>
 </section>
 <section>
-<section id="slide-org2a0e5d1">
-<h2 id="org2a0e5d1">Picking Metrics</h2>
-<div class="outline-text-2" id="text-org2a0e5d1">
+<section id="slide-orga4425d2">
+<h2 id="orga4425d2">Picking Metrics</h2>
+<div class="outline-text-2" id="text-orga4425d2">
 </div>
 </section>
-<section id="slide-orge8f74a9">
-<h3 id="orge8f74a9">Picking metrics</h3>
+<section id="slide-org0e4a61a">
+<h3 id="org0e4a61a">Picking metrics</h3>
 <ul>
 <li>Accuracy rarely what you want</li>
 <li>Problems are rarely balanced</li>
@@ -1383,8 +1383,8 @@ Ranking:
 
 </aside>
 </section>
-<section id="slide-orgc58c4bd">
-<h3 id="orgc58c4bd">Using metrics in cross-validation</h3>
+<section id="slide-orge8adc39">
+<h3 id="orge8adc39">Using metrics in cross-validation</h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >X, y = make_blobs(n_samples=(2500, 500), cluster_std=[7.0, 2],
@@ -1422,8 +1422,8 @@ AUC scoring: [0.93  0.885 0.923]
 
 </aside>
 </section>
-<section id="slide-org29e7220">
-<h3 id="org29e7220">Built-in scoring</h3>
+<section id="slide-orgd8d94f8">
+<h3 id="orgd8d94f8">Built-in scoring</h3>
 <div class="org-src-container">
 
 <pre   ><code class="python" >from sklearn.metrics import get_scorer_names
@@ -1432,7 +1432,7 @@ print("\n".join(sorted(get_scorer_names())))
 </div>
 
 <div class="column" style="float:left; width: 40%">
-<pre class="example" id="orgfed95d0">
+<pre class="example" id="org1bb28c5">
 accuracy
 adjusted_mutual_info_score
 adjusted_rand_score
@@ -1449,7 +1449,7 @@ homogeneity_score
 </pre>
 </div>
 <div class="column" style="float:left; width: 40%">
-<pre class="example" id="orgfda2bbc">
+<pre class="example" id="orgcedb74b">
 log_loss
 mean_absolute_error
 mean_squared_error
@@ -1466,7 +1466,7 @@ precision_macro
 </pre>
 </div>
 <div class="column" style="float:left; width: 20%">
-<pre class="example" id="orga36fa0f">
+<pre class="example" id="orgafaa16b">
 precision_micro
 precision_samples
 precision_weighted
@@ -1493,8 +1493,8 @@ v_measure_score
 
 </aside>
 </section>
-<section id="slide-orgb760c88">
-<h3 id="orgb760c88">Providing you your own callable</h3>
+<section id="slide-org7b4403d">
+<h3 id="org7b4403d">Providing you your own callable</h3>
 <ul>
 <li>Takes <code>estimator, X, y</code></li>
 <li>Returns score – higher is better (always!)</li>
@@ -1517,8 +1517,8 @@ v_measure_score
 
 </aside>
 </section>
-<section id="slide-org11fd853">
-<h3 id="org11fd853">You can access the model!</h3>
+<section id="slide-org2c13009">
+<h3 id="org2c13009">You can access the model!</h3>
 <font size=6>
 <div class="org-src-container">
 
@@ -1578,6 +1578,208 @@ print(len(grid.best_estimator_.support_))
 <li>Some models don't give probabilities, though!</li>
 <li>But that doesn't really matter, you just need to pick different
 thresholds between score functions</li>
+
+</ul>
+
+</aside>
+
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgd6ce00a">
+<h2 id="orgd6ce00a">Metrics for Regression</h2>
+<aside class="notes">
+<p>
+Doesn't really fit, but it's just a tidbit. Probably doesn't hurt too
+much to skip&#x2026;
+</p>
+
+</aside>
+</section>
+<section id="slide-org8815d58">
+<h3 id="org8815d58">Built-in Standard Metrics</h3>
+<ul>
+<li>\(R^2\): easy to understand scale</li>
+<li>MSE: easy to relate to input</li>
+<li>Mean/Median absolute error: more robust</li>
+<li>When using "scoring" use <code>neg_mean_squared_error</code> etc.</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>\(R^2\), between 0 and 1 (actually not, but usually)</li>
+<li>MSE: same units as output</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org9508b55">
+<h3 id="org9508b55">Prediction Plots</h3>
+<div class="column" style="float:left; width: 75%">
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.linear_model import Ridge
+from sklearn.datasets import load_boston
+boston = load_boston()
+X_train, X_test, y_train, y_test = \
+    train_test_split(boston.data, boston.target)
+ridge = Ridge(normalize=True)
+ridge.fit(X_train, y_train)
+pred = ridge.predict(X_test)
+plt.plot(pred, y_test, 'o')
+</code></pre>
+</div>
+</div>
+<div class="column" style="float:left; width: 25%">
+
+<div id="org045bbea" class="figure">
+<p><img src="./assets/regression_boston.png" alt="regression_boston.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Prediction plots are great debugging tools</li>
+<li>Plot predicted versus true, so you want to get points on the diagonal</li>
+<li>So for some of the points we are underpredicting pretty bad (esp. for high values)</li>
+<li>And overpredicting for low values</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orge4dbe9d">
+<h3 id="orge4dbe9d">Residual Plots</h3>
+<div class="column" style="float:left; width: 50%">
+
+
+<div id="org139de84" class="figure">
+<p><img src="./assets/regression_boston.png" alt="regression_boston.png" height="250px" />
+</p>
+</div>
+
+
+<div id="org568a756" class="figure">
+<p><img src="./assets/regression_boston_2.png" alt="regression_boston_2.png" height="250px" />
+</p>
+</div>
+
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div id="orgaab9471" class="figure">
+<p><img src="./assets/regression_boston_3.png" alt="regression_boston_3.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Different way is residual plot, which is basically just rotated</li>
+<li>Can also look at histogram of residuals, which I think is pretty intuitive</li>
+<li>Note: no matter how many features (dimensions) you have, you can
+visualize these in 2 dimensions</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org347122a">
+<h3 id="org347122a">Target vs Feature</h3>
+
+<div id="orgcbef4ed" class="figure">
+<p><img src="./assets/target_vs_feature.png" alt="target_vs_feature.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>For more detail, look at per feature plots</li>
+<li>We have seen this before, looking at feature vs. target</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org1770ad6">
+<h3 id="org1770ad6">Residual vs Feature</h3>
+
+<div id="org664554f" class="figure">
+<p><img src="./assets/residual_vs_feature.png" alt="residual_vs_feature.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Can also look at feature vs. residual</li>
+<li>i.e., plotting feature value to residual (<code>y_test - pred</code>)</li>
+<li>For each sample with a particular value for this feature, plot the
+difference between prediction and actual value</li>
+<li>This can tell you a lot, b/c it can tell you that for specific
+values of a specific feature, we are doing really poorly</li>
+<li>i.e., there are trends we might be missing</li>
+<li>Ideally you want these all clustered around zero, meaning the error
+the model makes is independent of each feature</li>
+<li>Otherwise, it means there's some pattern in the feature value that we didn't capture</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgbbb7d07">
+<h3 id="orgbbb7d07">Absolute vs Relative: MAPE</h3>
+<p>
+Mean Absolute Percentage Error
+</p>
+
+<p>
+\[ \text{MAPE} = \frac{100}{m} \sum_{i=1}^{m}\left|\frac{y-\hat{y}}{y}\right|\]
+</p>
+
+
+<div id="org3620e87" class="figure">
+<p><img src="./assets/mape.png" alt="mape.png" height="350px" />
+</p>
+</div>
+
+<aside class="notes">
+<ul>
+<li>Another metric: Mean Absolute Percentage Error</li>
+<li>Captures the percentage error</li>
+<li>It's got a residual, clearly taking a mean, and taking absolute
+value b/c that's all we care about</li>
+<li>Interesting thing is the division of the residual by the true value (e.g., housing price)</li>
+<li>If a data point is large, we don't care as much about prediction error, since the value is large anyway</li>
+<li>For small values we care more</li>
+<li>Which is intuitive: if a house costs 25 million, it doesn't matter that much if you predict a million off</li>
+<li>But if a house is 50,000, you better not be off by a million!</li>
+<li>Notice the two pairs on the plot, the absolute error between them vs. MAPE</li>
+<li>Often used in forecasting (predicting future, like stock prices)</li>
+<li>Careful, it might not be intuitive</li>
+<li>If anything is zero, well it's not defined</li>
+<li>If something is <b>close</b> to zero, you basically have to be perfect or
+else the percentage error will be very large</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgdb6c79f">
+<h3 id="orgdb6c79f">Over vs under</h3>
+<ul>
+<li>Overprediction and underprediction can have different cost.</li>
+<li>Try to create cost-matrix: how much does overprediction and
+underprediction cost?</li>
+<li>Is it linear?</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>First question: Should you look at absolute error or relative errors?</li>
+<li>Can assign costs to under/over prediction</li>
+<li>e.g., how much does it cost if I make a prediction and get a
+particular residual</li>
+<li>This builds an optimization problem, which you can solve</li>
 
 </ul>
 
