@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Regularization</title>
+<meta name="author" content="Robert Utterback (based on slides by Andreas Muller)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./revealjs/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./revealjs/dist/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+<link rel="stylesheet" href="./revealjs/plugin/highlight/zenburn.css"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h2>Regularization</h2><h4>09/30/2022</h4><h5>Robert Utterback (based on slides by Andreas Muller)</h5>
+</section>
+\(
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand{\E}{\mathop{\boldsymbol{E}}}
+\newcommand{\var}{\boldsymbol{Var}}
+\newcommand{\norm}[1]{\lvert\lvert#1\rvert\rvert}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\ltwo}[1]{\norm{#1}_2}
+\newcommand{\lone}[1]{\norm{#1}_1}
+\newcommand{\sgn}[1]{\text{sign}\left( #1 \right)}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\minw}{\min_{w \in \mathbb{R}^p}}
+\newcommand{\sumn}{\sum_{i=1}^n}
+\newcommand{\logloss}{\log{(\exp{(-y_iw^T\vec{x}_i)} + 1)}}
+\)
+
+<section>
+<section id="slide-org8503939">
+<h2 id="org8503939">Linear Regression Review</h2>
+<aside class="notes">
+<p>
+Syntax note: \(\vec{\theta}\) is ALL the coefficients, while \(\vec{w}\)
+excludes the bias term, i.e., \(\theta_0\).
+</p>
+
+</aside>
+</section>
+<section id="slide-org0b225e0">
+<h3 id="org0b225e0">Linear Models for Regression</h3>
+
+<div id="org0aedc31" class="figure">
+<p><img src="./assets/linear_regression_1d.png" alt="linear_regression_1d.png" height="300px" />
+</p>
+</div>
+
+<p>
+\[ \hat{y} = w^T \vec{x} + b = \sum_{i=1}^p w_i x_i + b \]
+</p>
+
+<aside class="notes">
+<p>
+Predictions in all linear models for regression are of the form shown
+here: It's an inner product of the features with some coefficient or
+weight vector w, and some bias or intercept b. In other words, the
+output is a weighted sum of the inputs, possibly with a shift. here i
+runs over the features and x<sub>i</sub> is one feature of the data
+point x. These models are called linear models because they are linear
+in the parameters w. The way I wrote it down here they are also linear
+in the features x<sub>i</sub>. However, you can replace the features by any
+non-linear function of the inputs, and it'll still be a linear model.
+</p>
+
+<p>
+There are many differnt linear models for regression, and they all
+share this formula for making predictions. The difference between them
+is in how they find w and b based on the training data.
+</p>
+
+</aside>
+</section>
+<section id="slide-org0d981a2">
+<h3 id="org0d981a2">Ordinary Least Squares</h3>
+<p>
+\[ \hat{y} = w^T \vec{x} + b = \sum_{i=1}^p w_i x_i + b\]
+\[ \min_{\vec{w} \in \mathbb{R}^p, b\in\mathbb{R}} \sum_{i=1}^m \norm{w^T \vec{x}^{(i)} + b - y^{(i)}}^2 \]
+</p>
+
+<p>
+Unique solution if \(\vec{X} = (\vec{x}^{(1)},\ldots,\vec{x}^{m})^T\) has full column rank.
+</p>
+<aside class="notes">
+<p>
+The most straight-forward solution that goes back to Gauss is ordinary
+least squares. In ordinary least squares, find w and b such that the
+predictions on the training set are as accurate as possible according
+the the squared error. That intuitively makes sense: we want the
+predictions to be good on the training set. If there is more samples
+than features (and the samples span the whole feature space), then
+there is a unique solution. The problem is what's called a least
+squares problem, which is particularly easy to optimize and get the
+unique solution to.
+</p>
+
+<p>
+However, if there are more features than samples, there are usually
+many perfect solutions that lead to 0 error on the training set. Then
+it's not clear which solution to pick. Even if there are more samples
+than features, if there are strong correlations among features the
+results might be unstable, and we'll see some examples of that soon.
+</p>
+
+<p>
+Before we look at examples, I want to introduce a popular alternative.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org8013585">
+<h2 id="org8013585">Ridge Regression</h2>
+<div class="outline-text-2" id="text-org8013585">
+</div>
+</section>
+<section id="slide-org7219a95">
+<h3 id="org7219a95">Ridge Regression</h3>
+<p>
+\[ \min_{\vec{w} \in \mathbb{R}^p, b\in\mathbb{R}} \sum_{i=1}^m \norm{w^T \vec{x}^{(i)} + b - y^{(i)}}^2 + \alpha \ltwo{w} \]
+</p>
+
+<ul>
+<li>Always has a unique solution</li>
+<li>\(\alpha\) is tuning parameter.</li>
+
+</ul>
+
+<aside class="notes">
+<p>
+In Ridge regression we add another term to the optimization
+problem. Not only do we want to fit the training data well, we also
+want w to have a small squared l2 norm or squared euclidean norm. The
+idea here is that we're decreasing the "slope" along each of the
+feature by pushing the coefficients towards zero. This constrains the
+model to be more simple.
+</p>
+
+<p>
+So there are two terms in this optimization problem, which is also
+called the objective function of the model: the data-fitting term here
+that wants to be close to the training data according to the squared
+norm, and the penalty or regularization term here that wants w to
+have small norm, and that doesn't depend on the data.
+</p>
+
+<p>
+Usually these two goals are somewhat opposing. If we made w zero, the
+second term would be zero, but the predictions would be bad. So we
+need to trade off between these two. The trade off is problem specific
+and is specified by the user. If we set alpha to zero, we get linear
+regression, if we set alpha to infinity we get a constant
+model. Obviously usually we want something in between.
+</p>
+
+<p>
+Note: In many papers (and the book) you'll see \(\frac12\) because it
+makes the gradient easier (I think?), but I'm pretty sure sklearn does
+not use it. The effect is only to change what alpha means slightly, so
+it doesn't really matter. Also note that the bias is not regularlized.
+</p>
+
+<p>
+This is a very typical example of a general principle in machine
+learning, called regularized empirical risk minimization.
+</p>
+
+</aside>
+</section>
+<section id="slide-org7f37ffa">
+<h3 id="org7f37ffa">Regularized Empirical Risk Minimization</h3>
+<p>
+\[ \min_{f \in F} \sum_{i=1}^m L(f(\vec{x}^{(i)}),y^{(i)}) + \alpha R(f) \]
+</p>
+
+<aside class="notes">
+<p>
+Many models in machine learning, like linear models, SVMs and neural
+networks follow the general framework of empirical risk minimization,
+which you can see here. We formulate the machine learning problem as
+an optimization problem over a family of functions. In our case that
+was the family of linear functions parametrized by w and b. The
+minimization problem consists of two parts, the data fitting part and
+the model complexity part. The data fitting part says that the
+predictions mad eby our functions should be accurate according to some
+loss L. For our regression problems that was the squared loss. The
+model complexity part says that we prefer simple models and penalizes
+complicated f. Most machine learning algorithms can be cast into this,
+with a particular choice of family of functions f, loss function L and
+regularizer R. And most of machine learning theory is build around
+this framework. People proof for differnt choices of F and L and R
+that if you minimize this, you'll be able to generalize well. And that
+makes intuitive sense. To do well on the test set, we definitely want
+to do reasonably well on the training set. We don't expect that we can
+do better on a test set than the training set. But we also want to
+minimize the performance difference between training and test set. If
+we restrict our model to be simple via the regularizer R, we have
+better chances of the model generalizing.
+</p>
+
+</aside>
+</section>
+<section id="slide-org7c4e7ab">
+<h3 id="org7c4e7ab">Reminder on model complexity</h3>
+
+<div id="org934ffff" class="figure">
+<p><img src="./assets/overfitting_underfitting_cartoon_full.png" alt="overfitting_underfitting_cartoon_full.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+I hope this sounds familiar from what we talked about earlier. This
+is a particular way of dealing with overfitting and underfitting. For
+this framework in general, or for ridge regression in particular,
+trading off the data fitting and the regularization changes the model
+complexity. If we set alpha high we restrict the model, and we will be
+on the left side of the graph. If we make alpha small, we allow the
+model to fit the data more, and we're on the right side of the graph.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgd03aaaa">
+<h3 id="orgd03aaaa">Ames Housing Dataset</h3>
+
+<div id="org1303331" class="figure">
+<p><img src="./assets/ames_housing_scatter.png" alt="ames_housing_scatter.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >print(X.shape, y.shape)
+</code></pre>
+</div>
+
+<pre class="example">
+(1460, 80) (1460,)
+</pre>
+
+
+<aside class="notes">
+<p>
+Ok after all this pretty abstract talk, let's make this
+concrete. Let's do some regression on the Ames housing
+dataset &#x2013; more modern than Boston.
+</p>
+
+<p>
+Keep in mind that this data lives in a 80 dimensional space and these
+univariate plots only look at 80 different projections of the data,
+and can't capture any of the interactions.
+</p>
+
+<p>
+But still we can see that the price clearly depends on some of these
+variables. It's also pretty clear that the dependency is non-linear
+for some of the variables. We'll still start with a linear model,
+because its a very simple class of models, and I'd always star
+approaching any model from the simplest baseline. In this case it's
+linear regression. We're having 1460 samples and 80 features. We have
+much more samples than features. Linear regression should work just
+fine. Also it's a tiny dataset, so basically anything we'll try will
+run instantaneously, which is also good to keep in mind.
+</p>
+
+<p>
+Another thing that you can see in this graph is that the features have
+very different scales. Here's a box plot that shows that even more
+clearly.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgf33d538">
+<h3 id="orgf33d538"></h3>
+
+<div id="org8c6db0f" class="figure">
+<p><img src="./assets/ames_scaling.png" alt="ames_scaling.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+That's something that will trip up the distance based models models we
+talked about a while ago (e.g., KNearestNeighbor), as well as the
+linear models we're talking about today. For the penalized models the
+different scales mean that different features are penalized
+differently, which you usually want to avoid. Usually there is no
+particular semantics attached to the fact that one feature has
+different magnitutes than another. We could measure something in
+inches instead of miles, and that would change the outcome of the
+model. That's certainly not something we want. A good idea is to scale
+the data to get rid of this effect.
+</p>
+
+<p>
+LR: actually sometimes not that important (except maybe for
+optimization), but important for Ridge and Lasso.
+</p>
+
+</aside>
+</section>
+<section id="slide-org532a855">
+<h3 id="org532a855">Coefficient of determination</h3>
+<p>
+\[ R^2(y,\hat{y}) = 1 - \frac{\sum_{i=1}^{m} (y^{(i)} - \hat{y}^{(i)})^2}{\sum_{i=1}^{m} (y^{(i)} - \overline{y})^2 } \]
+\[ \overline{y} = \frac1m \sum_{i=1}^{m} y^{(i)} \]
+Can be negative for biased estimators - or for the test set!
+</p>
+<aside class="notes">
+<p>
+\(R^2\) Usually between 0 and 1.  1 means perfect correlation, 0 means
+random prediction. How much of the data's variance is predicted by
+your model
+</p>
+
+<p>
+How far is prediction from ground truth relative to mean.  How much
+better is our prediction that just predicting the mean. In this
+context it's not the square of anything (different definition)
+Negative when you do a worse job at predicting that just guessing the
+mean.  (1) really biased model (too regularized/restricted) (2)
+different test set vs. training set negative really bad, 0 bad, 1 good
+</p>
+
+<p>
+Some people think it is misleading. Definitely if you have outliers it
+can be. Though I'm not sure that MSE is any better &#x2013; anytime you
+reduce to a single number you are probably in for trouble.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgddf1945">
+<h3 id="orgddf1945">Preprocessing</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >cat_pre = make_pipeline( # standardize missing, then OHE
+    SimpleImputer(strategy='constant', fill_value='NA'), 
+    OneHotEncoder(handle_unknown='ignore'))
+num_pre = make_pipeline(SimpleImputer(),StandardScaler())
+
+from sklearn.compose import make_column_selector, \
+    make_column_transformer
+full_pre = make_column_transformer(
+    (cat_pre, make_column_selector(dtype_include='object')),
+    remainder=num_pre)
+
+X_train, X_test, y_train, y_test = \
+    train_test_split(X, y, random_state=2)
+pipe = make_pipeline(full_pre, LinearRegression())
+print(cross_val_score(pipe, X_train, y_train, cv=5))
+</code></pre>
+</div>
+
+<pre class="example">
+[0.818 0.885 0.892 0.905 0.887]
+</pre>
+
+
+<aside class="notes">
+<p>
+Default alpha of 1; reasonable but you should do grid search&#x2026;
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb3da9d2">
+<h3 id="orgb3da9d2">Note on Skewed Targets</h3>
+<div class="column" style="float:left; width: 50%">
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >
+y_train.hist(bins='auto')
+
+</code></pre>
+</div>
+
+
+<div id="orgc8be019" class="figure">
+<p><img src="img/ames_target_skewed.png" alt="ames_target_skewed.png" />
+</p>
+</div>
+
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >
+np.log(y_train).hist(bins='auto')
+
+</code></pre>
+</div>
+
+
+<div id="orge4788a0" class="figure">
+<p><img src="img/ames_target_log.png" alt="ames_target_log.png" />
+</p>
+</div>
+
+</div>
+</section>
+<section id="slide-orgacca42a">
+<h3 id="orgacca42a">Handling Transformed Targets</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >cross_val_score(pipe, X_train, y_train, cv=5)
+</code></pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">0.818</td>
+<td class="org-right">0.885</td>
+<td class="org-right">0.892</td>
+<td class="org-right">0.905</td>
+<td class="org-right">0.887</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.compose import TransformedTargetRegressor
+log_linreg = TransformedTargetRegressor(
+    LinearRegression(), func=np.log, inverse_func=np.exp)
+reg_pipe = make_pipeline(full_pre, log_linreg)
+cross_val_score(reg_pipe, X_train, y_train, cv=5)
+</code></pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">0.882</td>
+<td class="org-right">0.896</td>
+<td class="org-right">0.905</td>
+<td class="org-right">0.902</td>
+<td class="org-right">0.911</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="slide-orgd441ac7">
+<h3 id="orgd441ac7">Linear Regression vs. Rdige</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.compose import TransformedTargetRegressor
+cross_val_score(reg_pipe, X_train, y_train, cv=5)
+</code></pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">0.882</td>
+<td class="org-right">0.896</td>
+<td class="org-right">0.905</td>
+<td class="org-right">0.902</td>
+<td class="org-right">0.911</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >log_ridge = TransformedTargetRegressor(
+    Ridge(), func=np.log, inverse_func=np.exp)
+ridge_pipe = make_pipeline(full_pre, log_ridge)
+cross_val_score(ridge_pipe, X_train, y_train, cv=5)
+</code></pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">0.898</td>
+<td class="org-right">0.911</td>
+<td class="org-right">0.942</td>
+<td class="org-right">0.909</td>
+<td class="org-right">0.914</td>
+</tr>
+</tbody>
+</table>
+
+<aside class="notes">
+<p>
+Let’s look at two simple models. Linear regression and Ridge
+regression. What I've done is I’ve split the data into training and
+test set and used 10 fold cross-validation to evaluate them. Here I
+use cross<sub>val</sub><sub>score</sub> together with the model, the training data,
+training labels, and 10 fold cross-validation. This will return 10
+scores and I'm going to compute the mean of them. I'm doing this for
+both linear regression and Ridge regression. Here is ridge regression
+uses a default value of alpha of 1. Here these two scores are quite
+similar.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org873792b">
+<h3 id="org873792b">Tuning Ridge Regression</h3>
+<div class="org-src-container">
+
+<pre  id="smallcode" ><code class="python" >pipe = Pipeline([('pre', full_pre), ('ridge', log_ridge)])
+param_grid = {'ridge__regressor__alpha': np.logspace(-3, 3, 30)}
+grid = GridSearchCV(pipe, param_grid, return_train_score=True)
+grid.fit(X_train, y_train)
+print(f"{grid.best_score_:3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+0.924953
+</pre>
+
+</section>
+<section id="slide-org711738d">
+<h3 id="org711738d"></h3>
+
+<div id="orgb857431" class="figure">
+<p><img src="img/ames_ridge_gridsearch.png" alt="ames_ridge_gridsearch.png" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+So we want to find the best alpha, 1 probably isn't best.
+Lots of uncertainty, training always better than test.
+</p>
+
+<p>
+We can modify the data so that regularization makes a difference.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org720552f">
+<h2 id="org720552f">Triazine Dataset</h2>
+<div class="org-src-container">
+
+<pre   ><code class="python" >triazines = fetch_openml('triazines', version=1)
+print(triazines.data.shape)
+</code></pre>
+</div>
+
+<pre class="example">
+(186, 60)
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >
+pd.Series(triazines.target).hist()
+
+</code></pre>
+</div>
+
+
+<div id="org539fb98" class="figure">
+<p><img src="img/triazine-target.png" alt="triazine-target.png" width="400px" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+Chemical 'triazine', drug discovery (molecule interaction?)
+</p>
+
+<p>
+We have more rows than features. That's good, although the ratio is
+only about 3&#x2026;so we would still consider this 'wide' instead of
+'narrow'. We'd really like narrow&#x2026;
+</p>
+
+<p>
+Anyway, for wide matrices we really need regularization, since we
+can't 'restrict' our model by just using a lot of data.
+</p>
+
+</aside>
+</section>
+<section id="slide-org9d56377">
+<h3 id="org9d56377"></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >X_train, X_test, y_train, y_test = \
+    train_test_split(triazines.data, triazines.target,
+                     random_state=0)
+print(cross_val_score(LinearRegression(), X_train, y_train, cv=5))
+print(cross_val_score(Ridge(), X_train, y_train, cv=5))
+</code></pre>
+</div>
+
+<pre class="example">
+[ 0.213  0.129 -0.796 -0.222 -0.155]
+[0.263 0.455 0.024 0.23  0.036]
+</pre>
+
+
+<aside class="notes">
+<p>
+LR does poorly&#x2026;we probably have correlated features, and LR
+struggles with that.
+</p>
+
+<p>
+Need to do regularization&#x2026;or just do features selection, which we'll talk about later.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org43da4d1">
+<h3 id="org43da4d1"></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >param_grid = {'alpha': np.logspace(-3,3,30)}
+cv = RepeatedKFold(n_splits=5, n_repeats=10, random_state=42)
+grid = GridSearchCV(Ridge(), param_grid,
+                    cv=cv, return_train_score=True)
+grid.fit(X_train, y_train)
+</code></pre>
+</div>
+
+
+<div id="org2f3e4e7" class="figure">
+<p><img src="img/triazine-ridge-grid.png" alt="triazine-ridge-grid.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org67007b9">
+<h3 id="org67007b9">Plotting coefficient values for LR</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >
+lr = LinearRegression().fit(X_train, y_train)
+plt.scatter(range(X_train.shape[1]), lr.coef_,
+	      c=np.sign(lr.coef_), cmap="bwr_r")
+plt.xlabel('feature index'); plt.ylabel('regression coefficient')
+
+</code></pre>
+</div>
+
+
+<div id="org8a3a6cb" class="figure">
+<p><img src="img/triazine-lr-coef.png" alt="triazine-lr-coef.png" width="500px" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+These coefficients are not terribly large (Andreas made a mistake in
+his slides maybe?), but when you use Ridge they get smaller, which
+makes sense. Large coefficients tend to mean overfitting,
+as a rule of thumb.
+</p>
+
+<p>
+Note the HUGE scale. Two of the features are just
+absolutely huge. 
+</p>
+
+</aside>
+</section>
+<section id="slide-org5312760">
+<h3 id="org5312760">Ridge Coefficients</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >
+ridge = grid.best_estimator_
+plt.scatter(range(X_train.shape[1]), ridge.coef_,
+	      c=np.sign(ridge.coef_), cmap="bwr_r")
+plt.xlabel('feature index'); plt.ylabel('regression coefficient')
+
+</code></pre>
+</div>
+
+
+<div id="orge09db5c" class="figure">
+<p><img src="img/triazine-ridge-coef.png" alt="triazine-ridge-coef.png" width="500px" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+Smaller coefficients, as expected.
+</p>
+
+</aside>
+</section>
+<section id="slide-org7366fd5">
+<h3 id="org7366fd5">Boston LR Coefficients</h3>
+
+<div id="orgcd700af" class="figure">
+<p><img src="./assets/lr_coefficients_large.png" alt="lr_coefficients_large.png" height="350px" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+Large magnitude &#x2013; one very positive, one very negative. Prices are
+only like 70000, so these mostly just cancel each other out&#x2026;
+</p>
+
+<p>
+The features are probably correlated, but they also
+cancel each other out! 
+</p>
+
+<p>
+Large coefficients tend to mean overfitting, as a rule of thumb.
+</p>
+
+</aside>
+</section>
+<section id="slide-org91e42be">
+<h3 id="org91e42be">Ridge Coefficients By alpha</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >
+ridge100 = Ridge(alpha=100).fit(X_train, y_train)
+ridge1 = Ridge(alpha=1).fit(X_train, y_train)
+plt.figure(figsize=(8, 4))
+plt.plot(ridge1.coef_, 'o', label="alpha=1")
+plt.plot(ridge.coef_, 'o', label=f"alpha={ridge.alpha:.2f}")
+plt.plot(ridge100.coef_, 'o', label="alpha=100")
+plt.legend()
+
+</code></pre>
+</div>
+
+
+<div id="org2e551e2" class="figure">
+<p><img src="img/triazine-ridge-coefs-by-alpha.png" alt="triazine-ridge-coefs-by-alpha.png" height="350px" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+Basically alpha pushes all coefficients towards zero.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgbda8f83">
+<h3 id="orgbda8f83">Learning Curves</h3>
+
+<div id="org48433e4" class="figure">
+<p><img src="./assets/ridge_learning_curve.png" alt="ridge_learning_curve.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Hold features constant, look at what happens when I increasing
+training size, for multiple settings of alpha.  With small data,
+regularization does help. With lots of data, the difference is
+smaller. In other words, with small data sets we are prone to
+overfitting unless we regularize.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgbb27ea1">
+<h2 id="orgbb27ea1">Lasso Regression</h2>
+<div class="outline-text-2" id="text-orgbb27ea1">
+</div>
+</section>
+<section id="slide-orgd7e640b">
+<h3 id="orgd7e640b">Lasso Regression</h3>
+<p>
+\[ \min_{w \in \mathbb{R}^p, b\in\mathbb{R}} \sum_{i=1}^m \norm{w^T \vec{x}^{(i)} +b - y^{(i)}}^2 + \alpha \lone{w} \]
+</p>
+
+<ul>
+<li>Shrinks \(\vec{w}\) towards zero like Ridge</li>
+<li>Sets some \(\vec{w}\) exactly to zero</li>
+<li>Automatic feature selection!</li>
+
+</ul>
+<aside class="notes">
+<p>
+Use l1 norm instead of l2.
+l1 is sum of absolute values, l2 is sum of squares
+l2 penalizes very large, l1 penalizes all equally
+Coefficient of 0 = don't use that feature = does feature selection!
+(if you <i>really</i> want to penalize the number of features used, use the l0 norm!)
+</p>
+
+</aside>
+</section>
+<section id="slide-orga8951d8">
+<h3 id="orga8951d8">Grid-Search for Lasso</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.linear_model import Lasso
+param_grid = {'alpha': np.logspace(-5, 0, 20)}
+grid = GridSearchCV(Lasso(max_iter=10000), param_grid, cv=10)
+grid.fit(X_train, y_train)
+
+print(grid.best_params_)
+print(f"{grid.best_score_:.3f}")
+</code></pre>
+</div>
+
+<pre class="example">
+{'alpha': 0.0012742749857031334}
+0.169
+</pre>
+
+
+<aside class="notes">
+<p>
+Not great&#x2026;but not terrible compared to what we had before.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org2426f69">
+<h3 id="org2426f69">Grid-Search for Lasso</h3>
+
+<div id="org4b7e626" class="figure">
+<p><img src="./assets/lasso_alpha_triazine.png" alt="lasso_alpha_triazine.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Q: Which side corresponds to overfitting? A: left!
+Right side is biased, underfitting!
+</p>
+
+<p>
+Increase regularization = model does really poorly.
+</p>
+
+</aside>
+</section>
+<section id="slide-org87984c9">
+<h3 id="org87984c9">Coefficients for Lasso</h3>
+
+<div id="org55a6d04" class="figure">
+<p><img src="./assets/lasso_coefficients.png" alt="lasso_coefficients.png" height="350px" />
+</p>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >lasso = grid.best_estimator_
+print(X_train.shape)
+print(np.sum(lasso.coef_ != 0))
+</code></pre>
+</div>
+
+<pre class="example">
+(139, 60)
+14
+</pre>
+
+
+<aside class="notes">
+<p>
+Out of 60 it selected 14.  But if two features are very correlated
+(e.g. duplicates), lasso will randomly select between them. Makes
+interpretation harder.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org299aec3">
+<h2 id="org299aec3">Understanding Penalties</h2>
+<div class="outline-text-2" id="text-org299aec3">
+</div>
+</section>
+<section id="slide-org2558890">
+<h3 id="org2558890">Understanding L1 and L2 Penalties</h3>
+<div class="column" style="float:left; width: 50%">
+
+<div id="org76c07c5" class="figure">
+<p><img src="./assets/l2_l1_l0.png" alt="l2_l1_l0.png" width="400px" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+<p>
+\(\ell_2(w) = \sum_i \sqrt{w_i^2}\)
+</p>
+
+<p>
+\(\ell_1(w) = \sum_i \abs{w_i}\)
+</p>
+
+<p>
+\(\ell_0(w) = \sum_i \mathbf{1}\{w_i \ne 0\}\)
+</p>
+</div>
+<aside class="notes">
+<p>
+If you really wanted a model to select features, you tell it to try to
+penalize setting any feature to anyting other than 0. That's the l0
+norm. However, if you plot this function you'll see how nasty it
+looks, it's very hard to optimize.  We actually want continuous
+functions to differentiate and optimize. But we can do pretty well
+with the l1, even though it's not differentiable at 0.
+</p>
+
+</aside>
+</section>
+<section id="slide-org68bed30">
+<h3 id="org68bed30">Understanding L1 and L2 Penalties</h3>
+<div class="column" style="float:left; width: 40%">
+
+<div id="orgc57199e" class="figure">
+<p><img src="./assets/l1_kink.png" alt="l1_kink.png" width1="350px" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 60%">
+<p>
+\[ f(x) = (2x-1)^2 \]
+</p>
+
+<p>
+\[ f(x) + L2 = (2x-1)^2 + \alpha x^2 \]
+</p>
+
+<p>
+\[ f(x) + L1 = (2x-1)^2 + \alpha \abs{x} \]
+</p>
+</div>
+<aside class="notes">
+<p>
+These are the f plus loss functions plotted.
+Very vaguely, you can see the minimums getting squished towards 0 on the x axis.
+</p>
+
+</aside>
+</section>
+<section id="slide-org8e9b7c7">
+<h3 id="org8e9b7c7">Understanding L1 and L2 Penalties</h3>
+
+<div id="org0ef4372" class="figure">
+<p><img src="./assets/l1l2ball.png" alt="l1l2ball.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+2 coefficients.
+</p>
+
+<p>
+Let's fix a norm of 1 (restrict coefficients such that&#x2026;) instead of
+minimizing. These are plotted here. Diamond is l1.
+</p>
+
+<p>
+i.e., all the 2D vectors that have Euclidean norm 1 on the ball and l1
+norm 1 on the diamond.
+</p>
+
+<p>
+If we plot a quadratic we intersect the circle, and that's our solution.
+</p>
+
+<p>
+For the diamond, the geometry of this makes it likely to hit a corner,
+setting the parameter to 0.
+</p>
+
+</aside>
+</section>
+<section id="slide-orge9417aa">
+<h3 id="orge9417aa">Understanding L1 and L2 Penalties</h3>
+
+<div id="org92dfbfa" class="figure">
+<p><img src="./assets/l1l2ball_intersect.png" alt="l1l2ball_intersect.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Ellipses are our loss function now. Minimum is the purple, but we are
+also considering the penalty, so we are looking for the first point
+that intersects one of the circles (for ridge) or one of the diamonds
+(for lasso).
+</p>
+
+<p>
+For lasso you can see that we are likely to intersect at a corner,
+which will make on of the coefficients 0.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgd048320">
+<h2 id="orgd048320">Elastic Net</h2>
+<div class="outline-text-2" id="text-orgd048320">
+</div>
+</section>
+<section id="slide-orge8ca9ca">
+<h3 id="orge8ca9ca">Elastic Net</h3>
+<p>
+\[ \min_{\vec{w} \in \mathbb{R}^p, b\in\mathbb{R}} \sum_{i=1}^m \norm{w^T \vec{x}^{(i)} + b - y^{(i)}}^2 + \alpha_1 \lone{w} + \alpha_2 \ltwo{w}^2 \]
+</p>
+
+<ul>
+<li>Combines benefits for ridge and lasso</li>
+<li>Must tune two parameters</li>
+
+</ul>
+<aside class="notes">
+<p>
+It works best in practice to combine them both! Ridge tends to
+generalize well, lasso tends to do a bit of feature selection.
+</p>
+
+</aside>
+</section>
+<section id="slide-orga2ee970">
+<h3 id="orga2ee970">Comparing Unit Norm Contours</h3>
+
+<div id="org1930cb6" class="figure">
+<p><img src="./assets/l1l2_elasticnet.png" alt="l1l2_elasticnet.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Elastic net is inbetween, is round but also has corner
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb8188b7">
+<h3 id="orgb8188b7">Parameterization in scikit-learn</h3>
+<p>
+\[ \min_{\vec{w} \in \mathbb{R}^p, b\in\mathbb{R}} \sum_{i=1}^m \norm{w^T \vec{x}^{(i)} + b - y^{(i)}}^2 + \alpha\eta \lone{w} + \alpha(1-\eta) \ltwo{w}^2 \]
+</p>
+
+<ul>
+<li>Where \(\eta\) is the relative amount of L1 penalty.</li>
+<li>In <code>sklearn</code>: <code>l1_ratio</code></li>
+
+</ul>
+<aside class="notes">
+<p>
+Still has alpha, but also l1 ratio: how much should be l1 and how much
+l2.  If you use alpha=0 or eta=0 or 1, it will be inefficient, just
+use one of the above (LR or Ridge), since the solver has to work
+harder in this general case.
+</p>
+
+</aside>
+</section>
+<section id="slide-orged1710f">
+<h3 id="orged1710f">Grid-Search for Elastic Net</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.linear_model import ElasticNet
+param_grid = {'alpha': np.logspace(-4, -1, 10),
+              'l1_ratio': [0.01, .1, .5, .8, .9, .95, .98, 1]}
+grid = GridSearchCV(ElasticNet(), param_grid, cv=10)
+grid.fit(X_train, y_train)
+print(grid.best_params_)
+print(grid.best_score_)
+print((grid.best_estimator_.coef_ != 0).sum())
+</code></pre>
+</div>
+
+<pre class="example">
+{'alpha': 0.002154434690031882, 'l1_ratio': 0.5}
+0.17410151837759943
+16
+</pre>
+
+</section>
+<section id="slide-orgbcd60f6">
+<h3 id="orgbcd60f6">Analyzing 2D Grid Search</h3>
+<font size=6>
+<div class="org-src-container">
+
+<pre   ><code class="python" >
+table = pd.pivot_table(pd.DataFrame(grid.cv_results_),
+    values='mean_test_score', index='param_alpha', columns='param_l1_ratio')
+import seaborn as sns
+ax = sns.heatmap(table, annot=True, fmt=".2g")
+ax.set_yticklabels([round(x,4) for x in table.index])
+ax.collections[0].colorbar.set_label(r'$R^2$', rotation=0)
+plt.gcf().tight_layout()
+
+</code></pre>
+</div>
+
+
+<div id="org6f38a10" class="figure">
+<p><img src="img/triazine-elasticnet-gridsearch.png" alt="triazine-elasticnet-gridsearch.png" />
+</p>
+</div>
+
+</font>
+
+
+
+<div id="org1b4dd31" class="figure">
+<p><img src="img/triazine-elasticnet-gridsearch.png" alt="triazine-elasticnet-gridsearch.png" />
+</p>
+</div>
+
+
+<aside class="notes">
+<p>
+Not a nice curve, but there's this thing called a pivot table.  Alpha
+vs. l1 ratio Of course, this hasn't been validated. When you do 2+
+more parameters, you're more likely to have some noise that got picked
+up on, so these are not unbiased estimators of actual performance.
+This just tells us whether the parameters matter and what's the best.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgaff101f">
+<h2 id="orgaff101f">Robust Regression</h2>
+<div class="outline-text-2" id="text-orgaff101f">
+</div>
+</section>
+<section id="slide-org240c3d1">
+<h3 id="org240c3d1">Robust Regression</h3>
+
+<div id="orgf93e02c" class="figure">
+<p><img src="./assets/robust_regression.png" alt="robust_regression.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Looks kind of clear to us: there are outliers.
+But it fools the standard linear models.
+</p>
+
+</aside>
+</section>
+<section id="slide-org2def32f">
+<h3 id="org2def32f">Least Squares Fit to Outlier Data</h3>
+
+<div id="org52e1d24" class="figure">
+<p><img src="./assets/outliers_least_squares.png" alt="outliers_least_squares.png" height="400pxa" />
+</p>
+</div>
+</section>
+<section id="slide-orgea0cf5f">
+<h3 id="orgea0cf5f">Robust Fit</h3>
+
+<div id="org9f863d8" class="figure">
+<p><img src="./assets/outliers_robust_fit.png" alt="outliers_robust_fit.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Here's what we'd like. Very helpful if you know there are outliers. Easy to see now, but actually hard in many dimensions.
+</p>
+
+</aside>
+</section>
+<section id="slide-org582ab7d">
+<h3 id="org582ab7d">Huber Loss</h3>
+<div class="column" style="float:left; width: 50%">
+
+<div id="org28dbe69" class="figure">
+<p><img src="./assets/huber_loss.png" alt="huber_loss.png" width="300px" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+<p>
+\[ \min_{\vec{w},\sigma} \sum_{i=1}^m \left( \sigma + H\left( \frac{X_i w_i - y_i}{\sigma} \right) \sigma \right) \\+ \alpha \ltwo{w}^2 \]
+</p>
+
+<p>
+\[ H(z) = \begin{cases} 
+z^2, & \qquad\text{if $|z| < \epsilon$}\\
+2\epsilon \abs{z} & \qquad\text{else}
+\end{cases} \]
+</p>
+
+</div>
+<aside class="notes">
+<p>
+Changes loss to "Huber loss". Details are not important. Sigma learns
+some scaling of the data. Around zero it's quadratic, outside that
+it's linear.  So outlier won't be penalized too much. But being
+quadratic around zero makes it differentiable everywhere.
+</p>
+
+<p>
+sklearn: linear<sub>model.HuborRegressor</sub>
+</p>
+
+</aside>
+</section>
+<section id="slide-orgcd8746c">
+<h3 id="orgcd8746c">RANSAC</h3>
+
+<div id="orgc59b55c" class="figure">
+<p><img src="./assets/ransac_algorithm.png" alt="ransac_algorithm.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Doesn't actually fit our loss/risk minimization model.
+</p>
+
+<p>
+Subsamples a few points to fit a linear model.
+Repeat this many times.
+</p>
+
+<p>
+Now evaluate them:
+How well do they predict particular fragments of the data.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgedc01bf">
+<h3 id="orgedc01bf">RANSAC</h3>
+
+<div id="org3209b82" class="figure">
+<p><img src="./assets/ransac_algorithm2.png" alt="ransac_algorithm2.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Calculates what the "inliers" (well predicted by the model)
+The biggest set of inliers is the model we choose.
+</p>
+
+<p>
+sklearn: linear<sub>model.RANSACRegressor</sub>
+</p>
+
+</aside>
+</section>
+</section>
+</div>
+</div>
+<script src="./revealjs/dist/reveal.js"></script>
+<script src="./revealjs/plugin/highlight/highlight.js"></script>
+<script src="./revealjs/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealHighlight, RevealNotes],
+slideNumber:true, hash:true
+});
+
+</script>
+</body>
+</html>

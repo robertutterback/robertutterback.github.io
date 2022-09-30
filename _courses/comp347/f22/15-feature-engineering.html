@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Feature Engineering</title>
+<meta name="author" content="Robert Utterback (based on slides by Andreas Muller)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./revealjs/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./revealjs/dist/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+<link rel="stylesheet" href="./revealjs/plugin/highlight/zenburn.css"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h2>Feature Engineering</h2><h4>09/28/2022</h4><h5>Robert Utterback (based on slides by Andreas Muller)</h5>
+</section>
+\(
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand{\E}{\mathop{\boldsymbol{E}}}
+\newcommand{\var}{\boldsymbol{Var}}
+\newcommand{\norm}[1]{\lvert\lvert#1\rvert\rvert}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\ltwo}[1]{\norm{#1}_2}
+\newcommand{\lone}[1]{\norm{#1}_1}
+\newcommand{\sgn}[1]{\text{sign}\left( #1 \right)}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\minw}{\min_{w \in \mathbb{R}^p}}
+\newcommand{\sumn}{\sum_{i=1}^n}
+\newcommand{\logloss}{\log{(\exp{(-y_iw^T\vec{x}_i)} + 1)}}
+\)
+
+<section>
+<section id="slide-org47e7cd1">
+<h2 id="org47e7cd1">Feature Engineering</h2>
+<div class="outline-text-2" id="text-org47e7cd1">
+</div>
+</section>
+<section id="slide-org94eac67">
+<h3 id="org94eac67"></h3>
+<blockquote >
+<p>
+Coming up with features is difficult, time-consuming, requires expert
+knowledge. "Applied machine learning" is basically feature
+engineering.
+</p>
+</blockquote>
+<ul>
+<li>Andrew Ng</li>
+
+</ul>
+<aside class="notes">
+<p>
+Feature engineering: creating our own features. Ideally your model
+does this for you, but often that requires a very complex model, which
+likely overfits. This is also often where it is helpful to have some
+domain expertise with your data.
+\(2+2\)
+</p>
+
+</aside>
+</section>
+<section id="slide-orga63d985">
+<h3 id="orga63d985">Interaction Features</h3>
+
+<div id="org7faadb0" class="figure">
+<p><img src="./assets/img_33.png" alt="img_33.png" height="500px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+2D data set, two classes. Not linearly separable&#x2026;
+</p>
+
+</aside>
+</section>
+<section id="slide-org23aa188">
+<h3 id="org23aa188">Interaction Features</h3>
+
+<div id="org707d210" class="figure">
+<p><img src="./assets/img_34.png" alt="img_34.png" height="400px" />
+</p>
+</div>
+
+
+<div id="org201c4b7" class="figure">
+<p><img src="./assets/img_35.png" alt="img_35.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Can't do this with a linear model&#x2026;
+</p>
+
+</aside>
+</section>
+<section id="slide-org7afb371">
+<h3 id="org7afb371"></h3>
+
+<div id="org9fd9d61" class="figure">
+<p><img src="./assets/img_36.png" alt="img_36.png" />
+</p>
+</div>
+
+
+<div id="orgc6fa2a6" class="figure">
+<p><img src="./assets/img_37.png" alt="img_37.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+What if we add the interaction between the two features?
+Now in 3 dimensions this can be separated with a linear model: a plane!
+</p>
+
+<p>
+TODO: make this an actual 3D, interactive plot so students can see
+where the plane would go.
+</p>
+
+</aside>
+</section>
+<section id="slide-org5d0fbad">
+<h3 id="org5d0fbad"></h3>
+
+<div id="org1bf89bb" class="figure">
+<p><img src="./assets/img_38.png" alt="img_38.png" height="400px" />
+</p>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >X_i_train, X_i_test, y_train, y_test = train_test_split(
+    X_interaction, y, random_state=0)
+logreg3 = LogisticRegressionCV().fit(X_i_train, y_train)
+logreg3.score(X_i_test, y_test)
+</code></pre>
+</div>
+
+<pre class="example" id="org39827d6">
+0.960
+</pre>
+<aside class="notes">
+<p>
+So here is the data projected down to 2 dimensions. Logistic
+regression in this case.
+Great for continuous features.
+</p>
+
+</aside>
+</section>
+<section id="slide-org43ca34c">
+<h3 id="org43ca34c"></h3>
+
+<div id="orgbda59fe" class="figure">
+<p><img src="./assets/img_40.png" alt="img_40.png" height="300px" />
+</p>
+</div>
+
+<ul>
+<li>One model per gender!</li>
+<li>Keep original: common model + model for each gender to adjust.</li>
+<li>Product of multiple categoricals: common model + multiple models to adjust for combinations</li>
+
+</ul>
+<aside class="notes">
+<p>
+(feature cross) For discrete features it does something a little different.
+BY doing interaction features with gender, what I get is a model per gender!
+i.e. learning two separate models, one for each gender.
+</p>
+
+<p>
+Alternative: use original features, then use the interactions. So you
+have the original, then you have model for each gender saying how each
+one differs from the general model.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgba2df70">
+<h3 id="orgba2df70">More Interactions</h3>
+<pre class="example" id="org1116017">
+age articles_bought gender spend$ time_online
+ + Male * (age articles_bought spend$ time_online )
+ + Female * (age articles_bought spend$ time_online )
+ + (age &gt; 20) * (age articles_bought gender spend$ time_online)
+ + (age &lt;= 20) * (age articles_bought gender spend$ time_online)
+ + (age &lt;= 20) * Male * (age articles_bought gender spend$ time_online)
+</pre>
+<aside class="notes">
+<p>
+Lots of different interactions, can add lots of models. Adjust for a subpopulation.
+</p>
+
+</aside>
+</section>
+<section id="slide-org3a65a32">
+<h3 id="org3a65a32">Polynomial Features</h3>
+
+<div id="org1d08d84" class="figure">
+<p><img src="./assets/img_41.png" alt="img_41.png" height="550px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+This model is kind of linear, but also not really at the edges&#x2026;
+</p>
+
+</aside>
+</section>
+<section id="slide-org6d96707">
+<h3 id="org6d96707">Polynomial Features</h3>
+
+<div id="orgf585a3e" class="figure">
+<p><img src="./assets/img_42.png" alt="img_42.png" height="550px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+We can add polynomial interactions between features and then we can
+actually model this! Kind of weird, right?
+</p>
+
+<p>
+interactions<sub>only</sub> = False by default, it will add powers of a single feature
+order is how many features together, e.g. 3 is all products of 3
+</p>
+
+</aside>
+</section>
+<section id="slide-org0f43b70">
+<h3 id="org0f43b70">Polynomial Features</h3>
+<ul>
+<li><code>PolynomialFeatures()</code> adds polynomials and interactions.</li>
+<li>Transformer interface like scalers etc.</li>
+<li>Create polynomial algorithms with <code>make_pipeline</code>!</li>
+
+</ul>
+</section>
+<section id="slide-orgddd9fb1">
+<h3 id="orgddd9fb1">Polynomial Features</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.preprocessing import PolynomialFeatures
+poly = PolynomialFeatures()
+X_bc_poly = poly.fit_transform(X_bc_scaled)
+print(X_bc_scaled.shape)
+print(X_bc_poly.shape)
+</code></pre>
+</div>
+
+<pre class="example">
+(379, 13)
+(379, 105)
+</pre>
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >scores = cross_val_score(RidgeCV(), X_bc_scaled, y_train, cv=10)
+print2(np.mean(scores), np.std(scores))
+</code></pre>
+</div>
+
+<pre class="example">
+(0.693, 0.111)
+</pre>
+
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >scores = cross_val_score(RidgeCV(), X_bc_poly, y_train, cv=10)
+print2(np.mean(scores), np.std(scores))
+</code></pre>
+</div>
+
+<pre class="example">
+(0.829, 0.071)
+</pre>
+</section>
+<section id="slide-org506c005">
+<h3 id="org506c005">Discretization and Binning</h3>
+<ul>
+<li>Loses data.</li>
+<li>Target-independent might be bad</li>
+<li>Powerful combined with interactions to create new features!</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="./revealjs/dist/reveal.js"></script>
+<script src="./revealjs/plugin/highlight/highlight.js"></script>
+<script src="./revealjs/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealHighlight, RevealNotes],
+slideNumber:true, hash:true
+});
+
+</script>
+</body>
+</html>
