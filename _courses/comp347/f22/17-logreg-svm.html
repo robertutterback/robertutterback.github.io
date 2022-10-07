@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Linear Models for Classification</title>
+<meta name="author" content="Robert Utterback (based on slides by Andreas Muller)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./revealjs/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./revealjs/dist/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+<link rel="stylesheet" href="./revealjs/plugin/highlight/zenburn.css"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h2>Linear Models for Classification</h2><h4>10/05/2022</h4><h5>Robert Utterback (based on slides by Andreas Muller)</h5>
+</section>
+\(
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand{\E}{\mathop{\boldsymbol{E}}}
+\newcommand{\var}{\boldsymbol{Var}}
+\newcommand{\norm}[1]{\lvert\lvert#1\rvert\rvert}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\ltwo}[1]{\norm{#1}_2}
+\newcommand{\lone}[1]{\norm{#1}_1}
+\newcommand{\sgn}[1]{\text{sign}\left( #1 \right)}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\minw}{\min_{\vec{w} \in \mathbb{R}^p, b\in\mathbb{R}}}
+\newcommand{\summ}{\sum_{i=1}^m}
+\newcommand{\sumn}{\sum_{i=1}^n}
+\newcommand{\logloss}{\ln{(\exp{(-y^{(i)}(\vec{w}^T\vec{x}^{(i)}+b))} + 1)}}
+\)
+
+<section>
+<section id="slide-orgdb778fa">
+<h2 id="orgdb778fa">Linear models for <b>binary</b> classification</h2>
+<aside class="notes">
+<p>
+We'll first start with linear models for binary classification, so if
+there are only two classes. That makes the models much easier to
+understand.
+</p>
+
+<p>
+<b>NOTE</b>: I didn't mention this last time: sometimes we'll use 0 and 1,
+ sometimes -1 and 1. It makes the math work out easier in particular
+ cases. Here we will use 1 and -1, even though the book uses 1 and 0.
+</p>
+
+</aside>
+</section>
+<section id="slide-org6c0ed8b">
+<h3 id="org6c0ed8b"></h3>
+<p height="400px">
+<img src="./assets/linear_boundary_vector.png" alt="linear_boundary_vector.png" height="400px" />
+\[ \hat{y} = \sgn{\vec{w}^T \vec{x} + b} = \sgn{\sum^{(i)} w^{(i)} x^{(i)} + b}\]
+</p>
+<aside class="notes">
+<p>
+Similar to the regression case, basically all linear models for
+classification have the same way to make predictions. As with
+regression, they compute an inner product of a weight vector w with
+the feature vector x, and add some bias b. The result of that is a
+real number, as in regression. For classification, however, we only
+look at the sign of the result, so whether it is negative or
+positive. If it's positive, we predict one class, usually called +1,
+if it's negative, we predict the other class, usually called -1. If
+the result is 0, by convention the positive class is predicted, but
+because it's a floating point number that doesn't really happen in
+practice. You'll see that sometimes in my notation I will not have
+a b. That's because you can always add a constant feature to x to
+achieve the same effect (thought you would then need to leave that
+feature out of the regularization). So when I write wTx without a b
+assume that there is a constant feature added that is not part of any
+regularization (although I will try to use theta*b in that case&#x2026;).
+</p>
+
+<p>
+Geometrially, what the formula means is that the decision boundary of
+a linear classifier will be a hyperplane in the feature space, where w
+is the normal vector of that plane. In the 2d example here, it's just
+a line separating red and blue. Everything on the right hand side
+would be classified as blue by this classifier, and everything on the
+left-hand side as red.
+</p>
+
+<p>
+Questions? So again, the learning here consists of finding parameters
+w and b based on the training set, and that is where the different
+algorithms differ. There are quite a lot of algorithms out there, and
+there are also quite a lot in scikit-learn, but we'll only discuss the
+most common ones.
+</p>
+
+<p>
+The most straight-forward way to approach finding w and b is to use
+the framework of empirical risk minimization that we talked about last
+time, so finding parameters that minimize some loss of the training
+set. Where classification differs quite a bit from regression is on
+how we want to measure misclassifications.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgecc7605">
+<h3 id="orgecc7605">Loss Functions</h3>
+<p>
+\[ \hat{y} = \sgn{\vec{w}^T\vec{x} + b}\]
+\[ \min_{\vec{w} \in \mathbb{R}^p} \sum_{i=1}^m \mathbf{1}_{\{ y^{(i)} \ne \sgn{w^T\vec{x}^{(i)} + b} \}} \]
+</p>
+
+
+<div id="org38efe5e" class="figure">
+<p><img src="./assets/binary_loss.png" alt="binary_loss.png" height="300px" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+So we need to define a loss function for given w and b that tell us
+how well they fit the training set. Obvious Idea: Minimize number of
+misclassifications aka 0-1 loss but this loss is non-convex, not
+continuous and minimizing it is NP-hard. So we need to relax it, which
+basically means we want to find a convex upper bound for this
+loss. This is not done on the actual prediction, but on the inner
+product wTx, which is also called the decision function. So this graph
+here has the inner product on the x axis, and shows what the loss
+would be for class 1. The 0-1 loss is zero if the decision function is
+positive, and one if it's negative. Because a positive decision
+function means a positive predition, means correct classification in
+the case of y=1. A negative prediction means a wrong classification,
+which is penalized by the 0-1 loss with a loss of 1, i.e. one mistake.
+</p>
+
+<p>
+The other losses we'll talk about are mostly the hinge loss and the
+log loss. You can see they are both upper bounds on the 0-1 loss but
+they are convex and continuous. Both of these losses care not only
+that you make a correct prediction, but also "how correct" your
+prediction is, i.e. how positive or negative your decision function
+is. We'll talk a bit more about the motivation of these two losses,
+starting with the logistic loss.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgd74dceb">
+<h3 id="orgd74dceb">Logistic Regression</h3>
+<div class="column" style="float:left; width: 30%">
+<font size=5>
+<p>
+\[ \ln\left( \frac{p(y=1 | \vec{x})}{p(y=0 | \vec{x})} \right) = \vec{w}^T \vec{x} \]
+\[ p(y | \vec{x}) = \frac{1}{1 + \e^{-\vec{w}^T\vec{x}-b}} \]
+\[ \minw \sum_{i=1}^m \ln{(\exp{(-y^{(i)}\vec{w}^T\vec{x}^{(i)}+b)} + 1)} \]
+\[ \hat{y} = \sgn{\vec{w}^T\vec{x} + b} \]
+</p>
+</font>
+</div>
+<div class="column" style="float:left; width: 70%">
+
+<div id="orgda8f5de" class="figure">
+<p><img src="./assets/sigmoid1.png" alt="sigmoid1.png" height="300px" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<p>
+Logistic regression is probably the most commonly used linear
+classifier, maybe the most commonly used classifier overall. The idea
+is to model the log-odds (logit), which is log p(y=1|x) - log p(y=0|x) as a
+linear function, as shown here. Rearranging the formula, you get a
+model of p(y=1|x) as 1 over 1 + &#x2026; This function is called the
+logistic sigmoid, and is drawn to the right here. Basically it
+squashed the linear function wTx between 0 and 1, so that it can model
+a probability.
+</p>
+
+<p>
+Given this equation for p(y|x), what we want to do is maximize the
+probability of the training set under this model. This approach is
+known as maximum likelihood. Basically you want to find w and b such
+that they assign maximum probability to the labels observed in the
+training data. You can rearrange that a bit and end up with this
+equation here, which contains the log-loss as seen on the last
+slide. Notice that because we're using y=1 or y=-1, we directly use yi
+here in a different way than the book.
+</p>
+
+<p>
+The prediction is the class with the higher probability. In the binary
+case, that's the same as asking whether the probability of class 1 is
+bigger or smaller than .5. And as you can see from the plot of the
+logistic sigmoid, the probability of the class +1 is greater than .5
+exactly if the decision function wTx is greater than 0. So predicting
+the class with maximum probability is the same as predicting which
+side of the hyperplane given by w we are on.
+</p>
+
+<p>
+Ok so this is logistic regression. We minimize this loss and get a w
+which defines a hyper plane. But if you think back to last time, this
+is only part of what we want. This formulation tries to fit the
+training data, but it doesn't care about finding a simple solution.
+</p>
+
+</aside>
+</section>
+<section id="slide-org11e4274">
+<h3 id="org11e4274">Penalized Logistic Regression</h3>
+<p>
+\[ \minw C \summ \logloss + \ltwo{\vec{w}}^2 \]
+\[ \minw C \summ \logloss + \lone{\vec{w}} \]
+</p>
+<aside class="notes">
+<ul>
+<li>Both versions 'strongly' convex, l2 version smooth (diff.)</li>
+<li>All points contribute to w (dense solution to dual)</li>
+
+</ul>
+
+<p>
+So we can do the same we did for regression: we can add regularization
+terms using the L1 and L2 norm. The effects are the same as for
+regression: both push the coefficients towards zero, but the l1 norm
+encourages coefficients to be exactly zero, for the same reasons we
+discussed last time.
+</p>
+
+<p>
+You could also use a mixed penalty to get something like the
+elasticnet, and indeed that's now available in sklearn.
+</p>
+
+<p>
+But here is a different notation: C vs. alpha. Q: How do they relate?
+</p>
+
+</aside>
+</section>
+<section id="slide-orgc61aa00">
+<h3 id="orgc61aa00">Penalized Logistic Regression</h3>
+<p>
+\[ \minw C \summ \logloss + \ltwo{\vec{w}}^2 \]
+\[ \minw C \summ \logloss + \lone{\vec{w}} \]
+</p>
+
+<ul>
+<li>\(C\) is inverse to \(\alpha\) (or \(\frac{\alpha}{n}\))</li>
+<li>Both versions strongly convex, l2 version smooth (differentiable).</li>
+<li>All points contribute to w</li>
+
+</ul>
+
+<aside class="notes">
+<p>
+Here I used a slightly different notation as last time, though. I'm
+not using alpha to multiply the regularizer, instead I'm using C to
+multiply the loss. That's mostly because that's how it's done in
+scikit-learn and it has only historic reasons. The idea is exactly the
+same, only now C is 1 over alpha. So large C means heavy weight to the
+loss, means little regularization, while small C means less weight on
+the loss, means strong regularization.
+</p>
+
+<p>
+Depending on the model, there might be a factor of n<sub>samples</sub> in there
+somewhere. Usually we try to make the objective as independent of the
+number of samples as possible in scikit-learn, but that might lead to
+surprises if you're not aware of it.
+</p>
+
+<p>
+Some side-notes on the optimization problem: here, as in regression,
+having more regularization makes the optimization problem easier. You
+might have seen this in your homework already, if you decrease C,
+meaning you add more regularization, your model fits more quickly.
+</p>
+
+<p>
+One particular property of the logistic loss, compared to the hinge
+loss we'll discuss next is that each data point contributes to the
+loss, so each data point has an effect on the solution. That's also
+true for all the regression models we saw last time.
+</p>
+
+</aside>
+</section>
+<section id="slide-orga5088ed">
+<h3 id="orga5088ed">Effect of Regularization</h3>
+
+<div id="org9aafa65" class="figure">
+<p><img src="./assets/logreg_regularization.png" alt="logreg_regularization.png" height="300px" />
+</p>
+</div>
+
+<ul>
+<li>Small C limits influence of individual points.</li>
+
+</ul>
+<aside class="notes">
+<p>
+So I spared you with coefficient plots, because they looks the same as
+for regression. All the things I said about model complexity and
+dependency on the number of features and samples is as true for
+classification as it is for regression.
+</p>
+
+<p>
+There is another interesting way to thing about regularization that I
+found helpful, though. I'm not going to walk through the math for
+this, but you can reformulate the optimization problem and find that
+what the C parameter does is actually limit the influence of
+individual data points. With very large C, we said we have no
+regularization. It also means individual data points can have
+basically unlimited influence, as you can see here. There are two
+outliers here, which basically completely tilt the decision
+boundary. But if we decrease C, and therefore increase the
+regularization, what happens is that the influence of these outlier
+points becomes limited, and the other points get more influence.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org2314fa3">
+<h2 id="org2314fa3">Support Vector Machines</h2>
+<div class="outline-text-2" id="text-org2314fa3">
+</div>
+</section>
+<section id="slide-org77e347c">
+<h3 id="org77e347c">Max-Margin and Support Vectors</h3>
+
+<div id="org70e04cd" class="figure">
+<p><img src="./assets/max_margin.png" alt="max_margin.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Margin: how far can you go before hitting a point (support vector)
+Bigger margin seems better, right?
+But usually there's not way to draw a line with any margin
+So we often use a 'soft margin' &#x2013; wide as possible minimizing points IN the margin
+</p>
+
+</aside>
+</section>
+<section id="slide-org49d1a55">
+<h3 id="org49d1a55">Max Margin and Support Vectors</h3>
+<p>
+\[ \minw C \summ \max(0, 1-y^{(i)}(\vec{w}^T \vec{x}^{(i)}+b)) + \ltwo{\vec{w}}^2 \]
+\[ \minw C \summ \max(0, 1-y^{(i)}(\vec{w}^T \vec{x}^{(i)}+b)) + \lone{\vec{w}} \]
+</p>
+
+<ul>
+<li>Within margin \(\iff y \vec{w}^T \vec{x} < 1\)</li>
+<li>Smaller \(\vec{w} \implies\) larger margin</li>
+
+</ul>
+<aside class="notes">
+<p>
+If \(y^{(i)} w^T \vec{X} < 1\) there is a loss, bigger = no loss
+</p>
+
+<ul>
+<li>Point on wrong side: always loss</li>
+<li>Point on right side: loss if within margin</li>
+<li>No loss if right side and outside of margin</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgb7d52ef">
+<h3 id="orgb7d52ef">Max Margin and Support Vectors</h3>
+<div class="column" style="float:left; width: 50%">
+
+<div id="org23fc8d2" class="figure">
+<p><img src="./assets/max_margin_C_0.1.png" alt="max_margin_C_0.1.png" height="400px" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div id="org1284dd8" class="figure">
+<p><img src="./assets/max_margin_C_1.png" alt="max_margin_C_1.png" height="400px" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<p>
+Here are two examples on the same dataset where Andreas trained linear
+support vector machine with c=0.1, and c=1. With c=0.1, you have a
+wider margin. There are points inside the margin and all the points
+inside the margin are support vectors which contribute to the
+solution. Points that are outside of the margin and on the correct
+side doesn't contribute to the solution. These points are sort of
+classified correctly, not when they’re ignored. The normal vector is w
+and basically, the size of the margin is the inverse of the length
+of w. C=0.1 means I have less emphasis on the data fitting and more
+emphasis on the shrinking w. This will lead to a smaller w (thus
+larger margin). If I have larger C that means less regularization,
+which will lead to a larger W, larger W means a smaller margin. So
+there are fewer points here, they are inside the margin and therefore,
+fewer support vectors. More regularization usually means a larger
+margin but more points inside the margin. Also, more support vectors
+mean there are more data points that actually influence the solution.
+</p>
+
+</aside>
+</section>
+<section id="slide-orga761314">
+<h3 id="orga761314">(soft margin) Linear SVM</h3>
+<p>
+\[ \minw C \summ \max(0, 1-y^{(i)}(\vec{w}^T \vec{x}^{(i)}+b)) + \ltwo{\vec{w}}^2 \]
+\[ \minw C \summ \max(0, 1-y^{(i)}(\vec{w}^T \vec{x}^{(i)}+b)) + \lone{\vec{w}} \]
+</p>
+
+<ul>
+<li>Both versions strongly convex, neither smooth.</li>
+<li>Only some points contribute (the support vectors) to \(\vec{w}\)</li>
+
+</ul>
+<aside class="notes">
+<p>
+Moving from logistic regression to linear SVMs is just a matter of
+changing the loss from the log loss to the hinge loss. The hinge-loss
+is defined as &#x2026; And we can penalize using either l1 or l2 norm, or
+again, in principle also elastic net. This formulation with the hinge
+loss doesn't really make sense without the penalty, because of the
+formulation of the hinge loss. What this loss says is basically "if
+you predict the right class with a margin of 1, there is no
+loss". Otherwise the loss is linear in the decision function. So you
+need to be on the right side of the hyperplane by a given amount, and
+then there is no more loss. That's the reason you need the penalty,
+for the 1 to make sense. Otherwise you could just scale up w to make
+it far enough on the right side. But the regularization penalizes
+growing w.
+</p>
+
+<p>
+The hinge loss has a kink, same as the l1 norm, and so it's not a
+smooth optimization problem any more, but that's not really a big
+deal. What's interesting is that all the points that are classified
+correctly with a margin of at least 1 have a loss of zero, and so they
+don't influence the solution any more. All the points that are not
+classified correctly by this margin are the ones that do influence the
+solution and they are called the support vectors.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org09c69b8">
+<h2 id="org09c69b8">Logistic Regression vs. SVM</h2>
+<div class="outline-text-2" id="text-org09c69b8">
+</div>
+</section>
+<section id="slide-orga930f69">
+<h3 id="orga930f69">Logistic Regression vs. SVM</h3>
+<p>
+\[ \minw C \summ \logloss + \ltwo{\vec{w}}^2 \]
+\[ \minw C \summ \max(0, 1-y^{(i)}(\vec{w}^T \vec{x}^{(i)}+b)) + \ltwo{\vec{w}}^2 \]
+</p>
+
+
+<div id="org66c581a" class="figure">
+<p><img src="./assets/binary_loss_classification.png" alt="binary_loss_classification.png" height="300px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+So this is the main difference between logistic regression and linear
+SVMs: Does it penalize misclassifications according to the green line,
+or according to the blue line? In practice it doesn't make a big
+difference.
+</p>
+
+</aside>
+</section>
+<section id="slide-org88a6c45">
+<h3 id="org88a6c45">When to Use</h3>
+
+<div id="org2ad661b" class="figure">
+<p><img src="./assets/svm_or_lr.png" alt="svm_or_lr.png" />
+</p>
+</div>
+<ul>
+<li>Need compact model or believe solution is sparse? Use l1.</li>
+
+</ul>
+<aside class="notes">
+<p>
+So which one of them should you use? If you need probability
+estimates, you should use logistic regression. If you don't, you can
+pick either, and it doesn't really matter. Logistic regression can be
+a bit faster to optimize in theory. If you're in a setting where
+there's many more feature than samples, it might make sense to use
+linear SVMs and solve the dual, but you can actually solve either of
+the problems in the dual, and we'll talk about what that means in
+practice in a little bit.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgd096b77">
+<h2 id="orgd096b77">Multiclass Classification</h2>
+<div class="outline-text-2" id="text-orgd096b77">
+</div>
+</section>
+<section id="slide-org92ff28e">
+<h3 id="org92ff28e">Multinomial Logistic Regression</h3>
+<p>
+\[ p(y=i | \vec{x}) = \frac{\e^{(\vec{w}^{(i)})^T \vec{x} + b^{(j)}}}{\sum_{j=1}^k \e^{(\vec{w}^{(j)})^T \vec{x} + b^{(j)}}} \]
+\[ \min_{\vec{w}\in\mathbb{R}^{pk},b\in\mathbb{R}^k} \sum_{i=1}^m \ln(p(y=y^{(i)} | x^{(i)})) \]
+\[ \hat{y} = \text{argmax}_{i \in 1,\ldots,k} ((\vec{w}^{(i)})^T \vec{x} + b^{(i)}) \]
+</p>
+<ul>
+<li>Same prediction rule as OVR.</li>
+
+</ul>
+<aside class="notes">
+<p>
+The binary logistic regression case can be generalized to multinomial
+logistic regression, in which we model the probability that i is one
+of the classes using this formula, which is also known as softmax. The
+probability is proportional to e to the minus wtx which is the same as
+in the binary case. But now we need to normalize it so that the sum
+over all classes is one. So we just divide it by this sum.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgdceb5cc">
+<h3 id="orgdceb5cc">In scikit-learn</h3>
+<ul>
+<li>OVO: Only option for SVC</li>
+<li>OVR: default for all linear models except <code>LogisticRegression</code></li>
+<li><code>clf.decision_function</code> \(=\vec{w}^T \vec{x}\)</li>
+<li><code>clf.predict_proba</code> gives probabilities for each class</li>
+<li><code>SVC(probability=True)</code> not great</li>
+
+</ul>
+<aside class="notes">
+<p>
+All models in sklearn have multiclass built in
+Logistic Regression decides based on the number of classes
+</p>
+
+<p>
+SVC(prob=True) does OVO SVM, then builds second model on top, really
+slow and probably not what you want. If you want probabilities, use
+logistic regression (though you could use calibration&#x2026;)
+</p>
+
+</aside>
+</section>
+<section id="slide-org4097b6c">
+<h3 id="org4097b6c">Multiclass in Practice</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >iris = load_iris()
+X,y = iris.data, iris.target
+print(X.shape)
+print(np.bincount(y))
+
+logreg = LogisticRegression(multi_class="multinomial",
+                            random_state=0,
+                            solver="lbfgs").fit(X,y)
+linearsvm = LinearSVC().fit(X,y)
+print(logreg.coef_.shape)
+print(linearsvm.coef_.shape)
+</code></pre>
+</div>
+
+<pre class="example">
+(150, 4)
+[50 50 50]
+(3, 4)
+(3, 4)
+</pre>
+
+
+<aside class="notes">
+<p>
+OVR and multinomial, logreg produce one coef per class. Actually logreg would do this anyway.
+</p>
+
+<p>
+SVC would product same shape, but different semantics (since it uses OVO scheme).
+</p>
+
+</aside>
+</section>
+<section id="slide-org290b1fa">
+<h3 id="org290b1fa"></h3>
+
+<div id="orgcb77458" class="figure">
+<p><img src="./assets/logistic_coefs.png" alt="logistic_coefs.png" />
+</p>
+</div>
+<div class="org-src-container">
+
+<pre   ><code class="python" >print(logreg.coef_)
+</code></pre>
+</div>
+
+<pre class="example">
+[[-0.41815181  0.96640966 -2.52143555 -1.08402204]
+ [ 0.53103513 -0.31447032 -0.19924552 -0.94919389]
+ [-0.11288332 -0.65193934  2.72068108  2.03321592]]
+</pre>
+
+
+<aside class="notes">
+<p>
+(after centering data, without intercept)
+</p>
+
+<p>
+Interpreting the feature coefficients: for each class we have a
+coefficient. Tells you what the classifier has learned. It's pretty
+interpretable, which is nice&#x2026;
+</p>
+
+<p>
+If sepal width is big, then setosa classifier is happy.
+If sepal width is small, versicolor large response.
+</p>
+
+<p>
+For more complicated models, like random forests (see later), it's
+much harder to visualize what is going on.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org10239e1">
+<h2 id="org10239e1">Computational Considerations</h2>
+<p>
+(for linear models)
+</p>
+<aside class="notes">
+<p>
+For all linear models
+</p>
+
+</aside>
+</section>
+<section id="slide-org9da409f">
+<h3 id="org9da409f">Solver choices</h3>
+<font size=6>
+<ul>
+<li>Don't use <code>SVC(kernel='linear')</code>, use <code>LinearSVC</code></li>
+<li>When \(p >> m\): Lars (or LassoLars) instead of Lasso</li>
+<li>For small \(m\) (\(< 10,000\)), don't worry &#x2014; it will be fast enough</li>
+<li><code>LinearSVC, LogisticRegression</code> when \(m >> p\): <code>dual=False</code></li>
+<li><code>LogisticRegression(solver="sag")</code> when \(m\) is really big (100,000+)</li>
+<li>Stochastic Gradient Descent also good when \(m\) is large</li>
+
+</ul>
+</font>
+<aside class="notes">
+<p>
+svc uses ovo and hinge loss, LinearSVC uses ovr and squared hinged
+loss, linearSVC will be faster
+</p>
+
+<p>
+lars: feature selection much more quickly (for regression)
+</p>
+
+<p>
+defining "large" is tenous; depends on # features, there's some tradeoffs there
+</p>
+
+</aside>
+</section>
+</section>
+</div>
+</div>
+<script src="./revealjs/dist/reveal.js"></script>
+<script src="./revealjs/plugin/highlight/highlight.js"></script>
+<script src="./revealjs/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealHighlight, RevealNotes],
+slideNumber:true, hash:true
+});
+
+</script>
+</body>
+</html>

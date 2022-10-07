@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>SVM Kernels</title>
+<meta name="author" content="Robert Utterback (based on slides by Andreas Muller)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./revealjs/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./revealjs/dist/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+<link rel="stylesheet" href="./revealjs/plugin/highlight/zenburn.css"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h2>SVM Kernels</h2><h4>10/07/2022</h4><h5>Robert Utterback (based on slides by Andreas Muller)</h5>
+</section>
+\(
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand{\E}{\mathop{\boldsymbol{E}}}
+\newcommand{\var}{\boldsymbol{Var}}
+\newcommand{\norm}[1]{\lvert\lvert#1\rvert\rvert}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\ltwo}[1]{\norm{#1}_2}
+\newcommand{\lone}[1]{\norm{#1}_1}
+\newcommand{\sgn}[1]{\text{sign}\left( #1 \right)}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\minw}{\min_{\vec{w} \in \mathbb{R}^p, b\in\mathbb{R}}}
+\newcommand{\summ}{\sum_{i=1}^m}
+\newcommand{\sumn}{\sum_{i=1}^n}
+\newcommand{\logloss}{\ln{(\exp{(-y^{(i)}(\vec{w}^T\vec{x}^{(i)}+b))} + 1)}}
+\newcommand{\ai}{\alpha^{(i)}}
+\newcommand{\w}{\vec{w}}
+\newcommand{\wt}{\vec{w}^T}
+\newcommand{\xi}{\vec{x}^{(i)}}
+\newcommand{\xit}{(\vec{x}^{(i)})^T}
+\newcommand{\xip}{\xit \vec{w}}
+\newcommand{\tip}{(\phi(\xi)^T \phi(\vec{x}))}
+\)
+
+<section>
+<section id="slide-org11d2de1">
+<h2 id="org11d2de1">Nonlinear SVMs</h2>
+<div class="outline-text-2" id="text-org11d2de1">
+</div>
+</section>
+<section id="slide-org90bbc24">
+<h3 id="org90bbc24">Motivation</h3>
+<ul>
+<li>Go from linear models to more powerful nonlinear ones.</li>
+<li>Keep convexity (ease of optimization).</li>
+<li>Generalize the concept of feature engineering.</li>
+
+</ul>
+<aside class="notes">
+<p>
+The main motivation for kernel support vector machines is that we want
+to go from linear models to nonlinear models but we also want to have
+the same simple kernel optimization to solve. So basically, the
+optimization problem we have to solve from a kernel SVM is about as
+hard as a linear SVM. So it's sort of very simple problem to
+solve. It’s much easier than learning in neural networks for
+example. But we get nonlinear decision boundaries. The idea behind
+this is to generalize the concept of feature engineering. We'll see in
+a little bit how, for example, kernels SVM with polynomial kernels
+relate to using polynomials explicitly in your feature
+engineering.
+</p>
+
+<p>
+First let's review linear SVMs&#x2026;
+</p>
+
+</aside>
+</section>
+<section id="slide-org1eb8b7f">
+<h3 id="org1eb8b7f">Reminder on Linear SVM</h3>
+<p>
+\[ \minw C \sum_{i=1}^m \max(0, 1 - y^{(i)} (\vec{w}^T\vec{x}^{(i)} + b)) + ||w||^2_2 \]
+\[ \hat{y} = \text{sign}(\vec{w}^T \vec{x} + b)  \]
+</p>
+<aside class="notes">
+<p>
+The idea behind the linear support vector machine is it's a linear
+classifier, the minimization problem is a hinge loss, which is
+basically linear in the decision function w^Tx. Basically, as long as
+you have a distance on the right side of the hyper plane, that’s
+bigger than one, your data point does not contribute to the loss. So
+you want all of the points outside of this margin of one around the
+separating hyper plane.
+</p>
+
+</aside>
+</section>
+<section id="slide-org316a376">
+<h3 id="org316a376">Max-Margin and Support Vectors</h3>
+
+<div id="org4319a2a" class="figure">
+<p><img src="./assets/max_margin.png" alt="max_margin.png" height="500px" />
+</p>
+</div>
+<aside class="notes">
+nil
+</aside>
+</section>
+<section id="slide-orga920707">
+<h3 id="orga920707">Max-Margin and Support Vectors</h3>
+<div class="column" style="float:left; width: 50%">
+
+<div id="org0b3be29" class="figure">
+<p><img src="./assets/max_margin_C_0.1.png" alt="max_margin_C_0.1.png" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div id="org5c9a278" class="figure">
+<p><img src="./assets/max_margin_C_1.png" alt="max_margin_C_1.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+nil
+</aside>
+</section>
+<section id="slide-org62a2993">
+<h3 id="org62a2993">Reformulate Linear Models</h3>
+<ul>
+<li>Optimization Theory:</li>
+
+</ul>
+<font size=6>
+
+<p>
+\[ \vec{w} = \sum_{i=1}^m \alpha^{(i)} \vec{x}^{(i)} \]
+</p>
+
+<p>
+(alpha are dual coefficients. Non-zero for support vectors only)
+</p>
+
+<p>
+\[ \hat{y} = \text{sign}(\vec{w}^T \vec{x})  \Longrightarrow   \hat{y} = \text{sign}\left(\summ\ai (\xip) \right) \]
+</p>
+
+<p>
+\[ \ai \le C\]
+</p>
+</font>
+<aside class="notes">
+<p>
+Remember a while ago I talked about expanding to n features and we
+could learn anything. Turns out we can approximate that by using
+kernel functions.
+</p>
+
+<ul>
+<li>Slightly different formulation than the book; same idea</li>
+<li>Can formulate learning as optimization over alpha, only involves x
+via dot-products</li>
+<li>Expressing w as linear combo of x's (but only the support vectors)</li>
+<li>Primal: find w; dual: find alphas</li>
+<li>Get a slightly different decision function</li>
+<li>Regularization parameter C is limit on alphas, i.e., C limits influence of each data point</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org2badcc1">
+<h2 id="org2badcc1">Kernels</h2>
+<div class="outline-text-2" id="text-org2badcc1">
+</div>
+</section>
+<section id="slide-orgab9140d">
+<h3 id="orgab9140d">Introducing Kernels</h3>
+<p>
+\[\hat{y} = \text{sign}\left(\summ\ai (\xip)\right) \longrightarrow \\
+\hat{y} = \text{sign}\left(\summ \ai \tip \right) \]
+</p>
+
+<p>
+\[ \phi(\vec{x}^{(i)})^T \phi( \vec{x}^{(j)}) \longrightarrow k(\xi,  \vec{x}^{(j)}) \]
+</p>
+
+<aside class="notes">
+<ul>
+<li>You <b>could</b> compute the transformation, then do the dot-product.</li>
+<li>But you only ever need the end result dot product, and sometimes the
+end result is easier to compute that phi! (shortcut)</li>
+<li>Can now design k instead of \(\phi\) – which might be easier, more flexible!</li>
+<li>Dimensionality of \(\phi\) “doesn’t matter”.</li>
+<li>Can be done for any linear model – not only SVM! (svm has some alpha
+zero). Kernel Logistic Regression, Kernel PCA, Kernel Kmeans….</li>
+<li>k positive definite, symmetric \(\Rightarrow\) there exists a \(\phi\)! (possilby $&infin;$-dim)</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgd754870">
+<h3 id="orgd754870">Examples of Kernels</h3>
+<font size=6>
+<p>
+\[k_\text{linear}(\vec{x}, \vec{x}') = \vec{x}^T\vec{x}'\]
+\[k_\text{poly}(\vec{x}, \vec{x}') = (\vec{x}^T\vec{x}' + c) ^ d\]
+\[k_\text{rbf}(\vec{x}, \vec{x}') = \exp(\gamma||\vec{x} -\vec{x}'||^2)\]
+\[k_\text{sigmoid}(\vec{x}, \vec{x}') = \tanh\left(\gamma \vec{x}^T\vec{x}'  + r\right)\]
+\[k_\cap(\vec{x}, \vec{x}')= \sum_{i=1}^p \min(x_i, x'_i)\]
+</p>
+</font>
+
+<ul>
+<li>If \(k\) and \(k'\) are kernels, so are \(k + k'\), \(kk'\), \(ck'\), &#x2026;</li>
+
+</ul>
+
+<aside class="notes">
+<ul>
+<li>linear kernel = plain linear svms</li>
+<li>polynomial = polynomial features (basically)</li>
+<li>rbf: Gaussian function above the curve around the distance of two data points (inf. dimensional)</li>
+<li>Much faster: consider a high degree polynomial feature expansion versus computing the poly kernel.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org7dcc469">
+<h3 id="org7dcc469">Polynomial Kernel vs Features</h3>
+<p>
+\[ k_\text{poly}(\vec{x}, \vec{x}') = (\vec{x}^T\vec{x}' + c) ^ d \]
+</p>
+
+<ul>
+<li>Primal vs Dual Optimization</li>
+<li>Explicit polynomials \(\rightarrow\) compute on \(m\cdot p^d\)</li>
+<li>Kernel trick \(\rightarrow\) compute on kernel matrix of shape \(m^2\)</li>
+
+<li>For a single feature:</li>
+
+</ul>
+<p>
+\[ (x^2, \sqrt{2}x, 1)^T (x'^2, \sqrt{2}x', 1) = x^2x'^2 + 2xx' + 1 = (xx' + 1)^2 \]
+</p>
+<aside class="notes">
+<p>
+SVM with poly kernel similar (but not exactly same) to linear SVM with
+polynomial features!
+</p>
+
+</aside>
+</section>
+<section id="slide-org5b8d92f">
+<h3 id="org5b8d92f">Poly kernels with <code>sklearn</code></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >poly = PolynomialFeatures(include_bias=False)
+X_poly = poly.fit_transform(X)
+print(X.shape, X_poly.shape)
+print(poly.get_feature_names())
+# ((100, 2), (100, 5))
+# ['x0', 'x1', 'x0^2', 'x0 x1', 'x1^2']
+</code></pre>
+</div>
+
+
+<div id="orgf065b3a" class="figure">
+<p><img src="./assets/poly_kernel_features.png" alt="poly_kernel_features.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Linear SVM wouldn't work here</li>
+<li>Very similar result, basically the same</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org7e8a2f3">
+<h3 id="org7e8a2f3">Understanding Dual Coefficients</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >linear_svm.coef_
+#array([[0.139, 0.06, -0.201, 0.048, 0.019]])
+</code></pre>
+</div>
+<p>
+\[ y = \text{sign}(0.139 x_0 + 0.06 x_1 - 0.201 x_0^2 + 0.048 x_0 x_1 + 0.019 x_1^2) \]
+</p>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >linear_svm.dual_coef_
+#array([[-0.03, -0.003, 0.003, 0.03]])
+linear_svm.support_
+#array([1,26,42,62], dtype=int32)
+</code></pre>
+</div>
+<p>
+\[ y = \text{sign}(-0.03 \phi(\mathbf{x}_1)^T \phi(x) - 0.003 \phi(\mathbf{x}_{26})^T \phi(\mathbf{x})  \\ +0.003 \phi(\mathbf{x}_{42})^T \phi(\mathbf{x}) + 0.03 \phi(\mathbf{x}_{62})^T \phi(\mathbf{x})) \]
+</p>
+<aside class="notes">
+<ul>
+<li>linear svm: 5 coefs for 5 features</li>
+<li>Dual: 4 coefs for 4 support vectors (samples)</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgba20c20">
+<h3 id="orgba20c20">With Kernel</h3>
+<p>
+\[y = \text{sign}\left(\summ\ai k(\xi,\vec{x})\right) \]
+</p>
+<div class="org-src-container">
+
+<pre   ><code class="python" >poly_svm.dual_coef_
+# array([[-0.057, -0. , -0.012, 0.008, 0.062]])
+poly_svm.support_
+# array([1,26,41,42,62], dtype=int32)
+</code></pre>
+</div>
+<p>
+\[ y = \text{sign}(-0.057 (\vec{x}_1^T\vec{x} + 1)^2
+-0.012 (\vec{x}_{41}^T \vec{x} + 1)^2 \\
++0.008 (\vec{x}_{42}^T \vec{x} + 1)^2 + 0.062 (\vec{x}_{62}^T \vec{x} + 1)^2
+\]
+</p>
+<aside class="notes">
+<p>
+y = sign(-0.03 np.inner(poly(X[1]), poly(x)) – 0.003 np.inner(poly(X[26]), poly(x)) +0.003 np.inner(poly(X[42]), poly(x)) + 0.03 np.inner(poly(X[63]), poly(x))
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org14887d4">
+<h2 id="org14887d4">Practical Considerations</h2>
+<div class="outline-text-2" id="text-org14887d4">
+</div>
+</section>
+<section id="slide-org05e7fbb">
+<h3 id="org05e7fbb">Runtime Considerations</h3>
+
+<div id="orgf043147" class="figure">
+<p><img src="./assets/kernel_runtime.png" alt="kernel_runtime.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Top: linear space, bot: log-log space</li>
+<li>Fixed num. features, more features make the kernel better</li>
+<li>Small m =&gt; kernel is faster</li>
+<li>Big m =&gt; kernel is slower b/c m^2 will be really big</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org4e92ad0">
+<h3 id="org4e92ad0">Kernels in Practice</h3>
+<ul>
+<li>Dual coefficients less interpretable</li>
+<li>Long runtime for "large" datasets (100k samples)</li>
+<li>Real power in infinite-dimensional spaces: rbf!</li>
+<li>Rbf is “universal kernel” - can learn (aka overfit) anything.</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>RBF can fit anything&#x2026;but easy to overfit</li>
+<li>Same is true for NNs, trees, and nearest neighbors</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org7c5fe68">
+<h3 id="org7c5fe68">Preprocessing</h3>
+<ul>
+<li>Kernel use inner products or distances.</li>
+<li>Use StandardScaler or MinMaxScaler</li>
+<li>Gamma parameter in RBF directly relates to scaling of data – default
+only works with zero-mean, unit variance.</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>B/c they use distances, scaling is important</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgf903953">
+<h3 id="orgf903953">Parameters for RBF Kernels</h3>
+<font size=6>
+<ul>
+<li>Regularization parameter C is limit on alphas (for any kernel)</li>
+<li>Gamma is bandwidth: \(k_\text{rbf}(\vec{x}, \vec{x}') = \exp(\gamma||\vec{x}-\vec{x}'||^2)\)</li>
+
+</ul>
+</font>
+
+
+<div id="orgb6e2c62" class="figure">
+<p><img src="./assets/rbf_gamma.png" alt="rbf_gamma.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+C param limits influence of any data point.
+Smaller gamma -&gt; wider kernel -&gt; simpler model -&gt; smoother boundary
+Larger gamma -&gt; narrow kernel -&gt; more local influence -&gt; more like NN and more complex
+</p>
+
+</aside>
+</section>
+<section id="slide-org480543e">
+<h3 id="org480543e"></h3>
+
+<div id="orga915d28" class="figure">
+<p><img src="./assets/svm_grid.png" alt="svm_grid.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Illustrating the two params. Vertical = C, horizontal = gamma.
+Support vectors circled.
+Simplest has smallest gamma and C.
+</p>
+
+<p>
+There's a tradeoff between the two; multiple combos that will give you
+similarly good results.
+Contours are the results before you take the "sign" to actually make a decision
+</p>
+
+<ul>
+<li>Low C, gamma: all data points are support vectors, everything gets averaged, broad kernel</li>
+<li>Increase C, each data point has more influence: ones closest to boundary have more influence</li>
+<li>Increase gamma: area of influence of each data point shrinks</li>
+<li>You end up with isolated islands around each point; very complicated decision boundary</li>
+<li>Usually multiple combinations of C and gamma that give good results</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orge6fd3aa">
+<h3 id="orge6fd3aa"></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.datasets import load_digits
+digits = load_digits()
+</code></pre>
+</div>
+
+<div id="org9ffcf4a" class="figure">
+<p><img src="./assets/digits.png" alt="digits.png" height="450px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Slightly more interesting dataset.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb50c844">
+<h3 id="orgb50c844">Scaling and Default Params</h3>
+<pre class="example" id="org9035b1b">
+gamma : float, optional (default = "auto")
+  Kernel coefficient for 'rbf', 'poly' and 'sigmoid'.
+  If gamma is 'auto' then 1/n_features will be used
+</pre>
+<div class="org-src-container">
+
+<pre   ><code class="python" >scaled_svc = make_pipeline(StandardScaler(), SVC())
+print(np.mean(cross_val_score(SVC(), X_train, y_train, cv=10)))
+print(np.mean(cross_val_score(scaled_svc, \
+                              X_train, y_train, cv=10)))
+# 0.578
+# 0.978
+</code></pre>
+</div>
+
+
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >gamma = (1. / (X_train.shape[1] * X_train.std()))
+print(np.mean(cross_val_score(SVC(gamma=gamma), \
+                              X_train, y_train, cv=10)))
+# 0.987
+</code></pre>
+</div>
+
+<aside class="notes">
+<p>
+Default gamma is 1/ n_features, works reasonably well when feature have std 1. (otherwise doesn't really make sense))
+If features have similar std, we can also just rescale gamma by it, instead of the data.
+Features having the same scale is a bit unusual though, this is a very particular dataset.
+The bottom code section is 'scale' setting for gamma.
+Q: How to do grid search for these params? (C and gamma))
+</p>
+
+</aside>
+</section>
+<section id="slide-org9b6fc2b">
+<h3 id="org9b6fc2b">Grid-Searching Parameters</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >param_grid = {'svc__C': np.logspace(-3, 2, 6),
+              'svc__gamma': \
+              np.logspace(-3, 2, 6) / X_train.shape[0]}
+param_grid
+</code></pre>
+</div>
+<pre class="example" id="org93ceb92">
+{'svc_C': array([   0.001,    0.01 ,    0.1  ,    1.   ,   10.   ,  100.   ]),
+'svc_gamma': array([ 0.000001,  0.000007,  0.000074,  0.000742,  0.007424, 0.074239])}
+</pre>
+<div class="org-src-container">
+
+<pre   ><code class="python" >grid = GridSearchCV(scaled_svc, param_grid=param_grid, cv=10)
+grid.fit(X_train, y_train)
+</code></pre>
+</div>
+<aside class="notes">
+nil
+</aside>
+</section>
+<section id="slide-orgb8e8ea2">
+<h3 id="orgb8e8ea2">Grid-Searching Parameters</h3>
+
+<div id="org98aa14a" class="figure">
+<p><img src="./assets/svm_grid_mat.png" alt="svm_grid_mat.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Chance performance is 10% accuracy, since there are 10 digits (random
+guessing). With wrong parameters, I do no better than chance.  Here's
+an example of where you might want to extend your search
+space. Clearly you don't need smaller C's, but maybe try larger ones,
+though as you increase C you will also increase running time.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org487e5dd">
+<h2 id="org487e5dd">Regression</h2>
+<div class="outline-text-2" id="text-org487e5dd">
+</div>
+</section>
+<section id="slide-org8e5831b">
+<h3 id="org8e5831b">Support Vector Regression</h3>
+
+<div id="orgff92d09" class="figure">
+<p><img src="./assets/svr_math.png" alt="svr_math.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Another way to do robust (to outliers) regression. Often the way this
+is formulated: Want ALL points to be within a tube of width
+\(\epsilon\), kind of opposite of SVM for classification.  All points
+within this tube don't contribute to the solution, only things
+outside. \(\epsilon\) is a tunable parameter, typically you pick it by
+domain knowledge. Don't worry about the math too much.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgaecb5ca">
+<h3 id="orgaecb5ca">Using SVR</h3>
+<ul>
+<li>Fix epsilon based on application/outliers</li>
+<li>Linear kernel \(\to\) robust linear regression</li>
+<li>Poly / rbf kernel \(\to\) robust non-linear regression</li>
+
+</ul>
+
+
+<div id="org6c6d1ec" class="figure">
+<p><img src="./assets/svr.png" alt="svr.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Can use kernels with this too. Intuition: you're paying most amount of
+attention to things that are far away, although we're using the
+absolute value actually, not squared, so it's not really that
+sensitive to outliers.  In tube, no error, outside tube, linear error.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org722f4c1">
+<h2 id="org722f4c1">Kernel Approximation</h2>
+<div class="outline-text-2" id="text-org722f4c1">
+</div>
+</section>
+<section id="slide-org3165b9c">
+<h3 id="org3165b9c">Why undo the kernel trick?</h3>
+
+<div id="org4a976b0" class="figure">
+<p><img src="./assets/lskm.png" alt="lskm.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Problem: for 100,000+ data points, these techniques just don't work!
+</p>
+
+</aside>
+</section>
+<section id="slide-org35b45b0">
+<h3 id="org35b45b0">RKHS vs RKS</h3>
+<p>
+(Reproducing Kernel Hilbert-Spaces vs Random Kitchen Sinks)
+</p>
+<ul>
+<li>Idea: ditch kernel, approximate (infinite-dimensional) feature map</li>
+
+</ul>
+<p>
+\[\phi(x)^T \phi(x') = k(x, x') \approx \hat{\phi}(x)^T \hat{\phi}(x')\]
+</p>
+<ul>
+<li>For rbf-kernel random projection followed by sin/cos , higher n_features is better</li>
+
+</ul>
+
+<aside class="notes">
+<p>
+Went full circle: create poly/other features \(\to\) more powerful
+models Rather than feature space, use kernels Now go back to feature
+expansions that approximate the kernel So instead for large data sets
+we add features that expand to something about the same as the kernel
+we want.
+You can look at RKHS if you want, otherwise don't worry.
+RKS: Draw a big random matrix, multiply with data, apply sin/cos.
+Somehow this approximates rbf-kernel&#x2026;
+</p>
+
+</aside>
+</section>
+<section id="slide-org88a35dd">
+<h3 id="org88a35dd">Kernel Approximation in <code>sklearn</code></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.kernel_approximation import RBFSampler
+gamma = 1. / (X.shape[1] * X.std())
+approx_rbf = RBFSampler(gamma=gamma, n_components=5000)
+print(X.shape)
+X_rbf = approx_rbf.fit_transform(X)
+print(X_rbf.shape)
+# (1347, 64)
+# (1347, 5000)
+np.mean(cross_val_score(LinearSVC(), X, y, cv=10))
+# 0.946
+np.mean(cross_val_score(SVC(gamma=gamma), X, y, cv=10))
+# 0.987
+np.mean(cross_val_score(LinearSVC(), X_rbf, y, cv=10))
+# 0.984
+</code></pre>
+</div>
+<aside class="notes">
+<p>
+Need to specify gamma AND how many features I want. More features = better approximation but slower to compute.
+Comparable results.
+</p>
+
+</aside>
+</section>
+<section id="slide-org0d10cb3">
+<h3 id="org0d10cb3">Nyström Approximation</h3>
+<ul>
+<li>Use low-rank approximation of kernel matrix</li>
+<li>Select some samples, compute kernel with only those, embed all the points.</li>
+<li>Using all points = full rank = exact</li>
+<li>For same number of components more expensive than RBFSampler, but needs less!</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.kernel_approximation import Nystroem
+nystroem = Nystroem(gamma=gamma, n_components=200)
+X_train_ny = nystroem.fit_transform(X_train)
+print(X_train_ny.shape)
+# (1347, 200)
+np.mean(cross_val_score(LinearSVC(), \
+                        X_train_ny, y_train, cv=10))
+# 0.974
+</code></pre>
+</div>
+<aside class="notes">
+<p>
+Another strategy. The previous only works for RBF kernels. Idea is
+subsample some of the points, compute the kernel have only on those
+points. Then you can transform all your points into this 200
+dimensional feature space.
+</p>
+
+</aside>
+</section>
+<section id="slide-orga5589ca">
+<h3 id="orga5589ca">New techniques</h3>
+<ul>
+<li>Many newer / faster algorithms out there</li>
+<li>Not in sklearn so far</li>
+<li>FastFood one of the most prominent ones</li>
+<li>Current research on selecting good points for Nystroem.</li>
+
+</ul>
+<aside class="notes">
+<p>
+FastFood is fairly recent, also how to select points from Nystroem.
+</p>
+
+<p>
+We saw how adding features was useful, then it was convenient to use
+kernel, then we went backwards. What we're really interested in is
+creating the right features.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgd3eebf0">
+<h3 id="orgd3eebf0">Relation to Random Neural Nets</h3>
+<ul>
+<li>Why approximate kernels?</li>
+<li>Just go random !</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre   ><code class="python" >rng = np.random.RandomState(0)
+w = rng.normal(size=(X_train.shape[1], 100))
+X_train_wat = np.tanh(scale(np.dot(X_train, w)))
+print(X_train_wat.shape)
+# (1347, 100)
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >np.mean(cross_val_score(LinearSVC(), \
+                        X_train_wat, y_train, cv=10))
+# 0.966
+</code></pre>
+</div>
+
+<aside class="notes">
+<p>
+Here's a technique: add random features! Like a random neural
+network. Dot product of train data and random data, then tanh, this is
+basically training a Neural Network (will look at later). Then train
+LinearSVC on this projected data, and we have good performance!
+</p>
+
+<p>
+What this is basically saying is that it doesn't really matter what
+your projection is, as long as you blow up your feature space to high
+dimensions. With all that freedom in higher dimensions, the randomness
+effect is small and you can classify anything! Weird! Works well in practice!
+</p>
+
+</aside>
+</section>
+<section id="slide-orgaf9c3d1">
+<h3 id="orgaf9c3d1">Extreme Learning Machine Hoax</h3>
+<ul>
+<li>AKA random neural networks</li>
+<li>Same result published in the 90s</li>
+<li>Bogus math</li>
+
+</ul>
+<aside class="notes">
+<p>
+Some papers published calling this "Extreme Learning". Don't use this
+term. Not me, others famous in the field called them out.
+</p>
+
+</aside>
+</section>
+<section id="slide-org29f64cd">
+<h3 id="org29f64cd">Kernel Approximation in Practice</h3>
+<ul>
+<li>SVM: only when n_samples \(<\) 100,000 but works for n_features large</li>
+<li>RBFSampler, Nystroem can allow making anything kernelized!</li>
+<li>Some kernels (like chi2 and intersection) have really fast
+approximation.</li>
+
+</ul>
+<aside class="notes">
+<p>
+Others implemented in sklearn that can be approximated well,
+especially for computer vision.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org96608fa">
+<h2 id="org96608fa">Summary</h2>
+<ul>
+<li>Kernels are cool!</li>
+<li>Kernels work best for "small" n_samples</li>
+<li>Approximate kernels or random features for many samples</li>
+<li>Could do even SGD / streaming with kernel approximations!</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>Could use Logistic Regression (hurray probabilities)</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+</div>
+</div>
+<script src="./revealjs/dist/reveal.js"></script>
+<script src="./revealjs/plugin/highlight/highlight.js"></script>
+<script src="./revealjs/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealHighlight, RevealNotes],
+slideNumber:true, hash:true
+});
+
+</script>
+</body>
+</html>
