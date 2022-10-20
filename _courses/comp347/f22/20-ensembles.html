@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Ensembles</title>
+<meta name="author" content="Robert Utterback (based on slides by Andreas Muller)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./revealjs/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./revealjs/dist/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+<link rel="stylesheet" href="./revealjs/plugin/highlight/zenburn.css"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h2>Ensembles</h2><h4>10/21/2022</h4><h5>Robert Utterback (based on slides by Andreas Muller)</h5>
+</section>
+\(
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand{\E}{\mathop{\boldsymbol{E}}}
+\newcommand{\var}{\boldsymbol{Var}}
+\newcommand{\norm}[1]{\lvert\lvert#1\rvert\rvert}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\ltwo}[1]{\norm{#1}_2}
+\newcommand{\lone}[1]{\norm{#1}_1}
+\newcommand{\sgn}[1]{\text{sign}\left( #1 \right)}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\minw}{\min_{\vec{w} \in \mathbb{R}^p, b\in\mathbb{R}}}
+\newcommand{\summ}{\sum_{i=1}^m}
+\newcommand{\sumn}{\sum_{i=1}^n}
+\newcommand{\logloss}{\ln{(\exp{(-y^{(i)}(\vec{w}^T\vec{x}^{(i)}+b))} + 1)}}
+\newcommand{\ai}{\alpha^{(i)}}
+\newcommand{\w}{\vec{w}}
+\newcommand{\wt}{\vec{w}^T}
+\newcommand{\xi}{\vec{x}^{(i)}}
+\newcommand{\xit}{(\vec{x}^{(i)})^T}
+\newcommand{\xip}{\xit \vec{w}}
+\newcommand{\tip}{(\phi(\xi)^T \phi(\vec{x}))}
+\)
+
+<section>
+<section id="slide-orga13ab33">
+<h2 id="orga13ab33">Ensemble Models</h2>
+<aside class="notes">
+<p>
+The general term that captures any way of turning multiple models into one.
+</p>
+
+</aside>
+</section>
+<section id="slide-org4384786">
+<h3 id="org4384786">Poor man's ensembles</h3>
+<ul>
+<li>Build different models</li>
+<li>Average the result</li>
+<li>Owen Zhang (long time kaggle 1st): build XGBoosting models with different random seeds.</li>
+<li>More models are better – if they are not correlated.</li>
+<li>Also works with neural networks</li>
+<li>You can average any models as long as they provide calibrated ("good") probabilities.</li>
+<li>Scikit-learn: <code>VotingClassifier</code> hard and soft voting</li>
+
+</ul>
+<aside class="notes">
+<p>
+Just build same model multiple times with multiple random seeds, and
+average the results.  Not used as much in practice &#x2014; gives a few
+extra points of accuracy, but can take a while and makes it very hard
+to interpret.
+soft: average probs, do argmax
+Hard: take the thing most commonly predicted
+</p>
+
+</aside>
+</section>
+<section id="slide-orga1f523f">
+<h3 id="orga1f523f">VotingClassifier</h3>
+<div class="org-src-container">
+
+<pre  id="smallcode" ><code class="python" >voting = VotingClassifier(
+    [('logreg', LogisticRegression(C=100)),
+     ('tree', DecisionTreeClassifier(max_depth=3, random_state=0))],
+    voting='soft')
+voting.fit(X_train, y_train)
+lr, tree = voting.estimators_
+voting.score(X_test, y_test), lr.score(X_test, y_test), \
+    tree.score(X_test, y_test)
+</code></pre>
+</div>
+
+<div id="org2621ac8" class="figure">
+<p><img src="./assets/voting_classifier.png" alt="voting_classifier.png" height="300px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Left: logreg, middle: single tree, right: voting using both
+</p>
+
+<p>
+If they overfit in the same way, you're not getting rid of the overfitting
+</p>
+
+<p>
+So you want to make sure they're different
+</p>
+
+</aside>
+</section>
+<section id="slide-org2ad20e4">
+<h3 id="org2ad20e4">Bagging (Bootstrap Aggregation)</h3>
+<div class="column" style="float:left; width: 50%">
+<ul>
+<li>Generic way to build “slightly different” models</li>
+<li><code>BaggingClassifier, BaggingRegressor</code></li>
+
+</ul>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div id="orgd45f21a" class="figure">
+<p><img src="./assets/tree_datasplit.png" alt="tree_datasplit.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Want to build similar models but ensure they are different (more than just random seed)</li>
+<li>Draw bootstrap samples from dataset (sample with replacement)</li>
+<li>Bootstrap AGgregation</li>
+<li>(as many as there are in the dataset, with repetition)</li>
+<li>Some data is left out, some is duplicated == slightly different dataset</li>
+<li>Then average models, might not overfit as much</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org4f69f40">
+<h3 id="org4f69f40">Bias and Variance</h3>
+
+<div id="orgeb4478b" class="figure">
+<p><img src="./assets/bias-variance.png" alt="bias-variance.png" height="400px" />
+</p>
+</div>
+
+<p>
+<a href="http://scott.fortmann-roe.com/docs/BiasVariance.html">http://scott.fortmann-roe.com/docs/BiasVariance.html</a>
+</p>
+<aside class="notes">
+<p>
+Often talked about in bagging context. Bagging takes multiple high
+variance models and can reduce them. If predictions are not
+correlated, there's a proof that we get a low variance
+estimator. Related to bias and variance of models, but not quite the
+same (those are about how the model error changes wrt the dataset,
+these are about predictions wrt data points)
+</p>
+
+<ul>
+<li>high bias, low variance: very consistent predictions, but off (low variance linear model, underfitting)</li>
+<li>low bias, low variance: captures the data very well, low variance in predictions</li>
+<li>high variance, low bias: predictions good on average, but high variance</li>
+<li>high variance, high bias: well just bad overall</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org70ab5ee">
+<h3 id="org70ab5ee">Bias and Variance in Ensembles</h3>
+<ul>
+<li>Breiman showed that generalization depends on strength of the
+individual classifiers and (inversely) on their correlation</li>
+<li>Uncorrelating them might help, even at the expense of strength</li>
+
+</ul>
+<aside class="notes">
+<p>
+Sometimes do even more randomization, even if it makes prediction
+worse! Helps if you have a lot of models. Hence random forests.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgf388877">
+<h2 id="orgf388877">Random Forests</h2>
+<div class="outline-text-2" id="text-orgf388877">
+</div>
+</section>
+<section id="slide-org7e26c2c">
+<h3 id="org7e26c2c">Forests</h3>
+<ul>
+<li>Build different trees</li>
+<li>Average their results (or vote)</li>
+
+</ul>
+</section>
+<section id="slide-orgb0ae1d0">
+<h3 id="orgb0ae1d0">Random Forests</h3>
+
+<div id="orgbac0df0" class="figure">
+<p><img src="./assets/forest01.png" alt="forest01.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Individually not very good, but work well together.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org996068b">
+<h3 id="org996068b">Tree Randomization</h3>
+<div class="column" style="float:left; width: 50%">
+<ul>
+<li>For each tree:
+<ul>
+<li>Pick bootstrap sample of data</li>
+
+</ul></li>
+
+<li>For each split:
+<ul>
+<li>Pick random sample of features</li>
+
+</ul></li>
+<li>More trees are always better</li>
+
+</ul>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div id="org6757b93" class="figure">
+<p><img src="./assets/tree_datasplit.png" alt="tree_datasplit.png" />
+</p>
+</div>
+
+
+<div id="orgb0f6926" class="figure">
+<p><img src="./assets/tree_featuresplit.png" alt="tree_featuresplit.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<p>
+bootstrap agg: sampling with replacement
+</p>
+
+</aside>
+</section>
+<section id="slide-org1a1fec7">
+<h3 id="org1a1fec7">Tuning Random Forests</h3>
+<ul>
+<li>Main hyperparameter: max_features
+<ul>
+<li>around sqrt(n_features) for classification</li>
+<li>Around n_features for regression</li>
+
+</ul></li>
+<li>n_estimators &gt; 100</li>
+<li>Prepruning might help, definitely helps with model size!</li>
+<li>max_depth, max_leaf_nodes, min_samples_split again</li>
+
+</ul>
+<aside class="notes">
+<p>
+Num features to look at for each split. Controls variance.  
+</p>
+
+<p>
+Q: Which (high,low) would lead to higher variance? A: Lower values ==
+higher variance.
+</p>
+
+<p>
+sklearn default num trees (estimators) is 100, which is ok; used to be
+only 10, which is way too low.
+</p>
+
+<p>
+Generally prepruning won't help accuracy as much as
+num trees, though it makes your models smaller so decreases RAM and
+prediction time.
+</p>
+
+</aside>
+</section>
+<section id="slide-org5acb3e8">
+<h3 id="org5acb3e8">Extremely Randomized Trees</h3>
+<ul>
+<li>More randomness!</li>
+<li>Randomly draw threshold for each feature</li>
+<li>Doesn’t use bootstrap</li>
+<li>Faster because no sorting / searching</li>
+<li>Can have smoother boundaries</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>For each feature, randomly pick a threshold. Then choose the best
+among all those thresholded features.</li>
+
+</ul>
+
+<p>
+Even more random! Probably creates deeper trees since you can't really
+make good decisions. Not as commonly used as regular random trees.
+Like random forests, might not be best model, but they don't require
+processing and they tend to just <b>work</b>.
+</p>
+
+</aside>
+</section>
+<section id="slide-org0f68043">
+<h3 id="org0f68043">Warm-Starts</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >train_scores = []
+test_scores = []
+
+rf = RandomForestClassifier(warm_start=True)
+estimator_range = range(1, 100, 5)
+for n_estimators in estimator_range:
+    rf.n_estimators = n_estimators
+    rf.fit(X_train, y_train)
+    train_scores.append(rf.score(X_train, y_train))
+    test_scores.append(rf.score(X_test, y_test))
+</code></pre>
+</div>
+
+<div id="org4649fc8" class="figure">
+<p><img src="./assets/forest_warmstart.png" alt="forest_warmstart.png" height="275px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Don't grid search num trees b/c higher is better. But eventually you
+reach a point where it's not helping that much.  So "warm-start" grid
+search: keep adding more and more trees until you don't increase
+performance very much.
+</p>
+
+<p>
+RFC will keep those old trees around so you don't retrain them.
+</p>
+
+<p>
+Or just pick a high number&#x2026;downside: wasting time/space.
+</p>
+
+</aside>
+</section>
+<section id="slide-orga246bf8">
+<h3 id="orga246bf8">Out-of-bag estimates</h3>
+<ul>
+<li>Each tree only uses ~66% of data</li>
+<li>Can evaluate it on the rest!</li>
+<li>Make predictions for out-of-bag, average, score.</li>
+<li>Each prediction is an average over different subset of trees</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  id="smallcode" ><code class="python" >train_scores, test_scores, oob_scores = [], [], []
+
+feature_range = range(1, 64, 5)
+for max_features in feature_range:
+    rf = RandomForestClassifier(max_features=max_features, oob_score=True,
+                                n_estimators=200, random_state=0)
+    rf.fit(X_train, y_train)
+    train_scores.append(rf.score(X_train, y_train))
+    test_scores.append(rf.score(X_test, y_test))
+    oob_scores.append(rf.oob_score_)
+</code></pre>
+</div>
+<aside class="notes">
+<p>
+We drew with replacements, so we have some data we didn't select. That
+makes a great test set <b>for that particular tree</b>. So for each tree
+predict on the points that were out-of-bag. Then for each data point,
+look at all trees that held out that data point, let them vote.
+</p>
+
+<p>
+So only a subset of trees are used for each data point, but if you
+have enough trees it will be fine.
+</p>
+
+<p>
+Can use oob estimate instead of explicit test set.
+</p>
+
+</aside>
+</section>
+<section id="slide-org9b97599">
+<h3 id="org9b97599"></h3>
+
+<div id="org04f3109" class="figure">
+<p><img src="./assets/tree_oob.png" alt="tree_oob.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+train: overfit. oob and test at the same magnitude, slightly worse. But it comes for free. Theoretically it's an unbiased estimate.
+</p>
+
+</aside>
+</section>
+<section id="slide-org16d9625">
+<h3 id="org16d9625">Variable Importance</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >X_train, X_test, y_train, y_test = \
+    train_test_split(iris.data, iris.target,
+                     stratify=iris.target, random_state=1)
+rf = RandomForestClassifier(n_estimators=100).fit(X_train, y_train)
+rf.feature_importances_
+plt.barh(range(4), rf.feature_importances_)
+plt.yticks(range(4), iris.feature_names);
+# array([ 0.126,  0.033,  0.445,  0.396])
+</code></pre>
+</div>
+
+<div id="org8987e81" class="figure">
+<p><img src="./assets/tree_feat_importance.png" alt="tree_feat_importance.png" height="300px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+More robust feature importances than for a single tree. If you have
+two correlated features, as an average of all trees, they are likely
+to have similar importance, unlike a similar. So "smoother" estimates.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org1f7c95b">
+<h2 id="org1f7c95b">More ensembles: Stacking</h2>
+<aside class="notes">
+<p>
+Different way to put multiple models together. Stacking tries to go a bit beyond bagging.
+</p>
+
+</aside>
+</section>
+<section id="slide-org36378c5">
+<h3 id="org36378c5">Averaging</h3>
+<div class="org-src-container">
+
+<pre  id="smallcode" ><code class="python" >from sklearn.neighbors import KNeighborsClassifier
+
+X, y = make_moons(noise=.4, random_state=16, n_samples=300)
+X_train, X_test, y_train, y_test = \
+    train_test_split(X, y, stratify=y, random_state=0)
+voting = VotingClassifier(
+   [('logreg', LogisticRegression(C=100)),
+    ('tree', DecisionTreeClassifier(max_depth=3)),
+    ('knn', KNeighborsClassifier(n_neighbors=3))],
+    voting='soft')
+voting.fit(X_train, y_train)
+lr, tree, knn = voting.estimators_
+</code></pre>
+</div>
+
+<div id="orgd3a6504" class="figure">
+<p><img src="./assets/average_voting.png" alt="average_voting.png" height="200px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Two class dataset, trained logreg, decision tree, kNN, takes average
+as prediction. But we could instead take a weighted average, based on our confidence of each model&#x2026;or&#x2026;
+</p>
+
+</aside>
+</section>
+<section id="slide-orgdaa01cc">
+<h3 id="orgdaa01cc">Simplified Stacking</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >stacking = make_pipeline(voting, LogisticRegression(C=100))
+stacking.fit(X_train, y_train)
+stacking.named_steps.logisticregression.coef_
+</code></pre>
+</div>
+<div class="column" style="float:left; width: 75%">
+
+<div id="orgcc83c54" class="figure">
+<p><img src="./assets/average_voting.png" alt="average_voting.png" height="200px" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 25%">
+
+<div id="orge9cbc8b" class="figure">
+<p><img src="./assets/simple_stacking_result.png" alt="simple_stacking_result.png" height="200px" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<p>
+Take as input the probability estimates from all your models. THEN
+train logistic regression on these estimates, trying to predict the
+class.
+</p>
+
+<p>
+The voting classifier here is just a transformer: transforms into the
+probabilities given by the models inside it.
+</p>
+
+<p>
+But instead of logreg you could use any model you want!
+</p>
+
+</aside>
+</section>
+<section id="slide-orgd3d7e2e">
+<h3 id="orgd3d7e2e">Problem: Overfitting!</h3>
+<ul>
+<li>Train first stage on training data</li>
+<li>Second stage trains on probability estimates from training data</li>
+<li>First stage overfitting -&gt; most informative</li>
+<li>Second stage will "trust" model that overfits the most</li>
+
+</ul>
+<aside class="notes">
+<p>
+
+</p>
+
+</aside>
+</section>
+<section id="slide-org7f0552d">
+<h3 id="org7f0552d">Stacking</h3>
+<ul>
+<li>Use validation set to produce prob. estimates</li>
+<li>Train second step estimator on held-out estimates</li>
+<li>No overfitting of second step!</li>
+<li>For testing: as usual</li>
+
+</ul>
+<aside class="notes">
+<p>
+Use a hold out set. This way you're not overfitting as much.
+</p>
+
+<p>
+Or use cross validation&#x2026;so that you have more data to train with
+</p>
+
+</aside>
+</section>
+<section id="slide-org23ca2e4">
+<h3 id="org23ca2e4">Hold-out estimates of Probabilities</h3>
+
+<div id="orgefbf295" class="figure">
+<p><img src="./assets/holdout_estimate.png" alt="holdout_estimate.png" height="200px" />
+</p>
+</div>
+
+<font size=6>
+<ul>
+<li>Split 1 produces probabilities for Fold 1, split2 for Fold 2 etc.</li>
+<li>Get a probability estimate for each data point!</li>
+<li>Unbiased estimates (like on the test set) for the whole training set!</li>
+<li>Without it: The best estimator is the one that memorized the training set.</li>
+
+</ul>
+</font>
+<aside class="notes">
+<p>
+Notice this is <b>outside</b> of any cross validation you might do for
+tuning (grid search!) That also needs cross validation, but now we
+also need an extra round of it.
+</p>
+
+<p>
+Much more training data for second stage. Takes longer, though.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgcf3e814">
+<h3 id="orgcf3e814"></h3>
+<div class="org-src-container">
+
+<pre  id="smallcode" ><code class="python" >from sklearn.model_selection import cross_val_predict
+# take only probabilities of positive classes for
+# more interpretable coefficients
+first_stage = make_pipeline(voting,
+                            FunctionTransformer(lambda X: X[:, 1::2]))
+transform_cv = cross_val_predict(first_stage, X_train,
+                                 y_train, cv=10, method="transform")
+second_stage = LogisticRegression(C=100).fit(transform_cv, y_train)
+print(second_stage.coef_)
+print(second_stage.score(transform_cv, y_train))
+print(second_stage.score(first_stage.transform(X_test), y_test))
+</code></pre>
+</div>
+
+<div class="column" style="float:left; width: 50%">
+
+<div id="org71f929a" class="figure">
+<p><img src="./assets/simple_stacking_result.png" alt="simple_stacking_result.png" height="300px" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div id="orgb3bbe54" class="figure">
+<p><img src="./assets/stacking_result.png" alt="stacking_result.png" height="300px" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<p>
+There are actually other ways to do this in sklearn. Here I'm
+specifying I want to use the "transform" method of the voting
+classifier. With voting='soft' and flatten_transform=True (the
+default), this gives back n_classifiers * n_classes columns, which is
+why I take every other column from it.
+</p>
+
+<p>
+Use 10-fold CV to always <b>just</b> use transform on the
+held-out set (fold), i.e., just compute probabilities of the voting
+classifier on the hold-out set. So <code>transform_cv</code> is the same size as
+the training data set, so then we can use that to fit LogReg.
+</p>
+
+<p>
+Q: Which model does it trust the most? A: the first, logreg. Now it doesn't trust kNN as much as before.
+</p>
+
+<p>
+The <b>goal</b> of stacking is to blend different models in a smart way,
+making a more expressive model. The next thing seems similar but has a
+different goal.
+</p>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-org569d521">
+<h2 id="org569d521">Boosting (in General)</h2>
+<aside class="notes">
+<p>
+One of the best off-the-shelf methods. Builds off of trees.
+</p>
+
+<p>
+We'll continue on with the techniques of stacking and calibration.
+</p>
+
+<p>
+Gradient boosting is one of the most successfull supervised machine learning methods in practice.
+It's often used in kaggle to win competition, it's used for credit scoring, it's one of the standard tools of the trade.
+It's one of the best of-the-shelf models.
+</p>
+
+<p>
+A standard implementation that people use is XGBoost, but there's also
+an implementation in scikit-learn, and we'll talk about both of
+them. Last time we talked about Random forests, which builds many
+trees independently, each randomized in a different way, and then
+averages their predictions.
+</p>
+
+<p>
+Gradient boosting on the other hand builds trees one by one in a sequential manner, with each tree requiring the results of previous trees.
+Often, Gradient boosting is done with very small trees, or even decision stumps, which is trees of depth one, so a single split.
+</p>
+
+<ul>
+<li>"Meta-algorithm" (similar to bagging) to create strong learners from weak learners.</li>
+<li>Tries to iteratively improve these simple (weak) models</li>
+<li>AdaBoost, GentleBoost, …</li>
+<li>Small  Trees or stumps work best</li>
+<li>Gradient Boosting often the best of the bunch, so we won't talk
+other types of boosting (or using other learners)</li>
+<li>Many specialized algorithms (ranking etc)</li>
+
+</ul>
+
+<p>
+This is an instance of a more general family of models, called boosting models, which all iteratively
+try to improve a model built up from weak learners. Gradient boosting is this particular technique
+where we are trying to fit the residuals, and it's been found to work very well in practice, in particular
+if you're using shallow trees as the weak learners.
+In principle, you could use any model as a weak learner, but trees just work really well.
+</p>
+
+<p>
+Takeaway: boosting takes weak learners and makes them better; bagging reduces overfitting.
+</p>
+
+</aside>
+</section>
+<section id="slide-org903e21c">
+<h3 id="org903e21c">Gradient Boosting Algorithm</h3>
+<p>
+\[ f_{1}(x) \approx y  \]
+\[ f_{2}(x) \approx y - f_{1}(x) \]
+\[ f_{3}(x) \approx y - f_{1}(x) - f_{2}(x)\]
+</p>
+
+<div class="smallimgs">
+<p>
+\(y \approx\) <img src="./assets/grad_boost_term_1.png" alt="grad_boost_term_1.png" /> +  <img src="./assets/grad_boost_term_2.png" alt="grad_boost_term_2.png" /> + <img src="./assets/grad_boost_term_3.png" alt="grad_boost_term_3.png" /> + &#x2026;
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Let's look at the regression case first.</li>
+<li><p>
+We start by building a single tree f1 to try to predict the output
+</p>
+<ol>
+<li>But we strongly restrict f1 (shallow), so it will be rather bad at</li>
+
+</ol>
+<p>
+predicting y.
+</p></li>
+<li>Next, we'll look at the residual of this first model, so y - f1(x).</li>
+<li>We now train a new model f2 to try and predict this residual, in
+other words to correct the mistakes made by f1. Again, this will be
+a very simple model, so it will still not be able to fix all errors.</li>
+<li>Then, we look at the residual of both of the models together, so y -
+f1(x) - f2(x), so the mistakes that could not be fixed by f2, and we
+build f3 to fix that, and so on.</li>
+<li>To make predictions you just add up all the predictions. Note you
+add, not average, like RF. Also in random forests each tree is
+independent.</li>
+<li>This is natural for regression. For classification this is not as clear.</li>
+<li>For binary classification you use log-loss, or rather you apply the
+logistic function to get a binary prediction, for multi-class you
+can use 1 vs rest.</li>
+<li>So we're sequentially building up a model using what's called "weak
+learners", small trees, and create a more powerful composite model.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org19138c8">
+<h3 id="org19138c8">Learning Rate</h3>
+<font size=6>
+<p>
+\(f_{1}(x) \approx y\)
+</p>
+
+<p>
+\(f_{2}(x) \approx y - \alpha f_{1}(x)\)
+</p>
+
+<p>
+\(f_{3}(x) \approx y - \alpha f_{1}(x) - \alpha f_{2}(x)\)
+</p>
+</font>
+
+<div class="smallimgs">
+<p>
+\(y \approx \alpha\) <img src="./assets/grad_boost_term_1.png" alt="grad_boost_term_1.png" /> + \(\alpha\) <img src="./assets/grad_boost_term_2.png" alt="grad_boost_term_2.png" /> + \(\alpha\) <img src="./assets/grad_boost_term_3.png" alt="grad_boost_term_3.png" /> + &#x2026;
+</p>
+</div>
+
+<p>
+Learning rate \(\alpha, i.e. 0.1\)
+</p>
+<aside class="notes">
+<ul>
+<li>Q: If I didn't restrict my tree at all and set \(\alpha=1\), what would \(y-f_{1}(x)\) be? A: 0!</li>
+<li>Discount update by learning rate, kind of like saying you don't trust it fully.</li>
+<li>Only taking a small step in the direction of \(f_i\)</li>
+<li>Kind of like gradient descent if you squint (really hard)</li>
+<li>Each tree can only take a small step, so smaller learning rates =
+you need more trees</li>
+<li>In gradient boosting, adding more trees increases chance of
+overfitting, so isn't as good as adding trees in RF.</li>
+<li>Use log loss for classification</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgd94325a">
+<h3 id="orgd94325a">GradientBoostingRegressor</h3>
+
+<div id="orgcc90f18" class="figure">
+<p><img src="./assets/grad_boost_regression_steps.png" alt="grad_boost_regression_steps.png" height="500px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+First fit shallow tree to data. Right side is squished by alpha.  Now
+below on the left the dots move, they are the residuals. Then fit a
+tree again, and again look at predictions squished by alpha. And so on.
+</p>
+
+</aside>
+</section>
+<section id="slide-org39d7d0d">
+<h3 id="org39d7d0d">GradientBoostingClassifier</h3>
+
+<div id="orga82be13" class="figure">
+<p><img src="./assets/grad_boost_depth2.png" alt="grad_boost_depth2.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Basically applying log loss, trying to find regression function that
+has smallest log loss, but f is the decision function.
+</p>
+
+<p>
+White means a tie, probability 0.5.
+</p>
+
+</aside>
+</section>
+<section id="slide-orga678e8c">
+<h3 id="orga678e8c">Gradient Boosting Advantages</h3>
+<ul>
+<li>Slower to train than RF (serial), but much faster to predict</li>
+<li>Small model size</li>
+<li>Typically more accurate than Random Forests</li>
+
+</ul>
+</section>
+<section id="slide-orgd0ad9be">
+<h3 id="orgd0ad9be">Tuning Gradient Boosting</h3>
+<ul>
+<li>Pick n_estimators, tune learning rate</li>
+<li>Can also tune max_features</li>
+<li>Typically strong pruning via max_depth</li>
+
+</ul>
+<aside class="notes">
+<p>
+Commonly people will just pick n_estimators that you have time to
+train for. Maybe tune learning rate over that, but you can also tune
+max_features, or use subsampling.
+</p>
+
+<p>
+Often depth much smaller than RF, which means less memory and faster prediction
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org0c7e91e">
+<h2 id="org0c7e91e">Analyzing Gradient Boosting</h2>
+<div class="outline-text-2" id="text-org0c7e91e">
+</div>
+</section>
+<section id="slide-org5a5d8b1">
+<h3 id="org5a5d8b1">Partial Dependence Plots</h3>
+<ul>
+<li>Marginal dependence of prediction on one or two features</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  id="smallcode" ><code class="python" >from sklearn.ensemble.partial_dependence import plot_partial_dependence
+boston = load_boston()
+X_train, X_test, y_train, y_test = \
+    train_test_split(boston.data, boston.target,
+                     random_state=0)
+
+gbrt = GradientBoostingRegressor().fit(X_train, y_train)
+
+fig, axs = \
+    plot_partial_dependence(gbrt, X_train,
+                            np.argsort(gbrt.feature_importances_)[-6:],
+                            feature_names=boston.feature_names, n_jobs=3,
+                            grid_resolution=50)
+</code></pre>
+</div>
+
+<aside class="notes">
+<p>
+In sklearn right now only for gradient boosting, not all trees.
+</p>
+
+<p>
+Idea: see not just which params are important, but how they influence the target.
+</p>
+
+<p>
+This takes 6 most important features.
+</p>
+
+</aside>
+</section>
+<section id="slide-org8106e43">
+<h3 id="org8106e43">Partial Dependence Plots</h3>
+
+<div id="orgc5a4fe7" class="figure">
+<p><img src="./assets/feat_impo_part_dep.png" alt="feat_impo_part_dep.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>The marginal contribution of each feature.</li>
+<li>Basically how does the target change based on the feature.</li>
+<li>RM is most important, goes left.</li>
+<li>Look at only the contribution of this particular feature.</li>
+<li>For most models this is hard to compute, but can do efficiently for trees.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org615db7b">
+<h3 id="org615db7b">Bivariate Partial Dependence Plots</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >plot_partial_dependence(
+    gbrt, X_train, [np.argsort(gbrt.feature_importances_)[-2:]],
+    feature_names=boston.feature_names,
+    n_jobs=3, grid_resolution=50)
+</code></pre>
+</div>
+
+<div id="org347bc71" class="figure">
+<p><img src="./assets/feature_importance.png" alt="feature_importance.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Can also look at interactions between features. Looks like nothing too strong here.
+</p>
+
+<p>
+It's kind of hard to tell. If you take the two feature plots before
+and do the "outer" product, this is basically what you expect. A rule
+of thumb is that it's all basically going in the same direction. (?)
+</p>
+
+</aside>
+</section>
+<section id="slide-orgec75a86">
+<h3 id="orgec75a86">Partial Dependence for Classification</h3>
+<div class="org-src-container">
+
+<pre  id="tinycode" ><code class="python" >from sklearn.ensemble.partial_dependence import plot_partial_dependence
+for i in range(3):
+    fig, axs = \
+        plot_partial_dependence(gbrt, X_train, range(4), n_cols=4,
+                                feature_names=iris.feature_names,
+                                grid_resolution=50, label=i)
+</code></pre>
+</div>
+
+<div id="org6ac6967" class="figure">
+<p><img src="./assets/feat_impo_part_dep_class.png" alt="feat_impo_part_dep_class.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Same for classification. Note we have a classifier for each class b/c we're using OVR.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgf7396bf">
+<h2 id="orgf7396bf">Practical details</h2>
+<div class="outline-text-2" id="text-orgf7396bf">
+</div>
+</section>
+<section id="slide-org2eef747">
+<h3 id="org2eef747">XGBoost</h3>
+<p>
+pip install xgboost
+</p>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from xgboost import XGBClassifier
+xgb = XGBClassifier()
+xgb.fit(X_train, y_train)
+xgb.score(X_test, y_test)
+</code></pre>
+</div>
+<ul>
+<li>supports missing values</li>
+<li>supports multi-core and GPU (sklearn does not)</li>
+<li>Monotonicity constraints</li>
+<li>Supports sparse data</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>Efficient implementation of gradient boosting (5x sklearn)</li>
+<li>Improvements on original algorithm</li>
+<li>Adds l1 and l2 penalty on leaf-weights</li>
+<li>Fast approximate split finding</li>
+<li>Scikit-learn compatible interface</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orga9a7c2b">
+<h3 id="orga9a7c2b"></h3>
+
+<div id="orgdbf650a" class="figure">
+<p><img src="./assets/xgboost_sklearn_bench.png" alt="xgboost_sklearn_bench.png" height="350px" />
+</p>
+</div>
+
+<ul>
+<li>Exact splits ~5x faster on single core</li>
+<li>Approximate splits (bin the features, don't sort them), multi-core \(\to\) more speed!</li>
+<li>Also check lightGBM (even faster?)</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>Better benchmarks available online</li>
+<li>x axis is number of samples</li>
+<li>y axis is time</li>
+<li>lightGBM is from Microsoft</li>
+<li>Both have GPU support</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org443363c">
+<h3 id="org443363c"><code>LightGBM</code></h3>
+<p>
+pip install lightgbm
+</p>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from lightgbm.sklearn import LGBMClassifier
+lgbm = LGBMClassifier()
+lgbm.fit(X_train, y_train)
+lgbm.score(X_test, y_test)
+</code></pre>
+</div>
+<ul>
+<li>supports missing values</li>
+<li>native support for categorical variables</li>
+<li>multicore + GPU training</li>
+<li>montonicity contraints</li>
+<li>sparse data</li>
+
+</ul>
+</section>
+<section id="slide-org6381db0">
+<h3 id="org6381db0"><code>CatBoost</code></h3>
+<p>
+pip install catboost
+</p>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from catboost.sklearn import CatBoostClassifier
+catb = CatBoostClassifier()
+catb.fit(X_train, y_train)
+catb.score(X_test, y_test)
+</code></pre>
+</div>
+<font size=6>
+<ul>
+<li>optimized for categorical variables</li>
+<li>uses one feature / threshold for all splits on a given level aka symmetric trees</li>
+<li>Symmetric trees are "different" but can be much faster</li>
+<li>supports missing value</li>
+<li>GPU training</li>
+<li>monotonicity constraints</li>
+<li>uses bagged and smoothed version of target encoding for categorical variables</li>
+<li>lots of tooling</li>
+
+</ul>
+</font>
+</section>
+<section id="slide-org4338245">
+<h3 id="org4338245">Newer <code>sklearn</code> Estimator</h3>
+<div class="column" style="float:left; width: 35%">
+<font size=6>
+<p>
+<code>GradientBoostingClassifier</code>
+</p>
+
+<ul>
+<li>no feature 'binning'</li>
+<li>single core</li>
+<li>sparse data support</li>
+
+</ul>
+</font>
+</div>
+<div class="column" style="float:left; width: 65%">
+<font size=6>
+<p>
+<code>HistGradientBoostingClassifier</code>
+</p>
+
+<ul>
+<li>binning (makes training faster for \(m=10,000+\))</li>
+<li>multicore</li>
+<li>no sparse data support</li>
+<li>missing value support (!)</li>
+<li>monotonicity constraint support (!)</li>
+<li>native categorical variables (must have numeric labels)</li>
+
+</ul>
+</font>
+
+</div>
+
+</section>
+<section id="slide-orgcf121cb">
+<h3 id="orgcf121cb">Early stopping</h3>
+<ul>
+<li>Adding trees can lead to overfitting</li>
+<li>Stop adding trees when validation accuracy stops increasing</li>
+<li>Optional in XGBoost and sklearn \(\ge\) 0.20</li>
+
+</ul>
+<aside class="notes">
+<p>
+Idea: pick large # estimators, once validation accuracy stops improving, stop.
+Needs a validation set, so you have less data for training. Must still have a test set, though&#x2026;
+</p>
+
+</aside>
+</section>
+<section id="slide-orgbdb3d7b">
+<h3 id="orgbdb3d7b">When to use tree-based models</h3>
+<ul>
+<li>Model non-linear relationships</li>
+<li>Doesn’t care about scaling, no need for feature engineering</li>
+<li>Single tree: very interpretable (if small)</li>
+<li>Random forests: very robust, good benchmark</li>
+<li>Gradient boosting often best performance with careful tuning</li>
+
+</ul>
+<aside class="notes">
+<p>
+Summary. Great for lots of weird features.
+</p>
+
+<p>
+Very high dimensional, sparse data: probably not trees
+</p>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-org618f4cc">
+<h2 id="org618f4cc">Dynamic Ensemble Selection</h2>
+<div class="outline-text-2" id="text-org618f4cc">
+</div>
+</section>
+<section id="slide-org5fc1248">
+<h3 id="org5fc1248">Motivation</h3>
+<ul>
+<li>letting <b>all</b> classifiers vote is dumb</li>
+<li>Some classifiers good at some kinds of points, bad at others</li>
+<li>(just like humans)</li>
+<li>Idea: learn which classifiers are good for which "regions"</li>
+
+</ul>
+</section>
+<section id="slide-org52e3308">
+<h3 id="org52e3308"><code>DESlib</code> Quick Example</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from deslib.des.knora_e import KNORAE
+# 'pool' of 10 classifiers
+pool_classifiers = RandomForestClassifier(n_estimators=10)
+pool_classifiers.fit(X_train, y_train)
+knorae = KNORAE(pool_classifiers) # init DES model
+knorae.fit(X_dsel, y_dsel) # preprocess to find good 'regions'
+knorae.predict(X_test) # predict
+</code></pre>
+</div>
+<aside class="notes">
+<p>
+which dynamically select which classifier (or SET of classifiers) to
+use for a prediction
+</p>
+
+</aside>
+</section>
+</section>
+</div>
+</div>
+<script src="./revealjs/dist/reveal.js"></script>
+<script src="./revealjs/plugin/highlight/highlight.js"></script>
+<script src="./revealjs/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealHighlight, RevealNotes],
+slideNumber:true, hash:true
+});
+
+</script>
+</body>
+</html>
