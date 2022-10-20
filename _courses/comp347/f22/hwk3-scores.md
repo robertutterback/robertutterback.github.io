@@ -5,6 +5,7 @@ semester: f22
 ---
 
 | Team Name         | Best R^2 |
-|-------------------|----------|
-| Keyboard Warriors | 0.477    |
+|-------------------+----------|
+| Kiddra            |    0.859 |
+| Keyboard Warriors |    0.477 |
 
