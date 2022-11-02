@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="python">
+<head>
+<meta charset="utf-8"/>
+<title>Model Interpretation and Feature Selection</title>
+<meta name="author" content="Robert Utterback (based on slides by Andreas Muller)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./revealjs/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./revealjs/dist/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./notes.css"/>
+<link rel="stylesheet" href="./revealjs/plugin/highlight/zenburn.css"/><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h2>Model Interpretation and Feature Selection</h2><h4>10/28/2022</h4><h5>Robert Utterback (based on slides by Andreas Muller)</h5>
+</section>
+\(
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand{\E}{\mathop{\boldsymbol{E}}}
+\newcommand{\var}{\boldsymbol{Var}}
+\newcommand{\norm}[1]{\lvert\lvert#1\rvert\rvert}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\ltwo}[1]{\norm{#1}_2}
+\newcommand{\lone}[1]{\norm{#1}_1}
+\newcommand{\sgn}[1]{\text{sign}\left( #1 \right)}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\minw}{\min_{\vec{w} \in \mathbb{R}^p, b\in\mathbb{R}}}
+\newcommand{\summ}{\sum_{i=1}^m}
+\newcommand{\sumn}{\sum_{i=1}^n}
+\newcommand{\logloss}{\ln{(\exp{(-y^{(i)}(\vec{w}^T\vec{x}^{(i)}+b))} + 1)}}
+\newcommand{\ai}{\alpha^{(i)}}
+\newcommand{\w}{\vec{w}}
+\newcommand{\wt}{\vec{w}^T}
+\newcommand{\xi}{\vec{x}^{(i)}}
+\newcommand{\xit}{(\vec{x}^{(i)})^T}
+\newcommand{\xip}{\xit \vec{w}}
+\newcommand{\tip}{(\phi(\xi)^T \phi(\vec{x}))}
+\)
+
+<section>
+<section id="slide-orge1335bb">
+<h2 id="orge1335bb">Model Interpretation (post-hoc?)</h2>
+<div class="outline-text-2" id="text-orge1335bb">
+</div>
+</section>
+<section id="slide-org70ecdaf">
+<h3 id="org70ecdaf">NOT causal inference</h3>
+<ul>
+<li>Does x cause y?</li>
+<li>That's NOT what model interpretation is giving us!</li>
+<li>Don't want to get too into 'causal inference', but just be careful</li>
+<li>Can still inform how to better model the data or do better exploration</li>
+
+</ul>
+<aside class="notes">
+<p>
+Possibly useful for feature selection, feature engineering, model
+debugging, explaining predictions.
+</p>
+
+<p>
+Alternative: use a model that is easy to interpret.
+</p>
+
+<p>
+Alt: Derive a simpler explainable model from a non-explainable one (model compression)
+</p>
+
+<p>
+BUT: if your model is bad, it doesn't make sense to try and interpret it!
+</p>
+
+</aside>
+</section>
+<section id="slide-orga34216e">
+<h3 id="orga34216e">Types of explanations</h3>
+<p>
+Explain model globally
+</p>
+<ul>
+<li>How does the output depend on the input?
+Often: some form of 'marginals'</li>
+
+</ul>
+<p>
+Explain model locally
+</p>
+<ul>
+<li>Why does it classify this point this way?</li>
+<li>Explanation could look like a 'global' one but be different for each point</li>
+<li>"What is the minimum change to classify it differently?"</li>
+
+</ul>
+<aside class="notes">
+<p>
+Marginals: how does the prediction change as a function of a particular feature?
+</p>
+
+</aside>
+</section>
+<section id="slide-org0482fa6">
+<h3 id="org0482fa6">Explaining the model \(\ne\) explaining the data</h3>
+<ul>
+<li>model inspection only tells you about the model</li>
+<li>the model might not accurately reflect the data</li>
+
+</ul>
+</section>
+<section id="slide-org75e3e7c">
+<h3 id="org75e3e7c">"Features important to the model"?</h3>
+<p>
+Naive:
+</p>
+<ul>
+<li><code>coef_</code> for linear models</li>
+<li><code>feature_importances_</code> for tree-based models</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li><code>feature_importances_</code> kind of unfair since it comes from the training data!</li>
+<li>(why not compute it with the test set?)</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgf3fe11f">
+<h3 id="orgf3fe11f">Linear Model coefficients</h3>
+<ul>
+<li>Relative importance only meaningful after scaling</li>
+<li>Correlation among features might make coefficients completely uninterpretable</li>
+<li>L1 regularization will pick one at random from a correlated group</li>
+<li>Any penalty will invalidate usual interpretation of linear coefficients</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>With regularization, the magnitude and sign of the coefficients
+might still tell you something, but it doesn't have the same
+interpretation as unregularized</li>
+<li>Still tells you about the <b>model</b>, just not as much about the <b>data</b> (not as statistically valid)</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org37607dd">
+<h3 id="org37607dd">Drop Feature Importance</h3>
+<p>
+\[ I^{drop}_i = Acc(f,X,y) - Acc(f',X_{-i},y) \]
+</p>
+<div class="org-src-container">
+
+<pre  id="tinycode" ><code class="python" >def drop_feature_importance(est, X, y):
+    base_score = np.mean(cross_val_score(est, X, y))
+    scores = []
+    for feature in range(X.shape[1]):
+        mask = np.ones(X.shape[1], 'bool')
+        mask[feature] = False
+        X_new = X[:, mask]
+        this_score = np.mean(cross_val_score(est, X_new, y))
+        scores.append(base_score - this_score)
+    return np.array(scores)
+</code></pre>
+</div>
+<ul>
+<li>Doesn't really explain model (refits for each features</li>
+<li>Can't deal with correlated features well</li>
+<li>Very slow</li>
+<li>Can be used for feature selection</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>With correlated features, could find that both are not important,
+even though you had a model which was very successful and originally
+(with both features) used only one feature</li>
+
+</ul>
+
+<p>
+On its own not very useful, we'll see it later rebuilds many models,
+not explaining this particular model.
+</p>
+
+</aside>
+</section>
+<section id="slide-org3438466">
+<h3 id="org3438466">Permutation Importance</h3>
+<p>
+Idea: measure marginal influence of one feature
+\[ I^{perm}_i = Acc(f,X,y) - E_{x_i}[Acc(f(x_i,X_{-i}),y)] \]
+</p>
+<div class="org-src-container">
+
+<pre   ><code class="python" >def permutation_importance(est, X, y, n_repeat=100):
+  baseline_score = estimator.score(X, y)
+  for f_idx in range(X.shape[1]):
+      for repeat in range(n_repeat):
+          X_new = X.copy()
+          X_new[:, f_idx] = np.random.shuffle(X[:, f_idx])
+          feature_score = estimator.score(X_new, y)
+          scores[f_idx, repeat] = baseline_score - feature_score
+</code></pre>
+</div>
+<ul>
+<li>Applied on a validation set given trained estimator.</li>
+<li>Also kind of slow.</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>instead of dropping a feature, replace with an 'uninformative variant'</li>
+<li>Shuffle a particular feature's values</li>
+<li>Same as prediction made if I average over all possible feature
+values, taking expectation over data distribution</li>
+<li>We're NOT refitting the model &#x2013; doing this on a validation set!</li>
+<li>Telling you: how much does this model <b>rely</b> on this particular feature</li>
+<li>Better than, e.g., tree feature importances</li>
+<li><code>from sklearn.inspection import permutation_importance</code></li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgfc1ecd9">
+<h3 id="orgfc1ecd9">LIME</h3>
+<font size=6>
+<ul>
+<li>Build sparse linear local model around each data point</li>
+<li>Explain prediction for each point locally</li>
+<li>Paper: "Why Should I Trust Y ou" explaining the predictions of any classifier</li>
+<li>Implementation: <a href="https://github.com/marcotcr/lime">https://github.com/marcotcr/lime</a></li>
+
+</ul>
+</font>
+
+<div id="org5d0241e" class="figure">
+<p><img src="./assets/lime_paper.png" alt="lime_paper.png" height="300px" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Point is to have local explanations</li>
+<li>Model built complicated decision boundary shown</li>
+<li>Builds a sparse linear model <b>around</b> some given point</li>
+<li>Randomly sample some points, build an L1-regularized model, look at the coefficients (repeat)</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgab41a53">
+<h3 id="orgab41a53">SHAP</h3>
+<ul>
+<li>Build around idea of Shapley values</li>
+<li>Roughly: does drop-out importance for every subset of features</li>
+<li>Intractable, requires sample approximations</li>
+<li>Fast variants for linear and tree-based models</li>
+<li>Cool visualizations and tools: <a href="https://github.com/slundberg/shap">https://github.com/slundberg/shap</a></li>
+<li>Can give local and global explanations</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org66f34e9">
+<h2 id="org66f34e9">Case Study</h2>
+<div class="outline-text-2" id="text-org66f34e9">
+</div>
+</section>
+<section id="slide-org7ac983d">
+<h3 id="org7ac983d">Toy Data</h3>
+<p>
+100,000 points, 8 features
+</p>
+<div class="column" style="float:left; width: 75%">
+
+<div id="orgf657b4f" class="figure">
+<p><img src="./assets/toy_data_scatter.png" alt="toy_data_scatter.png" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 25%">
+
+<div id="org4b75e3f" class="figure">
+<p><img src="./assets/covariance.png" alt="covariance.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Features 0 and 1 are informative but ANTI-correlated</li>
+<li>Features 2 and 3 are informative but anti-correlated</li>
+<li>Features 4-7 are random (nothing to do with target)</li>
+<li>Pretty nasty!</li>
+<li>Can trip up regression models</li>
+<li>Maybe we can remove correlated features first? (We'll look at this in a minute)</li>
+<li>We might expect an L1-penalized model to pick out one of {0,1} and one of {2,3} and do nothing else</li>
+<li>Any other model probably uses all of these (but not 4-7) and ideally
+assigned similar importances to each pair</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgcf39cbc">
+<h3 id="orgcf39cbc">Models on lots of data</h3>
+<div class="org-src-container">
+
+<pre  id="tinycode" ><code class="python" >lasso = LassoCV().fit(X_train, y_train)
+lasso.score(X_test, y_test)
+</code></pre>
+</div>
+
+<font size=6>
+<p>
+0.545
+</p>
+</font>
+
+<div class="org-src-container">
+
+<pre  id="tinycode" ><code class="python" >ridge = RidgeCV().fit(X_train, y_train)
+ridge.score(X_test, y_test)
+</code></pre>
+</div>
+
+<font size=6>
+<p>
+0.545
+</p>
+</font>
+
+<div class="org-src-container">
+
+<pre  id="tinycode" ><code class="python" >lr = LinearRegression().fit(X_train, y_train)
+lr.score(X_test, y_test)
+</code></pre>
+</div>
+
+<font size=6>
+<p>
+0.545
+</p>
+</font>
+
+<div class="org-src-container">
+
+<pre  id="tinycode" ><code class="python" >param_grid = {'max_leaf_nodes': range(5, 40, 5)}
+grid = GridSearchCV(DecisionTreeRegressor(), param_grid, cv=10, n_jobs=3)
+grid.fit(X_train, y_train)
+grid.score(X_test, y_test)
+</code></pre>
+</div>
+
+<font size=6>
+<p>
+0.545
+</p>
+</font>
+
+<div class="org-src-container">
+
+<pre  id="tinycode" ><code class="python" >rf = RandomForestRegressor(min_samples_leaf=5).fit(X_train, y_train)
+rf.score(X_test, y_test)
+</code></pre>
+</div>
+
+<font size=6>
+<p>
+0.542
+</p>
+</font>
+
+
+</section>
+<section id="slide-orgf1a8057">
+<h3 id="orgf1a8057">Coefficients and default feature importance</h3>
+
+<div id="org843766f" class="figure">
+<p><img src="./assets/standard_importances.png" alt="standard_importances.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Lasso makes sense, and so does Ridge</li>
+<li>LR is going crazy (the bars actually go way up)</li>
+<li>But actually the values of 0 and 1 cancel each other out to some degree (correlation!)</li>
+<li>(Maybe easier to see for 2 and 3)</li>
+<li>For trees, importances will always be positive (two different things on the same plot&#x2026;)</li>
+<li>Tree is a little odd - picks 0 over 1, but you'd expect the same</li>
+<li>Lasso (and to some degree tree) selected randomly among correlated</li>
+<li>But a single tree is pretty unstable, so ok</li>
+<li>Random Forest makes more sense b/c it has less variance</li>
+<li>Also RF assigns some importance to useless features, which reflects
+why some people don't like tree-based feature importances</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgab318a3">
+<h3 id="orgab318a3">Permutation Importances</h3>
+
+<div id="org579e426" class="figure">
+<p><img src="./assets/permutation_importance_big.png" alt="permutation_importance_big.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Always positive, more comparable</li>
+<li>Makes more sense</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org62ab889">
+<h3 id="org62ab889">SHAP values</h3>
+
+<div id="org5c4fd8d" class="figure">
+<p><img src="./assets/shap_big.png" alt="shap_big.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Does give directionality (can be negative)</li>
+<li>Don't look too much into this (?)</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org0e51beb">
+<h2 id="org0e51beb">More model inspection</h2>
+<ul>
+<li>Kind of coarse-grained: just tells you how important</li>
+<li>How about telling us exactly how a feature interacts with a given model/prediction</li>
+
+</ul>
+</section>
+<section id="slide-orga681261">
+<h3 id="orga681261">Partial Dependence plots</h3>
+<ul>
+<li>Marginal dependence of prediction on one (or two) features
+\[ f^{pdp}_i(x_i) = E_{X_{-i}}[f(x_i,x_{-i})] \]</li>
+<li>Idea: get marginal predictions given feature</li>
+<li>How? "integrate out" other features using validation data</li>
+<li>Fast methods available for tree-based models (doesn't require validation data)</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>Nonsense for linear models (or just show obvious linearity?)?</li>
+<li>Gives 1D function for each feature</li>
+<li>For each feature <code>i</code>, what is the expected prediction if I average out all the other features</li>
+<li>Example: look at first feature</li>
+<li>It has range 0-10</li>
+<li>First replace with 0, then 1, then 2, etc., averaging results</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org198e2d5">
+<h3 id="org198e2d5">Partial Dependence</h3>
+<div class="org-src-container">
+
+<pre  id="tinycode" ><code class="python" >from sklearn.ensemble.partial_dependence import plot_partial_dependence
+boston = load_boston()
+X_train, X_test, y_train, y_test = \
+    train_test_split(boston.data, boston.target,
+                     random_state=0)
+
+gbrt = GradientBoostingRegressor().fit(X_train, y_train)
+
+fig, axs = \
+    plot_partial_dependence(gbrt, X_train,
+                            np.argsort(gbrt.feature_importances_)[-6:],
+                            feature_names=boston.feature_names, n_jobs=3,
+                            grid_resolution=50)
+</code></pre>
+</div>
+
+
+<div id="org24e45a7" class="figure">
+<p><img src="./assets/feat_impo_part_dep.png" alt="feat_impo_part_dep.png" height="300px" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+But there's also something else that's quite interesting, which is
+called Partial Dependence Plots that's actually possible for all
+trees. Unfortunately, in scikit-learn, it’s available only for the
+gradient boosting. So the idea here is to not only see what parameters
+are important but how will they influence the target. And so after you
+fit your model, I'm using the Boston data set to the gradient boosting
+regressor, there's a thing called plot partial dependence, which gets
+the model and the training data set and then the features for which I
+want to make the partial dependence plots.
+</p>
+
+<ul>
+<li>For trees, don't actually need validation set (but in general you do!)</li>
+<li>Trees actually have a faster way that doesn't require the brute force</li>
+<li>Plots shown backwards (RM is most important)</li>
+<li>This is about what the model learned, not necessarily about the data</li>
+
+</ul>
+
+<p>
+So here, I'm looking at the six most important features. The feature
+importance is important according to the trees. So I sort this and
+take the six most important ones.
+</p>
+
+<p>
+And so this is what the partner dependence plots look like. So this is
+the most important feature, the second most important feature and so
+on. This is sort of the marginal contribution of each
+feature. Basically, in each tree, you're summing out the contribution
+of all the other features, and you look only at what is the
+contribution of this particular feature. In general, this would be
+hard to compute. For tree-based models you can compute is a very
+efficient way because you can basically just sum up over the whole
+space by traversing the tree.
+</p>
+
+<p>
+Here with increased room size, the price increases and you can see how
+it increases and you can see that there's like a big step function
+here. And you can see that for increased LSTAT, the price
+decreases. For the others, there aren’t any drastic effect. There
+seems to be some threshold for NOX. And something funky going on DIS.
+</p>
+
+<p>
+The question is, so I said for random forest, you can't find out the
+direction of which way the feature influences. But that was for the
+eature importance. So the feature importance tells the impurity
+decrease. So here I also look at the feature importance and they're
+just numbers so they don't give you the direction. For both gradient
+boosting and random forest, you can look at partial dependency plot,
+and they will give you a non-parametric model of how a single feature
+influences it. Unfortunately, it’s not available in scikit-learn. You
+could do the same thing for random forests. Because in the end, the
+way they predict is quite similar.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgcefff1b">
+<h3 id="orgcefff1b">Bivariate Partial Dependence Plots</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >plot_partial_dependence(
+    gbrt, X_train, [np.argsort(gbrt.feature_importances_)[-2:]],
+    feature_names=boston.feature_names,
+    n_jobs=3, grid_resolution=50)
+</code></pre>
+</div>
+
+<div id="orgc7db8f0" class="figure">
+<p><img src="./assets/feature_importance.png" alt="feature_importance.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+You can also do this in bivariate. So here, looking at the two most
+important features in a bivariate plot, I'm actually not giving it a
+list of features, but I'm giving it a list of list of features. And so
+the two most important features, LSTAT, and ROOM.
+</p>
+
+<p>
+You can see there’s no very complex interaction. As you can see, the
+effect of these two features taking into account all the other
+features.
+</p>
+
+<p>
+This is something you can usually do for linear model easily. If you
+do this for the linear model, you would have lines everywhere but for
+more complicated models this is very hard to do. Way more tricky to do
+in neural networks.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgc5b57ab">
+<h3 id="orgc5b57ab">Partial Dependence for Classification</h3>
+<div class="org-src-container">
+
+<pre  id="tinycode" ><code class="python" >from sklearn.ensemble.partial_dependence import plot_partial_dependence
+for i in range(3):
+    fig, axs = \
+        plot_partial_dependence(gbrt, X_train, range(4), n_cols=4,
+                                feature_names=iris.feature_names,
+                                grid_resolution=50, label=i)
+</code></pre>
+</div>
+
+<div id="orgf6bb67a" class="figure">
+<p><img src="./assets/feat_impo_part_dep_class.png" alt="feat_impo_part_dep_class.png" height="400px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+We can do the same for classification. Here is a partial dependency
+plot for the iris dataset.
+</p>
+
+<p>
+As I said, for classification we’re usually using One Versus Rest. So
+here, we have three classifiers.
+</p>
+
+<p>
+One classifier for sertosa, one for Versicolor and one for virginica.
+</p>
+
+<p>
+You can see that for the first two features they're like flat. But for
+sertosa the decision function is high for small part petal length,
+medium peddling for versicolor and large for virginca. These are all
+put through logistic function and then normalized.
+</p>
+
+</aside>
+</section>
+<section id="slide-org482dbdd">
+<h3 id="org482dbdd">PDP Caveats</h3>
+<div class="column" style="float:left; width: 50%">
+
+<div id="orgb4aea76" class="figure">
+<p><img src="./assets/pdp_failure.png" alt="pdp_failure.png" />
+</p>
+</div>
+</div>
+<div class="column" style="float:left; width: 50%">
+
+<div id="orgbf9f281" class="figure">
+<p><img src="./assets/pdp_failure_data.png" alt="pdp_failure_data.png" />
+</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Feature doesn't seem important (very small scale)</li>
+<li>But look at data (x-axis feature, y-axis target)</li>
+<li>Clearly two groups, one has positive effect, other negative</li>
+<li>Not shown in partial dependence plot</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgeec7d81">
+<h3 id="orgeec7d81">ICE (individual conditional expectation) plots</h3>
+<ul>
+<li>Like partial dependence plots, without averaging</li>
+
+</ul>
+
+<div id="org58cd624" class="figure">
+<p><img src="./assets/ice_cross.png" alt="ice_cross.png" height="300px" />
+</p>
+</div>
+<ul>
+<li>See <a href="https://scikit-learn.org/stable/modules/partial_dependence.html">https://scikit-learn.org/stable/modules/partial_dependence.html</a></li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>Each line is a data point (row) in the original dataset</li>
+<li>What happens to it if I replace the feature with a different value</li>
+<li>How common is this in the real world? I have no idea!</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org9f0dba9">
+<h2 id="org9f0dba9">(Automatic) Feature Selection</h2>
+<div class="outline-text-2" id="text-org9f0dba9">
+</div>
+</section>
+<section id="slide-orgfc12cf2">
+<h3 id="orgfc12cf2">Why Select Features?</h3>
+<ul>
+<li>Avoid overfitting (?)</li>
+<li>Faster prediction and training</li>
+<li>Less storage for model and dataset</li>
+<li>More interpretable model</li>
+
+</ul>
+<aside class="notes">
+<p>
+Can avoid overfitting, although in practice this doesn't help that
+much (other methods, e.g. penalization) But the others are important,
+especially the last.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgf067afe">
+<h3 id="orgf067afe">Types of Feature Selection</h3>
+<ul>
+<li>Unsupervised vs Supervised</li>
+<li>Univariate vs Multivariate</li>
+<li>Model based or not</li>
+
+</ul>
+<aside class="notes">
+<p>
+Supervised will consider the target.
+Univariate &#x2013; looks at each feature by itself, multivariate looks at interactions.
+Model will build an ML model.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org0c0c47e">
+<h2 id="org0c0c47e">Unsupervised Feature Selection</h2>
+<div class="outline-text-2" id="text-org0c0c47e">
+</div>
+</section>
+<section id="slide-org5592af3">
+<h3 id="org5592af3">Unsupervised Feature Selection</h3>
+<ul>
+<li>May discard important information</li>
+<li>Variance-based: 0 variance or few unique values</li>
+<li>Covariance-based: remove correlated features</li>
+<li>PCA: remove linear subspaces</li>
+
+</ul>
+<aside class="notes">
+<p>
+Small variance? Don't remove! Probably data is just on a small scale.
+</p>
+
+<p>
+Covariance-based: maybe the diff. between two correlated features was
+the only way to distinguish between two classes! In general a problem
+with unsupervised; it's not considering the results, so the
+information you throw away might be the most important!
+</p>
+
+<p>
+PCA derived "linearly independent" features from original
+features. Principal Components Analysis. 
+</p>
+
+</aside>
+</section>
+<section id="slide-orgf286475">
+<h3 id="orgf286475">Covariance</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.preprocessing import scale
+boston = load_boston()
+X, y = boston.data, boston.target
+X_train, X_test, y_train, y_test = \
+    train_test_split(X, y, random_state=0)
+X_train_scaled = scale(X_train)
+cov = np.cov(X_train_scaled, rowvar=False)
+</code></pre>
+</div>
+
+<div id="org71b0d57" class="figure">
+<p><img src="./assets/l18_17.png" alt="l18_17.png" height="350px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Look at which features are most correlated with others, and drop
+those.  Here the lighter values are positively correlated. But this
+plot is hard to read.
+</p>
+
+</aside>
+</section>
+<section id="slide-org0db2560">
+<h3 id="org0db2560"></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from scipy.cluster import hierarchy
+order = np.array(hierarchy.dendrogram(
+    hierarchy.ward(cov),no_plot=True)['ivl'], dtype="int")
+</code></pre>
+</div>
+
+<div id="org01f5384" class="figure">
+<p><img src="./assets/l18_19.png" alt="l18_19.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Here I've reordered columns and rows to create "blocks" that are
+correlated or uncorrelated. Can look at this manually or you can
+create algorithms that look at these values and based on some
+threshold can remove some features.
+</p>
+
+<p>
+Note that that code doesn't create this nice picture. Look at
+matplotlib's <code>pcolor</code>, <code>imshow</code>, or <code>matshow</code>
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org4c5cb6c">
+<h2 id="org4c5cb6c">Supervised Feature Selection</h2>
+<div class="outline-text-2" id="text-org4c5cb6c">
+</div>
+</section>
+<section id="slide-orgce7d390">
+<h3 id="orgce7d390">Univariate Statistics</h3>
+<ul>
+<li>Pick statistic, check p-values !</li>
+<li>f_regression, f_classsif, chi2 in scikit-learn</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.feature_selection import f_regression
+f_values, p_values = f_regression(X, y)
+</code></pre>
+</div>
+
+
+<div id="org4f1e53f" class="figure">
+<p><img src="./assets/l18_20.png" alt="l18_20.png" height="375px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Use a statistical test, look at each feature and see if it's
+significantly related to the target. This is using boston again. Ex:
+rooms and lstat are most important here. CHAS is a binary model and
+this is using a regression model, and linear models aren't very good
+at using binary features (really, this linear test will not put a lot
+of emphasis on a binary feature).
+</p>
+
+<p>
+Assumes it's a linear model!
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb91bdf3">
+<h3 id="orgb91bdf3"></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.feature_selection import \
+    SelectKBest, SelectPercentile, SelectFpr
+from sklearn.linear_model import RidgeCV
+select = SelectKBest(k=2, score_func=f_regression)
+select.fit(X_train, y_train)
+print(X_train.shape)
+print(select.transform(X_train).shape)
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >(379, 13)
+(379, 2)
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >all_features = make_pipeline(StandardScaler(), RidgeCV())
+np.mean(cross_val_score(all_features, X_train, y_train, cv=10))
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >0.718
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >select_2 = make_pipeline(StandardScaler(),
+                         SelectKBest(k=2,
+                                     score_func=f_regression),
+                         RidgeCV())
+np.mean(cross_val_score(select_2, X_train, y_train, cv=10))
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >0.624
+</code></pre>
+</div>
+
+<aside class="notes">
+<p>
+Select k best features, percentile, Fpr controls for false positive
+rate of thinking features are significantly important. Basically does
+the multiple hypothesis testing adjustments to make sure that your
+false discovery rate of thinking the features are important is low.
+</p>
+
+<p>
+Need to set some score function, regression or classification. First
+try selects just 2/13 features.
+</p>
+
+<p>
+Second part is just with standard scaler.
+</p>
+
+<p>
+Third: Fitting a model with only 2 best features. It overselected &#x2013;
+two is not enough features, it got worse.
+</p>
+
+</aside>
+</section>
+<section id="slide-org85fe844">
+<h3 id="org85fe844">Mutual Information</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.feature_selection import mutual_info_regression
+scores = mutual_info_regression(X_train, y_train,
+                                discrete_features=[3])
+</code></pre>
+</div>
+
+
+<div id="orge9cdec1" class="figure">
+<p><img src="./assets/img_22.png" alt="img_22.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+A little more complicated method that uses a non-parametric
+model. Works on discrete and continuous, but must tell it which are
+discrete.
+</p>
+
+<p>
+Plot is comparing mutual info scores vs. F values. Kind of similar but
+there are differences. If you think there are non-linear interactions
+between features, this might catch that, although this takes
+a lot longer to run. Still univariate though.
+</p>
+
+</aside>
+</section>
+<section id="slide-org9fb164c">
+<h3 id="org9fb164c">Model-Based Feature Selection</h3>
+<ul>
+<li>Get best fit for a particular model</li>
+<li>Ideally: exhaustive search over all possible combinations</li>
+<li>Exhaustive is infeasible (and has multiple testing issues)</li>
+<li>Use heuristics in practice.</li>
+
+</ul>
+<aside class="notes">
+<p>
+Find the subset of features on which this model performs best, i.e., a
+search algorithm. Exhaustive search is too long and also might overfit
+(pick up on noise).
+</p>
+
+</aside>
+</section>
+<section id="slide-org63f6d13">
+<h3 id="org63f6d13">Model based (single fit)</h3>
+<font size=6>
+<ul>
+<li>Build a model, select "features important to model"</li>
+<li>Lasso, other linear models, tree-based Models</li>
+<li>Multivariate - linear models assume linear relation</li>
+
+</ul>
+</font>
+
+<div class="org-src-container">
+
+<pre  id="tinycode" ><code class="python" >from sklearn.linear_model import LassoCV
+X_train_scaled = scale(X_train)
+lasso = LassoCV().fit(X_train_scaled, y_train)
+print(lasso.coef_)
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >[-0.881 0.951 -0.082 0.59 -1.69 2.639 -0.146 -2.796 1.695 -1.614 -2.133 0.729 -3.615]
+</code></pre>
+</div>
+
+
+<div id="org5b0de43" class="figure">
+<p><img src="./assets/img_23.png" alt="img_23.png" height="200px" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Fit a model, discard the features it doesn't think are important.
+</p>
+
+</aside>
+</section>
+<section id="slide-org7b444c5">
+<h3 id="org7b444c5">Changing Lasso alpha</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.linear_model import Lasso
+X_train_scaled = scale(X_train)
+lasso = Lasso().fit(X_train_scaled, y_train)
+print(lasso.coef_)
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >[-0. 0. -0. 0. -0. 2.529 -0. -0. -0. -0.228 -1.701 0.132 -3.606]
+</code></pre>
+</div>
+
+
+<div id="orgdb05541" class="figure">
+<p><img src="./assets/l18_24.png" alt="l18_24.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Different results if you have a different alpha. (this one is penalizing more)
+</p>
+
+</aside>
+</section>
+<section id="slide-org6373127">
+<h3 id="org6373127"><code>SelectFromModel</code></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.feature_selection import SelectFromModel
+select_lassocv = SelectFromModel(LassoCV(), threshold=1e-5)
+select_lassocv.fit(X_train, y_train)
+print(select_lassocv.transform(X_train).shape)
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >(379,11)
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >pipe_lassocv = make_pipeline(StandardScaler(),
+                             select_lassocv, RidgeCV())
+np.mean(cross_val_score(pipe_lassocv, X_train, y_train, cv=10))
+np.mean(cross_val_score(all_features, X_train, y_train, cv=10))
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >0.717
+0.718
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  id="smallcode" ><code class="python" ># could grid-search alpha in lasso
+select_lasso = SelectFromModel(Lasso())
+pipe_lasso = make_pipeline(StandardScaler(), select_lasso, RidgeCV())
+np.mean(cross_val_score(pipe_lasso, X_train, y_train, cv=10))
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >0.671
+</code></pre>
+</div>
+
+<aside class="notes">
+<p>
+Takes any model that gives you feature importances, and uses it to do
+feature selection. Notice the threshold value. 
+</p>
+
+<p>
+Can then put this into a pipeline. Performance is about the same actually.
+</p>
+
+</aside>
+</section>
+<section id="slide-org5cd19a6">
+<h3 id="org5cd19a6">Iterative Model-Based Selection</h3>
+<ul>
+<li>Fit model, find least important feature, remove, iterate.</li>
+<li>Or: Start with single feature, find most important feature, add, iterate.</li>
+
+</ul>
+<aside class="notes">
+<p>
+Importance of features might change after we remove a feature! So we
+should do this iteratively! Start with removing features&#x2026;
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb934b78">
+<h3 id="orgb934b78">Recursive Feature Elimination</h3>
+<ul>
+<li>Uses feature importances / coefficients, similar to “SelectFromModel”</li>
+<li>Iteratively removes features (one by one or in groups)</li>
+<li>Runtime: (n_features - n_feature_to_keep) / stepsize</li>
+
+</ul>
+<aside class="notes">
+<p>
+Fit model, discard least important feature(s), repeat until you have
+as many features as you want. Can use any models which give you a
+measure of feature importance. (hard to get with SVMs).
+</p>
+
+<p>
+Expensive b/c we must train a model many times.
+</p>
+
+</aside>
+</section>
+<section id="slide-org5ffc41e">
+<h3 id="org5ffc41e"></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.linear_model import LinearRegression
+from sklearn.feature_selection import RFE
+# create ranking among all features by selecting only one
+rfe = RFE(LinearRegression(), n_features_to_select=1)
+rfe.fit(X_train_scaled, y_train)
+rfe.ranking_
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >array([ 9, 8, 13, 11, 5, 2, 12, 4, 7, 6, 3, 10, 1])
+</code></pre>
+</div>
+
+
+<div id="org49bb3b6" class="figure">
+<p><img src="./assets/img_23.png" alt="img_23.png" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Implemented in sklearn. using LR to decide which features are
+important. Notice using RFE ranking is slightly different than LR by
+itself. The red dots are LR coefficients for one run of the model. But
+RFE is doing this iteratively and then ranking which coefficients are
+important. In this case the difference in not huge, but YMMV.
+</p>
+
+<p>
+This is selecting only one feature at a time, so along the way it's
+training models with n, n-1, n-2, &#x2026;, 5, 4, 3, 2, 1 models. So if you
+wanted to grid search the best number of features to use it would be
+wasting a lot of effort if you passed in RFE to it!
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org34855ee">
+<h3 id="org34855ee">RFECV</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.linear_model import LinearRegression
+from sklearn.feature_selection import RFECV
+rfe = RFECV(LinearRegression(), cv=10)
+rfe.fit(X_train_scaled, y_train)
+print(rfe.support_)
+print(boston.feature_names[rfe.support_])
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >[ True  True False  True  True  True False  True  True  True  True  True True]
+['CRIM' 'ZN' 'CHAS' 'NOX' 'RM' 'DIS' 'RAD' 'TAX' 'PTRATIO' 'B' 'LSTAT']
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >pipe_rfe_ridgecv = make_pipeline(StandardScaler(),
+                                 RFECV(LinearRegression(),
+                                       cv=10),
+                                 RidgeCV())
+np.mean(cross_val_score(pipe_rfe_ridgecv, X_train, y_train, cv=10))
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >0.710
+</code></pre>
+</div>
+
+<aside class="notes">
+<p>
+Efficient CV for n_features_to_keep. This is RFE <b>inside</b>
+cross-validation. Going from all features to just one feature, uses
+crossval to select best num. In this case it only dropped 2 features,
+the eleven it kept are shown.
+</p>
+
+<p>
+If we want to predict with the same model as used for selection, RFECV
+can be used as the prediction step. Could also use RFECV as
+transformer and use any other model!
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb724fbd">
+<h3 id="orgb724fbd"></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >
+pipe_rfe_ridgecv = make_pipeline(StandardScaler(),
+                                 RFECV(LinearRegression(),
+                                       cv=10),
+                                 RidgeCV())
+np.mean(cross_val_score(pipe_rfe_ridgecv, X_train, y_train, cv=10))
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >0.710
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >from sklearn.preprocessing import PolynomialFeatures
+pipe_rfe_ridgecv = make_pipeline(StandardScaler(),
+                                 PolynomialFeatures(),
+                                 RFECV(LinearRegression(),
+                                       cv=10),
+                                 RidgeCV())
+np.mean(cross_val_score(pipe_rfe_ridgecv, X_train, y_train, cv=10))
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >0.820
+</code></pre>
+</div>
+
+<aside class="notes">
+<p>
+If you do feature selection this way, your model for feature selection
+could be different than model for prediction. Just an additional
+degree of freedom. So I might do something very complicated for
+feature selection, but use a more interpretable model for prediction
+so I can explain it to my boss.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgff9d5b8">
+<h3 id="orgff9d5b8">Wrapper methods</h3>
+<ul>
+<li>Can be applied for ANY model!</li>
+<li>Shrink / grow feature set by greedy search</li>
+<li>Called Forward or Backward selection</li>
+<li>Run CV / train-val split per feature</li>
+<li>Complexity: n_features * (n_features + 1) / 2</li>
+<li>Implemented in <code>mlxtend</code></li>
+
+</ul>
+<aside class="notes">
+<p>
+Expensive, but can be applied to any model. Basically just do a greedy
+search over features, either adding most important or removing least
+important feature at each step. 
+</p>
+
+<p>
+Ex: Start with all features. Leave out first feature, build model,
+then do crossval to get an accuracy feature. Do this for <b>each</b>
+feature, leaving it out and building a model. After this, drop the
+feature that gave you the highest accuracy/\(R^2\). Then repeat!
+</p>
+
+<p>
+Each iteration requires training an crossval on many models. VERY slow.
+</p>
+
+<p>
+Not in sklearn, but in <code>mlxtend</code>, but has same interface as sklearn,
+so you can use these in a pipeline.
+</p>
+
+</aside>
+</section>
+<section id="slide-org18021ce">
+<h3 id="org18021ce"><code>SequentialFeatureSelector</code></h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >from mlxtend.feature_selection import \
+    SequentialFeatureSelector
+sfs = SequentialFeatureSelector(LinearRegression(),
+                                forward=False, k_features=7)
+sfs.fit(X_train_scaled, y_train)
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >Features: 7/7
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >print(sfs.k_feature_idx_)
+print(boston.feature_names[np.array(sfs.k_feature_idx_)])
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >(1, 4, 5, 7, 9, 10, 12)
+['ZN' 'NOX' 'RM' 'DIS' 'TAX' 'PTRATIO' 'LSTAT']
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="python" >sfs.k_score_
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="text" >0.725
+</code></pre>
+</div>
+
+<aside class="notes">
+<p>
+Forward: start with 0, add the feature that gives the best 1-feature model, and continue from there.
+Backward: start with all features and remove 1 at a time. <code>k_features</code> is how many to keep.
+</p>
+
+</aside>
+</section>
+</section>
+</div>
+</div>
+<script src="./revealjs/dist/reveal.js"></script>
+<script src="./revealjs/plugin/highlight/highlight.js"></script>
+<script src="./revealjs/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealHighlight, RevealNotes],
+slideNumber:true, hash:true
+});
+
+</script>
+</body>
+</html>
