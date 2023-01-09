@@ -9,6 +9,7 @@ description: Course materials.
 
 * <a href="{{ site.baseurl }}/courses/comp152/s23/">COMP 152: Object-Oriented Data Structures and Algorithms</a>
 * <a href="{{ site.baseurl }}/courses/comp345/s23/">COMP 345: Operating Systems</a>
+* <a href="{{ site.baseurl }}/courses/comp401/s23/">COMP 401: Senior Project Research</a>
 * <a href="{{ site.baseurl }}/courses/comp402/s23/">COMP 402: Senior Project Implementation</a>
 * <a href="{{ site.baseurl }}/courses/data402/s23/">DATA 402: Senior Project Implementation</a>
 
