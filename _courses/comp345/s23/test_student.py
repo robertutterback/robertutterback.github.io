@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 def run(*args):
-  result = subprocess.run(['python3', 'kv.py', *args], stdout=subprocess.PIPE)
+  result = subprocess.run(['./kv', *args], stdout=subprocess.PIPE)
   return result.stdout.decode('utf-8')
 
 class TestKV(unittest.TestCase):
