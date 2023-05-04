@@ -5,6 +5,12 @@ title: Teaching
 description: Course materials.
 ---
 
+### Fall 2023
+
+* <a href="{{ site.baseurl }}/courses/comp151/f23/">COMP 151: Intro to Programming</a>
+* <a href="{{ site.baseurl }}/courses/data151/f23/">DATA 151: Introduction to Data Science</a>
+* <a href="{{ site.baseurl }}/courses/comp401/f23/">COMP 401: Senior Project Research</a>
+
 ### Spring 2023
 
 * <a href="{{ site.baseurl }}/courses/comp152/s23/">COMP 152: Object-Oriented Data Structures and Algorithms</a>
