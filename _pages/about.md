@@ -2,7 +2,7 @@
 layout: about
 permalink: /
 title: <strong>Robert</strong> Utterback
-description: <a href="http://ou.monmouthcollege.edu/academics/computer-science">Department of Mathematics and Computer Science</a> | <a href="http://www.monmouthcollege.edu">Monmouth College</a>
+description: <a href="http://ou.monmouthcollege.edu/academics/computer-science">Department of Mathematics, Statistics, and Computer Science</a> | <a href="http://www.monmouthcollege.edu">Monmouth College</a>
 
 profile:
   align: right
@@ -16,7 +16,7 @@ news: true
 social: true
 ---
 
-I am an assistant professor in the department of Mathematics,
+I am an associate professor in the department of Mathematics,
 Statistics, and Computer Science at [Monmouth
 College](http://www.monmouthcollege.edu). I got my Ph.D. in Computer
 Science from [Washington University in
