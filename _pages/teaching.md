@@ -18,6 +18,8 @@ description: Course materials.
 * <a href="{{ site.baseurl }}/courses/data151/f23/">DATA 151: Introduction to Data Science</a>
 * <a href="{{ site.baseurl }}/courses/intg101/f23/">FYII 101: 1st Year Inquiry & Identity</a>
 * <a href="{{ site.baseurl }}/courses/comp401/f23/">COMP 401: Senior Project Research</a>
+* <a href="{{ site.baseurl }}/courses/comp402/f23/">COMP 402: Senior Project Implementation</a>
+* <a href="{{ site.baseurl }}/courses/data401/s23/">DATA 401: Senior Project Research</a>
 
 ### Spring 2023
 
