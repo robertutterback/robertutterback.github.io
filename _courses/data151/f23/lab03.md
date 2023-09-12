@@ -14,6 +14,8 @@ The main instructions for this lab can be [found here](https://moderndive.github
 with the following modifications:
 
 - You'll use RStudio on your own machines, not RStudio Server.
+- It's optional to create a new folder for your files. If you do, you
+  can name it something like `data151` instead of `introstatsR`.
 (fh)
 - Any time those instructions mention something happening on the
   server, just remember your code is actually executing on your own
