@@ -13,3 +13,15 @@ modifications.)
 The main instructions for this lab can be [found here](https://moderndive.github.io/moderndive_labs/static/PS/PS02_data_viz.html),
 with the following modifications:
 
+- You'll use RStudio on your own machines, not RStudio Server.
+- It's optional to create a new folder for your files. If you do, you
+  can name it something like `data151` instead of `introstatsR`.
+- Any time those instructions mention something happening on the
+  server, just remember your code is actually executing on your own
+  laptop, not a server.
+- Ignore the "Turning in your work" section. Instead, when you have
+  successfully "knit" your final document, open the HTML file in a
+  browser, print it out, and hand it in.
+- Ignore the "Logging out of the Server" section.
+
+
