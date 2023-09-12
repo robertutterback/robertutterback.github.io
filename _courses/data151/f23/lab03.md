@@ -15,6 +15,9 @@ with the following modifications:
 
 - You'll use RStudio on your own machines, not RStudio Server.
 (fh)
+- Any time those instructions mention something happening on the
+  server, just remember your code is actually executing on your own
+  laptop, not a server.
 - Ignore the "Turning in your work" seciton. Instead, when you have
   successfully "knit" your final document, open the HTML file in a
   browser, print it out, and hand it in.
