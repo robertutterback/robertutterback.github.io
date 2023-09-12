@@ -13,6 +13,7 @@ modifications.)
 The main instructions for this lab can be [found here](https://moderndive.github.io/moderndive_labs/static/PS/PS02_data_viz.html),
 with the following modifications:
 
+- You'll use RStudio on your own machines, not RStudio Server.
 (fh)
 - Ignore the "Turning in your work" seciton. Instead, when you have
   successfully "knit" your final document, open the HTML file in a
