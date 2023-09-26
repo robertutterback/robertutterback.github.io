@@ -22,7 +22,7 @@ with the following modifications:
 - When you have successfully "knit" your final document, open the HTML
   file in a browser, print it out, and hand it in.
 
-# Homework 2
+## Homework 2
 
 In section 3.9 of our textbook, do "Learning check" 3.20 (LC3.20). In
 addition, choose an appropriate plot to display the result
