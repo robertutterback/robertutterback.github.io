@@ -20,6 +20,7 @@ description: Course materials.
 * <a href="{{ site.baseurl }}/courses/comp401/f23/">COMP 401: Senior Project Research</a>
 * <a href="{{ site.baseurl }}/courses/comp402/f23/">COMP 402: Senior Project Implementation</a>
 * <a href="{{ site.baseurl }}/courses/data401/f23/">DATA 401: Senior Project Research</a>
+* MATH 323: Numerical Analysis
 
 ### Spring 2023
 
