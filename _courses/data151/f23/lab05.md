@@ -34,7 +34,7 @@ different reports, aggregate the data, and show a dashboard that helps
 executives make decisions.
 
 Obviously I can't share their real data, but I've created some
-[synthetic data](./hwk04-data.xlsx) that is somewhat similar (and
+[synthetic data](../hwk04-data.xlsx) that is somewhat similar (and
 greatly simplified). That Excel file contains 5 sheets. The first 4
 simulate output from each company, e.g., sheet "A" contains sales for
 each day of 2022 for a business unit called "A". The last sheet,
