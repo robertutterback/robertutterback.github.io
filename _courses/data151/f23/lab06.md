@@ -13,4 +13,4 @@ modifications.)
 The main instructions for this lab can be [found
 here](https://moderndive.github.io/moderndive_labs/static/PS/PS04_reg_one_num_x.html). You
 may work with another person for this lab. You can fill out your
-answers directly in the [instructions Rmd file](lab06.Rmd).
+answers directly in the [instructions Rmd file](../lab06.Rmd).
