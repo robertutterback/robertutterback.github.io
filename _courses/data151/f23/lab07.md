@@ -4,7 +4,7 @@ title: "DATA 151, Fall 2023, Lab 07"
 semester: f23
 ---
 
-## Lab 06: Linear Regression with One Categorical Variaible
+## Lab 07: Linear Regression with One Categorical Variaible
 
 (This lab is heavily based on material created by Jenny Smetzer,
 William Hopper, Beth Brown, and Albert Y. Kim, with minor
