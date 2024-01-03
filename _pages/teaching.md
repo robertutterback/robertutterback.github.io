@@ -5,11 +5,11 @@ title: Teaching
 description: Course materials.
 ---
 
-<!-- ### Spring 2024 -->
+### Spring 2024
 
-<!-- * <a href="{{ site.baseurl }}/courses/comp151/s24/">COMP 151: Intro to Programming</a> -->
-<!-- * <a href="{{ site.baseurl }}/courses/comp240/s24/">COMP 240: Computer Applications</a> -->
-<!-- * <a href="{{ site.baseurl }}/courses/comp340/s24/">COMP 340: Analysis of Applications</a> -->
+* <a href="{{ site.baseurl }}/courses/comp151/s24/">COMP 151: Intro to Programming</a>
+* <a href="{{ site.baseurl }}/courses/comp240/s24/">COMP 240: Computer Applications</a>
+* <a href="{{ site.baseurl }}/courses/comp340/s24/">COMP 340: Analysis of Algorithms</a>
 <!-- * <a href="{{ site.baseurl }}/courses/comp402/s24/">COMP 402: Senior Project Implementation</a> -->
 
 ### Fall 2023
