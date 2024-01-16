@@ -11,7 +11,7 @@ description: Course materials.
 * <a href="{{ site.baseurl }}/courses/comp240/s24/">COMP 240: Computer Applications</a>
 * <a href="{{ site.baseurl }}/courses/comp340/s24/">COMP 340: Analysis of Algorithms</a>
 * <a href="{{ site.baseurl }}/courses/comp402/s24/">COMP 402: Senior Project Implementation</a>
-* <a href="{{ site.baseurl }}/courses/data402/s24/">COMP 402: Senior Project Implementation</a>
+* <a href="{{ site.baseurl }}/courses/data402/s24/">DATA 402: Senior Project Implementation</a>
 
 ### Fall 2023
 
