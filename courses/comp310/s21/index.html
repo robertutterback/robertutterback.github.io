@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Robert Utterback | COMP 310: Database Theory and Design, Spring 2021</title>
+<meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+">
+
+     <link rel="shortcut icon" href="https://robertutterback.github.io/assets/img/favicon.ico">
+		 <link rel="stylesheet" href="https://robertutterback.github.io/assets/css/main.css">
+		 <!-- <link rel="shortcut icon" href="/assets/img/favicon.ico"> -->
+     <!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+
+     <link rel="canonical" href="https://robertutterback.github.io/courses/comp310/s21/">
+</head>
+
+	<body>
+		<style type="text/css">
+			.schedule {
+			width: 100%;
+			}
+			table {  
+			width: auto;
+			margin: auto;
+			}
+			blockquote {
+			padding: .35rem;
+			font: 12px;
+			}
+			blockquote footer {
+			font-size: 8px;
+			}
+		</style>
+		<div class="course-content">
+			<div class="wrapper">
+				<header class="post-header">
+					<h1 class="post-title">COMP 310: Database Theory and Design, Spring 2021</h1>
+					<!-- <h5 class="class-description">(todo)</h5> -->
+				</header>
+				<p><em>This syllabus is subject to change based on specific class needs, especially the <a href="#schedule">schedule</a>. Significant deviations will be discussed in class. Individual exceptions to the policies and schedule are granted only in cases of true emergency. Please make arrangements with me if an emergency arises.</em></p>
+
+<ul id="markdown-toc">
+  <li><a href="#logistics" id="markdown-toc-logistics">Logistics</a></li>
+  <li><a href="#content" id="markdown-toc-content">Content</a>    <ul>
+      <li><a href="#description" id="markdown-toc-description">Description</a></li>
+      <li><a href="#learning-objectives" id="markdown-toc-learning-objectives">Learning Objectives</a></li>
+      <li><a href="#sources" id="markdown-toc-sources">Sources</a></li>
+      <li><a href="#software" id="markdown-toc-software">Software</a></li>
+    </ul>
+  </li>
+  <li><a href="#policies" id="markdown-toc-policies">Policies</a></li>
+  <li><a href="#assessment" id="markdown-toc-assessment">Assessment</a>    <ul>
+      <li><a href="#assignments-and-workload" id="markdown-toc-assignments-and-workload">Assignments and Workload</a></li>
+      <li><a href="#grading" id="markdown-toc-grading">Grading</a></li>
+    </ul>
+  </li>
+  <li><a href="#schedule" id="markdown-toc-schedule">Schedule</a></li>
+  <li><a href="#monmouth-college-services" id="markdown-toc-monmouth-college-services">Monmouth College Services</a></li>
+</ul>
+
+<h2 id="logistics">Logistics</h2>
+
+<ul>
+  <li>Class meetings:
+    <ul>
+      <li>Schedule: MWF 11:00 AM - 11:50 AM</li>
+      <li><a href="https://monmouthcollege.zoom.us/j/91476084437">Class Zoom Room</a></li>
+    </ul>
+  </li>
+  <li>Instructor: Robert Utterback (working remotely spring 2021)
+    <ul>
+      <li><a href="Available upon request.">Personal Zoom Room</a></li>
+      <li>Physical Office: CSB 342</li>
+      <li>Office Phone: 309.457.2202</li>
+      <li><a href="https://robertutterback.github.io">Website</a></li>
+      <li><a href="mailto:rutterback@monmouthcollege.edu">Email</a></li>
+      <li>Office hours: M 2-4. Tu 10-11. W 4-5. Th 10-11. F 3-4. Or by appointment (see the schedule on my webpage). For the spring 2021 semester, all office hours and appointments will be held in my personal Zoom room.</li>
+    </ul>
+  </li>
+  <li>Course Website: <a href="https://robertutterback.github.io/courses/comp310/s21/">https://robertutterback.github.io/courses/comp310/s21/</a></li>
+  <li>Credits: 1 course credit</li>
+  <li>Prerequisites: COMP 152 and MATH 260.</li>
+  <li>Feedback: At any time during the course you can use
+<a href="https://forms.office.com/Pages/ResponsePage.aspx?id=2CUxPywZP0ec1n97FfYhs8Yn_tnrj59Js226l2OfoDlUN0k1T08zN1c3SzhXSFZYVERLUEdZNzZHTy4u">this</a> to provide
+anonymous suggestions, criticism, praise, etc.</li>
+</ul>
+
+<h2 id="content">Content</h2>
+
+<h3 id="description">Description</h3>
+
+<p>An introduction to the concepts and techniques of database
+systems. Includes history and motivation of database systems, data
+modeling, rational database, SQL, transaction processing, distributed
+databases.</p>
+
+<h3 id="learning-objectives">Learning Objectives</h3>
+
+<ol>
+  <li>Be able to query existing databases using SQL to gain effective insights.</li>
+  <li>Design and structure your own databases, understanding trade-offs
+between redundancy, reliability, and speed.</li>
+  <li>Understand the basics about how database store and access data,
+even in the presence of many simultaneous users or disk failures.</li>
+  <li>Understand and describe the motivation and basics behind new
+database technologies, including NoSQL and Big Data ecosystems.</li>
+</ol>
+
+<!-- @TODO: Finish student learning outcomes from ACM 2013 curriculum guide. -->
+<!-- See [Student Learning Outcomes](#student-learning-outcomes). -->
+
+<h3 id="sources">Sources</h3>
+
+<p>The required textbook is:</p>
+
+<ul>
+  <li>Silberschatz, Abraham and Korth, Henry F. and Sudarshan,
+S. <a href="https://www.db-book.com/db7/"><em>Database System Concepts</em> (7th
+Edition)</a>. McGraw-Hill
+Education. 2019. ISBN-13: 978-0-078-02215-9</li>
+</ul>
+
+<p>The <a href="https://www.db-book.com/db7/">textbook webpage</a> is a great source
+of additional information, including solutions to practice exercises,
+scripts to load the sample data, and tips on using specific databases.</p>
+
+<p>We may occasionally have readings from other sources, which will
+either be emailed to students or posted to the schedule below.</p>
+
+<p>Additionally, there are many resources on the web for learning about
+databases, and especially about SQL. One good is <a href="https://www.mysqltutorial.org/">this MySQL
+Tutorial</a>.</p>
+
+<h3 id="software">Software</h3>
+
+<p>In class I will often make use of the
+<a href="https://socrative.com">Socrative</a> app, so you’ll need to install this
+on your phones. We will also occasionally write SQL queries together
+in <a href="https://repl.it/">repl.it</a>, so you will need an account there.</p>
+
+<p>In terms of Database Management Systems we will usually stick to
+<a href="https://sqlite.org/index.html">SQLite</a> and
+<a href="https://www.mysql.com/">MySQL</a>.</p>
+
+<ul>
+  <li>There is nothing to download for SQLite – you can execute queries
+in your browser using the <a href="https://www.db-book.com/db7/university-lab-dir/sqljs.html">Online SQLite
+interpreter</a>,
+which comes pre-loaded with the textbook’s university data.</li>
+  <li>To interact with a MySQL DBMS you will use <a href="https://dev.mysql.com/downloads/workbench/">MySQL
+Workbench</a>. <strong>Note: you
+do NOT need to create an Oracle account when it asks you
+to. Instead, just click the link that says “No thanks, just start my
+download”.</strong> You can use this to access the DBMS hosted on the
+department server (details given in class), or you may install
+<a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a> on
+your own machine. Again note that you do not need to create an
+Oracle account. If you use this option you will need to load any
+sample data yourself using the scripts provided on the <a href="https://www.db-book.com/db7/">textbook
+webpage</a>.</li>
+</ul>
+
+<h2 id="policies">Policies</h2>
+
+<ul>
+  <li>
+    <p><strong>Zoom classes</strong>: If the instructor’s video is turned on, yours should be, too. Any computer, tablet, or phone usage should be directly related to the course, e.g., Zoom or Socrative. Anything else is rude and distracting to others. Inappropriate use of devices, or not turning your video on, will result in a low participation grade.
+To fully participate in class, you should plan to attend each Zoom session on a laptop or desktop computer, NOT a tablet or phone. This will allow you to take part in any live-coding exercises with the rest of the class. Please let the instructor know ahead of time if this is not possible for any particular class meeting.</p>
+  </li>
+  <li>
+    <p><strong>Late assignments</strong>: You are allotted a <em>total</em> of <em>5</em> days. You
+may apply these to any homework assignment (NOT projects) as you see
+fit and turn in your solutions with no penalty. However, you may use
+at most 2 on any individual assignment. The point is to give you
+some flexibility for illnesses, long trips, etc. I am unlikely to
+grant further extensions. If you are selected to give a presentation
+based on a homework exercise and wish to use late days, you must
+schedule your presentation for the next class period, although a
+<em>different</em> exercise may be chosen by the instructor!</p>
+  </li>
+  <li>
+    <p><strong>Academic dishonesty</strong>: Monmouth College’s official policy on academic dishonesty can be found <a href="http://ou.monmouthcollege.edu/life/residence-life/scots-guide/academic-regulations.aspx">here</a>. <strong>You</strong> are responsible for reading and complying with that policy.<br /><br />
+<em>In this course, any violation of the academic honesty policy will have varying consequences depending on the severity of the infraction as judged by the instructor. Minimally, a violation will result in an “F” or 0 points on the assignment in question. Additionally, the student’s course grade may be lowered by one letter grade. In severe cases, the student will be assigned a course grade of “F” and dismissed from the class. All cases of academic dishonesty <strong>must</strong> be reported to the Associate Dean who may decide to recommend further action to the Admissions and Academic Status Committee, including suspension or dismissal. It is assumed that students will educate themselves regarding what is considered to be academic dishonesty, so excuses or claims of ignorance will not mitigate the consequences of any violations</em></p>
+  </li>
+  <li>
+    <p><strong>Collaboration</strong>: We encourage you to make use of the resources available to you – it is fine to seek help from a friend, tutor, instructor, internet, etc. However, <em>copying of answers and any act worth of the label “cheating” is never permissible</em>! In addition to listing your sources and collaborators, you should be producing your own writeup in your own words. By “your own words,” we mean you should be producing the text yourself, without some external aid. Verbatim copying of text is specifically disallowed, but so is taking a source and rearranging some phrases and changing some variable names to create a derivative version! Such behavior is definitely NOT “using your own words.” It does not matter if you helped contribute to this source text with others, since then you are still not the sole author of the text.
+The point of collaborating on an assignment is not to produce a jointly authored set of solutions, since that violates the course policies. Instead, it is to help you solve the problems, which sometimes involve a bit of creativity. After you have jointly come up with the ideas you need to solve the problems, though, you should part ways with your group and sit down to do the writing by yourself.
+I also advise against sharing the writeup you submit with others, since if someone else uses your text as a source for their own solution (with or without your permission), you will also be implicated in the violation of the academic integrity policy. In any case, if two nearly identical solutions are received, we have no way of tell which is the original, and the policy is to not award credit for either submission.</p>
+  </li>
+  <li>
+    <p><strong>General expectations</strong>: In short, I expect you to be respectful of others and take
+responsibility for your own learning. You are here to learn, so work
+hard and be professional.</p>
+
+    <ul>
+      <li>
+        <p>Just attending class is not sufficient to truly learn the
+material. Read the text, use the resources available at Monmouth
+College, and go beyond the material.</p>
+      </li>
+      <li>
+        <p>If you miss class, you are responsible for everything covered on
+ that day.  College is, in some sense, your job. Take pride in
+ creating quality work. Staple your assignments, label problems, and
+ present your answers neatly and orderly.</p>
+      </li>
+      <li>
+        <p>Your job is to convince me that you have learned the material –
+show your work! Even if you do not know a particular answer,
+guide me through your thought process.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="assessment">Assessment</h2>
+
+<h3 id="assignments-and-workload">Assignments and Workload</h3>
+
+<p>The weekly workload for this course will vary by student and by week
+but should be about 13 hours per week on average. The following table
+provides a rough estimate of the distribution of time over different
+course components for a 16 week semester, as well as detailing the
+type, amount, and relative value of all assignments.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Amount</th>
+      <th>Final Grade Weight</th>
+      <th>Time/Week (Hours)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Lectures/Class</td>
+      <td>42</td>
+      <td>10% (<strong>Participation</strong>)</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <td><strong>Homework</strong></td>
+      <td>8–10</td>
+      <td>20%</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td><strong>Presentations</strong></td>
+      <td>1–3</td>
+      <td>10%</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Exam Study</td>
+      <td>-</td>
+      <td>-</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td><strong>Exams</strong></td>
+      <td>3</td>
+      <td>30%</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>Projects</strong></td>
+      <td>2</td>
+      <td>30%</td>
+      <td>3.5</td>
+    </tr>
+    <tr>
+      <td>Reading/Unstructured Study</td>
+      <td>-</td>
+      <td>-</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Total</td>
+      <td> </td>
+      <td>100%</td>
+      <td>13</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Homework assignments may include written exercises and/or programming
+assignments. When homework is due, the instructor may select 1 or more
+exercises to be presented. Students will be randomly selected (with
+replacement) to present their solution.</p>
+
+<p>Each exam will focus primarily, but not necessarily exclusively, on
+the material covered since the previous exam.</p>
+
+<h3 id="grading">Grading</h3>
+
+<p>In-class presentations will be graded on a simple 3-point scale:</p>
+
+<ul>
+  <li>0: Nothing of substance; little effort</li>
+  <li>1: Needs significant work</li>
+  <li>2: Mostly or fully correct</li>
+</ul>
+
+<p>If you are unable to attend a class, you must notify the instructor
+<em>prior</em> to the class. If you do not, and you are randomly selected to
+present, you will receive a 0. It is possible that you are never
+randomly selected, in which case you will receive full credit for this
+portion of the grade.</p>
+
+<p>Your participation grade is based on a variety of activities. During
+class I will often make use of the <a href="https://socrative.com">Socrative</a>
+app, so you’ll need to install this on your phones. Participating in
+Socrative questions and with in-class group activities is required for
+a decent participation grade; an A includes asking questions either in
+class or in office hours.</p>
+
+<p>Your final grade is based on a weighted average of particular
+assignment categories. You can estimate your current grade based on
+your scores and these weights. You may always visit the instructor
+outside of class to discuss your current standing. Assignments and
+final grades use a standard grading scale shown below and will not
+be curved except in rare cases when deemed necessary by the
+instructor.</p>
+
+<p>This courses uses a standard grading scale. Assignments and final
+grades will not be curved except in rare cases when its deemed
+necessary by the instructor. Percentage grades translate to letter
+grades as follows:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Score</th>
+      <th style="text-align: center">Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">94–100</td>
+      <td style="text-align: center">A</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">90–93</td>
+      <td style="text-align: center">A-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">88–89</td>
+      <td style="text-align: center">B+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">82–87</td>
+      <td style="text-align: center">B</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">80–81</td>
+      <td style="text-align: center">B-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">78–79</td>
+      <td style="text-align: center">C+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">72–77</td>
+      <td style="text-align: center">C</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">70–71</td>
+      <td style="text-align: center">C-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">68–69</td>
+      <td style="text-align: center">D+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">62–67</td>
+      <td style="text-align: center">D</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">60–61</td>
+      <td style="text-align: center">D-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0–59</td>
+      <td style="text-align: center">F</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You are always welcome to challenge a grade that you feel is unfair or
+calculated incorrectly. Mistakes made in your favor will never be
+corrected to lower your grade. Mistakes made not in your favor will
+be corrected. Basically, after the initial grading your score can
+only go up as the result of a challenge*.</p>
+
+<p>You are always welcome to challenge a grade that you feel is unfair or
+calculated incorrectly. Mistakes made in your favor will never be
+corrected to lower your grade. Mistakes made not in your favor will be
+corrected. <em>Basically, after the initial grading your score can only
+go up as the result of a challenge.</em></p>
+
+<h2 id="schedule">Schedule</h2>
+<p>The following <strong>tentative</strong> calendar should give you a feel for how
+work is distributed throughout the semester. Assignments and events
+are listed in the week they are due or when they occur. <em>This calendar
+is subject to change based on the circumstances of the course</em>.</p>
+
+<p><strong>Note</strong>: All readings should be done <strong>before</strong> the class period in
+which they are listed below.</p>
+
+<p>Each day’s slides/notes can be found in <a href="https://monmouthcollege-my.sharepoint.com/:f:/g/personal/rutterback_monmouthcollege_edu/El9m6H7DIk9PmTw_63XCwhABvx_cembEy2hSjaVvBX1fCg?e=6RM3Cl">this shared
+folder</a>. You
+will need to be logged in to your Monmouth College account to see the
+folder. If I have not uploaded the week’s slides by Friday afternoon
+you are free to email me a reminder.</p>
+
+<table class="schedule">
+  <thead>
+    <tr>
+      <th style="text-align: left">Date</th>
+      <th style="text-align: left">Topic</th>
+      <th style="text-align: right">Assignments and Readings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><l18></l18></td>
+      <td style="text-align: left"><l35></l35></td>
+      <td style="text-align: right"><r24></r24></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Mon 01/25 (Week 1)</td>
+      <td style="text-align: left">Logistics, Intro</td>
+      <td style="text-align: right">Chapter 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 01/27</td>
+      <td style="text-align: left">The Relational Model</td>
+      <td style="text-align: right">Chapter 2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 01/29</td>
+      <td style="text-align: left">Relational Algebra</td>
+      <td style="text-align: right"><a href="hwk1/">Homework 1</a></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 02/01 (Week 2)</td>
+      <td style="text-align: left">Basic SQL: SELECT</td>
+      <td style="text-align: right">3.1-3.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 02/03</td>
+      <td style="text-align: left">More SQL, Set Operations</td>
+      <td style="text-align: right">3.4-3.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 02/05</td>
+      <td style="text-align: left">Aggregating, Grouping, and more</td>
+      <td style="text-align: right"><a href="hwk2/">Homework 2</a>, 3.6-3.8</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 02/08 (Week 3)</td>
+      <td style="text-align: left">Nested Subqueries</td>
+      <td style="text-align: right">3.8</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 02/10</td>
+      <td style="text-align: left">Database Modifications</td>
+      <td style="text-align: right">3.9-3.10</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 02/12</td>
+      <td style="text-align: left">Practice Exercises</td>
+      <td style="text-align: right"><a href="hwk3/">Homework 3</a></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 02/15 (Week 4)</td>
+      <td style="text-align: left">Joins</td>
+      <td style="text-align: right">4.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 02/17</td>
+      <td style="text-align: left">Views, Transactions, Integrity Constraints</td>
+      <td style="text-align: right">4.2-4.6</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 02/19</td>
+      <td style="text-align: left">Practice Exercises</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 02/22 (Week 5)</td>
+      <td style="text-align: left">Functions, Procedures, Triggers</td>
+      <td style="text-align: right">5.2-5.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 02/24</td>
+      <td style="text-align: left">Query Practice/Review</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 02/26</td>
+      <td style="text-align: left">Exam 1</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 03/01 (Week 6)</td>
+      <td style="text-align: left">Access via Programming Languages</td>
+      <td style="text-align: right">5.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 03/03</td>
+      <td style="text-align: left">Security</td>
+      <td style="text-align: right">4.7</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 03/05</td>
+      <td style="text-align: left">Entity-Relationship Model</td>
+      <td style="text-align: right">6.1-6.5, <a href="proj.pdf">Project 1</a></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 03/08 (Week 7)</td>
+      <td style="text-align: left">Exam 1 Solutions, Advanced Data Modeling</td>
+      <td style="text-align: right">6.6-6.7, 6.10</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 03/10</td>
+      <td style="text-align: left">More E-R Design</td>
+      <td style="text-align: right">6.8-6.11, Project Enterprise chosen</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">(Fri 03/12)</td>
+      <td style="text-align: left">(No class – Pseudo-spring break)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 03/15 (Week 8)</td>
+      <td style="text-align: left">(No class)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 03/17</td>
+      <td style="text-align: left">Decomposition</td>
+      <td style="text-align: right">7.1-7.4</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 03/19</td>
+      <td style="text-align: left">Functional Dependency Theory</td>
+      <td style="text-align: right">7.4-7.5, E-R Checkpoint meeting deadline</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 03/22 (Week 9)</td>
+      <td style="text-align: left">Normal Forms</td>
+      <td style="text-align: right">Review 7.1-7.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 03/24</td>
+      <td style="text-align: left">Multivalued Dependencies</td>
+      <td style="text-align: right">7.6-7.11</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 03/26</td>
+      <td style="text-align: left">Complex Data Types</td>
+      <td style="text-align: right">Chapter 8, Relational checkpoint</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 03/29 (Week 10)</td>
+      <td style="text-align: left">Web Apps</td>
+      <td style="text-align: right">9.1-9.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 03/31</td>
+      <td style="text-align: left">Advanced Web Apps</td>
+      <td style="text-align: right">9.6-9.10</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">(Fri 04/02 – Easter Break)</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 04/05 (Week 11)</td>
+      <td style="text-align: left">Data Analytics</td>
+      <td style="text-align: right">11.1-11.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 04/07</td>
+      <td style="text-align: left">Project 1 Questions</td>
+      <td style="text-align: right">Project 1 due</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 04/09</td>
+      <td style="text-align: left">Project 1 Presentations</td>
+      <td style="text-align: right"><a href="proj.pdf">Project 2</a> start</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 04/12 (Week 12)</td>
+      <td style="text-align: left">Project 1 Presentations</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 04/14</td>
+      <td style="text-align: left">Project 1 Presentations</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 04/16</td>
+      <td style="text-align: left">Physical Storage</td>
+      <td style="text-align: right">Chapter 12, App. checkpoint 1</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 04/19 (Week 13)</td>
+      <td style="text-align: left">Data Storage Structures</td>
+      <td style="text-align: right">Chapter 13</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 04/21</td>
+      <td style="text-align: left">B-Tree Indexing</td>
+      <td style="text-align: right">14.1-14.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 04/23</td>
+      <td style="text-align: left">Query Processing I</td>
+      <td style="text-align: right">15.1-15.5, App. checkpoint 2, <a href="hwk4/">Homework 4</a></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 04/26 (Week 14)</td>
+      <td style="text-align: left">Query Processing II</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 04/28</td>
+      <td style="text-align: left">Transactions</td>
+      <td style="text-align: right">17.1-17.6</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 04/30</td>
+      <td style="text-align: left">Database Architectures</td>
+      <td style="text-align: right">20.1-20.5</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 05/03 (Week 15)</td>
+      <td style="text-align: left">Big Data</td>
+      <td style="text-align: right">Chapter 10</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 05/05</td>
+      <td style="text-align: left">Project 2 Presentations</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Fri 05/07</td>
+      <td style="text-align: left">Project 2 Due</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tue 05/11 3:00 PM</td>
+      <td style="text-align: left">Final Exam (take-home)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="monmouth-college-services">Monmouth College Services</h2>
+
+<ul>
+  <li>
+    <p><strong>Mental Health and Counseling Services</strong>: Monmouth College provides cost-free, professional
+mental health counseling to support you and to help you manage
+challenges that may impact your personal and academic success.
+The Counseling Center is located in the upper level of Poling
+Hall, offices 204 and 216, and the hours are Monday-Friday, 8:30
+AM – 5:00 PM.  To request a confidential appointment on-line,
+<a href="https://titanium.monmouthcollege.edu">click here</a> or email <a href="mailto:counselingcenter@monmouthcollege.edu">the
+center</a>, <a href="mailto:cbeadles@monmouthcollege.edu">Cindy
+Beadles</a> or <a href="mailto:tcaudill@monmouthcollege.edu">Tom
+Caudill</a>.</p>
+  </li>
+  <li>
+    <p><a href="http://ou.monmouthcollege.edu/academics/teaching-learning-center/"><strong>Student Success and Accessibility
+Services</strong></a>
+offers FREE resources to assist Monmouth College students with
+their academic success. Programs include supplemental instruction
+for difficult classes, drop-in and appointment tutoring, and
+individual academic coaching. The office is here to help students
+excel academically, since everyone can work toward better grades,
+practice stronger study skills, and mange their time better.</p>
+  </li>
+  <li>
+    <p><a href="http://ou.monmouthcollege.edu/life/disability-services/default.aspx"><strong>Accessibility
+Services</strong></a>:
+If you have a disability or had academic accommodations in high
+school or another college, you may be eligible for academic
+accommodations at Monmouth College under the Americans with
+Disabilities Act (ADA). Monmouth College is committed to equal
+educational access. To discuss any of the services offered, please
+call or visit Student Success and Accessibility Services. SSAS is
+located in the ACE space on the first floor of Hewes Library,
+opposite Einstein Bros. Bagels. They can be reached at
+309-457-2257 or via email at
+<a href="mailto:ssas@monmouthcollege.edu">ssas@monmouthcollege.edu</a>.</p>
+  </li>
+  <li>
+    <p>Hewes Library:
+Librarians can help you find appropriate sources for a speech, research paper, or project. #JustAsk!</p>
+
+    <p>Library Hours: <a href="https://library.monmouthcollege.edu/home/hours">library.monmouthcollege.edu/home/hours</a></p>
+
+    <p>How to contact a Hewes librarian:</p>
+
+    <ul>
+      <li>Visit the Information Desk and ask for the librarian on duty</li>
+      <li>Chat on our website:  <a href="https://library.monmouthcollege.edu">library.monmouthcollege.edu</a></li>
+      <li>Text (309)204-9275   <strong>Save this number!</strong></li>
+      <li>Email a question or set up a virtual consultation appointment:  reference@monmouthcollege.edu</li>
+      <li>Call (309)457-2190</li>
+    </ul>
+  </li>
+</ul>
+
+<!-- ## Student Learning Outcomes -->
+
+<!-- This course covers a variety of knowledge areas as categorized by the -->
+<!-- ACM/IEEE-CS Task Force on Computing Curricula. Note that not all of -->
+<!-- these areas are introduced in this course; some are touched upon -->
+<!-- previously and others will be developed further in later courses. At -->
+<!-- the end of the course, students should achieve the following learning -->
+<!-- outcomes with the specific level of mastery: -->
+
+<!-- | Knowledge Unit                  | Learning Outcome with Level of Mastery |   | -->
+<!-- | :------                         | :---                                   |   | -->
+<!-- | Information Management Concepts |                                        |   | -->
+<!-- |                                 |                                        |   | -->
+<!-- |                                 |                                        |   | -->
+<!-- |                                 |                                        |   | -->
+<!-- |                                 |                                        |   | -->
+<!-- | Database Systems                |                                        |   | -->
+<!-- |                                 |                                        |   | -->
+<!-- |                                 |                                        |   | -->
+<!-- |                                 |                                        |   | -->
+<!-- | Data Modeling                   |                                        |   | -->
+<!-- |                                 |                                        |   | -->
+<!-- |                                 |                                        |   | -->
+<!-- |                                 |                                        |   | -->
+<!-- |                                 |                                        |   | -->
+<!-- | Relational Databases            |                                        |   | -->
+
+<!-- --IM-- -->
+<!-- Information Management Concepts -->
+<!-- Database Systems -->
+<!-- Data Modeling -->
+<!-- Relational Databases -->
+<!-- Query Languages -->
+
+<!-- Indexing -->
+<!-- Physical Database Design -->
+<!-- Transaction Processing -->
+
+<!-- --LAS-- -->
+<!-- Foundational Concepts -->
+<!-- Security Policy and Governance -->
+
+<!-- Local Variables: -->
+<!-- eval: (orgtbl-mode) -->
+<!-- End: -->
+
+			</div>
+		</div>
+		<!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="https://robertutterback.github.io/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+<!-- <script src="/assets/js/katex.js"></script> -->
+<script src="https://robertutterback.github.io/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/academicons.min.css">
+
+<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"> -->
+
+
+<!-- Google Analytics -->
+<!-- <script> -->
+<!-- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!-- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!-- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!-- })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!-- ga('create', 'UA-XXXXXXXX-X', 'auto'); -->
+<!-- ga('send', 'pageview'); -->
+<!-- </script> -->
+
+	</body>
+</html>
