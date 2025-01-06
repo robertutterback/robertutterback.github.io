@@ -5,6 +5,18 @@ title: Teaching
 description: Course materials.
 ---
 
+### Spring 2025
+
+* <a href="{{ site.baseurl }}/courses/comp151/s25/">COMP 151: Intro to Programming</a>
+* <a href="{{ site.baseurl }}/courses/comp240/s25/">COMP 240: Computer Applications</a>
+* <a href="{{ site.baseurl }}/courses/comp345/s25/">COMP 345: Operating Systems</a>
+* <a href="{{ site.baseurl }}/courses/comp402/s25/">COMP 402: Senior Project Implementation</a>
+
+
+### Fall 2024
+
+(Sabbatical)
+
 ### Spring 2024
 
 * <a href="{{ site.baseurl }}/courses/comp151/s24/">COMP 151: Intro to Programming</a>
