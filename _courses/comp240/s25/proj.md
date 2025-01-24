@@ -4,7 +4,18 @@ title: "COMP240 (S25) -- Projects Overview"
 semester: s25
 ---
 
-Coming soon.
+Coming soon. See also proj-overview form last year.
+
+Agile exceptions:
+
+'Daily' Scrum: take notes: how long it took, super brief summary (a few sentences). Who was in attendance. Email it to me. Need 3 or more a week.
+
+Don't need to take notes on the other stuff. I want to see your
+backlog in the form of GitHub Issues. Show me your sprint backlog when
+you present checkpoints. Show me results of retrospective in your
+presentations.
+
+I want to see commits from as many people as possible. Pull requests. Comments on those pull requests and on issues from everyone.
 
 ## General Guidelines
 
