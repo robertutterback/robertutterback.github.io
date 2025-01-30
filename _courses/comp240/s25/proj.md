@@ -257,14 +257,17 @@ It should have the following sections:
      that demonstrates teamwork, tackles complexity, or showcases your
      learning process (e.g., debugging a challenging issue or
      requiring research).
-  4. Retrospective: Present a simulated SCRUM 'retrospective' meeting,
+  4. AI & Internet Usage: Describe the internet sources and AI helpers
+     you used, and explain how you used them. Each individual project
+     may have different restrictions or allowances for AI usage.
+  5. Retrospective: Present a simulated SCRUM 'retrospective' meeting,
      where you discuss what went well, what didn't go well, and what
      you would do differently next time. This is not at the level of
      implementation, but is instead about your team's process of
      development. Focus on concrete examples for what went well or
      didn't, e.g., "splitting tasks evenly helped us avoid
      bottlenecks", or "poor communication caused delays"
-  5. Future plans: Stories/ideas for next sprint.
+  6. Future plans: Stories/ideas for next sprint.
   
 Checkpoint presentations are a great way to practice presentation
 skills in a relatively low-stakes environment. They should be
@@ -277,7 +280,8 @@ to get into a rhythm.
 |--------------------+-------------------------------------------+-----------------------------------------------------------------+-------------------------------------+-----------------------------------|
 | Demo               | Functional feature w/o unexpected bugs.   | Mostly functional; minor issues.                                | Partially functional. Disorganized. | Prototype broken or demo absent.  |
 | User Stories       | Clearly, concise stories. Velocity shown. | Clarity/organizaiton issues.                                    | Stories missing or unclear.         | No user stories.                  |
-| Code Review        | Insight explanation, organized code.      | Adequate explanation, minor gaps in knowledge.                  | Shallow or disorganized review.     | No meaningful review.             |
+| Code Review        | Insightful explanation, organized code.   | Adequate explanation, minor gaps in knowledge.                  | Shallow or disorganized review.     | No meaningful review.             |
+| AI/Internet Usage  | Full explanation.                         | Adequate explanation but lack of detail.                        | Minimal explanation.                | No explanation/description.       |
 | Retrospective      | Thoughtful, actionable insights.          | Basic but adequate analysis/insights.                           | Minimal or vague analysis.          | Missing.                          |
 | Future Plans       | Clear, realistic goals.                   | Unclear or unrealistic goals.                                   | Minimal planning.                   | No plans discussed.               |
 | Presentation Style | Clear, engaging, well-paced.              | Adequate but lacks engagement, or too much reading from slides. | Disorganized or unengaging.         | Difficult to follow or no effort. |
@@ -295,28 +299,33 @@ Required sections:
 
   1. Motivation: why was the project chosen? What were you supposed to learn?
   2. Development Process: Teach Scrum workflow. Reflect on your sprint cycle and velocity.
-  3. Demo: Show off your final product. It is perfectly fine if you
+  3. AI & Internet Usage: Document and explain how you used internet
+     sources and AI in your workflow (if applicable). Comment on what
+     worked, how you might improve how you use the tools, and any
+     dangers of long-term use.
+  4. Demo: Show off your final product. It is perfectly fine if you
      did not get everything done that you planned to, but it IS
      important that you have a working prototype! Things can be
      unfinished, but not buggy!
-  4. Code Highlighting: Discuss a key piece of code (or two). Explain
+  5. Code Highlighting: Discuss a key piece of code (or two). Explain
      it clearly, with visuals and careful pacing so that COMP151
      students get the idea. You may also comment on coding style here.
-  5. Reflection: Both successes and mistakes (both coding and project
+  6. Reflection: Both successes and mistakes (both coding and project
      management). What would you do differently if you could restart?
-  6. Future Directions: If you had another sprint, what would you focus on?
+  7. Future Directions: If you had another sprint, what would you focus on?
 
 Generally, the same rubric categories as checkpoint presentations, but
 I expect deeper insights, detailed explanations, and significantly
 more polish.
 
-| Section            | Excellent (100%)                                     | Good (85%)                      | Needs Improvement (70%)              | Unsatisfactory (0--50%)          |
-|--------------------+------------------------------------------------------+---------------------------------+--------------------------------------+----------------------------------|
-| Motivation         | Clear, compelling, well-articulated                  | Adequate but lacks depth        | Shallow or incomplete                | Missing or vague                 |
-| Dev. Process       | Detailed explanation of Scrum; teaches concepts well | Covers basics but lacks clarity | Limited or unclear explanation       | Process explanation missing      |
-| Demo               | Functional, smooth, highlighting key achievements    | Mostly functional; minor issues | Partially functional or disorganized | Incomplete or absent.            |
-| Code Highlight     | Insightful explanation, clear visuals and pacing     | Adequate, minor gaps            | Shallow or disorganized review       | No meaningful explanation        |
-| Reflection         | Actional insights on project management              | Adequate but basic insights     | Minimal or vague insights            | No reflection                    |
-| Future Directions  | Realistic, thoughtful next steps                     | Unclear or superficial goals    | Minimal planning shown.              | No plans discussed               |
-| Presentation Style | Clear, engaging, professional                        | Lacks polish or full engagement | Disorganized or unengaging           | Difficult to follow or no effort |
+| Section            | Excellent (100%)                                     | Good (85%)                       | Needs Improvement (70%)              | Unsatisfactory (0--50%)          |
+|--------------------+------------------------------------------------------+----------------------------------+--------------------------------------+----------------------------------|
+| Motivation         | Clear, compelling, well-articulated                  | Adequate but lacks depth         | Shallow or incomplete                | Missing or vague                 |
+| Dev. Process       | Detailed explanation of Scrum; teaches concepts well | Covers basics but lacks clarity  | Limited or unclear explanation       | Process explanation missing      |
+| AI/Internet Usage  | Full explanation and actionable insights             | Description but unclear analysis | Description but no analysis          | No explanation or reflection     |
+| Demo               | Functional, smooth, highlighting key achievements    | Mostly functional; minor issues  | Partially functional or disorganized | Incomplete or absent.            |
+| Code Highlight     | Insightful explanation, clear visuals and pacing     | Adequate, minor gaps             | Shallow or disorganized review       | No meaningful explanation        |
+| Reflection         | Actionable insights on project management            | Adequate but basic insights      | Minimal or vague insights            | No reflection                    |
+| Future Directions  | Realistic, thoughtful next steps                     | Unclear or superficial goals     | Minimal planning shown.              | No plans discussed               |
+| Presentation Style | Clear, engaging, professional                        | Lacks polish or full engagement  | Disorganized or unengaging           | Difficult to follow or no effort |
 
