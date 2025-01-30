@@ -113,7 +113,24 @@ occasionally during each project.
   project's programming language. For user interfaces, automated
   testing is beyond the scope of this course, so manual testing is
   acceptable.
+- Restrictions or allowances for AI usage will be provided on a
+  per-process basis. If a project description does not make any note
+  about AI, assume that no AI usage is allowed.
+- You are generally allowed to use other human-written internet
+  sources, with the restriction that you may not copy and paste
+  code. When trying to solve a particular problem, the best way to
+  avoid accusations of cheating is the following process:
 
+  1. Search for your problem.
+  2. Read the various search results until you understand the problem
+     and how to fix it, studying any found code to see how it might
+     need to be modified to fit into your code base. If the fix is
+     quite small (e.g., 1 line), you can go ahead and implement
+     it. Otherwise, do not type any code yet.
+  3. Close all search-related tabs.
+  4. Take a 5 minute break, e.g., go for a brief walk.
+  5. Return and code up your solution without reopening any related
+     browser tabs.
 
 ## GitHub Activity
 
