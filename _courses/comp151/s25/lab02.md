@@ -1,7 +1,7 @@
 ---
 layout: class
-title: "COMP 151, Spring 2024, Lab 03"
-semester: s24
+title: "COMP 151, Spring 2025, Lab 02"
+semester: s25
 ---
 
 ## Lab 03: Experiments with Turtle
