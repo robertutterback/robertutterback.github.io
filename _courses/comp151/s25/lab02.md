@@ -22,8 +22,8 @@ activity would be fitting, but it doesn't really matter.
 
 You need to write code that satisfies the following requirements:
 
-- Randomly choose a number between 1 and 10 (inclusive), call it $n$.
-- In a loop, create $n$ turtles.
+- Randomly choose a number between 1 and 10 (inclusive), call it `n`.
+- In a loop, create `n` turtles.
 - For each turtle:
   - Assign them a random color.
   - Choose a random radius from 50, 75, 100, 125, 150
