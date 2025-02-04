@@ -7,7 +7,7 @@ semester: s25
 ## Lab 03: Experiments with Turtle
 
 Our book has some nice content using `turtle`, such as [this
-activity](https://runestone.academy/ns/books/published/monmouth-comp151-spring25/Projects/drawing_a_circle.html#drawing-a-circle),
+activity](https://runestone.academy/ns/books/published/mc-comp151-spring25/Projects/drawing_a_circle.html#drawing-a-circle),
 but doesn't involve enough problem solving with it.
 
 So, I created a custom lab which involves `turtle`, `random`, and just
@@ -17,7 +17,7 @@ a bit of problem solving.
 
 Choose any code block from the book. Something from the [Drawing a
 Circle with the
-Turtle](https://runestone.academy/ns/books/published/monmouth-comp151-spring25/Projects/drawing_a_circle.html#drawing-a-circle)
+Turtle](https://runestone.academy/ns/books/published/mc-comp151-spring25/Projects/drawing_a_circle.html#drawing-a-circle)
 activity would be fitting, but it doesn't really matter.
 
 You need to write code that satisfies the following requirements:
@@ -45,7 +45,7 @@ When you are done, raise your hand and show me your code.
 - To draw a circle, learn about [`turtle`'s `circle`
   method](https://docs.python.org/3/library/turtle.html#turtle.circle).
 - You will need just a little bit of [chapter
-  6](https://runestone.academy/ns/books/published/monmouth-comp151-spring25/Sequences/toctree.html)
+  6](https://runestone.academy/ns/books/published/mc-comp151-spring25/Sequences/toctree.html)
   content to create a list of possible radii, and maybe a list of
   possible colors. Luckily, we'll cover enough of that right before
   lab.
