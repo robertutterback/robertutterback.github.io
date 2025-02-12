@@ -146,18 +146,14 @@ creating issues, code review, etc.
 
 As a group, however, I am looking for the following:
 
-| Criteria      | Excellent (100%)             | Good (85%)           | Needs Improvement (70%) | Unsatisfactory (0--50%) |
-|---------------+------------------------------+----------------------+-------------------------+-------------------------|
-| Commits       | Frequent, meaningful commits | Regular commits but  | Rare commits. Unclear   | Commits are infrequent, |
-|               | with clear messages          | messages lack detail | messages.               | meaningless, or missing |
-|---------------+------------------------------+----------------------+-------------------------+-------------------------|
-| Pull Requests | All tasks merved via pull    | Most tasks use pull  | Minimal use of pull     | No pull requests or     |
-|               | requests with clear          | requests; some lack  | requests; no meaninful  | fails to merge work     |
-|               | descriptions and reviews     | clarity or reviews   | reviews                 |                         |
-|---------------+------------------------------+----------------------+-------------------------+-------------------------|
-| Issues        | Actively uses GitHub issues  | Uses issues but some | Few issues created      | No meaningful use       |
-|               | to track tasks, bugs,        | tasks are untracked  | or used minimally       | of GitHub issues        |
-|               | user stories, etc.           | or disorganized      |                         |                         |
+| Criteria         | Excellent (100%)                                                        | Good (85%)                                                  | Needs Improvement (70%)                             | Unsatisfactory (0--50%)                          |
+|------------------+-------------------------------------------------------------------------+-------------------------------------------------------------+-----------------------------------------------------+--------------------------------------------------|
+| Commits          | Frequent, meaningful commits with clear messages                        | Regular commits but messages lack detail                    | Rare commits. Unclear messages.                     | Commits are infrequent, meaningless, or missing. |
+|------------------+-------------------------------------------------------------------------+-------------------------------------------------------------+-----------------------------------------------------+--------------------------------------------------|
+| Pull Requests    | All tasks merved via pull requests with clear descriptions and reviews. | Most tasks use pull requests; some lack clarity or reviews. | Minimal use of pull requests; no meaninful reviews. | No pull requests or fails to merge work.         |
+|------------------+-------------------------------------------------------------------------+-------------------------------------------------------------+-----------------------------------------------------+--------------------------------------------------|
+| Issues           | Actively uses GitHub issues to track tasks, bugs, user stories, etc.    | Uses issues but some tasks are untracked or disorganized.   | Few issues created or used minimally.               | No meaningful use of GitHub issues.              |
+| Standup Meetings | 3 meetings per full sprint, brief description emailed                   | 2 meetings, notes emailed                                   | 1 meeting, notes emailed                            | 0 meetings                                       |
 
 Overall, GitHub activity is worth 20 points (out of 100) for each project.
 
