@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Robert Utterback | COMP 337: Computer Communications, Spring 2022</title>
+<meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+">
+
+     <link rel="shortcut icon" href="https://robertutterback.github.io/assets/img/favicon.ico">
+		 <link rel="stylesheet" href="https://robertutterback.github.io/assets/css/main.css">
+		 <!-- <link rel="shortcut icon" href="/assets/img/favicon.ico"> -->
+     <!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+
+     <link rel="canonical" href="https://robertutterback.github.io/courses/comp337/s22/">
+</head>
+
+	<body>
+		<style type="text/css">
+			.schedule {
+			width: 100%;
+			}
+			table {  
+			width: auto;
+			margin: auto;
+			}
+			blockquote {
+			padding: .35rem;
+			font: 12px;
+			}
+			blockquote footer {
+			font-size: 8px;
+			}
+		</style>
+		<div class="course-content">
+			<div class="wrapper">
+				<header class="post-header">
+					<h1 class="post-title">COMP 337: Computer Communications, Spring 2022</h1>
+					<!-- <h5 class="class-description">(todo)</h5> -->
+				</header>
+				<p><em>This syllabus is subject to change based on specific class needs, especially the <a href="#schedule">schedule</a>. Significant deviations will be discussed in class. Individual exceptions to the policies and schedule are granted only in cases of true emergency. Please make arrangements with me if an emergency arises.</em></p>
+
+<ul id="markdown-toc">
+  <li><a href="#logistics" id="markdown-toc-logistics">Logistics</a></li>
+  <li>
+<a href="#content" id="markdown-toc-content">Content</a>    <ul>
+      <li><a href="#description" id="markdown-toc-description">Description</a></li>
+      <li><a href="#sources" id="markdown-toc-sources">Sources</a></li>
+      <li><a href="#software" id="markdown-toc-software">Software</a></li>
+    </ul>
+  </li>
+  <li><a href="#policies" id="markdown-toc-policies">Policies</a></li>
+  <li>
+<a href="#assessment" id="markdown-toc-assessment">Assessment</a>    <ul>
+      <li><a href="#assignments-and-workload" id="markdown-toc-assignments-and-workload">Assignments and Workload</a></li>
+      <li><a href="#grading" id="markdown-toc-grading">Grading</a></li>
+    </ul>
+  </li>
+  <li><a href="#schedule" id="markdown-toc-schedule">Schedule</a></li>
+</ul>
+
+<h2 id="logistics">Logistics</h2>
+
+<ul>
+  <li>Class meetings: MWF 1:00 PM - 1:50 PM in CSB 303 (some days via <a href="Available%20upon%20request.">Zoom</a>)</li>
+  <li>Instructor: Robert Utterback
+    <ul>
+      <li>Office: CSB 342</li>
+      <li>Zoom Room: <a href="Available%20upon%20request.">Available upon request.</a>
+</li>
+      <li>Office Phone: 309.457.2202</li>
+      <li><a href="https://robertutterback.github.io">Website</a></li>
+      <li><a href="mailto:rutterback@monmouthcollege.edu">Email</a></li>
+      <li>Office hours: M 2-3. Tu 1-2. W 10-noon. F 2-3. Or <a href="https://robertutterback.github.io/schedule/">by appointment</a>. For the spring 2022 semester, all office hours and appointments will be held in my personal Zoom room unless otherwise noted.</li>
+    </ul>
+  </li>
+  <li>Course Website: <a href="https://robertutterback.github.io/courses/comp337/s22/">https://robertutterback.github.io/courses/comp337/s22/</a>
+</li>
+  <li>Credits: 1 course credit</li>
+  <li>Prerequisites: COMP 152.</li>
+  <li>Feedback: At any time during the course you can use
+<a href="https://forms.office.com/Pages/ResponsePage.aspx?id=2CUxPywZP0ec1n97FfYhs8Yn_tnrj59Js226l2OfoDlUOVdZQ0VJRUVZUzNGM1pHU01PNUhZSDJZVS4u">this</a> to provide
+anonymous suggestions, criticism, praise, etc.</li>
+</ul>
+
+<h2 id="content">Content</h2>
+
+<h3 id="description">Description</h3>
+
+<p>In this course we examine the technology and fundamental principles
+governing communications between computers, i.e., computer
+networking. Careful attention will be paid to the modern Internet and
+the technologies that support it. Students will use a combination of
+hands-on network analysis, programming assignments, and written
+problems to explore the top four layers of the five protocol layers of
+computer networking: the application layer, transport layer, network
+layer, and the link layer. This study encompasses the first six
+chapters of the text. Time permitting, we’ll examine basic issues in
+network security, the eighth chapter of the text.</p>
+
+<h3 id="sources">Sources</h3>
+
+<p>The required textbook is:</p>
+
+<ul>
+  <li>Kurose, James F. and Ross, Keith W. <em>Computer Networking: A Top-Down Approach</em> (8th
+Edition). Pearson. 2021. ISBN-13: 9780135928608.</li>
+</ul>
+
+<p>We may occasionally have readings from other sources, which will
+either be emailed to students or posted to the schedule below.</p>
+
+<h3 id="software">Software</h3>
+
+<p>In class I will often make use of the
+<a href="https://socrative.com">Socrative</a> app, so you’ll need to install this
+on your phones.</p>
+
+<p>Many assignments will make use of the
+<a href="https://www.wireshark.org/">Wireshark</a> packet sniffer. All students
+will need to install this program. Other networking software will be
+discussed as needed.</p>
+
+<h2 id="policies">Policies</h2>
+
+<ul>
+  <li>
+    <p><strong>Late assignments</strong>: You are allotted a <em>total</em> of <em>5</em> days. You
+may apply these to any homework assignment (NOT projects) as you see
+fit and turn in your solutions with no penalty. However, you may use
+at most 2 on any individual assignment. The point is to give you
+some flexibility for illnesses, long trips, etc. I am unlikely to
+grant further extensions. You must email the instructor <em>before</em> the
+due date if you wish to use late days.</p>
+  </li>
+  <li>
+    <p><strong>Academic dishonesty</strong>: Monmouth College’s official policy on academic dishonesty can be found <a href="http://ou.monmouthcollege.edu/life/residence-life/scots-guide/academic-regulations.aspx">here</a>. <strong>You</strong> are responsible for reading and complying with that policy.<br><br>
+<em>In this course, any violation of the academic honesty policy will have varying consequences depending on the severity of the infraction as judged by the instructor. Minimally, a violation will result in an “F” or 0 points on the assignment in question. Additionally, the student’s course grade may be lowered by one letter grade. In severe cases, the student will be assigned a course grade of “F” and dismissed from the class. All cases of academic dishonesty <strong>must</strong> be reported to the Associate Dean who may decide to recommend further action to the Admissions and Academic Status Committee, including suspension or dismissal. It is assumed that students will educate themselves regarding what is considered to be academic dishonesty, so excuses or claims of ignorance will not mitigate the consequences of any violations</em></p>
+  </li>
+  <li>
+    <p><strong>Collaboration</strong>: We encourage you to make use of the resources available to you – it is fine to seek help from a friend, tutor, instructor, internet, etc. However, <em>copying of answers and any act worth of the label “cheating” is never permissible</em>! In addition to listing your sources and collaborators, you should be producing your own writeup in your own words. By “your own words,” we mean you should be producing the text yourself, without some external aid. Verbatim copying of text is specifically disallowed, but so is taking a source and rearranging some phrases and changing some variable names to create a derivative version! Such behavior is definitely NOT “using your own words.” It does not matter if you helped contribute to this source text with others, since then you are still not the sole author of the text.
+The point of collaborating on an assignment is not to produce a jointly authored set of solutions, since that violates the course policies. Instead, it is to help you solve the problems, which sometimes involve a bit of creativity. After you have jointly come up with the ideas you need to solve the problems, though, you should part ways with your group and sit down to do the writing by yourself.
+I also advise against sharing the writeup you submit with others, since if someone else uses your text as a source for their own solution (with or without your permission), you will also be implicated in the violation of the academic integrity policy. In any case, if two nearly identical solutions are received, we have no way of tell which is the original, and the policy is to not award credit for either submission.</p>
+  </li>
+  <li>
+    <p><strong>Electronic Devices</strong>: Do not use your phone or other devices in class except where necessary. Any computer or tablet usage should be related to the course. If a device is not being used for Zoom or Socrative it should be put away and turned on silent. Other usage is rude and distracting to others.</p>
+  </li>
+  <li>
+    <p><strong>General expectations</strong>: In short, I expect you to be respectful of others and take
+responsibility for your own learning. You are here to learn, so work
+hard and be professional.</p>
+
+    <ul>
+      <li>
+        <p>Just attending class is not sufficient to truly learn the
+material. Read the text, use the resources available at Monmouth
+College, and go beyond the material.</p>
+      </li>
+      <li>
+        <p>If you miss class, you are responsible for everything covered on
+ that day.  College is, in some sense, your job. Take pride in
+ creating quality work. Staple your assignments, label problems, and
+ present your answers neatly and orderly.</p>
+      </li>
+      <li>
+        <p>Your job is to convince me that you have learned the material –
+show your work! Even if you do not know a particular answer,
+guide me through your thought process.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="assessment">Assessment</h2>
+
+<h3 id="assignments-and-workload">Assignments and Workload</h3>
+
+<p>The weekly workload for this course will vary by student and by week
+but should be about 12 hours per week on average. The following table
+provides a rough estimate of the distribution of time over different
+course components for a 16 week semester, as well as detailing the
+type, amount, and relative value of all assignments.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Amount</th>
+      <th>Final Grade Weight</th>
+      <th>Time/Week (Hours)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Lectures/Class</td>
+      <td>42</td>
+      <td>5% (<strong>Participation</strong>)</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <td><strong>Problem Sets</strong></td>
+      <td>5–6</td>
+      <td>25%</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <td><strong>Wireshark Labs</strong></td>
+      <td>5–6</td>
+      <td>25%</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>Exam Study</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td><strong>Exams</strong></td>
+      <td>4–6</td>
+      <td>30%</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>Reading Quizzes</strong></td>
+      <td>Many</td>
+      <td>15%</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Reading/Unstructured Study</td>
+      <td>-</td>
+      <td>-</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Total</td>
+      <td> </td>
+      <td>100%</td>
+      <td>12</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Problem sets may include written exercises and/or programming
+assignments. When homework is due, the instructor may select 1 or more
+exercises to be presented. Students will be randomly selected (with
+replacement) to present their solution. Such presentations are graded
+as a part of your problem set grade.</p>
+
+<p>Each exam will focus primarily, but not necessarily exclusively, on
+the material covered since the previous exam.</p>
+
+<h3 id="grading">Grading</h3>
+
+<p>In-class presentations will be graded on a simple 3-point scale:</p>
+
+<ul>
+  <li>0: Nothing of substance; little effort</li>
+  <li>1: Needs significant work</li>
+  <li>2: Mostly or fully correct</li>
+</ul>
+
+<p>If you are unable to attend a class, you must notify the instructor
+<em>prior</em> to the class. If you do not, and you are randomly selected to
+present, you will receive a 0. It is possible that you are never
+randomly selected, in which case you will receive full credit for this
+portion of the grade.</p>
+
+<p>Your participation grade is based on a variety of activities. During
+class I will often make use of the <a href="https://socrative.com">Socrative</a>
+app, so you’ll need to install this on your phones. Participating in
+Socrative questions and with in-class group activities is required for
+a decent participation grade; an A includes asking questions either in
+class or in office hours.</p>
+
+<p>Your final grade is based on a weighted average of particular
+assignment categories. You can estimate your current grade based on
+your scores and these weights. You may always visit the instructor
+outside of class to discuss your current standing. Assignments and
+final grades use a standard grading scale shown below and will not
+be curved except in rare cases when deemed necessary by the
+instructor.</p>
+
+<p>This courses uses a standard grading scale. Assignments and final
+grades will not be curved except in rare cases when its deemed
+necessary by the instructor. Percentage grades translate to letter
+grades as follows:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Score</th>
+      <th style="text-align: center">Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">94–100</td>
+      <td style="text-align: center">A</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">90–93</td>
+      <td style="text-align: center">A-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">88–89</td>
+      <td style="text-align: center">B+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">82–87</td>
+      <td style="text-align: center">B</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">80–81</td>
+      <td style="text-align: center">B-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">78–79</td>
+      <td style="text-align: center">C+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">72–77</td>
+      <td style="text-align: center">C</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">70–71</td>
+      <td style="text-align: center">C-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">68–69</td>
+      <td style="text-align: center">D+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">62–67</td>
+      <td style="text-align: center">D</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">60–61</td>
+      <td style="text-align: center">D-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0–59</td>
+      <td style="text-align: center">F</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You are always welcome to challenge a grade that you feel is unfair or
+calculated incorrectly. Mistakes made in your favor will never be
+corrected to lower your grade. Mistakes made not in your favor will
+be corrected. Basically, after the initial grading your score can
+only go up as the result of a challenge*.</p>
+
+<p>You are always welcome to challenge a grade that you feel is unfair or
+calculated incorrectly. Mistakes made in your favor will never be
+corrected to lower your grade. Mistakes made not in your favor will be
+corrected. <em>Basically, after the initial grading your score can only
+go up as the result of a challenge.</em></p>
+
+<h2 id="schedule">Schedule</h2>
+<p>The following <strong>tentative</strong> calendar should give you a feel for how
+work is distributed throughout the semester. Assignments and events
+are listed in the week they are due or when they occur. <em>This calendar
+is subject to change based on the circumstances of the course</em>.</p>
+
+<p><strong>Note</strong>: All readings should be done <strong>before</strong> the class period in
+which they are listed below.</p>
+
+<!-- Each day's slides/notes can be found in [this shared -->
+<!-- folder](https://monmouthcollege-my.sharepoint.com/:f:/g/personal/rutterback_monmouthcollege_edu/El9m6H7DIk9PmTw_63XCwhABvx_cembEy2hSjaVvBX1fCg?e=6RM3Cl). You -->
+<!-- will need to be logged in to your Monmouth College account to see the -->
+<!-- folder. If I have not uploaded the week's slides by Friday afternoon -->
+<!-- you are free to email me a reminder. -->
+
+<table class="schedule">
+  <thead>
+    <tr>
+      <th style="text-align: left">Date</th>
+      <th style="text-align: center">Class Activity</th>
+      <th style="text-align: right">Assignment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Wed 01/12 (Week 1)</td>
+      <td style="text-align: center">Intro and Logistics</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 01/14</td>
+      <td style="text-align: center">Network of Networks; Wireshark</td>
+      <td style="text-align: right">Read 1.1-1.3, <a href="https://monmouthcollege-my.sharepoint.com/:w:/g/personal/rutterback_monmouthcollege_edu/Eb3WAZMznENBumledDjqHrwBo4YEWxA7lLQEkWSRXRJKKA?e=WGXdVy">Wireshark Lab 0</a>
+</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">(Mon 01/17) (Week 2)</td>
+      <td style="text-align: center">(MLK Jr. Day – no afternoon classes)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 01/19</td>
+      <td style="text-align: center">Performance</td>
+      <td style="text-align: right">Read 1.4-1.8, PS 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 01/21</td>
+      <td style="text-align: center">Security &amp; History</td>
+      <td style="text-align: right">WL 0 Due</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 01/24 (Week 3)</td>
+      <td style="text-align: center">The Web and HTTP</td>
+      <td style="text-align: right">2.1-2.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 01/26</td>
+      <td style="text-align: center">SMTP, DNS, and Peer-to-Peer</td>
+      <td style="text-align: right">2.3-2.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 01/28</td>
+      <td style="text-align: center">Streaming; Socket Programming</td>
+      <td style="text-align: right">2.6-2.8, PS 1 Due, <a href="https://monmouthcollege-my.sharepoint.com/:w:/g/personal/rutterback_monmouthcollege_edu/EaMa0gNQUHdFvW5XuGWkZU0Bv2TA4_GWzWBQQcCd_TrE3w?e=1mtRfJ">WL 1</a>
+</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 01/31 (Week 4)</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 02/02</td>
+      <td style="text-align: center">Exam 1 Review</td>
+      <td style="text-align: right">WL 1 Due</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 02/04</td>
+      <td style="text-align: center">Exam 1</td>
+      <td style="text-align: right">PS 2 out</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 02/07 (Week 5)</td>
+      <td style="text-align: center">Exam 1 Solutions</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 02/09</td>
+      <td style="text-align: center">Transport layer; UDP</td>
+      <td style="text-align: right">3.1-3.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 02/11</td>
+      <td style="text-align: center">Reliable Data Transfer: Stop-and-Wait</td>
+      <td style="text-align: right">3.4</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 02/14 (Week 6)</td>
+      <td style="text-align: center">RDT: Pipelining</td>
+      <td style="text-align: right">PS 2 Due, <a href="https://monmouthcollege-my.sharepoint.com/:w:/g/personal/rutterback_monmouthcollege_edu/Ed3lfQnxD39CtEh2Nsxd1V4BB9GYVynhptqBxSu7spTAGA?e=Ue05L5">WL 2</a> out</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 02/16</td>
+      <td style="text-align: center">TCP Reliable Data Transfer</td>
+      <td style="text-align: right">3.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 02/18</td>
+      <td style="text-align: center">TCP flow control/connection</td>
+      <td style="text-align: right">3.6, PS 3 out</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 02/21 (Week 7)</td>
+      <td style="text-align: center">WL2 Review; Congestion Control Principles</td>
+      <td style="text-align: right">3.7, WL 2 due</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 02/23</td>
+      <td style="text-align: center">Congestion Control in TCP</td>
+      <td style="text-align: right">3.8-3.9</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 02/25</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right">PS 3 due</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 02/28 (Week 8)</td>
+      <td style="text-align: center">Exam Review</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 03/02</td>
+      <td style="text-align: center">Exam 2</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">(Fri 03/04)</td>
+      <td style="text-align: center">(Exam Day for 1st half-semester courses)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">(03/07 – 03/11)</td>
+      <td style="text-align: center">(Spring Break)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 03/14 (Week 9)</td>
+      <td style="text-align: center">Exam 2 Solutions</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 03/16</td>
+      <td style="text-align: center">Network Layer: Routers</td>
+      <td style="text-align: right">4.1-4.2, <a href="https://monmouthcollege-my.sharepoint.com/:w:/g/personal/rutterback_monmouthcollege_edu/EdoFHKgNEnxMqxDKJVxMSlgBqrHy2GxM04kkes5p2FFWVw?e=uYPkN7">WL 3</a> out</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 03/18</td>
+      <td style="text-align: center">Priority Scheduling</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 03/21 (Week 10)</td>
+      <td style="text-align: center">The Internet Protocol</td>
+      <td style="text-align: right">4.3, PS 4 out</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 03/23</td>
+      <td style="text-align: center">NAT and IPv6</td>
+      <td style="text-align: right">WL 3 due</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 03/25</td>
+      <td style="text-align: center">SDN</td>
+      <td style="text-align: right">4.4-4.6</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 03/28 (Week 11)</td>
+      <td style="text-align: center">Link-State Routing</td>
+      <td style="text-align: right">5.1-5.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 03/30</td>
+      <td style="text-align: center">Distance Vector; BGP</td>
+      <td style="text-align: right">5.3-5.4</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 04/01</td>
+      <td style="text-align: center">SDN Control Plane</td>
+      <td style="text-align: right">5.5, <a href="https://monmouthcollege-my.sharepoint.com/:w:/g/personal/rutterback_monmouthcollege_edu/EWcdeyomSkVPgd3ygwZ8sVoBEq4NjbFLOyKhmwZAhVV7bg?e=Psyn9u">WL 4</a> out</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 04/04 (Week 12)</td>
+      <td style="text-align: center">Network Management</td>
+      <td style="text-align: right">5.6-5.8</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 04/06</td>
+      <td style="text-align: center">(No class)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 04/08</td>
+      <td style="text-align: center">(No class; Exam 3 – take-home)</td>
+      <td style="text-align: right">
+<a href="https://monmouthcollege-my.sharepoint.com/:b:/g/personal/rutterback_monmouthcollege_edu/EScmVMr19o1KiGOsoFH_H48BBSDP2NY0-gwBup-N81YBvQ?e=CIqka1">PS 6</a> out (research project)</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 04/11 (Week 13)</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right">6.1-6.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 04/13</td>
+      <td style="text-align: center">Exam 3 Solutions</td>
+      <td style="text-align: right">PS 5 out</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">(Fri 04/15)</td>
+      <td style="text-align: center">(Easter Break)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">(Mon 04/18) (Week 14)</td>
+      <td style="text-align: center">(Easter Break)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 04/20</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right">6.4</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 04/22</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right">6.5-6.8, PS 5 due</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 04/25 (Week 15)</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right">8.1-8.3, <a href="https://monmouthcollege-my.sharepoint.com/:w:/g/personal/rutterback_monmouthcollege_edu/EcNQSxXPaRRIs-99IeXkE4oB0uD7tyKuRWf4tgmXbiBaoA?e=XVeuvG">WL 5</a> out</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 04/27</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right">8.4-8.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 04/29</td>
+      <td style="text-align: center">Presentations</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 05/02 (Week 16)</td>
+      <td style="text-align: center">Presentations</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 05/04</td>
+      <td style="text-align: center">Presentations</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td style="text-align: left"><strong>Tue 05/10 8:00 AM</strong></td>
+      <td style="text-align: center"><strong>Exam 5 (Final)</strong></td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tfoot>
+</table>
+
+<!-- Local Variables: -->
+<!-- eval: (orgtbl-mode) -->
+<!-- End: -->
+
+			</div>
+		</div>
+		<!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="https://robertutterback.github.io/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+<!-- <script src="/assets/js/katex.js"></script> -->
+<script src="https://robertutterback.github.io/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/academicons.min.css">
+
+<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"> -->
+
+
+<!-- Google Analytics -->
+<!-- <script> -->
+<!-- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!-- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!-- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!-- })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!-- ga('create', 'UA-XXXXXXXX-X', 'auto'); -->
+<!-- ga('send', 'pageview'); -->
+<!-- </script> -->
+
+	</body>
+</html>

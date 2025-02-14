@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Robert Utterback | COMP240 - Project 3: Baseball Dashboard</title>
+<meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+">
+
+     <link rel="shortcut icon" href="https://robertutterback.github.io/assets/img/favicon.ico">
+		 <link rel="stylesheet" href="https://robertutterback.github.io/assets/css/main.css">
+		 <!-- <link rel="shortcut icon" href="/assets/img/favicon.ico"> -->
+     <!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+
+     <link rel="canonical" href="https://robertutterback.github.io/courses/comp240/s24/p3/">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    
+    <span class="site-title">
+        
+        <strong>Robert</strong> Utterback
+    </span>
+    
+
+    <nav class="site-nav">
+
+      <div class="trigger">
+        <!-- About -->
+        <a class="page-link" href="https://robertutterback.github.io/">About</a>
+        <!-- <a class="page-link" href="">About</a> -->
+
+        <!-- Blog -->
+        <!-- <a class="page-link" href="https://robertutterback.github.io/blog/">blog</a> -->
+
+        <!-- Pages -->
+        
+          
+        
+          
+						 <a class="page-link" href="https://robertutterback.github.io/cv/">CV</a>
+						 <!-- <a class="page-link" href="">CV</a> -->
+          
+        
+          
+        
+          
+        
+          
+						 <a class="page-link" href="https://robertutterback.github.io/pubs/">Publications</a>
+						 <!-- <a class="page-link" href="">Publications</a> -->
+          
+        
+          
+						 <a class="page-link" href="https://robertutterback.github.io/resources/">Resources</a>
+						 <!-- <a class="page-link" href="">Resources</a> -->
+          
+        
+          
+						 <a class="page-link" href="https://robertutterback.github.io/schedule/">Schedule</a>
+						 <!-- <a class="page-link" href="">Schedule</a> -->
+          
+        
+          
+						 <a class="page-link" href="https://robertutterback.github.io/teaching/">Teaching</a>
+						 <!-- <a class="page-link" href="">Teaching</a> -->
+          
+        
+
+        <!-- CV link -->
+        <!-- <a class="page-link" href="https://robertutterback.github.io/assets/pdf/cv.pdf">Vitae</a> -->
+
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">COMP240 - Project 3: Baseball Dashboard</h1>
+		<h5 class="post-description"></h5>
+  </header>
+
+	<article class="post-content COMP240 - Project 3: Baseball Dashboard clearfix">
+		<p>For our third project you’ll be developing a web-based dashboard to
+visualize and analyze baseball data. This dashboard will serve as an
+interactive tool to explore various statistics and trends within the
+dataset provided. The backend of the application must be implemented
+in Python, while you have the freedom to choose the technologies used
+for the frontend and data visualization components.</p>
+
+<p><strong>Note</strong>: I realize not everyone is familiar with baseball. You do NOT
+need to become an expert in baseball to do this project. There is
+enough flexibility in the requirements that you can learn a few things
+about baseball and still ask/answer some very interesting questions
+about the data. <em>Many</em> data scientists start a new job knowing NOTHING
+about their dataset, so this is pretty typical, and is an opportunity
+to learn how to extract and present interesting insights from any
+dataset. This will prepare you for real-world scenarios.</p>
+
+<p>As in the first two projects, we will continue to challenge your
+programming skills while building on your ability to work in a team,
+use version control effectively, and apply an <a href="https://en.wikipedia.org/wiki/Agile_software_development">Agile
+development</a>
+methodology.</p>
+
+<h2 id="learning-goals">Learning Goals</h2>
+
+<ul>
+  <li>Learn SQL for data retrieval and manipulation.</li>
+  <li>Learn to integrate Python with a SQL database (PostgreSQL) for data
+retrieval.</li>
+  <li>Practice researching and analyzing suitable technologies for a given
+project.</li>
+  <li>Gain experience wrangling and manipulating data in Python.</li>
+  <li>Explore data visualization techniques and tools to present data in
+an interactive and insightful manner.</li>
+  <li>Team-based software development and project management:
+    <ul>
+      <li>Agile methodology to plan, execute, and track progress, including
+the use of sprints, user stories, and retrospectives.</li>
+      <li>Git and GitHub for version control and collaboration</li>
+      <li>GitHub pull requests and comments for code reviews</li>
+      <li><a href="https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow">Git feature branch
+workflow</a></li>
+    </ul>
+  </li>
+  <li>Independent learning and problem-solving skills</li>
+  <li>Continue practicing presentation skills</li>
+</ul>
+
+<h2 id="the-dataset-lahmans-baseball-database">The Dataset: Lahman’s Baseball Database</h2>
+
+<p>The project will utilize Lahman’s Baseball Database, a comprehensive
+dataset containing historical baseball data. This dataset includes
+player performance statistics, team data, batting and pitching
+statistics, and more, spanning from 1871 to 2022. You will have access
+to a PostgreSQL database containing this information.</p>
+
+<h3 id="key-components-of-the-dataset">Key Components of the Dataset</h3>
+
+<ul>
+  <li>People: Player names, birth dates, and biographical info.</li>
+  <li>Batting: Batting statistics for players.</li>
+  <li>Pitching: Pitching statistics for players.</li>
+  <li>Teams: Yearly stats and information for each team.</li>
+  <li>Awards: Player awards (e.g., MVP, Cy Young).</li>
+</ul>
+
+<h3 id="querying-the-data">Querying the Data</h3>
+
+<p>I will email you the access information necessary to access the
+database. You may NOT use other forms of the Lahman database — you
+MUST use SQL to retrieve the data from my database. You may, however,
+add other baseball datasets, in whatever format you choose, if you’re
+feeling ambitious.</p>
+
+<p>You will need to learn SQL to query the data. There are many online
+resources available, including <a href="https://www.w3schools.com/sql/">W3
+Schools</a>,
+<a href="https://www.codecademy.com/catalog/language/sql">Codecademy</a>, and the
+free, interactive book <a href="https://selectstarsql.com/">Select Star SQL</a>.</p>
+
+<p>The baseball data is split up into <em>tables</em>. To ask and answer
+interesting questions, you will need to <strong>join</strong> some of these tables
+together. This will likely be the hardest aspect of SQL you’ll need to
+learn. See more about joins
+<a href="https://www.w3schools.com/sql/sql_join.asp">here</a> and
+<a href="https://selectstarsql.com/hiatuses.html">here</a>.</p>
+
+<p>Although SQL is the query language, you will need to use this from
+WITHIN Python. I highly recommend using the Python module psycopg2 as
+an “adapter” to the database, SQLAlchemy to run your queries, and
+Pandas for data manipulation.</p>
+
+<h2 id="dashboard-technologies">Dashboard Technologies</h2>
+
+<p>You are required to build a web-based dashboard, as opposed to a
+native desktop or mobile app. Unlike last project’s website, this app
+requires both a “front” end (HTML/CSS/JavaScript) and a “back” end
+that retrieves the data and perhaps does some processing. <em>Your
+backend MUST be in Python</em>.</p>
+
+<p>Other than that, you are free to choose what your dashboard will be
+built with. In fact, research different technologies is one of the
+learning goals for this project! There are some Python libraries made
+specifically for dashboards. There are many others made for websites,
+and you can build dashboards on top of them.</p>
+
+<p>Here are a few libraries to help you start your search:</p>
+
+<ul>
+  <li><a href="https://dash.plotly.com/">Plotly Dash</a> is made for
+dashboards. Under the hood it uses Plotly to create visualizes and
+Flask as the web serving software.</li>
+  <li><a href="https://panel.holoviz.org/">Panel</a> is also made for dashboards, and
+is built off of Bokeh.</li>
+  <li><a href="https://streamlit.io/">Streamlit</a> is a new library that is easy to
+build with. It <em>seems</em> less flexible than the other choices, but I
+don’t have any direct experience with it, so I may be wrong.</li>
+  <li><a href="http://bokeh.org/">Bokeh</a> is a plotting library and server, though
+it is a bit more “low-level” than something like Panel.</li>
+  <li><a href="https://flask.palletsprojects.com/en/3.0.x/">Flask</a> is a general
+purpose web framework. You can build any kind of website with it. It
+is very flexible, though you’ll need to have some other
+visualization packages to create your visualizations.</li>
+</ul>
+
+<p>Find out more about Python dashboards
+<a href="https://pyviz.org/dashboarding/">here</a>.</p>
+
+<h2 id="agile-development-and-github-usage">Agile Development and GitHub Usage</h2>
+
+<p>As before, you are expected to adopt an Agile development methodology
+for this project. Plan your work in one-week sprints, create user
+stories, maintain a backlog of tasks, estimate the difficulty of tasks
+and keep track of your velocity.</p>
+
+<p>User GitHub for version control, collaborating on code through feature
+branches and pull requests. I should see pull requests from everyone,
+as well as comments on those pull requests that serve as code reviews.</p>
+
+<h2 id="weekly-checkpoints-and-requirements">Weekly Checkpoints and Requirements</h2>
+
+<ul>
+  <li><strong>Week 1</strong>: You need to accomplish two separate tasks during this week:
+    <ul>
+      <li>Research technologies and build a basic prototype or toy
+dashboard. It’s fine to follow an online tutorial to do this. You
+might even build multiple toy dashboards to get a feel for which
+dashboard/visualization technology you like best.</li>
+      <li>Begin learning SQL and exploring the dataset. You should be able
+to retrieve part of the dataset from Python.</li>
+    </ul>
+  </li>
+  <li>Week 2: Integrate week 1’s two pieces so that the dashboard shows
+  some baseball information. Focus on simple things, like showing
+  descriptive analytics.</li>
+  <li>Week 3: Expand the dashboard to include interactive, exploratory
+visualizations. The user should be able to filter or subset parts of
+the data. Refine the user interface and user experience based on
+feedback.</li>
+  <li>Week 4: Attempt to incorporate a descriptive model into the
+dashboard. Prepare for the final presentation.</li>
+</ul>
+
+<p>Notice that there are no specific required visualizations or questions
+to answer — it’s up to you! Imagine that you work for a baseball
+executive in the 90s, before analytics was a big part of
+baseball. What might be interesting and useful to them? <strong>This is
+actually the hardest part of the job for any data analyst or data
+scientist: figuring out what will help your company’s decision makers,
+even though they don’t even know!</strong></p>
+
+<h3 id="what-is-a-descriptive-model">What is a “Descriptive Model”</h3>
+
+<p>For week 4 above I mentioned you need a descriptive model. A
+descriptive model aims to summarize or describe the main features of a
+dataset of the relationships between variables within it. Unlike
+predictive models, which forecast unobserved outcomes or future
+trends, descriptive models focus on presenting the current data in a
+manner that is easy to understand, highlighting patterns, trends, and
+relationships that are already present in the dataset.</p>
+
+<p>In the context of this project, a descriptive model could involve:</p>
+
+<ul>
+  <li><strong>Correlation Analysis</strong>: Probably the most expected
+form. Identifying and quantifying the relationships between
+variables. For instance, exploring how batting average correlates
+with runs batted in (RBIs) or home runs.</li>
+  <li><strong>Trend Analysis</strong>: Looking at how certain metrics (e.g., player
+performance, team wins) change over time. For example, how has power
+hitting or base stealing changed since the 1980s?</li>
+  <li><strong>Segmentation and Clustering</strong>: Grouping similar data points
+together to identify distinct categories within the data. For
+example, categorizing pitchers into different roles based on their
+performance statistics.</li>
+</ul>
+
+<p>Normally, summary statistics would also count as a descriptive model,
+but that is too simple for your last week; I expect summary statistics
+to be implemented earlier.</p>
+
+<p>You will probably need some additional Python libraries, such as
+<a href="https://www.statsmodels.org/stable/index.html">statsmodels</a> or
+<a href="https://scikit-learn.org">scikit-learn</a> to implement such a model.</p>
+
+<h2 id="presentations">Presentations</h2>
+
+<p>As before, you’ll have weekly checkpoint presentations. The
+requirements for those are unchanged; please see project 2’s
+description of them.</p>
+
+<p>Your final presentation will be similar, but I want you to start the
+presentation as if you are presenting to a baseball executive. Demo
+your dashboard, explain why it’s useful and what questions it can
+answer, without using technical jargon. Then, for the rest of the
+presentation, target intro programming students and include the rest
+of the final presentation components mentioned in project 2.</p>
+
+
+	</article>
+
+	
+
+	
+
+
+</div>
+
+      </div>
+    </div>
+
+    <footer>
+
+  <div class="wrapper">
+    &copy; Copyright 2025 Robert Utterback.
+    Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
+
+    
+  </div>
+
+</footer>
+
+
+    <!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="https://robertutterback.github.io/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+<!-- <script src="/assets/js/katex.js"></script> -->
+<script src="https://robertutterback.github.io/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/academicons.min.css">
+
+<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"> -->
+
+
+<!-- Google Analytics -->
+<!-- <script> -->
+<!-- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!-- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!-- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!-- })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!-- ga('create', 'UA-XXXXXXXX-X', 'auto'); -->
+<!-- ga('send', 'pageview'); -->
+<!-- </script> -->
+
+
+  </body>
+
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Robert Utterback | COMP240 - Project 2: Conway's Game of Life</title>
+<meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+">
+
+     <link rel="shortcut icon" href="https://robertutterback.github.io/assets/img/favicon.ico">
+		 <link rel="stylesheet" href="https://robertutterback.github.io/assets/css/main.css">
+		 <!-- <link rel="shortcut icon" href="/assets/img/favicon.ico"> -->
+     <!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+
+     <link rel="canonical" href="https://robertutterback.github.io/courses/comp240/s24/p2/">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    
+    <span class="site-title">
+        
+        <strong>Robert</strong> Utterback
+    </span>
+    
+
+    <nav class="site-nav">
+
+      <div class="trigger">
+        <!-- About -->
+        <a class="page-link" href="https://robertutterback.github.io/">About</a>
+        <!-- <a class="page-link" href="">About</a> -->
+
+        <!-- Blog -->
+        <!-- <a class="page-link" href="https://robertutterback.github.io/blog/">blog</a> -->
+
+        <!-- Pages -->
+        
+          
+        
+          
+						 <a class="page-link" href="https://robertutterback.github.io/cv/">CV</a>
+						 <!-- <a class="page-link" href="">CV</a> -->
+          
+        
+          
+        
+          
+        
+          
+						 <a class="page-link" href="https://robertutterback.github.io/pubs/">Publications</a>
+						 <!-- <a class="page-link" href="">Publications</a> -->
+          
+        
+          
+						 <a class="page-link" href="https://robertutterback.github.io/resources/">Resources</a>
+						 <!-- <a class="page-link" href="">Resources</a> -->
+          
+        
+          
+						 <a class="page-link" href="https://robertutterback.github.io/schedule/">Schedule</a>
+						 <!-- <a class="page-link" href="">Schedule</a> -->
+          
+        
+          
+						 <a class="page-link" href="https://robertutterback.github.io/teaching/">Teaching</a>
+						 <!-- <a class="page-link" href="">Teaching</a> -->
+          
+        
+
+        <!-- CV link -->
+        <!-- <a class="page-link" href="https://robertutterback.github.io/assets/pdf/cv.pdf">Vitae</a> -->
+
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">COMP240 - Project 2: Conway's Game of Life</h1>
+		<h5 class="post-description"></h5>
+  </header>
+
+	<article class="post-content COMP240 - Project 2: Conway's Game of Life clearfix">
+		<p>For our second project you’ll be implementing <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway’s Game of
+Life</a>. Despite
+the name, this is really a simulation. It is interesting to see the
+patterns and “life” that appears from such simple rules.</p>
+
+<p>As in the first project, we will continue to challenge your
+programming skills while building on your ability to work in a team,
+use version control effectively, and apply an <a href="https://en.wikipedia.org/wiki/Agile_software_development">Agile
+development</a>
+methodology.</p>
+
+<h2 id="learning-goals">Learning Goals</h2>
+
+<ul>
+  <li>Basic web development using JavaScript, HTML, and a little CSS</li>
+  <li>Independent learning and problem-solving skills
+    <ul>
+      <li>We will cover some basic ideas in class, but just as in the last
+project, it’s up to you to pick up all the details. I’m here to
+guide you if things are taking too long, but it’s up to you to
+research and experiment!</li>
+    </ul>
+  </li>
+  <li>Team-based software development and project management:
+    <ul>
+      <li>Agile methodology to plan, execute, and track progress, including
+the use of sprints, user stories, and retrospectives.</li>
+      <li>Git and GitHub for version control and collaboration</li>
+      <li><a href="https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow">Git feature branch
+workflow</a></li>
+    </ul>
+  </li>
+  <li>Presentation skills</li>
+  <li>Software design patterns and architecture, specifically MVC
+(Model-View-Controller)</li>
+</ul>
+
+<h2 id="the-game">The “Game”</h2>
+
+<p>The essence of the simulation is a grid of cells, each of which is
+either alive or dead. Generally, living cells are colored (e.g., red,
+green, black), while dead cells are white. But you can choose colors
+as you please.</p>
+
+<p>The game is turn-based: for each turn, each cell decides whether it
+will be alive or dead in the next turn. It does this by considering
+the cells around it (cells adjacent horizontally, vertically, or
+diagonally). People have come up with different rule variants, but
+Conway’s initial rules were (taken from Wikipedia):</p>
+
+<ol>
+  <li>Any live cell with fewer than two live neighbors dies (underpopulation).</li>
+  <li>Any live cell with two or three live neighbors lives on to the next
+generation.</li>
+  <li>Any live cell with more than three live neighbors dies
+(overpopulation).</li>
+  <li>Any dead cell with exactly three live neighbors becomes a live cell
+(reproduction).</li>
+</ol>
+
+<p>The behavior of the simulation depends on the initial state (AKA
+“seed”) of the system.</p>
+
+<p>At a minimum, our users should be able to:</p>
+
+<ol>
+  <li>Before a simulation has started, click various cells to toggle them
+alive or dead.</li>
+  <li>Start a simulation.</li>
+  <li>Pause a simulation.</li>
+  <li>Stop a simulation.</li>
+</ol>
+
+<p>However, many more features are possible and should be
+considered. Here are some example stretch goals:</p>
+
+<ul>
+  <li>All the users to select different rulesets.</li>
+  <li>Let the user adjust the simulation speed.</li>
+  <li>Ability to save the current state and load it later.</li>
+  <li>Ability to use a library of predefined patterns.</li>
+  <li>Advanced visualization, e.g., color-coding cells based on their age,
+visual effects when a cell is born/dies, etc.</li>
+  <li>Make the app responsive and usable on a mobile device</li>
+</ul>
+
+<p>You may come up with your own stretch goals, keeping in mind the fact
+that this is only a one-month project. It is recommended that you come
+to me with your stretch goal ideas for advice on how to implement
+them.</p>
+
+<h2 id="the-implementation-medium--a-web-app">The Implementation Medium — A Web App</h2>
+
+<p>Your implementation will be a web application using HTML, CSS, and
+JavaScript. We will review the basics in class, but you are encouraged
+to explore additional resources and tutorials.</p>
+
+<h2 id="the-development-environment--vscode">The Development Environment — VSCode</h2>
+
+<p>The whole team should work with the same IDE (integrated development
+environment). I highly recommend
+<a href="https://code.visualstudio.com/">VSCode</a> — it’s popular (so there’s
+lots of online support), easy to use, and works on all major operating
+systems. However, your team is free to have a discussion and choose a
+different IDE.</p>
+
+<p>As before, use Git for version control. <strong>However, I also want you to do
+a few new techniques</strong>:</p>
+
+<ul>
+  <li>Use GitHub issues to track your progress on features and any bugs
+you find.</li>
+  <li>Use <a href="https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow">Git feature branch
+workflow</a>
+to develop your features. The basic idea is to make a new branch for a
+new feature and implement your feature. When you’re done, commit,
+push, and make a pull request on GitHub. Ask your teammates to review
+the pull request, possibly walking them through the code. After making
+any changes they’d like, merge your pull request!</li>
+</ul>
+
+<h2 id="initial-planning">Initial Planning</h2>
+
+<p>Start by envisioning your final product and creating <a href="https://en.wikipedia.org/wiki/User_story">user
+stories</a>. You don’t
+necessarily need to implement ALL of these user stories, just come up
+with a bunch. Estimate how long each story will take in
+<a href="https://www.atlassian.com/agile/project-management/estimation">“points”</a>.</p>
+
+<p>I will act as a partial “product owner”, helping to define and clarify
+your user stories. The user stories are key, BUT please realize that
+the plans here are not fixed. Your initial plan will evolve based on
+feedback and your sprint reviews.</p>
+
+<p>Your goal is to end up with a final “release” that is a usable
+product. It may not have all the user stories or features you wanted,
+but it should run and do <em>some</em> things.</p>
+
+<p>After you get your feet wet, I’m going to introduce extra requirements
+in weeks 2 and 3 (see below). Keep this in mind when doing your
+planning.</p>
+
+<h3 id="details-about-user-stories">Details about User Stories</h3>
+
+<p>User stories describe a feature or function of your application from
+the perspective of your end user. They’re a way to capture user needs
+and ensure your project aligns with those needs. A typical user story
+follows this format:</p>
+
+<blockquote>
+  <p>As a [type of user], I want [some goal] so that [some reason].</p>
+</blockquote>
+
+<p>For example:</p>
+
+<blockquote>
+  <p>As a user, I want to pause the simulation so that I can inspect the
+current state of the grid in detail.</p>
+</blockquote>
+
+<p>(We will probably only have one type of user.)</p>
+
+<p>Some user stories will be essential, others are just nice to
+have. Work together to prioritize these stories, focusing first on
+those that are critical to a successful “release.”</p>
+
+<h2 id="agile-sprints">Agile “Sprints”</h2>
+
+<p>In real-world Agile implementations, “sprints” are 1–4 weeks. Due to
+the duration of our project, your sprints will be one week long.</p>
+
+<p>Each week, decide which user stories (or parts of user stories) are
+most important, break them down into small tasks, and assign them to
+team members. Use GitHub issues to track these tasks — both new
+tasks and old ones not yet completed (the “backlog”). Estimate how
+long each task will take and keep track of the velocity, just like in
+previous projects.</p>
+
+<p>Every time you meet as a group, start with a 5-15 minute <a href="https://en.wikipedia.org/wiki/Stand-up_meeting">“stand-up
+meeting”</a>. The point
+of standing is to keep the meeting short. (It’s okay if some members
+are unable to stand.) Each member should address three questions:</p>
+
+<ol>
+  <li>What have I done recently that helped us meet our spring goal?</li>
+  <li>What will I do today?</li>
+  <li>What obstacles are preventing progress?</li>
+</ol>
+
+<p>After this, you can do code reviews, re-assign tasks as necessary, and
+begin coding. Code in pairs or triples whenever possible.</p>
+
+<h2 id="when-things-dont-go-as-planned">When Things Don’t Go As Planned</h2>
+
+<p>It’s normal for plans to change. Use your meets and especially the
+checkpoints to adjust tasks based on completed work and team velocity.</p>
+
+<p>Sometimes you may need to <strong>slow down</strong> and make sure you understand
+JavaScript. If you use web sources, make sure you understand the code
+you’re using, or else it will actually slow you down when things don’t
+work the way you expect.</p>
+
+<h2 id="checkpoint-presentations">Checkpoint Presentations</h2>
+
+<p>Begin by showing me a demo of the current state of your project,
+focusing on newly implemented features or user stories. Spend some
+time telling me what your tasks were, who worked on them, how long
+they took versus expected time, and velocity. Include a small code
+review. Reflect on your user stories themselves — how well they were
+understood, whether they effectively captured user needs, and how they
+might need to be changed.</p>
+
+<p>Then review your teamwork and Agile project management — what you
+did well versus what could be improved. This is an opportunity for
+feedback and reflections. Lastly, tell me your plans for the next
+sprint, including what is in the “backlog” and what changes might be
+needed to keep the “release” on track.</p>
+
+<h2 id="final-presentation">Final Presentation</h2>
+
+<p>Your final presentation should target first-year computer science
+students. This is a longer presentation: 15–20 minutes. It should
+include the following components, not necessarily in this order:</p>
+
+<ul>
+  <li>Explain the motivation behind the project — why are you doing it
+and what are you learning?</li>
+  <li>Explain your development process and Agile methodologies — act
+like you are teaching it to them!</li>
+  <li>Show a demo of your final result.</li>
+  <li>Highlight key piece(s) of code. Pick only the most
+important/interesting bit(s). Slow down and explain it well.</li>
+  <li>Discuss your success and mistakes, both in terms of coding but also project management.</li>
+  <li>What would you do differently if you could restart the project from the beginning?</li>
+  <li>If you had time for another “release”, what users stories would you
+focus on, and what would the next sprint look like?</li>
+</ul>
+
+<p>Presentation tips:</p>
+
+<ul>
+  <li>Number slides</li>
+  <li>Use an outline slide. Possible flash it up between sections</li>
+  <li>Don’t add too much text to slides. Don’t just read directly off the slide.</li>
+  <li>Aim for one diagram/picture/code block per slide.</li>
+  <li>Don’t cover too much!</li>
+</ul>
+
+<h2 id="testing-week-2-only">Testing (Week 2+ only)</h2>
+
+<p>Starting in week 2, we’re going to add explicit testing as a
+requirement for your project. We’ll use
+<a href="https://en.wikipedia.org/wiki/QUnit">QUnit</a> to do this. We’ll talk
+more about this in class.</p>
+
+<h2 id="mvc-architecture-week-3-only">MVC Architecture (Week 3+ only)</h2>
+
+<p>Starting in week 3, we’re going to refactor your app to use a specific
+<a href="https://en.wikipedia.org/wiki/Software_architecture">software
+architecture</a>
+called
+<a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC</a>
+(Modal-View-Controller).</p>
+
+<p>The idea is to split your app into three components. This separation
+helps in managing complex applications, making it easier to maintain
+and add features.</p>
+
+<ul>
+  <li><strong>Model</strong>: the central component, managing the data, logic, and
+rules of the application. For us, this would manage the grid state
+and the rules for determining which cells are born or die.</li>
+  <li><strong>View</strong>: Any representation of the state. For us, it’s the visual
+representation of the grid on the HTML canvas.</li>
+  <li><strong>Controller</strong>: Accepts input and converts it to commends for the
+model or view. For us, including the acts of starting, pausing, or
+resetting the grid.</li>
+</ul>
+
+<p>The previous week’s tests should make it easier to refactor, since you
+can be more confident that you didn’t break anything. Although your
+tests might need some changes. You should focus on testing the model,
+and perhaps the controller. Testing the UI is beyond the scope of this
+project.</p>
+
+<h2 id="test-driven-development-week-4-only">Test-Driven Development (Week 4+) only</h2>
+
+<p>In your final week, experiment with test-driven development. This style
+of development means you will write tests BEFORE writing any
+code. Yes, this means you will write tests that will immediately fail!
+The hope is that writing the tests first makes the goal and eventual
+code clearer, while also enforcing comprehensive tests for your app.</p>
+
+	</article>
+
+	
+
+	
+
+
+</div>
+
+      </div>
+    </div>
+
+    <footer>
+
+  <div class="wrapper">
+    &copy; Copyright 2025 Robert Utterback.
+    Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
+
+    
+  </div>
+
+</footer>
+
+
+    <!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="https://robertutterback.github.io/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+<!-- <script src="/assets/js/katex.js"></script> -->
+<script src="https://robertutterback.github.io/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/academicons.min.css">
+
+<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"> -->
+
+
+<!-- Google Analytics -->
+<!-- <script> -->
+<!-- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!-- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!-- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!-- })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!-- ga('create', 'UA-XXXXXXXX-X', 'auto'); -->
+<!-- ga('send', 'pageview'); -->
+<!-- </script> -->
+
+
+  </body>
+
+</html>

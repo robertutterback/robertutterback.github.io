@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Robert Utterback | COMP 230: Computer Architecture and Organization, Fall 2017</title>
+<meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+">
+
+     <link rel="shortcut icon" href="https://robertutterback.github.io/assets/img/favicon.ico">
+		 <link rel="stylesheet" href="https://robertutterback.github.io/assets/css/main.css">
+		 <!-- <link rel="shortcut icon" href="/assets/img/favicon.ico"> -->
+     <!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+
+     <link rel="canonical" href="https://robertutterback.github.io/courses/comp230/f17/">
+</head>
+
+	<body>
+		<style type="text/css">
+			.schedule {
+			width: 100%;
+			}
+			table {  
+			width: auto;
+			margin: auto;
+			}
+			blockquote {
+			padding: .35rem;
+			font: 12px;
+			}
+			blockquote footer {
+			font-size: 8px;
+			}
+		</style>
+		<div class="course-content">
+			<div class="wrapper">
+				<header class="post-header">
+					<h1 class="post-title">COMP 230: Computer Architecture and Organization, Fall 2017</h1>
+					<!-- <h5 class="class-description">Blah</h5> -->
+				</header>
+				<p><em>This syllabus is subject to change based on specific class needs, especially the <a href="#schedule">schedule</a>. Significant deviations will be discussed in class.</em></p>
+
+<ul id="markdown-toc">
+  <li><a href="#logistics" id="markdown-toc-logistics">Logistics</a></li>
+  <li><a href="#content" id="markdown-toc-content">Content</a>    <ul>
+      <li><a href="#topics" id="markdown-toc-topics">Topics</a></li>
+      <li><a href="#sources" id="markdown-toc-sources">Sources</a></li>
+    </ul>
+  </li>
+  <li><a href="#policies" id="markdown-toc-policies">Policies</a></li>
+  <li><a href="#assessment" id="markdown-toc-assessment">Assessment</a>    <ul>
+      <li><a href="#assignments" id="markdown-toc-assignments">Assignments</a></li>
+      <li><a href="#workload" id="markdown-toc-workload">Workload</a></li>
+      <li><a href="#grading" id="markdown-toc-grading">Grading</a></li>
+    </ul>
+  </li>
+  <li><a href="#schedule" id="markdown-toc-schedule">Schedule</a></li>
+  <li><a href="#monmouth-college-services" id="markdown-toc-monmouth-college-services">Monmouth College Services</a></li>
+</ul>
+
+<h3 id="logistics">Logistics</h3>
+
+<ul>
+  <li>Class Meetings: MTWF 12:00 PM - 12:50 PM in CFSB 303</li>
+  <li>Instructor: Robert Utterback
+    <ul>
+      <li>Office: CSB 342</li>
+      <li>Phone: 309.457.2202</li>
+      <li>Website: <a href="https://robertutterback.github.io">https://robertutterback.github.io</a></li>
+      <li>Email: <a href="mailto:rutterback@monmouthcollege.edu">rutterback@monmouthcollege.edu</a></li>
+      <li>Office Hours: M 9-10 AM. Tu 3-4 PM. Th 11-noon. F 10-11 AM. By appointment (see the schedule on my webpage).</li>
+    </ul>
+  </li>
+  <li>Website: <a href="https://robertutterback.github.io/courses/comp230/f17/">https://robertutterback.github.io/courses/comp230/f17/</a></li>
+  <li>Credits: 1 course credit</li>
+  <li>Prerequisites: COMP 160 and MATH 260, though MATH 260 can be a co-requisite.</li>
+</ul>
+
+<h3 id="content">Content</h3>
+
+<p>This course aims to convince students that no magic is required to
+make computers work by teaching the design and operation of digital
+computers. By learning about the organization of computers, including
+processor datapath, processor control, memory systems, and I/O,
+students will develop an intuition about why hardware is the way it is
+and how software interacts with hardware. Through detailed
+implementation experience students will learn to make careful
+tradeoffs between functional, performance and cost goals when
+selecting and interconnecting hardware components.</p>
+
+<h4 id="topics">Topics</h4>
+
+<p>Possible topics include:</p>
+
+<ul>
+  <li>Technology Trends in CPU performance</li>
+  <li>Instruction Sets</li>
+  <li>Computer Arithmetic</li>
+  <li>Datapath and Control</li>
+  <li>Pipelining</li>
+  <li>Memory Hierarchies</li>
+  <li>Input and Output</li>
+  <li>Multiprocessors</li>
+  <li>Digital Logic</li>
+</ul>
+
+<h4 id="sources">Sources</h4>
+
+<p>The course textbook will be:</p>
+
+<ul>
+  <li>Patterson, David A. and Hennessy, John L. <em>Computer Organization and
+Design MIPS Edition, Fifth Edition: The Hardware/Software
+Interface</em>. Morgan Kaufmann. 2013. ISBN-13: 978-0124077263.</li>
+</ul>
+
+<p>Other sources will be posted on this webpage as needed.</p>
+
+<h3 id="policies">Policies</h3>
+
+<ul>
+  <li>
+    <p><strong>Late Assignments</strong>: In general, late assignments will <em>not</em> be accepted. Exceptions may be made only for situations beyond your control. If you feel your reason is justified, schedule a meeting with the instructor to plead your case.</p>
+  </li>
+  <li>
+    <p><strong>Academic Dishonesty</strong>: Monmouth College’s official policy on academic dishonesty can be found <a href="http://ou.monmouthcollege.edu/life/residence-life/scots-guide/academic-regulations.aspx">here</a>. <strong>You</strong> are responsible for reading and complying with that policy.<br /><br />
+<em>In this course, any violation of the academic honesty policy will have varying consequences depending on the severity of the infraction as judged by the instructor. Minimally, a violation will result in an “F” or 0 points on the assignment in question. Additionally, the student’s course grade may be lowered by one letter grade. In severe cases, the student will be assigned a course grade of “F” and dismissed from the class. All cases of academic dishonesty <strong>must</strong> be reported to the Associate Dean who may decide to recommend further action to the Admissions and Academic Status Committee, including suspension or dismissal. It is assumed that students will educate themselves regarding what is considered to be academic dishonesty, so excuses or claims of ignorance will not mitigate the consequences of any violations</em></p>
+  </li>
+  <li>
+    <p><strong>Collaboration</strong>: We encourage you to make use of the resources available to you – it is fine to seek help from a friend, tutor, instructor, internet, etc. However, <em>copying of answers and any act worthy of the label of “cheating” is never permissible</em>! It is understandable that when you work with a partner or a group that the resultant product is often extremely similar. This is acceptable but be prepared to be asked to defend your collaborations to the instructor. <em>You should always be able to reproduce an answer on your own, and if you cannot you likely <strong>do not really know the material</strong></em>.<br /><br />
+One way to collaborate effectively is to avoid taking careful notes during a collaboration session. Discuss the material and sketch out possible solutions on a whiteboard. When you have finished, take a break and then write up your solutions without any help from notes or pictures from the study session. This not only helps avoid violations of academic dishonesty, it also improves your retention of the material!<br /><br />
+When assignments are meant to be done in groups, you will be directed to turn in one set of solutions per group. Otherwise, each student must turn in an assignment representing their own work.</p>
+  </li>
+  <li>
+    <p><strong>Electronic Devices</strong>: Do not use your phone or other devices in class except where necessary. Any computer or tablet usage should be related to the course. If a device is not being used for Zoom or Socrative it should be put away and turned on silent. Other usage is rude and distracting to others.</p>
+  </li>
+  <li>
+    <p><strong>General Expectations</strong>: In short, I expect you to be respectful of others and take
+responsibility for your own learning. You are here to learn, so work
+hard and be professional.</p>
+
+    <ul>
+      <li>
+        <p>Just attending class is not sufficient to truly learn the
+material. Read the text, use the resources available at Monmouth
+College, and go beyond the material.</p>
+      </li>
+      <li>
+        <p>If you miss class, you are responsible for everything covered on
+ that day.  College is, in some sense, your job. Take pride in
+ creating quality work. Staple your assignments, label problems, and
+ present your answers neatly and orderly.</p>
+      </li>
+      <li>
+        <p>Your job is to convince me that you have learned the material –
+show your work! Even if you do not know a particular answer,
+guide me through your thought process.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="assessment">Assessment</h3>
+
+<h4 id="assignments">Assignments</h4>
+
+<p>The course workload is as follows:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Category</th>
+      <th style="text-align: center">Number of Assignments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Homework</td>
+      <td style="text-align: center">7–8</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Exams</td>
+      <td style="text-align: center">3</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Some homework assignments will be written assignments only; some will
+include programming components. Exams will be open book and notes
+unless otherwise specified. Each exam focuses primarily, but not
+necessarily exclusively, on material covered since the previous
+exam. The final exam will include a small number of cumulative
+questions, and I reserve the right to include at most two cumulative
+questions on each of the other exams.</p>
+
+<h4 id="workload">Workload</h4>
+
+<p>The weekly workload for this course will vary by student but on
+average should be about 11 hours per week. The follow tables provides
+a rough estimate of the distribution of this time over different
+course components for a 16 week semester.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Category</th>
+      <th style="text-align: center">Total Time</th>
+      <th style="text-align: center">Time/week (hours)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Lectures</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">3</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Homework</td>
+      <td style="text-align: center">80</td>
+      <td style="text-align: center">5</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Exam Study</td>
+      <td style="text-align: center">16</td>
+      <td style="text-align: center">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Reading+Unstructured Study</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">2</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">11</td>
+    </tr>
+  </tfoot>
+</table>
+
+<h4 id="grading">Grading</h4>
+
+<p>Your final grade is based on a weighted average of particular
+assignment categories. You can estimate your current grade based on
+your scores and these weights. You may always visit the instructor
+<em>outside of class</em> to discuss your current standing.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Category</th>
+      <th style="text-align: center">Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Homework</td>
+      <td style="text-align: center">35%</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Exam 1</td>
+      <td style="text-align: center">15%</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Exam 2</td>
+      <td style="text-align: center">15%</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Final Exam</td>
+      <td style="text-align: center">25%</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Participation</td>
+      <td style="text-align: center">10%</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This courses uses a standard grading scale. Assignments and final
+grades will not be curved except in rare cases when its deemed
+necessary by the instructor. Percentage grades translate to letter
+grades as follows:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Score</th>
+      <th style="text-align: center">Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">94–100</td>
+      <td style="text-align: center">A</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">90–93</td>
+      <td style="text-align: center">A-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">88–89</td>
+      <td style="text-align: center">B+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">82–87</td>
+      <td style="text-align: center">B</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">80–81</td>
+      <td style="text-align: center">B-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">78–79</td>
+      <td style="text-align: center">C+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">72–77</td>
+      <td style="text-align: center">C</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">70–71</td>
+      <td style="text-align: center">C-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">68–69</td>
+      <td style="text-align: center">D+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">62–67</td>
+      <td style="text-align: center">D</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">60–61</td>
+      <td style="text-align: center">D-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0–59</td>
+      <td style="text-align: center">F</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You are always welcome to challenge a grade that you feel is unfair or
+calculated incorrectly. Mistakes made in your favor will never be
+corrected to lower your grade. Mistakes made not in your favor will
+be corrected. Basically, after the initial grading your score can
+only go up as the result of a challenge*.</p>
+
+<h3 id="schedule">Schedule</h3>
+<p>The following <em>tentative</em> calendar should give you a feel for how work is
+distributed throughout the semester. Assignments and events are listed
+in the week they are due or when they occur. <em>This calendar is subject
+to change based on the circumstances of the course</em>.</p>
+
+<p><a href="./hw0.pdf">HW 0</a></p>
+
+<table class="schedule">
+  <thead>
+    <tr>
+      <th style="text-align: center">Date</th>
+      <th>Topic</th>
+      <th>Assignment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Tue 08/22</td>
+      <td>Introduction and Components of a Computer (<a href="./L01.pptx">slides</a>)</td>
+      <td>Read/review Ch. 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 08/23</td>
+      <td>Measuring Performance (<a href="./L02.pptx">slides</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 08/25</td>
+      <td>(<a href="./L03.pptx">slides</a>)</td>
+      <td><a href="./hw1.pdf">HW 1</a> out, Read Appendix B.1-B.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 08/28</td>
+      <td>Basic Logic Design (<a href="./L04.pptx">slides</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tue 08/29</td>
+      <td>Combinational Logic (<a href="L05.pptx">slides</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 08/30</td>
+      <td>(<a href="L06.pptx">slides</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 09/01</td>
+      <td>ALU (<a href="L07.pptx">slides</a>)</td>
+      <td>Read B.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 09/04</td>
+      <td>(<a href="L08.pptx">slides</a>)</td>
+      <td>HW 1 due</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tue 09/05</td>
+      <td>Carry Ahead Addition</td>
+      <td>Read B.6</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 09/06</td>
+      <td>Carry Ahead Addition, Clocks (<a href="L09-10.pptx">slides</a>)</td>
+      <td><a href="./hw2.pdf">HW 2</a> out, Read B.7</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 09/08</td>
+      <td>Memory (<a href="L11.pptx">slides</a>)</td>
+      <td>Read B.8-9</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 09/11</td>
+      <td>MIPS Instructions (<a href="L12.pptx">slides</a>)</td>
+      <td>Read 2.1-2.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tue 09/12</td>
+      <td>(<a href="L13.pptx">slides</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 09/13</td>
+      <td>(<a href="L14.pptx">slides</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 09/15</td>
+      <td>Logic and Conditional Instructions (<a href="L15.pptx">slides</a>)</td>
+      <td>HW 2 due, <a href="./hw3.pdf">HW 3</a> out, read 2.4-2.7</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 09/18</td>
+      <td>Procedures (<a href="L16.pptx">slides</a>)</td>
+      <td>Read 2.8</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tue 09/19</td>
+      <td>Leaf Procedures (<a href="L17.pptx">slides</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 09/20</td>
+      <td>Non-leaf Procedures (<a href="L18.pptx">slides</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 09/22</td>
+      <td>More Procedures, Arrays (<a href="L19.pptx">slides</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 09/25</td>
+      <td>Character Data (<a href="L20.pptx">slides</a>)</td>
+      <td>HW 3 due, <a href="./exam1p.pdf">Practice Exam 1</a>, <a href="./exam1p-sol.pdf">Solutions</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tue 09/26</td>
+      <td>Addressing Modes (<a href="L21.pptx">slides</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 09/27</td>
+      <td>Exam 1  Review</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 09/29</td>
+      <td>Exam 1</td>
+      <td><a href="./exam1-sol.pdf">Exam 1 Solutions</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 10/02</td>
+      <td>Translating and Starting Programs (<a href="L24.pptx">slides</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tue 10/03</td>
+      <td>Pointers versus Arrays (<a href="L25.pptx">slides</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 10/04</td>
+      <td>Programming with SPIM</td>
+      <td>Read A.9, <a href="./add2.asm">Example source</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 10/06</td>
+      <td>Real x86 Assembly: gdb and objdump</td>
+      <td><a href="./hw4.pdf">HW 4</a> out</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 10/09</td>
+      <td>Review: Integer Arithmetic (<a href="L27.pptx">slides</a>)</td>
+      <td>Read 3.1-3.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tue 10/10</td>
+      <td>Multiplication (<a href="L28.pptx">slides</a>)</td>
+      <td>Read 3.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">(10/11–10/15)</td>
+      <td>(Fall Break)</td>
+      <td>(Fall Break)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 10/16</td>
+      <td>Multiplication and Division (<a href="L29.pptx">slides</a>)</td>
+      <td>Read 3.4</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tue 10/17</td>
+      <td>Division, Floating Point Representation (<a href="L30.pptx">slides</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 10/18</td>
+      <td>Floating Point (<a href="L31.pptx">slides</a>)</td>
+      <td>Read 3.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 10/20</td>
+      <td>In-class exercise</td>
+      <td>HW 4 due, <a href="./hw5.pdf">HW 5</a> out</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 10/23</td>
+      <td>Floating Point Arithmetic (<a href="L33.pptx">slides</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tue 10/24</td>
+      <td>Processor Overview (<a href="L34.pptx">slides</a>)</td>
+      <td>Read 4.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 10/25</td>
+      <td>Building a Datapath (<a href="L35.pptx">slides</a>)</td>
+      <td>Read 4.2-4.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 10/27</td>
+      <td>Simple Processor Implementation (<a href="L36.pptx">slides</a>)</td>
+      <td>Read 4.4</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 10/30</td>
+      <td>Control for Jumps, Pipelining Overview (<a href="L37.pptx">slides</a>)</td>
+      <td>Read 4.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tue 10/31</td>
+      <td>Pipeline Implementation (<a href="L38.pptx">slides</a>)</td>
+      <td>Read 4.6</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 11/01</td>
+      <td>(<a href="L39.pptx">slides</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 11/03</td>
+      <td>ILP Overview: Static Multiple-Issue (<a href="L40.pptx">slides</a>)</td>
+      <td>HW 5 due, <a href="./hw6.pdf">HW 6</a> out</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 11/06</td>
+      <td>ILP: Static Multiple-Issue (<a href="L41.pptx">slides</a>)</td>
+      <td>Read 4.10, <a href="exam2p.pdf">Practice Exam 2</a>, <a href="exam2p-sol.pdf">Solutions</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tue 11/07</td>
+      <td>ILP: Superscalar Processors (<a href="L42.pptx">slides</a>)</td>
+      <td>Read 4.14</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 11/08</td>
+      <td>Finish Chapter 4 (<a href="L43.pptx">slides</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 11/10</td>
+      <td>Exam 2 Review</td>
+      <td><a href="exam2-sol.pdf">Exam 2 Solutions</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 11/13</td>
+      <td>Exam 2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tue 11/14</td>
+      <td>Memory Hierarchy (<a href="L46.pptx">slides</a>)</td>
+      <td>Read 5.1-5.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 11/15</td>
+      <td>Basics of Caches (<a href="L47.pptx">slides</a>)</td>
+      <td>Read 5.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 11/17</td>
+      <td>Cache Performance (<a href="L48.pptx">slides</a>)</td>
+      <td>Read 5.4</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 11/20</td>
+      <td>Associativity (<a href="L49.pptx">slides</a>)</td>
+      <td>HW 6 due, <a href="hw7.pdf">HW 7</a> out</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tue 11/21</td>
+      <td>Dependable Memory Hierarchy (<a href="L50.pptx">slides</a>)</td>
+      <td>Read 5.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">(11/22–11/26)</td>
+      <td>(Thanksgiving Break)</td>
+      <td>(Thanksgiving Break)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 11/27</td>
+      <td>Virtual Machines and Virtual Memory (<a href="L51.pptx">slides</a>)</td>
+      <td>Read 5.6-5.7</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tue 11/28</td>
+      <td>Common Framework for the Memory Hierarchy (<a href="L52.pptx">slides</a>)</td>
+      <td>Read 5.8</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 11/29</td>
+      <td>Finish Chapter 5 (<a href="L53.pptx">slides</a>)</td>
+      <td>Read 5.13, 5.15-5.16</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 12/01</td>
+      <td>Parallel Programs (<a href="L54.pptx">slides</a>)</td>
+      <td>Read 6.1-6.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 12/04</td>
+      <td>Multithreading, Multicore, GPU (<a href="L55.pptx">slides</a>)</td>
+      <td>Read 6.4-6.5, <a href="exam3p.pdf">Practice Exam 3</a>, <a href="exam3p-sol.pdf">Solutions</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tue 12/05</td>
+      <td>Clusters and Beyond (<a href="L56.pptx">slides</a>)</td>
+      <td>Read 6.6-6.13 (optional)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 12/06</td>
+      <td>Review</td>
+      <td>HW 7 (first half) due</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td style="text-align: center">Mon 12/11</td>
+      <td> </td>
+      <td>HW 7 (second half) due</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tue 12/12 3:00 PM</td>
+      <td>Final Exam</td>
+      <td><a href="exam3-sol.pdf">Final Exam Solutions</a></td>
+    </tr>
+  </tfoot>
+</table>
+
+<h3 id="monmouth-college-services">Monmouth College Services</h3>
+
+<ul>
+  <li>
+    <p>The <a href="http://ou.monmouthcollege.edu/academics/teaching-learning-center/"><strong>Teaching and Learning
+Center</strong></a>
+offers FREE resources to assist Monmouth College students with their
+academic success. Programs include Supplemental Instruction for
+difficult classes, Drop-In and
+appointment tutoring, and individual Academic Coaching. The TLC is
+here to help students excel academically. TLC services are not just
+for struggling students, but can assist all students to get better
+grades, practice stronger study skills, and manage time. The TLC is
+located on the 2nd floor of Poling Hall.</p>
+  </li>
+  <li>
+    <p><a href="http://ou.monmouthcollege.edu/life/disability-services/default.aspx"><strong>Disability Support
+Services</strong></a>:
+If you have a disability or had academic accommodations in high
+school or another college, you may be eligible for academic
+accommodations at Monmouth College under the Americans with
+Disabilities Act (ADA). Monmouth College is committed to equal
+educational access.  Students with disabilities can apply for
+accommodations at the Teaching and Learning Center.</p>
+    <ul>
+      <li>If you have
+not been diagnosed with a learning disability but believe that you
+would benefit from disability screening, please contact Amy
+Hofmeister in Counseling Services.</li>
+      <li>The instructor will be
+notified of students with accommodations; however, it is the
+student’s responsibility to activate her/his
+accommodations. Please meet with the instructor ASAP if this
+applies to you!</li>
+    </ul>
+  </li>
+</ul>
+
+<!-- Local Variables: -->
+<!-- eval: (orgtbl-mode) -->
+<!-- End: -->
+
+			</div>
+		</div>
+		<!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="https://robertutterback.github.io/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+<!-- <script src="/assets/js/katex.js"></script> -->
+<script src="https://robertutterback.github.io/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/academicons.min.css">
+
+<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"> -->
+
+
+<!-- Google Analytics -->
+<!-- <script> -->
+<!-- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!-- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!-- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!-- })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!-- ga('create', 'UA-XXXXXXXX-X', 'auto'); -->
+<!-- ga('send', 'pageview'); -->
+<!-- </script> -->
+
+	</body>
+</html>

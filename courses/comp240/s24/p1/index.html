@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Robert Utterback | COMP240 - Project 1: Battlecode</title>
+<meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+">
+
+     <link rel="shortcut icon" href="https://robertutterback.github.io/assets/img/favicon.ico">
+		 <link rel="stylesheet" href="https://robertutterback.github.io/assets/css/main.css">
+		 <!-- <link rel="shortcut icon" href="/assets/img/favicon.ico"> -->
+     <!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+
+     <link rel="canonical" href="https://robertutterback.github.io/courses/comp240/s24/p1/">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    
+    <span class="site-title">
+        
+        <strong>Robert</strong> Utterback
+    </span>
+    
+
+    <nav class="site-nav">
+
+      <div class="trigger">
+        <!-- About -->
+        <a class="page-link" href="https://robertutterback.github.io/">About</a>
+        <!-- <a class="page-link" href="">About</a> -->
+
+        <!-- Blog -->
+        <!-- <a class="page-link" href="https://robertutterback.github.io/blog/">blog</a> -->
+
+        <!-- Pages -->
+        
+          
+        
+          
+						 <a class="page-link" href="https://robertutterback.github.io/cv/">CV</a>
+						 <!-- <a class="page-link" href="">CV</a> -->
+          
+        
+          
+        
+          
+        
+          
+						 <a class="page-link" href="https://robertutterback.github.io/pubs/">Publications</a>
+						 <!-- <a class="page-link" href="">Publications</a> -->
+          
+        
+          
+						 <a class="page-link" href="https://robertutterback.github.io/resources/">Resources</a>
+						 <!-- <a class="page-link" href="">Resources</a> -->
+          
+        
+          
+						 <a class="page-link" href="https://robertutterback.github.io/schedule/">Schedule</a>
+						 <!-- <a class="page-link" href="">Schedule</a> -->
+          
+        
+          
+						 <a class="page-link" href="https://robertutterback.github.io/teaching/">Teaching</a>
+						 <!-- <a class="page-link" href="">Teaching</a> -->
+          
+        
+
+        <!-- CV link -->
+        <!-- <a class="page-link" href="https://robertutterback.github.io/assets/pdf/cv.pdf">Vitae</a> -->
+
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">COMP240 - Project 1: Battlecode</h1>
+		<h5 class="post-description"></h5>
+  </header>
+
+	<article class="post-content COMP240 - Project 1: Battlecode clearfix">
+		<p>Disclosure: this project is heavily based on one by Logan Mayfield.</p>
+
+<p>For our first project we’ll be taking a crack at
+<a href="https://battlecode.org/">Battlecode</a>, specifically the <a href="https://play.battlecode.org/bc24/home">2024
+Variation</a>. Battlecode is an
+annual programming tournament hosted by MIT. Teams program software
+bots to compete 1-on-1 against other teams. Each year a new game is
+developed.</p>
+
+<p>We’ll be doing our own little tournament locally – there’s no need to
+officially sign up for the contest.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>To get going you’ll need to setup a working development environment
+and a GitHub repository through which your team can collaborate.</p>
+
+<ol>
+  <li>
+    <p><strong>Development Environment:</strong> One of the trickiest parts of doing a
+BattleCode project can be getting the development environment
+setup. The code is done in Java and requires the much-aged Java 8.
+Follow along with the <a href="https://play.battlecode.org/bc24/getting-started">getting
+started</a>
+instructions on the BattleCode site and have patience with yourself
+as you get moving. Find your classmates that are running the same
+OS as you and work through bugs with them. <strong>When it comes time to
+setup your Battlecode repository, you should go ahead and fork the
+class repo sent via email rather than use the scaffold linked in
+the getting started guide.</strong></p>
+  </li>
+  <li>
+    <p><strong>Team Repo:</strong> Once everyone on your team has a working development
+environment, <em>pick one team member’s fork of the class repo to act
+as the team repo</em> and <em>invite the remaining team members as
+collaborators with at least Write level access</em>.</p>
+  </li>
+</ol>
+
+<p>At this point everyone on the team should be able to make local copies
+(<code>clone</code>s) of the team repo and you’re ready to start developing your
+bot.</p>
+
+<h2 id="projecting-with-battlecode">Projecting with Battlecode</h2>
+
+<p>The key to your success and continued sanity is to make small,
+incremental changes. In the context of this game, that means starting
+with the given example bot and repeating the following process:</p>
+
+<ol>
+  <li>Create a new bot that is based on an existing bot but includes some changes or improvements.</li>
+  <li>Play your new bot against one or more old bots in order to test your design.</li>
+  <li>Based on your tests, identify a new change or improvement to make. Go back to step 1.</li>
+</ol>
+
+<p>You really cannot think too small with each successive change. Have a
+vision for how that change will help your team win, but don’t worry if
+each individual change is just a tiny step towards that goal.</p>
+
+<h3 id="mit-battlecode-2024-lecture-videos">MIT Battlecode 2024 Lecture Videos</h3>
+
+<p>At MIT, Battlecode is run as course. It begins with a series of
+lectures designed for people new to Battlecode but with some prior
+programming experience.  In short, you! <a href="https://youtube.com/playlist?list=PLzybaECz2FwTrduZ7ZSlqST07yJIcal8W">The lectures are posted on
+YouTube</a>. You
+are encouraged to check them out and at least use them as resource. If
+you follow all of these lectures, you’ll end up incrementally
+developing a pretty solid, all around bot. You can also cherry pick
+parts as desired.</p>
+
+<p>The code for the player developed in their lectures can also be found in <a href="https://github.com/battlecode/battlecode24-lectureplayer">this GitHub repository</a></p>
+
+<h1 id="project-deadlines">Project Deadlines</h1>
+
+<p>Below is the calendar for daily goals and activities as well as important due dates. Checkpoint requirements can be found after the calendar.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Date</th>
+      <th style="text-align: center">Goal or Task</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">1/23</td>
+      <td style="text-align: center">Form teams. Setup communications plan. Setup team repo. <br /> Explore game rules. Look at Code. Set Goals for Checkpoint 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2/01</td>
+      <td style="text-align: center">Checkpoint 1, Presentation</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2/08</td>
+      <td style="text-align: center">Checkpoint 2, Presentation</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2/15</td>
+      <td style="text-align: center">Checkpoint 3, Presentation</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2/22</td>
+      <td style="text-align: center">Final Presentation, feature freeze: only refactor/cleanup</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2/23</td>
+      <td style="text-align: center">Final code submission</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="checkpoint-presentations">Checkpoint Presentations</h3>
+
+<p>Each checkpoint should present one or more new bots representing
+incremental changes to previous bots or the example bot. Do not try to
+do anything earth-shattering from scratch. <em>You should seriously
+consider following along with and implementing one or more changes
+discussed in the MIT lectures.</em> Regardless of how you choose to work,
+you must work towards and demonstrate shared knowledge and
+understanding of your changes. <em>This means planning for and taking the
+time to discuss changes such that every team member has a working
+knowledge of all the changes.</em></p>
+
+<p>Presentation expectations are given in the syllabus. As a review
+specific to this project, I’d expect something like this:</p>
+
+<ol>
+  <li>A small tournament between the example bot and your new bot(s).</li>
+  <li>A slide deck discussing:
+    <ul>
+      <li><em>What’s New &amp; Why:</em> A brief, non-technical presentation of the bot and your goal for the bot,</li>
+      <li><em>How You Did It</em> A short technical presentation of key code changes,</li>
+      <li><em>Team Practices</em> A break down of how your team functioned, what went well, and what improvements you might make to your team collaborative practices, and</li>
+      <li><em>What’s next</em> What do you have in mind for your next checkpoint?</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Group presentations should consist of a short slide presentation. Every member of the group must talk.</p>
+
+<h3 id="final-presentation">Final Presentation</h3>
+
+<p>For the last presentation you should present a single, final bot. The
+presentation will also be a bit more all encompassing as it should
+reflect back on the sum total of your team’s work and not just the
+work completed since the last checkpoint. Here’s what you need to talk
+about:</p>
+
+<ol>
+  <li><em>Overall bot Strategy</em> At a high-level, what is your bot trying to
+do? What strategies and tactics did you set out to implement?</li>
+  <li><em>Technical Presentation</em> Highlight parts of the code that are
+critical to implementing your overall strategy and core tactics and
+discuss how they do what they do.</li>
+  <li><em>Team Practices</em> Discuss how your team worked together as well as
+how and why your practices may have evolved from the start of the
+project. This discussion should include team strengths and team
+weaknesses, neither of these should be pinned to a specific team
+member.</li>
+  <li><em>Next Time</em> You might have a new team on your next project. Discuss
+what practices you plan to bring to that team and what kinds of
+pitfalls you might have encountered on this project that you’ll do
+your best to steer the next team away from.</li>
+</ol>
+
+<h2 id="grading-rubric">Grading Rubric</h2>
+
+<p>Your code and GitHub activity is graded as a part of the “Projects”
+grade (45% of total grade):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Category</th>
+      <th style="text-align: right">Weight</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Bot Competitiveness</td>
+      <td style="text-align: right">10%</td>
+      <td style="text-align: left">How effective is your bot against the example bot</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Bot Quality and Creativity</td>
+      <td style="text-align: right">25%</td>
+      <td style="text-align: left">Did you try out reasonable things, even if it wasn’t effective?</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Code Quality</td>
+      <td style="text-align: right">20%</td>
+      <td style="text-align: left">Code should be <em>clean</em>: logical structure, reasonably concise, with clear comments</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Code Style</td>
+      <td style="text-align: right">20%</td>
+      <td style="text-align: left">A consistent coding style is followed throughout</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Collaboration</td>
+      <td style="text-align: right">25%</td>
+      <td style="text-align: left">Evidence of code reviews through pull requests, issues, commits from all members, etc.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Your presentations are graded separately as part of the
+“Presentations” grade (35% of total grade):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Category</th>
+      <th style="text-align: right">Weight</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Contains Correct Content</td>
+      <td style="text-align: right">15%</td>
+      <td style="text-align: left">Contains all parts specified in syllabus/instructions</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Clear Structure</td>
+      <td style="text-align: right">15%</td>
+      <td style="text-align: left">Has an outline, easy to follow high-level parts of presentation</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Appropriate Speed</td>
+      <td style="text-align: right">10%</td>
+      <td style="text-align: left">Not too slow nor too fast</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Slide Quality</td>
+      <td style="text-align: right">10%</td>
+      <td style="text-align: left">Slides show meaningful content without overwhelming. Not just a barrage of text.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Demonstrations</td>
+      <td style="text-align: right">15%</td>
+      <td style="text-align: left">Contains demos of code and/or GitHub content. It’s okay if the demos don’t work as you expected</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Teamwork</td>
+      <td style="text-align: right">15%</td>
+      <td style="text-align: left">Every team member contributes during the presentation</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Reflection</td>
+      <td style="text-align: right">20%</td>
+      <td style="text-align: left">The team appropriately reflects on both strengths and weaknesses and plans for the future</td>
+    </tr>
+  </tbody>
+</table>
+
+	</article>
+
+	
+
+	
+
+
+</div>
+
+      </div>
+    </div>
+
+    <footer>
+
+  <div class="wrapper">
+    &copy; Copyright 2025 Robert Utterback.
+    Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
+
+    
+  </div>
+
+</footer>
+
+
+    <!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="https://robertutterback.github.io/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+<!-- <script src="/assets/js/katex.js"></script> -->
+<script src="https://robertutterback.github.io/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/academicons.min.css">
+
+<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"> -->
+
+
+<!-- Google Analytics -->
+<!-- <script> -->
+<!-- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!-- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!-- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!-- })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!-- ga('create', 'UA-XXXXXXXX-X', 'auto'); -->
+<!-- ga('send', 'pageview'); -->
+<!-- </script> -->
+
+
+  </body>
+
+</html>
