@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Robert Utterback | Comp 220: Data Structures, Fall 2017</title>
+<meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+">
+
+     <link rel="shortcut icon" href="https://robertutterback.github.io/assets/img/favicon.ico">
+		 <link rel="stylesheet" href="https://robertutterback.github.io/assets/css/main.css">
+		 <!-- <link rel="shortcut icon" href="/assets/img/favicon.ico"> -->
+     <!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+
+     <link rel="canonical" href="https://robertutterback.github.io/courses/comp220/f17/">
+</head>
+
+	<body>
+		<style type="text/css">
+			.schedule {
+			width: 100%;
+			}
+			table {  
+			width: auto;
+			margin: auto;
+			}
+			blockquote {
+			padding: .35rem;
+			font: 12px;
+			}
+			blockquote footer {
+			font-size: 8px;
+			}
+		</style>
+		<div class="course-content">
+			<div class="wrapper">
+				<header class="post-header">
+					<h1 class="post-title">Comp 220: Data Structures, Fall 2017</h1>
+					<!-- <h5 class="class-description">Data structures is a continuation of comp 161 and explores the data structures and algorithms essential to modern computing. students will continue to develop linux based c++ programs as they design, analyze, and implement and utilize abstract data types such as lists, stacks, queues, and tress. strong emphasis is put on analyzing and evaluating how implementation choices made by the programmer impact overall program performance.</h5> -->
+				</header>
+				<p><em>This syllabus is subject to change based on specific class needs, especially the <a href="#schedule">schedule</a>. Significant deviations will be discussed in class.</em></p>
+
+<ul id="markdown-toc">
+  <li><a href="#logistics" id="markdown-toc-logistics">Logistics</a></li>
+  <li><a href="#content" id="markdown-toc-content">Content</a>    <ul>
+      <li><a href="#topics" id="markdown-toc-topics">Topics</a></li>
+      <li><a href="#sources" id="markdown-toc-sources">Sources</a></li>
+      <li><a href="#programming-environment" id="markdown-toc-programming-environment">Programming Environment</a></li>
+    </ul>
+  </li>
+  <li><a href="#policies" id="markdown-toc-policies">Policies</a></li>
+  <li><a href="#assessment" id="markdown-toc-assessment">Assessment</a>    <ul>
+      <li><a href="#assignments" id="markdown-toc-assignments">Assignments</a></li>
+      <li><a href="#workload" id="markdown-toc-workload">Workload</a></li>
+      <li><a href="#grading" id="markdown-toc-grading">Grading</a></li>
+    </ul>
+  </li>
+  <li><a href="#schedule" id="markdown-toc-schedule">Schedule</a></li>
+  <li><a href="#monmouth-college-services" id="markdown-toc-monmouth-college-services">Monmouth College Services</a></li>
+</ul>
+
+<h3 id="logistics">Logistics</h3>
+
+<ul>
+  <li>Class meetings:
+    <ul>
+      <li>Class: MWF 8:00 am - 8:50 AM in CFSB 323</li>
+      <li>Lab: Th 2:00 pm - 3:50 PM in CFSB 309</li>
+    </ul>
+  </li>
+  <li>Instructor: Robert Utterback
+    <ul>
+      <li>Office: CSB 342</li>
+      <li>Phone: 309.457.2202</li>
+      <li>Website: <a href="https://robertutterback.github.io">https://robertutterback.github.io</a></li>
+      <li>Email: <a href="mailto:rutterback@monmouthcollege.edu">rutterback@monmouthcollege.edu</a></li>
+      <li>Office hours: M 9-10 AM. Tu 3-4 PM. Th 11-noon. F 10-11 AM. By appointment (see the schedule on my webpage).</li>
+    </ul>
+  </li>
+  <li>Website: <a href="https://robertutterback.github.io/courses/comp220/f17/">https://robertutterback.github.io/courses/comp220/f17/</a></li>
+  <li>Credits: 1 course credit</li>
+  <li>Prerequisites: COMP160 and COMP161 with a C or better.</li>
+</ul>
+
+<h3 id="content">Content</h3>
+
+<p>Data structures continues the study of abstraction and programming
+through a focused study of data structures, algorithms, and abstract
+data types. The primary focus of this course is the design and
+development of algorithms and programs using data abstraction and
+information hiding via abstract data types <em>ADTs</em>. Data abstraction
+is absolutely fundamental to good programming practice and the
+management of large scale problems and data sets. This course is
+designed to round out a student’s understanding of basic computer
+science concepts while strengthening the program design and
+development skills through continued use of a test-driven design
+methodology.</p>
+
+<p>It is imperative that programmers and program designers be able to
+determine which of the many solutions available is the best for their
+specific task. Throughout the course, students will focus on to making
+solid quantitative and qualitative judgments about program efficiency
+and overall program design choices. Gone are the days when “it
+works” is a good enough assessment for the quality of a program.</p>
+
+<p>Students will explore the ideas and concepts brought up in class and
+homework assignments during the weekly lab session. In addition to
+hands on exercises, lab sessions will be used to explore current,
+relevant research in computer science.</p>
+
+<h4 id="topics">Topics</h4>
+
+<p>We will focus on chapter 5 and beyond from the text. This includes,
+but is not limited to:</p>
+
+<ul>
+  <li>Review of c++ fundamentals (chapters 1–4, comp161 notes)</li>
+  <li>Review of algorithm design, analysis through sorting algorithms (chapter 10 \&amp; notes)</li>
+  <li>Standard container types (chapter 5)</li>
+  <li>Classes and adt design (chapter 6)</li>
+  <li>Recursive strategies (parts of chapters 7–9)</li>
+  <li>Pointer and array logic (chapter 11)</li>
+  <li>Dynamic memory management (chapter 12)</li>
+  <li>Efficient implementation of container types such as vectors, lists,
+stacks, queues, trees, maps, sets, and graphs. (chapters 13–17)</li>
+</ul>
+
+<h4 id="sources">Sources</h4>
+
+<p>The course textbook will be:</p>
+
+<ul>
+  <li>Roberts, Eric S. <em>Programming Abstractions in C++</em>. Pearson. 2014. ISBN-13:978-0133454840</li>
+</ul>
+
+<p>Other sources will be posted on this webpage as needed.</p>
+
+<h4 id="programming-environment">Programming Environment</h4>
+
+<p>This course utilizes the <a href="http://www.codeblocks.org/">Code::Blocks
+ide</a> and the GNU compiler for C++
+development.</p>
+
+<p>All programs written in this course are required to compile and run on
+a server running Ubuntu 16.04.3. All students will have access to the
+departmental server and thereby the above development tools. While
+development is not required in this environment, <em>failure to properly
+port a program to the required environment could result in your
+program not compiling correctly at the time of grading</em>. All software
+for this course is available free of charge and can be found on the
+web if students wish to install it on their personal machines.</p>
+
+<h3 id="policies">Policies</h3>
+
+<ul>
+  <li>
+    <p><strong>Late assignments</strong>: In general, late assignments will <em>not</em> be accepted. Exceptions may be made only for situations beyond your control. If you feel your reason is justified, schedule a meeting with the instructor to plead your case.</p>
+  </li>
+  <li>
+    <p><strong>Academic dishonesty</strong>: Monmouth College’s official policy on academic dishonesty can be found <a href="http://ou.monmouthcollege.edu/life/residence-life/scots-guide/academic-regulations.aspx">here</a>. <strong>You</strong> are responsible for reading and complying with that policy.<br /><br />
+<em>In this course, any violation of the academic honesty policy will have varying consequences depending on the severity of the infraction as judged by the instructor. Minimally, a violation will result in an “F” or 0 points on the assignment in question. Additionally, the student’s course grade may be lowered by one letter grade. In severe cases, the student will be assigned a course grade of “F” and dismissed from the class. All cases of academic dishonesty <strong>must</strong> be reported to the Associate Dean who may decide to recommend further action to the Admissions and Academic Status Committee, including suspension or dismissal. It is assumed that students will educate themselves regarding what is considered to be academic dishonesty, so excuses or claims of ignorance will not mitigate the consequences of any violations</em></p>
+  </li>
+  <li>
+    <p><strong>Collaboration</strong>: We encourage you to make use of the resources available to you – it is fine to seek help from a friend, tutor, instructor, internet, etc. However, <em>copying of answers and any act worthy of the label of “cheating” is never permissible</em>! It is understandable that when you work with a partner or a group that the resultant product is often extremely similar. This is acceptable but be prepared to be asked to defend your collaborations to the instructor. <em>You should always be able to reproduce an answer on your own, and if you cannot you likely <strong>do not really know the material</strong></em>.<br /><br />
+One way to collaborate effectively is to avoid taking careful notes during a collaboration session. Discuss the material and sketch out possible solutions on a whiteboard. When you have finished, take a break and then write up your solutions without any help from notes or pictures from the study session. This not only helps avoid violations of academic dishonesty, it also improves your retention of the material!<br /><br />
+When assignments are meant to be done in groups, you will be directed to turn in one set of solutions per group. Otherwise, each student must turn in an assignment representing their own work.</p>
+  </li>
+  <li>
+    <p><strong>Electronic devices</strong>: Do not use your phone or other devices in class except where necessary. Any computer or tablet usage should be related to the course. If a device is not being used for Zoom or Socrative it should be put away and turned on silent. Other usage is rude and distracting to others.</p>
+  </li>
+  <li>
+    <p><strong>General expectations</strong>: In short, I expect you to be respectful of others and take
+responsibility for your own learning. You are here to learn, so work
+hard and be professional.</p>
+
+    <ul>
+      <li>
+        <p>Just attending class is not sufficient to truly learn the
+material. Read the text, use the resources available at Monmouth
+College, and go beyond the material.</p>
+      </li>
+      <li>
+        <p>If you miss class, you are responsible for everything covered on
+ that day.  College is, in some sense, your job. Take pride in
+ creating quality work. Staple your assignments, label problems, and
+ present your answers neatly and orderly.</p>
+      </li>
+      <li>
+        <p>Your job is to convince me that you have learned the material –
+show your work! Even if you do not know a particular answer,
+guide me through your thought process.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="assessment">Assessment</h3>
+
+<h4 id="assignments">Assignments</h4>
+
+<p>The course workload is as follows:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Category</th>
+      <th style="text-align: center">Number Of Assignments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Labs</td>
+      <td style="text-align: center">10</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Homework</td>
+      <td style="text-align: center">8–10</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Projects</td>
+      <td style="text-align: center">2</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Exams</td>
+      <td style="text-align: center">7</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Homework assignments will always either precede a lab to prepare for
+it or follow a lab to complete it. Students are also encouraged to
+look at the textbook’s review questions, since the solutions are
+available online. There will be no dedicated midterm or final exam,
+but 7 exams spaced throughout the semester. Each exam will focus
+primarily, but not necessarily exclusively, on the material covered
+since the previous exam. The final exam will include a small number of
+cumulative questions, and I reserve the right to include at most one
+cumulative question on each of the other exams.</p>
+
+<h4 id="workload">Workload</h4>
+
+<p>The weekly workload for this course will vary by student but on
+average should be about 13 hours per week. The follow tables provides
+a rough estimate of the distribution of this time over different
+course components for a 16 week semester.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Category</th>
+      <th style="text-align: center">Total Time</th>
+      <th style="text-align: center">Time/Week (Hours)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Lectures+Labs</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">4</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Homework</td>
+      <td style="text-align: center">48</td>
+      <td style="text-align: center">3</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Exam Study</td>
+      <td style="text-align: center">16</td>
+      <td style="text-align: center">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Projects</td>
+      <td style="text-align: center">48</td>
+      <td style="text-align: center">3</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Reading+Unstructured Study</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">2</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">13</td>
+    </tr>
+  </tfoot>
+</table>
+
+<h4 id="grading">Grading</h4>
+
+<p>Lab and homework assignments are graded on a simple 3 point
+scale. Grades are marked with, in decreasing order, a check-plus,
+check, or check-minus. Your final grade for these two assignment
+categories is then based off the respective averages and determined by
+the following chart. Notice this chart lists the minimum average
+needed to achieve a particular letter grade.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Assignment Avg. (min)</th>
+      <th style="text-align: center">Letter Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">2.8</td>
+      <td style="text-align: center">A</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2.75</td>
+      <td style="text-align: center">A-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2.5</td>
+      <td style="text-align: center">B+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2.25</td>
+      <td style="text-align: center">B</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2</td>
+      <td style="text-align: center">B-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1.75</td>
+      <td style="text-align: center">C+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1.5</td>
+      <td style="text-align: center">C</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">C-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0.75</td>
+      <td style="text-align: center">D</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0.5</td>
+      <td style="text-align: center">F</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Your final grade is based on a weighted average of particular
+assignment categories. You can estimate your current grade based on
+your scores and these weights. You may always visit the instructor
+<em>outside of class</em> to discuss your current standing.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">category</th>
+      <th style="text-align: center">weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">exams</td>
+      <td style="text-align: center">45%</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">projects</td>
+      <td style="text-align: center">25%</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">homework</td>
+      <td style="text-align: center">12.5%</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">labs</td>
+      <td style="text-align: center">12.5%</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">participation</td>
+      <td style="text-align: center">5%</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This courses uses a standard grading scale. Assignments and final
+grades will not be curved except in rare cases when its deemed
+necessary by the instructor. Percentage grades translate to letter
+grades as follows:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Score</th>
+      <th style="text-align: center">Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">94–100</td>
+      <td style="text-align: center">A</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">90–93</td>
+      <td style="text-align: center">A-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">88–89</td>
+      <td style="text-align: center">B+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">82–87</td>
+      <td style="text-align: center">B</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">80–81</td>
+      <td style="text-align: center">B-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">78–79</td>
+      <td style="text-align: center">C+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">72–77</td>
+      <td style="text-align: center">C</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">70–71</td>
+      <td style="text-align: center">C-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">68–69</td>
+      <td style="text-align: center">D+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">62–67</td>
+      <td style="text-align: center">D</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">60–61</td>
+      <td style="text-align: center">D-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0–59</td>
+      <td style="text-align: center">F</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You are always welcome to challenge a grade that you feel is unfair or
+calculated incorrectly. Mistakes made in your favor will never be
+corrected to lower your grade. Mistakes made not in your favor will
+be corrected. Basically, after the initial grading your score can
+only go up as the result of a challenge*.</p>
+
+<h3 id="schedule">Schedule</h3>
+<p>The following <strong>tentative</strong> calendar should give you a feel for how
+work is distributed throughout the semester. Assignments and events
+are listed in the week they are due or when they occur. <em>This calendar
+is subject to change based on the circumstances of the course</em>.</p>
+
+<table class="schedule">
+  <thead>
+    <tr>
+      <th style="text-align: center">date</th>
+      <th style="text-align: center">topic</th>
+      <th>Assignment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Wed 08/23</td>
+      <td style="text-align: center">Intro</td>
+      <td>Using <a href="./vnc.pdf">VNC</a>, <a href="./codeblocks.pdf">Code::Blocks</a>, <a href="./comp161-bigO.pdf">COMP161 BigO Notes</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Thu 08/24</td>
+      <td style="text-align: center">Logarithms (<a href="./01-logarithms.pdf">notes</a>)</td>
+      <td><a href="./lab1.pdf">Lab/HW 1</a> assigned</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 08/25</td>
+      <td style="text-align: center">Review C++ Fundamentals and Big O</td>
+      <td><a href="https://jlmayfield.github.io/teaching/COMP161/sp17/notes/comp161-lectureNotes-04.pdf">COMP161 C++ Notes I</a>, <a href="https://jlmayfield.github.io/teaching/COMP161/sp17/notes/comp161-lectureNotes-06.pdf">COMP161 C++ Notes II</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 08/28</td>
+      <td style="text-align: center">Analyzing Simple Recursion (<a href="./02-recursion.pdf">notes</a>)</td>
+      <td>Read Ch. 7</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 08/30</td>
+      <td style="text-align: center">Palindromes and Binary Search</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Thu 08/31</td>
+      <td style="text-align: center">Recursion to Iteration</td>
+      <td>HW 1 due, <a href="./lab2.pdf">Lab/HW 2</a> AND <a href="./lab3.pdf">HW 3</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 09/01</td>
+      <td style="text-align: center">Review</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 09/04</td>
+      <td style="text-align: center">Exam 1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 09/06</td>
+      <td style="text-align: center">Structural Recursion and Iteration (<a href="03-structure.pdf">notes</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Thu 09/07</td>
+      <td style="text-align: center">Recursion for intToStr</td>
+      <td>HW 2 AND 3 due, <a href="./lab3.pdf">Lab 3</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 09/08</td>
+      <td style="text-align: center">Analyzing Sorting</td>
+      <td>Read Ch. 10</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 09/11</td>
+      <td style="text-align: center">Divide and Conquer Sorting (Mergesort)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 09/13</td>
+      <td style="text-align: center">Quicksort</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Thu 09/14</td>
+      <td style="text-align: center">Tracing Sorting and Searching</td>
+      <td><a href="./lab4.pdf">Lab/HW 4</a> (<a href="./hw4-sol.pdf">Solutions</a>)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 09/15</td>
+      <td style="text-align: center"> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 09/18</td>
+      <td style="text-align: center">Collections: Stacks and Queues</td>
+      <td>Read 5.1-5.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 09/20</td>
+      <td style="text-align: center">Exam 2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Thu 09/21</td>
+      <td style="text-align: center">Using Stacks and Queues</td>
+      <td><a href="./lab5.pdf">Lab/HW 5</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 09/22</td>
+      <td style="text-align: center">Collections: Maps and Sets</td>
+      <td>Read 5.4-5.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 09/25</td>
+      <td style="text-align: center">Traversing Collections (<a href="08-traverse.pdf">notes</a>)</td>
+      <td>Read 5.6</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 09/27</td>
+      <td style="text-align: center">Designing Classes</td>
+      <td>Read 6.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Thu 09/28</td>
+      <td style="text-align: center">Map Inversion</td>
+      <td><a href="./lab6.pdf">Lab/HW 6</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 09/29</td>
+      <td style="text-align: center"> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 10/02</td>
+      <td style="text-align: center"> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 10/04</td>
+      <td style="text-align: center">Exam 3</td>
+      <td><a href="./exam3-sol.pdf">Solutions</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Thu 10/05</td>
+      <td style="text-align: center">Stacks Using Vectors</td>
+      <td><a href="./lab7.pdf">Lab/HW 7</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 10/06</td>
+      <td style="text-align: center">Overloading Operators</td>
+      <td>Read 6.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 10/09</td>
+      <td style="text-align: center"> </td>
+      <td><a href="./exam4.pdf">Exam 4</a> (take-home)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">(10/11–10/15)</td>
+      <td style="text-align: center">(Fall Break)</td>
+      <td>(Fall Break)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 10/16</td>
+      <td style="text-align: center">Exceptions and Exception handling (<a href="exceptions.pdf">notes</a>)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 10/18</td>
+      <td style="text-align: center">Handling Input: Tokenizing</td>
+      <td>Read 6.4</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Thu 10/19</td>
+      <td style="text-align: center">Reverse Polish Notation Calculator</td>
+      <td><a href="./proj1.pdf">Project 1</a> out</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 10/20</td>
+      <td style="text-align: center">Pointers</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 10/23</td>
+      <td style="text-align: center"> </td>
+      <td>Read 11.1-11.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 10/25</td>
+      <td style="text-align: center">Arrays and Pointer Arithmetic</td>
+      <td>Read 11.3-11.4</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Thu 10/26</td>
+      <td style="text-align: center">Free Lab for Project 1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 10/27</td>
+      <td style="text-align: center">C-style Strings</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 10/30</td>
+      <td style="text-align: center">Dynamic Memory, Linked Lists</td>
+      <td>Read 12.1-12.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 11/01</td>
+      <td style="text-align: center">Traversing Linked Lists, Arrays vs. Linked Lists</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Thu 11/02</td>
+      <td style="text-align: center">Array comparison</td>
+      <td><a href="lab8.pdf">Lab 8</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 11/03</td>
+      <td style="text-align: center">Freeing Memory, Destructors</td>
+      <td><a href="exam5.pdf">Exam 5</a> (take-home), Read 12.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 11/06</td>
+      <td style="text-align: center">DoubleStack</td>
+      <td>Read 12.4-12.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 11/08</td>
+      <td style="text-align: center"> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Thu 11/09</td>
+      <td style="text-align: center">Better Arrays and Vectors</td>
+      <td><a href="lab9.pdf">Lab 9/HW 7</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 11/10</td>
+      <td style="text-align: center">Copying Objects</td>
+      <td>Read 12.7</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 11/13</td>
+      <td style="text-align: center">Dynamic-array Stack Analysis, Templates</td>
+      <td>Read 12.8, 14.1-14.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 11/15</td>
+      <td style="text-align: center">Implementing Queues</td>
+      <td>Read 14.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Thu 11/16</td>
+      <td style="text-align: center"> </td>
+      <td><a href="proj2.pdf">Project 2</a> out, Exam 6 out</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 11/17</td>
+      <td style="text-align: center">Implementing Vectors</td>
+      <td>Labp2 due, Read 14.4-14.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 11/20</td>
+      <td style="text-align: center">Debugging in CodeBlocks; Maps with Vectors</td>
+      <td>Exam 6 due 11/21, Read 15.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">(11/22–11/26)</td>
+      <td style="text-align: center">(Thanksgiving Break)</td>
+      <td>(Thanksgiving Break)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 11/27</td>
+      <td style="text-align: center">Hashing</td>
+      <td>Read 15.2-15.4</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 11/29</td>
+      <td style="text-align: center">Hash Table Load Factor; Intro to Tree</td>
+      <td>Read 16.1-16.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Thu 11/30</td>
+      <td style="text-align: center">Free lab for Project 2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Fri 12/01</td>
+      <td style="text-align: center">Implementing BSTs</td>
+      <td>Project 2 Due</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mon 12/04</td>
+      <td style="text-align: center">Tree Traversals, Balanced Trees</td>
+      <td>Read 16.3, “HW” 8 out</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 12/06</td>
+      <td style="text-align: center">Tree Rotations, Review</td>
+      <td> </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td style="text-align: center">Fri 12/08 6:30 PM</td>
+      <td style="text-align: center"> </td>
+      <td>(Final) Exam 7 (<a href="exam7-sol.pdf">Solutions</a>)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Wed 12/13</td>
+      <td style="text-align: center"> </td>
+      <td>“HW” 8 due</td>
+    </tr>
+  </tfoot>
+</table>
+
+<h3 id="monmouth-college-services">Monmouth College Services</h3>
+
+<ul>
+  <li>
+    <p>The <a href="http://ou.monmouthcollege.edu/academics/teaching-learning-center/"><strong>Teaching and Learning
+Center</strong></a>
+offers FREE resources to assist Monmouth College students with their
+academic success. Programs include Supplemental Instruction for
+difficult classes, Drop-In and
+appointment tutoring, and individual Academic Coaching. The TLC is
+here to help students excel academically. TLC services are not just
+for struggling students, but can assist all students to get better
+grades, practice stronger study skills, and manage time. The TLC is
+located on the 2nd floor of Poling Hall.</p>
+  </li>
+  <li>
+    <p><a href="http://ou.monmouthcollege.edu/life/disability-services/default.aspx"><strong>Disability Support
+Services</strong></a>:
+If you have a disability or had academic accommodations in high
+school or another college, you may be eligible for academic
+accommodations at Monmouth College under the Americans with
+Disabilities Act (ADA). Monmouth College is committed to equal
+educational access.  Students with disabilities can apply for
+accommodations at the Teaching and Learning Center.</p>
+    <ul>
+      <li>If you have
+not been diagnosed with a learning disability but believe that you
+would benefit from disability screening, please contact Amy
+Hofmeister in Counseling Services.</li>
+      <li>The instructor will be
+notified of students with accommodations; however, it is the
+student’s responsibility to activate her/his
+accommodations. Please meet with the instructor ASAP if this
+applies to you!</li>
+    </ul>
+  </li>
+</ul>
+
+<!-- Local Variables: -->
+<!-- eval: (orgtbl-mode) -->
+<!-- End: -->
+
+			</div>
+		</div>
+		<!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="https://robertutterback.github.io/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+<!-- <script src="/assets/js/katex.js"></script> -->
+<script src="https://robertutterback.github.io/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/academicons.min.css">
+
+<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"> -->
+
+
+<!-- Google Analytics -->
+<!-- <script> -->
+<!-- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!-- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!-- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!-- })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!-- ga('create', 'UA-XXXXXXXX-X', 'auto'); -->
+<!-- ga('send', 'pageview'); -->
+<!-- </script> -->
+
+	</body>
+</html>

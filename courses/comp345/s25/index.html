@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Robert Utterback | COMP 345: Operating Systems, Spring 2025</title>
+<meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+">
+
+     <link rel="shortcut icon" href="https://robertutterback.github.io/assets/img/favicon.ico">
+		 <link rel="stylesheet" href="https://robertutterback.github.io/assets/css/main.css">
+		 <!-- <link rel="shortcut icon" href="/assets/img/favicon.ico"> -->
+     <!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+
+     <link rel="canonical" href="https://robertutterback.github.io/courses/comp345/s25/">
+</head>
+
+	<body>
+		<style type="text/css">
+			.schedule {
+			width: 100%;
+			}
+			table {  
+			width: auto;
+			margin: auto;
+			}
+			blockquote {
+			padding: .35rem;
+			font: 12px;
+			}
+			blockquote footer {
+			font-size: 8px;
+			}
+		</style>
+		<div class="course-content">
+			<div class="wrapper">
+				<header class="post-header">
+					<h1 class="post-title">COMP 345: Operating Systems, Spring 2025</h1>
+					<!-- <h5 class="class-description">Topics include dynamic procedure activation, system structure, memory management, process management, and recovery procedures.</h5> -->
+				</header>
+				<p><em>This syllabus is subject to change based on specific class needs, especially the <a href="#schedule">schedule</a>. Significant deviations will be discussed in class. Individual exceptions to the policies and schedule are granted only in cases of true emergency. Please make arrangements with me if an emergency arises.</em></p>
+
+<ul id="markdown-toc">
+  <li><a href="#logistics" id="markdown-toc-logistics">Logistics</a></li>
+  <li><a href="#content" id="markdown-toc-content">Content</a>    <ul>
+      <li><a href="#topics" id="markdown-toc-topics">Topics</a></li>
+      <li><a href="#course-goals" id="markdown-toc-course-goals">Course Goals</a></li>
+      <li><a href="#sources" id="markdown-toc-sources">Sources</a></li>
+    </ul>
+  </li>
+  <li><a href="#policies" id="markdown-toc-policies">Policies</a></li>
+  <li><a href="#assessment" id="markdown-toc-assessment">Assessment</a>    <ul>
+      <li><a href="#assignments-and-workload" id="markdown-toc-assignments-and-workload">Assignments and Workload</a></li>
+      <li><a href="#grading" id="markdown-toc-grading">Grading</a></li>
+    </ul>
+  </li>
+  <li><a href="#schedule" id="markdown-toc-schedule">Schedule</a></li>
+  <li><a href="#monmouth-college-services" id="markdown-toc-monmouth-college-services">Monmouth College Services</a></li>
+</ul>
+
+<h3 id="logistics">Logistics</h3>
+
+<ul>
+  <li>Class meetings: MWF 10:00 AM - 10:50 AM in CSB 303</li>
+  <li>Instructor: Robert Utterback
+    <ul>
+      <li>Office: CSB 342</li>
+      <li>Phone: 309.457.2202</li>
+      <li>Website: <a href="https://robertutterback.github.io">https://robertutterback.github.io</a></li>
+      <li>Email: <a href="mailto:rutterback@monmouthcollege.edu">rutterback@monmouthcollege.edu</a></li>
+      <li>Office hours: M 9-10, Tu 11-12, W 2-3, Th 3-4, F 9-10. Or <a href="https://robertutterback.github.io/schedule/">by appointment</a>.</li>
+    </ul>
+  </li>
+  <li>Course Website: <a href="https://robertutterback.github.io/courses/comp345/s25/">https://robertutterback.github.io/courses/comp345/s25/</a></li>
+  <li>Credits: 1 course credit</li>
+  <li>Prerequisites: COMP 152 and COMP 235.</li>
+  <li>Feedback: At any time during the course you can use
+<a href="https://forms.office.com/Pages/ResponsePage.aspx?id=2CUxPywZP0ec1n97FfYhs8Yn_tnrj59Js226l2OfoDlUMVY1MDZZMjMxUjNISjI3U0NSUTdETEhVNy4u">this</a> to provide
+anonymous suggestions, criticism, praise, etc.</li>
+</ul>
+
+<h3 id="content">Content</h3>
+
+<p>Introduces basic operating system concepts including virtualization,
+memory management, process and thread management, concurrency, file
+systems, and process scheduling. Students will also gain hands-on
+experience with the C programming language and Unix-based operating
+systems via programming projects.</p>
+
+<h4 id="topics">Topics</h4>
+
+<p>Possible topics include:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Processes</td>
+      <td>Concurrent Data Structures</td>
+    </tr>
+    <tr>
+      <td>CPU Scheduling</td>
+      <td>Concurrency Bugs</td>
+    </tr>
+    <tr>
+      <td>Virtual Memory</td>
+      <td>I/O Devices</td>
+    </tr>
+    <tr>
+      <td>Free Space Management</td>
+      <td>Redundant Disk Arrays</td>
+    </tr>
+    <tr>
+      <td>Locks</td>
+      <td>File Systems</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="course-goals">Course Goals</h4>
+
+<ol>
+  <li>Develop a deep understanding of operating system principles,
+including process management, memory management, concurrency, file
+systems, and CPU scheduling.</li>
+  <li>Gain practical experience with systems programming in C and
+Unix-based environments to solve real-world problems.</li>
+  <li>Build the skills necessary to analyze, design, and implement
+operating system components.</li>
+  <li>Cultivate problem-solving skills to debug and optimize complex
+software systems.</li>
+  <li>Prepare students for advanced courses or careers in systems
+programming, software engineering, or related fields.</li>
+</ol>
+
+<h4 id="sources">Sources</h4>
+
+<p>The required course textbook is:</p>
+
+<ul>
+  <li>Arpaci-Dusseau, Remzi H., Arpaci-Dusseau, Andrea C. <em>Operating
+Systems: Three Easy Pieces</em>. Arpaci-Dusseau Books. 2015.</li>
+</ul>
+
+<p>It is available online at
+<a href="http://pages.cs.wisc.edu/~remzi/OSTEP/">http://pages.cs.wisc.edu/~remzi/OSTEP/</a>.</p>
+
+<h3 id="policies">Policies</h3>
+
+<ul>
+  <li>
+    <p><strong>Late assignments</strong>: You have each been allotted a <em>total</em> of <em>5</em>
+late days. You may apply these without any penalty to any project you
+see fit, with the exception that you may use at most 2 on any
+individual project. The whole point here is to give you some
+flexibility that allows for things like illnesses, long trips, and the
+like. I am unlikely to grant further extensions. Any projects turned
+in late will result in a 20% penalty per day.</p>
+  </li>
+  <li>
+    <p><strong>Academic dishonesty</strong>: Monmouth College’s official policy on academic dishonesty can be found <a href="http://ou.monmouthcollege.edu/life/residence-life/scots-guide/academic-regulations.aspx">here</a>. <strong>You</strong> are responsible for reading and complying with that policy.<br /><br />
+<em>In this course, any violation of the academic honesty policy will have varying consequences depending on the severity of the infraction as judged by the instructor. Minimally, a violation will result in an “F” or 0 points on the assignment in question. Additionally, the student’s course grade may be lowered by one letter grade. In severe cases, the student will be assigned a course grade of “F” and dismissed from the class. All cases of academic dishonesty <strong>must</strong> be reported to the Associate Dean who may decide to recommend further action to the Admissions and Academic Status Committee, including suspension or dismissal. It is assumed that students will educate themselves regarding what is considered to be academic dishonesty, so excuses or claims of ignorance will not mitigate the consequences of any violations</em></p>
+  </li>
+  <li>
+    <p><strong>Collaboration</strong>: We encourage you to make use of the resources available to you – it is fine to seek help from a friend, tutor, instructor, internet, etc. However, <em>copying of answers and any act worth of the label “cheating” is never permissible</em>! In addition to listing your sources and collaborators, you should be producing your own writeup in your own words. By “your own words,” we mean you should be producing the text yourself, without some external aid. Verbatim copying of text is specifically disallowed, but so is taking a source and rearranging some phrases and changing some variable names to create a derivative version! Such behavior is definitely NOT “using your own words.” It does not matter if you helped contribute to this source text with others, since then you are still not the sole author of the text.
+The point of collaborating on an assignment is not to produce a jointly authored set of solutions, since that violates the course policies. Instead, it is to help you solve the problems, which sometimes involve a bit of creativity. After you have jointly come up with the ideas you need to solve the problems, though, you should part ways with your group and sit down to do the writing by yourself.
+I also advise against sharing the writeup you submit with others, since if someone else uses your text as a source for their own solution (with or without your permission), you will also be implicated in the violation of the academic integrity policy. In any case, if two nearly identical solutions are received, we have no way of tell which is the original, and the policy is to not award credit for either submission.</p>
+  </li>
+  <li>
+    <p><strong>Electronic devices</strong>: Do not use your phone or other devices in class except where necessary. Any computer or tablet usage should be related to the course. If a device is not being used for Zoom or Socrative it should be put away and turned on silent. Other usage is rude and distracting to others.</p>
+  </li>
+  <li>
+    <p><strong>General expectations</strong>: In short, I expect you to be respectful of others and take
+responsibility for your own learning. You are here to learn, so work
+hard and be professional.</p>
+
+    <ul>
+      <li>
+        <p>Just attending class is not sufficient to truly learn the
+material. Read the text, use the resources available at Monmouth
+College, and go beyond the material.</p>
+      </li>
+      <li>
+        <p>If you miss class, you are responsible for everything covered on
+ that day.  College is, in some sense, your job. Take pride in
+ creating quality work. Staple your assignments, label problems, and
+ present your answers neatly and orderly.</p>
+      </li>
+      <li>
+        <p>Your job is to convince me that you have learned the material –
+show your work! Even if you do not know a particular answer,
+guide me through your thought process.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="assessment">Assessment</h3>
+
+<h4 id="assignments-and-workload">Assignments and Workload</h4>
+
+<p>The weekly workload for this course will vary by student and over the
+semester, but on average should be about 12 hours per week. The follow
+table provides a rough estimate of the distribution of this time over
+different course components for a 16 week semester.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Amount</th>
+      <th>Final Grade Weight</th>
+      <th>Total Time</th>
+      <th>Time/Week (Hours)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Lectures</td>
+      <td>55</td>
+      <td>10% (Participation)</td>
+      <td>-</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <td>Reading Quizzes</td>
+      <td>6–10</td>
+      <td>10%</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Projects</td>
+      <td>3–5</td>
+      <td>40%</td>
+      <td>64</td>
+      <td>5.5</td>
+    </tr>
+    <tr>
+      <td>Exam Study</td>
+      <td>-</td>
+      <td>-</td>
+      <td>27</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>Exams</td>
+      <td>3</td>
+      <td>40%</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Reading+Unstructured Study</td>
+      <td>-</td>
+      <td>-</td>
+      <td> </td>
+      <td>2.5</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>12</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="grading">Grading</h4>
+
+<p>Your participation grade is based on a variety of activities. During
+class I will often make use of the Socrative (https://socrative.com)
+app, so you’ll need to install this on your phones. Participating in
+Socrative questions and with in-class group activities is required for
+a decent participation grade; an A includes asking questions either in
+class or in office hours.</p>
+
+<p>Your final grade is based on a weighted average of particular
+assignment categories, with weights shown above. You can estimate your
+current grade based on your scores and these weights. You may always
+visit the instructor <em>outside of class</em> to discuss your current
+standing.</p>
+
+<p>This courses uses a standard grading scale. Assignments and final
+grades will not be curved except in rare cases when its deemed
+necessary by the instructor. Percentage grades translate to letter
+grades as follows:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Score</th>
+      <th style="text-align: center">Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">94–100</td>
+      <td style="text-align: center">A</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">90–93</td>
+      <td style="text-align: center">A-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">88–89</td>
+      <td style="text-align: center">B+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">82–87</td>
+      <td style="text-align: center">B</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">80–81</td>
+      <td style="text-align: center">B-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">78–79</td>
+      <td style="text-align: center">C+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">72–77</td>
+      <td style="text-align: center">C</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">70–71</td>
+      <td style="text-align: center">C-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">68–69</td>
+      <td style="text-align: center">D+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">62–67</td>
+      <td style="text-align: center">D</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">60–61</td>
+      <td style="text-align: center">D-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0–59</td>
+      <td style="text-align: center">F</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You are always welcome to challenge a grade that you feel is unfair or
+calculated incorrectly. Mistakes made in your favor will never be
+corrected to lower your grade. Mistakes made not in your favor will
+be corrected. Basically, after the initial grading your score can
+only go up as the result of a challenge*.</p>
+
+<p>You are always welcome to challenge a grade that you feel is unfair or
+calculated incorrectly. Mistakes made in your favor will never be
+corrected to lower your grade. Mistakes made not in your favor will be
+corrected. <em>Basically, after the initial grading your score can only
+go up as the result of a challenge.</em></p>
+
+<h3 id="schedule">Schedule</h3>
+<p>The following <strong>tentative</strong> calendar should give you a feel for how
+work is distributed throughout the semester. Assignments and events
+are listed in the week they are due or when they occur. <em>This calendar
+is subject to change based on the circumstances of the course</em>.</p>
+
+<!-- (let* ((start-date (org-read-date nil nil "2018-01-15")) -->
+<!--        (end-date (org-read-date nil nil "2018-05-02")) -->
+<!--        (days (list "Mon" "Tue" "Wed" "Fri")) -->
+<!--        (current start-date)) -->
+<!--   (while (string< current end-date) -->
+<!--     (let* ((time (org-time-string-to-time current)) -->
+<!--            (day (format-time-string "%a" time))) -->
+<!--       (if (member day days) -->
+<!--           (princ (concat (format-time-string "%a %m/%d" time) "\n")))) -->
+<!--     (setq current (org-read-date nil nil "++1" nil (org-time-string-to-time current))))) -->
+
+<table class="schedule">
+  <thead>
+    <tr>
+      <th style="text-align: left">Date</th>
+      <th style="text-align: center">Topic</th>
+      <th style="text-align: right">Assignment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Wed 01/22 (Week 1)</td>
+      <td style="text-align: center">Operating Systems Overview</td>
+      <td style="text-align: right"><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/preface.pdf">OSTEP 0</a>, <a href="https://pages.cs.wisc.edu/~remzi/OSTEP/dialogue-threeeasy.pdf">1</a>, <a href="https://pages.cs.wisc.edu/~remzi/OSTEP/intro.pdf">2</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 01/24</td>
+      <td style="text-align: center">C Review</td>
+      <td style="text-align: right"><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/lab-tutorial.pdf">Tutorial</a>, Project 1 out</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 01/27 (Week 2)</td>
+      <td style="text-align: center">More C Exercises</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 01/29</td>
+      <td style="text-align: center">CPU Virtualization: Limited Direct Execution</td>
+      <td style="text-align: right"><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/dialogue-virtualization.pdf">3</a>,<a href="https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-intro.pdf">4</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 01/31</td>
+      <td style="text-align: center">Project 1 Questions; fork()</td>
+      <td style="text-align: right"><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-api.pdf">5</a>, <a href="https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-mechanisms.pdf">6</a></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 02/03 (Week 3)</td>
+      <td style="text-align: center">Basic Scheduling Policies</td>
+      <td style="text-align: right"><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf">7</a>, Project 1 due at 10:00 AM</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 02/05</td>
+      <td style="text-align: center">Project 1 Solutions</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 02/07</td>
+      <td style="text-align: center">More Sched. Algs, MLFQ</td>
+      <td style="text-align: right"><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched-mlfq.pdf">8</a>, Project 2 out</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 02/10 (Week 4)</td>
+      <td style="text-align: center">Finish MLFQ, Lottery Scheduling</td>
+      <td style="text-align: right"><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched-lottery.pdf">9</a>, <a href="https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-dialogue.pdf">11</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 02/12</td>
+      <td style="text-align: center">Memory Virtualization</td>
+      <td style="text-align: right"><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/dialogue-vm.pdf">12</a>, <a href="https://pages.cs.wisc.edu/~remzi/OSTEP/vm-intro.pdf">13</a>, <a href="https://pages.cs.wisc.edu/~remzi/OSTEP/vm-api.pdf">14</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 02/14</td>
+      <td style="text-align: center">Translation, Segmentation</td>
+      <td style="text-align: right"><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/vm-mechanism.pdf">15</a>, <a href="https://pages.cs.wisc.edu/~remzi/OSTEP/vm-segmentation.pdf">16</a></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 02/17 (Week 5)</td>
+      <td style="text-align: center">Project 2 Questions</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 02/19</td>
+      <td style="text-align: center">Intro to Paging</td>
+      <td style="text-align: right"><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/vm-paging.pdf">18</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 02/21</td>
+      <td style="text-align: center">(slack)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 02/24 (Week 6)</td>
+      <td style="text-align: center">TLBs</td>
+      <td style="text-align: right"><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/vm-tlbs.pdf">19</a>, Project 2 due at 10:00 AM</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 02/26</td>
+      <td style="text-align: center">Multi-level Page Tables</td>
+      <td style="text-align: right"><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/vm-smalltables.pdf">20</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 02/28</td>
+      <td style="text-align: center">Project 2 Solutions</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 03/03 (Week 7)</td>
+      <td style="text-align: center">Swapping, Replacement Policies</td>
+      <td style="text-align: right"><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys.pdf">21</a>, <a href="https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf">22</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 03/05</td>
+      <td style="text-align: center">Exam Review</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 03/07</td>
+      <td style="text-align: center">Exam 1</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">(Mon 03/10 – Fri 03/14)</td>
+      <td style="text-align: center">(Spring Break)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 03/17 (Week 8)</td>
+      <td style="text-align: center">Exam Solutions; Intro to Concurrency</td>
+      <td style="text-align: right"><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/dialogue-concurrency.pdf">25</a>, <a href="https://pages.cs.wisc.edu/~remzi/OSTEP/threads-intro.pdf">26</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 03/19</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 03/21</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 03/24 (Week 9)</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 03/26</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 03/28</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 03/31 (Week 10)</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 04/02</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 04/04</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 04/07 (Week 11)</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right">Exam 2 (take-home) out</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 04/09</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 04/11</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 04/14 (Week 12)</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 04/16</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">(Fri 04/18)</td>
+      <td style="text-align: center">(Easter Break)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">(Mon 04/21) (Week 13)</td>
+      <td style="text-align: center">(Easter Break)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 04/23</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 04/25</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 04/28 (Week 14)</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 04/30</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 05/02</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 05/05 (Week 15)</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 05/07</td>
+      <td style="text-align: center">Exam Review</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td style="text-align: left"><strong>Mon 05/12 11:30 AM–2:30 PM</strong></td>
+      <td style="text-align: center"><strong>Exam 3 (Final)</strong></td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tfoot>
+</table>
+
+<h3 id="monmouth-college-services">Monmouth College Services</h3>
+
+<ul>
+  <li>
+    <p>The <a href="https://www.monmouthcollege.edu/offices/student-success-and-accessibility-services/academic-support-services/"><strong>Academic Support and Accessibility Services
+Office</strong></a>
+offers FREE resources to assist Monmouth College students with
+their academic success. Programs include supplemental instruction
+for difficult classes, drop-in and appointment tutoring, and
+individual academic coaching. The office is here to help students
+excel academically, since everyone can work toward better grades,
+study skills, and time management. Please email
+<a href="mailto:academicsupport@monmouthcollege.edu">academicsupport@monmouthcollege.edu</a>
+for assistance.</p>
+  </li>
+  <li>
+    <p>If you need course adaptions or accommodations because of a
+disability please make an appointment with me and/or with the
+<a href="https://www.monmouthcollege.edu/offices/student-success-and-accessibility-services/">Accessibility Services Office
+(ASO)</a>
+(<a href="mailto:access@monmouthcollege.edu">access@monmouthcollege.edu</a>
+309-457-2257) as soon as possible. The accessibility of this
+course for every learner is important to me. If at any time you
+experience a barrier to learning, please bring it to my attention
+and I will do my best to address it.</p>
+  </li>
+  <li>
+    <p><strong>Office of Student Well-Being &amp; Student Health Center</strong>: Your
+well-being is crucial to your academic success and personal
+growth. That is why our campus provides free resources to support your
+physical and mental health needs. If you would like schedule an
+appointment for counseling or need further health care assistance,
+please reach out to the Office of Student Well-Being at
+<a href="mailto:wellness@monmouthcollege.edu">wellness@monmouthcollege.edu</a>.</p>
+
+    <p>Student Health Center: 
+  Hours: M-F, 9am-1pm
+  Location: McMichael Residence Hall, Lower level 
+  Call: 309-536-6055
+  Email: healthcenter@monmouthcollege.edu</p>
+
+    <p>Counseling Services:
+  Hours: M-F 9am-4:30pm
+  Location: CSB 393, Administrative Area
+  Call: 309-457-2316
+  Email: wellness@monmouthcollege.edu</p>
+
+    <p>TimelyCare: 24/7 free virtual access to medical and mental health
+care anytime. Visit: timelycare.com/monmouthcollege</p>
+  </li>
+</ul>
+
+<!-- Local Variables: -->
+<!-- eval: (orgtbl-mode) -->
+<!-- End: -->
+
+			</div>
+		</div>
+		<!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="https://robertutterback.github.io/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+<!-- <script src="/assets/js/katex.js"></script> -->
+<script src="https://robertutterback.github.io/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/academicons.min.css">
+
+<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"> -->
+
+
+<!-- Google Analytics -->
+<!-- <script> -->
+<!-- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!-- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!-- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!-- })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!-- ga('create', 'UA-XXXXXXXX-X', 'auto'); -->
+<!-- ga('send', 'pageview'); -->
+<!-- </script> -->
+
+	</body>
+</html>

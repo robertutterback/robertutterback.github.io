@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Robert Utterback | COMP 235: Introduction to Systems Programming, Fall 2022</title>
+<meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+">
+
+     <link rel="shortcut icon" href="https://robertutterback.github.io/assets/img/favicon.ico">
+		 <link rel="stylesheet" href="https://robertutterback.github.io/assets/css/main.css">
+		 <!-- <link rel="shortcut icon" href="/assets/img/favicon.ico"> -->
+     <!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+
+     <link rel="canonical" href="https://robertutterback.github.io/courses/comp235/f22/">
+</head>
+
+	<body>
+		<style type="text/css">
+			.schedule {
+			width: 100%;
+			}
+			table {  
+			width: auto;
+			margin: auto;
+			}
+			blockquote {
+			padding: .35rem;
+			font: 12px;
+			}
+			blockquote footer {
+			font-size: 8px;
+			}
+		</style>
+		<div class="course-content">
+			<div class="wrapper">
+				<header class="post-header">
+					<h1 class="post-title">COMP 235: Introduction to Systems Programming, Fall 2022</h1>
+					<!-- <h5 class="class-description">Basically, the aim of this course is to (1) convince students that no magic is required to make computers work, and (2) help students understand how hardware decisions can affect their programs.</h5> -->
+				</header>
+				<p><em>This syllabus is subject to change based on specific class needs, especially the <a href="#schedule">schedule</a>. Significant deviations will be discussed in class. Individual exceptions to the policies and schedule are granted only in cases of true emergency. Please make arrangements with me if an emergency arises.</em></p>
+
+<ul id="markdown-toc">
+  <li><a href="#logistics" id="markdown-toc-logistics">Logistics</a></li>
+  <li><a href="#content" id="markdown-toc-content">Content</a>    <ul>
+      <li><a href="#description" id="markdown-toc-description">Description</a></li>
+      <li><a href="#sources" id="markdown-toc-sources">Sources</a></li>
+      <li><a href="#topics" id="markdown-toc-topics">Topics</a></li>
+      <li><a href="#programming-environment" id="markdown-toc-programming-environment">Programming Environment</a></li>
+    </ul>
+  </li>
+  <li><a href="#assessment" id="markdown-toc-assessment">Assessment</a>    <ul>
+      <li><a href="#assignments-and-workload" id="markdown-toc-assignments-and-workload">Assignments and Workload</a></li>
+      <li><a href="#grading" id="markdown-toc-grading">Grading</a></li>
+    </ul>
+  </li>
+  <li><a href="#policies" id="markdown-toc-policies">Policies</a></li>
+  <li><a href="#schedule" id="markdown-toc-schedule">Schedule</a></li>
+  <li><a href="#monmouth-college-services" id="markdown-toc-monmouth-college-services">Monmouth College Services</a></li>
+  <li><a href="#student-learning-outcomes" id="markdown-toc-student-learning-outcomes">Student Learning Outcomes</a></li>
+</ul>
+
+<h2 id="logistics">Logistics</h2>
+
+<ul>
+  <li>Class Meetings: MWF 11:00 AM - 11:50 AM in CSB 309</li>
+  <li>Instructors: Robert Utterback
+    <ul>
+      <li>Office: CSB 342</li>
+      <li>Zoom Room: Available upon request.</li>
+      <li>Website: <a href="https://robertutterback.github.io">https://robertutterback.github.io</a></li>
+      <li>Email: <a href="mailto:rutterback@monmouthcollege.edu">rutterback@monmouthcollege.edu</a></li>
+      <li>Office Hours: M 2-3. Tu 1-2. W 2-3. Th 10-noon. F 2-3. Or <a href="https://robertutterback.github.io/schedule/">by appointment</a>. I will be in my office for office hours, but I’m also happy to meet in my Zoom room if that’s easier.</li>
+    </ul>
+  </li>
+  <li>Website: <a href="https://robertutterback.github.io/courses/comp235/f22/">https://robertutterback.github.io/courses/comp235/f22/</a></li>
+  <li>Credits: 1 course credit</li>
+  <li>Prerequisites: COMP 152 with a C or better.</li>
+  <li>Feedback: At any time during the course you can use
+<a href="https://forms.office.com/Pages/ResponsePage.aspx?id=2CUxPywZP0ec1n97FfYhs8Yn_tnrj59Js226l2OfoDlUQVpVVlBSQVpERTMzQVk3OTRRV1REMDlMMC4u">this</a> to provide
+anonymous suggestions, criticism, praise, etc.</li>
+</ul>
+
+<h2 id="content">Content</h2>
+
+<h3 id="description">Description</h3>
+<p>An introduction to low-level programming and computer hardware
+organization form a software perspective. The emphasis is on
+understanding how application programmers can use knowledge of the
+entire system to write better programs. Students will learn about data
+representation, machine language, the memory hierarchy, and virtual
+memory through programming assignments in C and assembly
+language. Further topics may include processor architecture, code
+optimization, and concurrency.</p>
+
+<p>Basically, the aim of this course is to (1) convince students that no
+magic is required to make computers work, and (2) help students
+understand how hardware decisions can affect their programs.</p>
+
+<h3 id="sources">Sources</h3>
+
+<p>The course textbook will be:</p>
+
+<ul>
+  <li>Bryant, Randal E. and O’Hallaron, David R.  <em>Computer Systems: A
+Programmer’s Perspective</em>. 3rd Edition. Pearson. 2015. ISBN-13:
+978-0134092669.</li>
+</ul>
+
+<p>We will also be using parts of <a href="https://diveintosystems.org/">Dive into
+Systems</a>, a free, online textbook.</p>
+
+<p>Since we will be using a lot of C, some of you may wish to have a more
+in-depth reference manual. The following is pretty good:</p>
+
+<ul>
+  <li>Harbison III, Samuel P. and Steele Jr., Guy L. <em>C: A Reference Manual</em>. Pearson. 2002. ISBN-13: 978-0130895929.</li>
+</ul>
+
+<p>However, you may be able to get by with online documentation only:</p>
+
+<ul>
+  <li><a href="https://devdocs.io/c/">DevDocs</a></li>
+  <li><a href="https://en.cppreference.com/w/c/language">CppReference</a></li>
+  <li><a href="https://www.gnu.org/software/gnu-c-manual/gnu-c-manual.html">GNU C Manual</a></li>
+</ul>
+
+<p>Other sources will be posted on this webpage as needed.</p>
+
+<h3 id="topics">Topics</h3>
+
+<p>The goal of this course is to produce programmers who understand how
+the correctness and performance of their applications are impacted by
+the compilation system, operating system, and hardware. After
+dedicating some time to learning C, the course aims to cover the
+majority of chapters 1-9 of the text.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>- Basics of C</td>
+      <td>- Memory Hierarchy</td>
+    </tr>
+    <tr>
+      <td>- Tour of Systems</td>
+      <td>- Linking</td>
+    </tr>
+    <tr>
+      <td>- Data Representations</td>
+      <td>- Exceptional Control Flow (as time allows)</td>
+    </tr>
+    <tr>
+      <td>- Machine Language</td>
+      <td>- Virtual Memory</td>
+    </tr>
+    <tr>
+      <td>- Code Optimization</td>
+      <td>- Processor Architecture (as time allows)</td>
+    </tr>
+    <tr>
+      <td>- x86 Assembly Language</td>
+      <td>- Dynamic Memory</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="programming-environment">Programming Environment</h3>
+
+<p>This course involves programming in both C and assembly language. All
+necessary tools will be available on the department server. All
+software for this course is available free of charge and can be found
+on the web if students wish to install it on their personal
+machines. The instructor cannot guarantee support for installing and
+using other development environments.</p>
+
+<h2 id="assessment">Assessment</h2>
+
+<h3 id="assignments-and-workload">Assignments and Workload</h3>
+<p>The weekly workload for this course will vary by student and by week
+but should be about 12 hours per week on average. The following table
+provides a rough estimate of the distribution of time over different
+course components for a 16 week semester, as well as detailing the
+type, amount, and relative value of all assignments.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Amount</th>
+      <th>Final Grade Weight</th>
+      <th>Total Time</th>
+      <th>Time/Week (Hours)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Lectures</td>
+      <td>41</td>
+      <td>10% (Participation)</td>
+      <td>-</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <td>Programming Assignments</td>
+      <td>5-7</td>
+      <td>30%</td>
+      <td>48</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Homework</td>
+      <td>6-8</td>
+      <td>25%</td>
+      <td>32</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <td>Exam Study</td>
+      <td>-</td>
+      <td>-</td>
+      <td>16</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Exams</td>
+      <td>2</td>
+      <td>35%</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Reading+Unstructured Study</td>
+      <td>-</td>
+      <td>-</td>
+      <td> </td>
+      <td>2</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>12</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Each exam (midterm and final) focuses primarily, but not necessarily
+exclusively, on material covered since the previous exam. In other
+words, the final exam may include a few questions from first-half
+material. The midterm and final are weighted equally (17.5% of your
+final grade). Your lowest homework score and programming assignment
+score will be dropped (separately).</p>
+
+<h3 id="grading">Grading</h3>
+
+<p>Your participation grade is based on a variety of activities. During
+class I will often make use of the <a href="https://socrative.com">Socrative</a>
+app, so you’ll need to install this on your phones. Participating in
+Socrative questions and with in-class group activities is required for
+a decent participation grade; an A includes asking questions either in
+class or in office hours.</p>
+
+<p>An additional portion of your participation grade is based on your
+homework <em>presentations</em>. Every day that a homework assignment is due,
+one or more students will be randomly selected to present their
+solution to a portion of the assignment. You will be graded based on
+<em>preparation</em> and the thoroughness of your explanations, NOT on
+correctness, although you should of course strive for
+correctness. Students taking late days will be required to leave the
+classroom during these presentations. You must inform me <em>BEFORE</em>
+class if you are taking late days to avoid being randomly selected to
+present. Otherwise, if you are randomly selected to present but have
+not done the assignment, you will receive a 0.</p>
+
+<p>Your final grade is based on a weighted average of particular
+assignment categories. You can estimate your current grade based on
+your scores and these weights. You may always visit the instructor
+outside of class to discuss your current standing. Assignments and
+final grades use a standard grading scale shown below and will not
+be curved except in rare cases when deemed necessary by the
+instructor.</p>
+
+<p>This courses uses a standard grading scale. Assignments and final
+grades will not be curved except in rare cases when its deemed
+necessary by the instructor. Percentage grades translate to letter
+grades as follows:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Score</th>
+      <th style="text-align: center">Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">94–100</td>
+      <td style="text-align: center">A</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">90–93</td>
+      <td style="text-align: center">A-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">88–89</td>
+      <td style="text-align: center">B+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">82–87</td>
+      <td style="text-align: center">B</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">80–81</td>
+      <td style="text-align: center">B-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">78–79</td>
+      <td style="text-align: center">C+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">72–77</td>
+      <td style="text-align: center">C</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">70–71</td>
+      <td style="text-align: center">C-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">68–69</td>
+      <td style="text-align: center">D+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">62–67</td>
+      <td style="text-align: center">D</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">60–61</td>
+      <td style="text-align: center">D-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0–59</td>
+      <td style="text-align: center">F</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You are always welcome to challenge a grade that you feel is unfair or
+calculated incorrectly. Mistakes made in your favor will never be
+corrected to lower your grade. Mistakes made not in your favor will
+be corrected. Basically, after the initial grading your score can
+only go up as the result of a challenge*.</p>
+
+<p>You are always welcome to challenge a grade that you feel is unfair or
+calculated incorrectly. Mistakes made in your favor will never be
+corrected to lower your grade. Mistakes made not in your favor will be
+corrected. <em>Basically, after the initial grading your score can only
+go up as the result of a challenge.</em></p>
+
+<h2 id="policies">Policies</h2>
+
+<ul>
+  <li>
+    <p><strong>Late Assignments</strong>: You have each been allotted a <em>total</em> of <em>5</em> late days. You may apply these to any homework or programming assignment (NOT exams, labs, or reading assignments) you see fit and turn in your solutions with no penalty. Each late days gives you exactly 24 extra hours from the original due date and time. However, you may use <em>at most 2</em> late days on any individual assignment. The whole point here is to give you some flexibility that allows for things like illnesses, long trips, and the like. I am unlikely to grant further extensions. You must notify me if you will use late days, and how many, BEFORE the assignment is due. Late assignments (beyond any applied late days) will be subject to a grade reduction at my discretion. While you should expect a reasonable penalty for late work, know that I will NEVER give you a 0 for late work as long as it is turned in before the final exam.</p>
+  </li>
+  <li>
+    <p><strong>Academic Dishonesty</strong>: Monmouth College’s official policy on academic dishonesty can be found <a href="http://ou.monmouthcollege.edu/life/residence-life/scots-guide/academic-regulations.aspx">here</a>. <strong>You</strong> are responsible for reading and complying with that policy.<br /><br />
+<em>In this course, any violation of the academic honesty policy will have varying consequences depending on the severity of the infraction as judged by the instructor. Minimally, a violation will result in an “F” or 0 points on the assignment in question. Additionally, the student’s course grade may be lowered by one letter grade. In severe cases, the student will be assigned a course grade of “F” and dismissed from the class. All cases of academic dishonesty <strong>must</strong> be reported to the Associate Dean who may decide to recommend further action to the Admissions and Academic Status Committee, including suspension or dismissal. It is assumed that students will educate themselves regarding what is considered to be academic dishonesty, so excuses or claims of ignorance will not mitigate the consequences of any violations</em></p>
+  </li>
+  <li>
+    <p><strong>Collaboration</strong>: We encourage you to make use of the resources available to you – it is fine to seek help from a friend, tutor, instructor, internet, etc. However, <em>copying of answers and any act worthy of the label of “cheating” is never permissible</em>! It is understandable that when you work with a partner or a group that the resultant product is often extremely similar. This is acceptable but be prepared to be asked to defend your collaborations to the instructor. <em>You should always be able to reproduce an answer on your own, and if you cannot you likely <strong>do not really know the material</strong></em>.<br /><br />
+One way to collaborate effectively is to avoid taking careful notes during a collaboration session. Discuss the material and sketch out possible solutions on a whiteboard. When you have finished, take a break and then write up your solutions without any help from notes or pictures from the study session. This not only helps avoid violations of academic dishonesty, it also improves your retention of the material!<br /><br />
+When assignments are meant to be done in groups, you will be directed to turn in one set of solutions per group. Otherwise, each student must turn in an assignment representing their own work.</p>
+  </li>
+  <li>
+    <p><strong>Electronic Devices</strong>: Do not use your phone or other devices in class except where necessary. Any computer or tablet usage should be related to the course. If a device is not being used for Zoom or Socrative it should be put away and turned on silent. Other usage is rude and distracting to others.</p>
+  </li>
+  <li>
+    <p><strong>General Expectations</strong>: In short, I expect you to be respectful of others and take
+responsibility for your own learning. You are here to learn, so work
+hard and be professional.</p>
+
+    <ul>
+      <li>
+        <p>Just attending class is not sufficient to truly learn the
+material. Read the text, use the resources available at Monmouth
+College, and go beyond the material.</p>
+      </li>
+      <li>
+        <p>If you miss class, you are responsible for everything covered on
+ that day.  College is, in some sense, your job. Take pride in
+ creating quality work. Staple your assignments, label problems, and
+ present your answers neatly and orderly.</p>
+      </li>
+      <li>
+        <p>Your job is to convince me that you have learned the material –
+show your work! Even if you do not know a particular answer,
+guide me through your thought process.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="schedule">Schedule</h2>
+<p>The following <em>tentative</em> calendar should give you a feel for how work is
+distributed throughout the semester. Assignments and events are listed
+in the week they are due or when they occur. <em>This calendar is subject
+to change based on the circumstances of the course</em>.</p>
+
+<!-- (with-output-to-string -->
+<!--   (let* ((start-date (org-read-date nil nil "2021-01-25")) -->
+<!--         (end-date (org-read-date nil nil "2021-05-05")) -->
+<!--         (days (list "Mon" "Wed" "Fri")) -->
+<!--         (current start-date)) -->
+<!--    (while (string< current end-date) -->
+<!--      (let* ((time (org-time-string-to-time current)) -->
+<!--             (day (format-time-string "%a" time))) -->
+<!--        (if (member day days) -->
+<!--            (princ (concat (format-time-string "%a %m/%d" time) "\n")))) -->
+<!--      (setq current (org-read-date nil nil "++1" nil (org-time-string-to-time current)))))) -->
+
+<p><em>Note</em>: CSAPP = Computer Systems, A Programmer’s Perspective, DIS = Dive into Systems</p>
+
+<table class="schedule">
+  <tbody>
+    <tr>
+      <td>Date</td>
+      <td>Topic</td>
+      <td>Assignment/Reading</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Wed 08/24 (Week 1)</td>
+      <td>Intro and Logistics</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 08/26</td>
+      <td>The Command Line</td>
+      <td>DIS 0 and <a href="http://linuxcommand.org/lc3_learning_the_shell.php">this</a>, <a href="./h1">Hwk 1</a></td>
+    </tr>
+    <tr>
+      <td>Mon 08/29 (Week 2)</td>
+      <td>Intro to C</td>
+      <td>DIS 1, <a href="./p1">Prog 1</a></td>
+    </tr>
+    <tr>
+      <td>Wed 08/31</td>
+      <td>More C through Exercises</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 09/02</td>
+      <td>Program 1 Walkthrough</td>
+      <td><a href="./p2">Prog 2</a></td>
+    </tr>
+    <tr>
+      <td>Mon 09/05 (Week 3)</td>
+      <td>Pointers</td>
+      <td>DIS 2.1-2.3</td>
+    </tr>
+    <tr>
+      <td>Wed 09/07</td>
+      <td>Dynamic Memory; Arrays</td>
+      <td>DIS 2.4-2.5</td>
+    </tr>
+    <tr>
+      <td>Fri 09/09</td>
+      <td>Strings; Structs; I/O</td>
+      <td>DIS 2.6-2.8</td>
+    </tr>
+    <tr>
+      <td>Mon 09/12 (Week 4)</td>
+      <td>Debugging</td>
+      <td>DIS 3</td>
+    </tr>
+    <tr>
+      <td>Wed 09/14</td>
+      <td><a href="https://monmouthcollege-my.sharepoint.com/:p:/g/personal/rutterback_monmouthcollege_edu/EbopwAcYtaFHtv6qMt3qjYUBmvNMOsA4MLmowPqUEr3yfg?e=FsRzQ4">A Tour of Computer Systems</a></td>
+      <td>CSAPP 1, <a href="./h2">Hwk 2</a></td>
+    </tr>
+    <tr>
+      <td>Fri 09/16</td>
+      <td>Amdahl’s Law; Prog 1/2 Review</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Mon 09/19 (Week 5)</td>
+      <td><a href="https://monmouthcollege-my.sharepoint.com/:p:/g/personal/rutterback_monmouthcollege_edu/EdTYFSS6SAVOkKhAGr1NC9UBGo_P1JxyAEVPg53mda14Xg?e=FM8tJ2">Data Representation and Bit Operations</a></td>
+      <td>CSAPP 2.1</td>
+    </tr>
+    <tr>
+      <td>Wed 09/21</td>
+      <td>Bit Operations II</td>
+      <td><a href="datalab.pdf">Prog 3 (Data Lab)</a></td>
+    </tr>
+    <tr>
+      <td>Fri 09/23</td>
+      <td>Integer Representations</td>
+      <td>CSAPP 2.2</td>
+    </tr>
+    <tr>
+      <td>Mon 09/26 (Week 6)</td>
+      <td>Integer Arithmetic</td>
+      <td>CSAPP 2.3</td>
+    </tr>
+    <tr>
+      <td>Wed 09/28</td>
+      <td><a href="https://monmouthcollege-my.sharepoint.com/:p:/g/personal/rutterback_monmouthcollege_edu/Ef_MOrhb5rZPgVR2hUa86sUB6aL8VLxarx4eBDFPfflOAw?e=tmI0n6">Floating Point I</a></td>
+      <td>CSAPP 2.4</td>
+    </tr>
+    <tr>
+      <td>Fri 09/30</td>
+      <td>Floating Point II</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Mon 10/03 (Week 7)</td>
+      <td>Datalab Questions</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Wed 10/05</td>
+      <td>Floating Point Arithmetic</td>
+      <td>CSAPP 3.1-3.4</td>
+    </tr>
+    <tr>
+      <td>Fri 10/07</td>
+      <td><a href="https://monmouthcollege-my.sharepoint.com/:p:/g/personal/rutterback_monmouthcollege_edu/EVcSwaTEgOhOi4It4W-LSQoBcf5ePFtxAyNU-_0fgGLkRA?e=p2UhrO">ML: Basics I</a></td>
+      <td>CSAPP 3.5,</td>
+    </tr>
+    <tr>
+      <td>Mon 10/10 (Week 8)</td>
+      <td>Bomb Lab Tips</td>
+      <td><a href="bomblab.pdf">Prog 4 (Bomb Lab)</a></td>
+    </tr>
+    <tr>
+      <td>(Wed 10/12)</td>
+      <td>(Fall Break)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>(Fri 10/14)</td>
+      <td>(Fall Break)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Mon 10/17 (Week 9)</td>
+      <td><a href="https://monmouthcollege-my.sharepoint.com/:p:/g/personal/rutterback_monmouthcollege_edu/EaCT1NGI_rhKjtJ1kLWw3wEBdNYqpoPsowVOqA5zaFZBWg?e=9YHSTB">ML: Control (Branching)</a></td>
+      <td>CSAPP 3.6</td>
+    </tr>
+    <tr>
+      <td>Wed 10/19</td>
+      <td>ML: Control (Loops)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 10/21</td>
+      <td>(Midterm Take-Home Exam)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Mon 10/24 (Week 10)</td>
+      <td>(Midterm Take-Home Exam)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Wed 10/26</td>
+      <td>(Midterm Take-Home Exam)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 10/28</td>
+      <td>Midterm Solutions</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Mon 10/31 (Week 11)</td>
+      <td>Bomblab Questions</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Wed 11/02</td>
+      <td><a href="https://monmouthcollege-my.sharepoint.com/:p:/g/personal/rutterback_monmouthcollege_edu/EQ0UcmTNoM9HuWhLBel1b5UB1LiKEhJ3pgibF4dgv95n_Q?e=AmcDbU">ML: Procedures</a></td>
+      <td>CSAPP 3.7</td>
+    </tr>
+    <tr>
+      <td>Fri 11/04</td>
+      <td>ML: Procedures II: Recursion</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Mon 11/07 (Week 12)</td>
+      <td>(no class)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Wed 11/09</td>
+      <td><a href="https://monmouthcollege-my.sharepoint.com/:p:/g/personal/rutterback_monmouthcollege_edu/ERvP9_mjz1pGoeNE7j_2_20BUuvjP389znHU_4xiYA8FxQ?e=5xwtf0">ML: Data</a></td>
+      <td>3.8,3.9,3.11*, <a href="./h3">Hwk 3</a></td>
+    </tr>
+    <tr>
+      <td>Fri 11/11</td>
+      <td><a href="https://monmouthcollege-my.sharepoint.com/:p:/g/personal/rutterback_monmouthcollege_edu/EW73RSmCfzVJnnZqBll1fAQB0fLhw8RsP5Ts7JG5-sAiIQ?e=FLsFrL">Buffer Overflows</a></td>
+      <td>3.10</td>
+    </tr>
+    <tr>
+      <td>Mon 11/14 (Week 13)</td>
+      <td><a href="https://monmouthcollege-my.sharepoint.com/:p:/g/personal/rutterback_monmouthcollege_edu/ES0Ssamjr8dOuUaQnWZKmeoB4EgZajND6tUl1oYjX9uB6Q?e=sRASzO">Memory Hierarchy I</a></td>
+      <td>CSAPP 6.1-6.3</td>
+    </tr>
+    <tr>
+      <td>Wed 11/16</td>
+      <td>Memory Hierarchy II</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 11/18</td>
+      <td><a href="https://monmouthcollege-my.sharepoint.com/:p:/g/personal/rutterback_monmouthcollege_edu/EVb2dUl9njdFmZ1RDixreO8B4nrHISwD7AFG4Ixl93yIuQ?e=BeG8fq">Caches</a></td>
+      <td>CSAPP 6.4-6.7</td>
+    </tr>
+    <tr>
+      <td>Mon 11/21 (Week 14)</td>
+      <td>Performance Impact of Caches</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>(Wed 11/23)</td>
+      <td>(Thanksgiving Break)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>(Fri 11/25)</td>
+      <td>(Thanksgiving Break)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Mon 11/28 (Week 15)</td>
+      <td><a href="https://monmouthcollege-my.sharepoint.com/:p:/g/personal/rutterback_monmouthcollege_edu/EWT_qyloxLpKvX3FlBEA57gBlERCiJeA6wEU3Bj8-7Ozbg?e=z7W2ya">Virtual Memory</a></td>
+      <td>CSAPP 9, <a href="./h4">Hwk 4</a>, <a href="malloclab.pdf">Prog 5 (Malloc Lab)</a></td>
+    </tr>
+    <tr>
+      <td>Wed 11/30</td>
+      <td><a href="https://monmouthcollege-my.sharepoint.com/:p:/g/personal/rutterback_monmouthcollege_edu/EXyzvrwOIBRIsbM3mITVWEoBevTLGZXDjrxoNrzoB49N1w?e=5zKEwK">Tracing Virtual Memory</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Fri 12/02</td>
+      <td><a href="https://monmouthcollege-my.sharepoint.com/:p:/g/personal/rutterback_monmouthcollege_edu/ETGwa6xF0q5BizRrtZl5jukBV29889xZnqRYldjkHB7o9Q?e=eUJSNe">Basic Heap Allocation Strategies</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Mon 12/05 (Week 16)</td>
+      <td><a href="https://monmouthcollege-my.sharepoint.com/:p:/g/personal/rutterback_monmouthcollege_edu/EVCjtmVrbMhPoEWgt6EJ_GkBGdnj-O6znj6m-DLJeEFHNA?e=LC7BzA">Advanced Malloc Implementations</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Wed 12/07</td>
+      <td>Malloc Lab Tips/Debugging</td>
+      <td> </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td><strong>Tue 12/13 8:00 AM</strong></td>
+      <td><strong>Final Exam</strong></td>
+      <td> </td>
+    </tr>
+  </tfoot>
+</table>
+
+<h2 id="monmouth-college-services">Monmouth College Services</h2>
+
+<ul>
+  <li>
+    <p><a href="https://www.monmouthcollege.edu/offices/counseling-services/"><strong>Mental Health and Counseling
+Services</strong></a>:
+Monmouth College provides cost-free, professional mental health
+counseling to support you and to help you manage challenges that
+may impact your personal and academic success.  The Counseling
+Center is located in the uppler level of Poling Hall (rooms 204
+and 216), and the hours are Monday–Friday, 8:30 AM to 5:00 PM.
+For an appointment call 309-457-2115, email
+<a href="mailto:counselingservices@monmouthcollege.edu">counselingservices@monmouthcollege.edu</a>,
+<a href="mailto:cbeadles@monmouthcollege.edu">cbeadles@monmouthcollege.edu</a>,
+or <a href="tcaudill@monmouthcollege.edu">tcaudill@monmouthcollege.edu</a>,
+or request an appointment directly by going to
+<a href="titanium.monmouthcollege.edu">titanium.monmouthcollege.edu</a> and
+clicking on “request an appointment.”</p>
+  </li>
+  <li>
+    <p>The <a href="https://www.monmouthcollege.edu/offices/student-success-and-accessibility-services/academic-support-services/"><strong>Academic Support and Accessibility Services
+Office</strong></a>
+offers FREE resources to assist Monmouth College students with
+their academic success. Programs include supplemental instruction
+for difficult classes, drop-in and appointment tutoring, and
+individual academic coaching. The office is here to help students
+excel academically, since everyone can work toward better grades,
+practice stronger study skills, and mange their time
+better. Please email
+<a href="mailto:academicsupport@monmouthcollege.edu">academicsupport@monmouthcollege.edu</a>
+for assistance.</p>
+  </li>
+  <li>
+    <p><a href="https://www.monmouthcollege.edu/offices/student-success-and-accessibility-services/accommodations/"><strong>Accessibility
+Services</strong></a>:
+If you have a disability and/or medical/mental health condition,
+or had academic accommodations in high school or another college,
+you may be eligible for academic accommodations at Monmouth
+College under the Americans with Disabilities Act (ADA). Monmouth
+College is committed to equal educational access. To discuss any
+of the services offered, please call or meet with Jennifer
+Sanberg, Associate Director of Academic Success and Accessibility
+Services. The ASAS office on the first floor of the Hewes Library,
+opposite Einstein Bros. Bagels. The office can be reached at
+309-457-2257 or via email at
+<a href="mailto:academicsupport@monmouthcollege.edu">academicsupport@monmouthcollege.edu</a>.</p>
+  </li>
+  <li>
+    <p>The <a href="https://www.monmouthcollege.edu/welcome-home/diversity-equity-inclusion/"><strong>The Office of Student Equity Inclusion &amp;
+Community</strong></a>
+can be found on the first floor of the Champion Miller Center for
+Student Equity Inclusion &amp; Community. The office provides support
+to meet the needs of underrepresented students and international
+students. Services include: personal and academic advising, help
+with transition to Monmouth College, information on scholarships,
+internships, and employment opportunities with the help of other
+campus offices, and intercultural programming. Office Phone
+Number: 309-457-3612. Email:
+<a href="champion@monmouthcollege.edu">champion@monmouthcollege.edu</a></p>
+  </li>
+</ul>
+
+<h2 id="student-learning-outcomes">Student Learning Outcomes</h2>
+
+<p>This course covers a variety of knowledge areas as categorized by the
+ACM/IEEE-CS Task Force on Computing Curricula. Note that not all of
+these areas are introduced in this course; some are touched upon
+previously and others will be developed further in later courses. At
+the end of the course, students should achieve the following learning
+outcomes with the specific level of mastery:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Knowledge Unit</th>
+      <th>Learning Outcome with Level of Mastery</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>AL/Basic Analysis</td>
+      <td>- Perform empirical studies to validate hypotheses about runtime stemming from</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>mathematical analysis. Run algorithms on input of various sizes and compare performance. [Assessment]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>AR/Digital Logic and</td>
+      <td>- Describe the progression of computer technology components from vacuum tubes</td>
+    </tr>
+    <tr>
+      <td>Digital Systems</td>
+      <td>to VLSI, from mainframe computer architectures to the organization of warehouse-scale computers. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Describe the progression of computer technology components from vacuum tubes</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>to VLSI, from mainframe computer architectures to the organization of warehouse-scale</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>computers. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>-  Comprehend the trend of modern computer architectures towards</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>multi-core and that parallelism is inherent in all hardware systems. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>-  Explain the implications of the “power wall” in terms of further processor</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>performance improvements and the drive towards harnessing parallelism. [Familiarity]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>AR/Machine Level</td>
+      <td>- Explain why everything is data, including instructions, in computers. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td>Representation of Data</td>
+      <td>-  Explain the reasons for using alternative formats to represent</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>numerical data. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Describe how negative integers are stored in sign-magnitude and</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>twos-complement representations. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Explain how fixed-length number representations affect accuracy and</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>precision. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Describe the internal representation of non-numeric data, such as</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>characters, strings, records, and arrays. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Convert numerical data from one format to another. [Usage]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Write simple programs at the assembly/machine level for string</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>processing and manipulation. [Usage]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>AR/Assembly Level</td>
+      <td>- Explain the organization of the classical von Neumann machine and</td>
+    </tr>
+    <tr>
+      <td>Machine Organization</td>
+      <td>its major functional units. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Describe how an instruction is executed in a classical von Neumann machine, with</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>extensions for threads, multicore synchronization, and SIMD execution. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Describe instruction level parallelism and hazards, and how they are</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>managed in typical processor pipelines. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Summarize how instructions are represented at both the machine level</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>and in the context of a symbolic assembler. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Demonstrate how to map between high-level language patterns into</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>assembly/machine language notations. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Explain different instruction formats, such as addresses per instruction and</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>variable length vs. fixed length formats. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Explain how subroutine calls are handled at the assembly level. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Explain the basic concepts of interrupts and I/O  operations. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Write simple assembly language program segments. [Usage]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Show how fundamental high-level programming constructs are</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>implemented at the machine-language level. [Usage]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>AR/Memory System</td>
+      <td>- Explain the effect of memory latency on running time. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td>Organization and</td>
+      <td>- Describe how the use of memory hierarchy (cache, virtual memory) is</td>
+    </tr>
+    <tr>
+      <td>Architecture</td>
+      <td>used to reduce the effective memory latency. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Describe the principles of memory management. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Explain the workings of a system with virtual memory managements. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Compute Average Memory Access Time under a variety of cache and</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>memory configurations and mixes of instruction and data references. [Usage]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>AR/Multiprocessing and</td>
+      <td>- Discuss the concept of parallel processing beyond the classical von Neumann model.]</td>
+    </tr>
+    <tr>
+      <td>Alternative</td>
+      <td>- Describe alternative parallel architectures such as SIMD and MIMD. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td>Architectures</td>
+      <td>- Discuss the special concerns that multiprocessing systems present with</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>respect to memory management and describe how these are addressed. [Familiarity]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>OS/Operating System</td>
+      <td>- Describe how computing resources are used by application software</td>
+    </tr>
+    <tr>
+      <td>Principles</td>
+      <td>and managed by system software. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Contrast kernel and user mode in an operating system. [Usage]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>OS/Memory</td>
+      <td>- Explain memory hierarchy and cost-performance trade-offs. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td>Management</td>
+      <td>- Summarize the principles of virtual memory as applied to caching and paging. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Evaluate the trade-offs in terms of memory size (main memory, cache</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>memory, auxiliary memory) and processor speed. [Assessment]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Defend the different ways of allocating memory to tasks, citing the</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>relative merits of each. [Assessment]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Describe the reason for and use of cache memory (performance and</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>proximity, different dimension of how caches complicate isolation</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>and VM abstraction). [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Discuss the concept of thrashing, both in terms of the reasons it</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>occurs and the techniques used to recognize and manage the problem. [Familiarity]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>OS/System Performance</td>
+      <td>- Describe the performance measurements used to determine how a system</td>
+    </tr>
+    <tr>
+      <td>Evaluation</td>
+      <td>performs. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Explain the main evaluation models used to evaluate a system. [Familiarity]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>SDF/Development</td>
+      <td>- Identify common coding errors that lead to insecure programs (e.g.,</td>
+    </tr>
+    <tr>
+      <td>Methods</td>
+      <td>buffer overflows, memory leaks, malicious code) and apply strategies</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>for avoiding such errors. [Usage]</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>SF/Evaluation</td>
+      <td>- Explain how the components of system architecture contribute to</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>improving its performance. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Describe Amdahl’s law and discuss its limitations. [Familiarity]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Design and conduct a performance-oriented experiment. [Usage]</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>- Use software tools to profile and measure program performance. [Assessment]</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Local Variables: -->
+<!-- eval: (orgtbl-mode) -->
+<!-- End: -->
+
+			</div>
+		</div>
+		<!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="https://robertutterback.github.io/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+<!-- <script src="/assets/js/katex.js"></script> -->
+<script src="https://robertutterback.github.io/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/academicons.min.css">
+
+<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"> -->
+
+
+<!-- Google Analytics -->
+<!-- <script> -->
+<!-- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!-- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!-- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!-- })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!-- ga('create', 'UA-XXXXXXXX-X', 'auto'); -->
+<!-- ga('send', 'pageview'); -->
+<!-- </script> -->
+
+	</body>
+</html>
