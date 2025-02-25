@@ -5,6 +5,19 @@ title: Teaching
 description: Course materials.
 ---
 
+<!-- ### Spring 2026 -->
+
+<!-- * <a href="{{ site.baseurl }}/courses/comp101/s26/">COMP 101: Computing for Everyone</a> -->
+<!-- * <a href="{{ site.baseurl }}/courses/comp152/s26/">COMP 152: Object-Oriented Data Structures and Algorithms</a> -->
+<!-- * <a href="{{ site.baseurl }}/courses/comp347/s26/">COMP 347: Applied Machine Learning</a> -->
+<!-- * <a href="{{ site.baseurl }}/courses/comp402/s26/">COMP 402: Senior Project Implementation</a> -->
+
+<!-- ### Fall 2025 -->
+
+<!-- * <a href="{{ site.baseurl }}/courses/data151/f25/">DATA 151: Introduction to Data Science</a> -->
+<!-- * <a href="{{ site.baseurl }}/courses/comp350/f25/">COMP 350: Web Development</a> -->
+<!-- * <a href="{{ site.baseurl }}/courses/comp401/f25/">COMP 401: Senior Project Design</a> -->
+
 ### Spring 2025
 
 * <a href="{{ site.baseurl }}/courses/comp151/s25/">COMP 151: Intro to Programming</a>
@@ -15,7 +28,7 @@ description: Course materials.
 
 ### Fall 2024
 
-(Sabbatical)
+(Sabbatical working for New England Fabricated Metals)
 
 ### Spring 2024
 
