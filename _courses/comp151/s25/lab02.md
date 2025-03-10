@@ -4,7 +4,7 @@ title: "COMP 151, Spring 2025, Lab 02"
 semester: s25
 ---
 
-## Lab 03: Experiments with Turtle
+## Lab 02: Experiments with Turtle
 
 Our book has some nice content using `turtle`, such as [this
 activity](https://runestone.academy/ns/books/published/mc-comp151-spring25/Projects/drawing_a_circle.html#drawing-a-circle),
