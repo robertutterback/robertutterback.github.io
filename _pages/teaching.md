@@ -12,19 +12,17 @@ description: Course materials.
 <!-- * <a href="{{ site.baseurl }}/courses/comp347/s26/">COMP 347: Applied Machine Learning</a> -->
 <!-- * <a href="{{ site.baseurl }}/courses/comp402/s26/">COMP 402: Senior Project Implementation</a> -->
 
-<!-- ### Fall 2025 -->
+### Fall 2025
 
-<!-- * <a href="{{ site.baseurl }}/courses/data151/f25/">DATA 151: Introduction to Data Science</a> -->
-<!-- * <a href="{{ site.baseurl }}/courses/comp350/f25/">COMP 350: Web Development</a> -->
-<!-- * <a href="{{ site.baseurl }}/courses/comp401/f25/">COMP 401: Senior Project Design</a> -->
+* <a href="{{ site.baseurl }}/courses/data151/f25/">DATA 151: Introduction to Data Science</a>
+* <a href="{{ site.baseurl }}/courses/comp350/f25/">COMP 350: Web Development</a>
+* <a href="{{ site.baseurl }}/courses/comp401/f25/">COMP 401: Senior Project Design</a>
 
 ### Spring 2025
 
 * <a href="{{ site.baseurl }}/courses/comp151/s25/">COMP 151: Intro to Programming</a>
 * <a href="{{ site.baseurl }}/courses/comp240/s25/">COMP 240: Computer Applications</a>
 * <a href="{{ site.baseurl }}/courses/comp345/s25/">COMP 345: Operating Systems</a>
-* <a href="{{ site.baseurl }}/courses/comp402/s25/">COMP 402: Senior Project Implementation</a>
-
 
 ### Fall 2024
 
