@@ -75,7 +75,7 @@ highlighter: pygments
 
 # Includes
 include:
-  - ['_pages']
+  - _pages
   - podcast/index.xml
 
 # Gems
