@@ -14,9 +14,9 @@ description: Course materials.
 
 ### Fall 2025
 
-* <a href="{{ site.baseurl }}/courses/data151/f25/">DATA 151: Introduction to Data Science</a>
+* <s><a href="{{ site.baseurl }}/courses/data151/f25/">DATA 151: Introduction to Data Science</a></s>
 * <a href="{{ site.baseurl }}/courses/comp350web/f25/">COMP 350: Web Development</a>
-* <a href="{{ site.baseurl }}/courses/comp401/f25/">COMP 401: Senior Project Design</a>
+* <s><a href="{{ site.baseurl }}/courses/comp401/f25/">COMP 401: Senior Project Design</a></s>
 
 ### Spring 2025
 
