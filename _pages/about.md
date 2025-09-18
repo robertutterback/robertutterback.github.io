@@ -2,7 +2,7 @@
 layout: about
 permalink: /
 title: <strong>Robert</strong> Utterback
-description: <a href="http://ou.monmouthcollege.edu/academics/computer-science">Department of Mathematics, Statistics, and Computer Science</a> | <a href="http://www.monmouthcollege.edu">Monmouth College</a>
+description: <a href="https://www.delcammanufacturing.com/">DelCam Manufacturing</a>
 
 profile:
   align: right
