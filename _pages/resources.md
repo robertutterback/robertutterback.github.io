@@ -36,6 +36,14 @@ it will likely be useful to all CS students.
   for programmers or those learning to program.
 * [The Interview Study Guide for Software Engineers](https://dev.to/seattledataguy/the-interview-study-guide-for-software-engineers-764)
 * [Free-for.dev](https://free-for.dev): a list of free software and services for developers.
+* [Working Well with Legacy
+  Code](http://www.cloudbees.com/blog/working-well-with-legacy-code):
+  Software engineering often requires working with an existing code
+  base. This short article is a good description of the mindset you'll
+  need to approach such a task. This is becoming even more prevalent
+  due to AI -- you will increasingly be asked to fix AI-generated
+  "slop" that worked at first, but quickly became a mess of spaghetti
+  code. (Thanks to Mrs. C's High School Club for suggesting this one!)
 
 ### General Learning
 
