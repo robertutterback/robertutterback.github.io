@@ -5,6 +5,10 @@ title: Teaching
 description: Course materials.
 ---
 
+### Fall 2026
+
+* <a href="{{ site.baseurl }}/courses/comp345/f26/">COMP 345: Operating Systems</a>
+
 ### Spring 2026
 
 * <a href="{{ site.baseurl }}/courses/comp347/s26/">COMP 347: Applied Machine Learning</a>
