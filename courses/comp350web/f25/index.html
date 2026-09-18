@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Robert Utterback | COMP 350: Web Design, Fall 2025</title>
+<meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+">
+
+     <link rel="shortcut icon" href="https://robertutterback.github.io/assets/img/favicon.ico">
+		 <link rel="stylesheet" href="https://robertutterback.github.io/assets/css/main.css">
+		 <!-- <link rel="shortcut icon" href="/assets/img/favicon.ico"> -->
+     <!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+
+     <link rel="canonical" href="https://robertutterback.github.io/courses/comp350web/f25/">
+</head>
+
+	<body>
+		<style type="text/css">
+			.schedule {
+			width: 100%;
+			}
+			table {  
+			width: auto;
+			margin: auto;
+			}
+			blockquote {
+			padding: .35rem;
+			font: 12px;
+			}
+			blockquote footer {
+			font-size: 8px;
+			}
+		</style>
+		<div class="course-content">
+			<div class="wrapper">
+				<header class="post-header">
+					<h1 class="post-title">COMP 350: Web Design, Fall 2025</h1>
+					<!-- <h5 class="class-description">TBD</h5> -->
+				</header>
+				<p><em>This syllabus is subject to change based on specific class needs, especially the <a href="#schedule">schedule</a>. Significant deviations will be discussed in class. Individual exceptions to the policies and schedule are granted only in cases of true emergency. Please make arrangements with me if an emergency arises.</em></p>
+
+<ul id="markdown-toc">
+  <li><a href="#logistics" id="markdown-toc-logistics">Logistics</a></li>
+  <li><a href="#content" id="markdown-toc-content">Content</a>    <ul>
+      <li><a href="#description" id="markdown-toc-description">Description</a></li>
+      <li><a href="#student-learning-objectives" id="markdown-toc-student-learning-objectives">Student Learning Objectives</a></li>
+      <li><a href="#pedagogical-rationale" id="markdown-toc-pedagogical-rationale">Pedagogical Rationale</a></li>
+      <li><a href="#sources" id="markdown-toc-sources">Sources</a></li>
+      <li><a href="#softwareaccounts" id="markdown-toc-softwareaccounts">Software/Accounts</a></li>
+    </ul>
+  </li>
+  <li><a href="#assessment" id="markdown-toc-assessment">Assessment</a>    <ul>
+      <li><a href="#assignments-and-workload" id="markdown-toc-assignments-and-workload">Assignments and Workload</a></li>
+      <li><a href="#grading" id="markdown-toc-grading">Grading</a></li>
+      <li><a href="#assessment-1" id="markdown-toc-assessment-1">Assessment</a></li>
+    </ul>
+  </li>
+  <li><a href="#policies" id="markdown-toc-policies">Policies</a></li>
+  <li><a href="#outline-and-schedule" id="markdown-toc-outline-and-schedule">Outline and Schedule</a>    <ul>
+      <li><a href="#course-outline" id="markdown-toc-course-outline">Course Outline</a></li>
+      <li><a href="#schedule" id="markdown-toc-schedule">Schedule</a></li>
+    </ul>
+  </li>
+  <li><a href="#monmouth-college-services" id="markdown-toc-monmouth-college-services">Monmouth College Services</a></li>
+</ul>
+
+<h3 id="logistics">Logistics</h3>
+
+<ul>
+  <li>Class meetings: MWF 10:00 am - 10:50 AM in CSB 303</li>
+  <li>Instructor: Robert Utterback
+    <ul>
+      <li>Office: CSB 342</li>
+      <li>Zoom Room: <a href="Available upon request.">Available upon request.</a></li>
+      <li><a href="https://robertutterback.github.io">Website</a></li>
+      <li><a href="mailto:rutterback@monmouthcollege.edu">Email</a></li>
+      <li>Office Hours: M 11-12, Tu 11-12, W 3-4, Th 3-4, F 9-10. Or <a href="https://robertutterback.github.io/schedule/">by appointment</a>.</li>
+    </ul>
+  </li>
+  <li>Course Website: <a href="https://robertutterback.github.io/courses/comp350web/f25/">https://robertutterback.github.io/courses/comp350web/f25/</a></li>
+  <li>Credits: 1 course credit</li>
+  <li>Prerequisites: A C or better in COMP 152.</li>
+  <li>Feedback: At any time during the course you can use <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=2CUxPywZP0ec1n97FfYhs8Yn_tnrj59Js226l2OfoDlUQkRFSzgwU0lKRFJRQjRBSlhLU0lZNkNEVy4u">this anonymous
+form</a> to
+provide anonymous suggestions, criticism, praise, etc.</li>
+</ul>
+
+<h3 id="content">Content</h3>
+
+<h4 id="description">Description</h4>
+
+<p>(Despite the official title, this course is not really about “design”,
+at least not visual design.)</p>
+
+<p>This course provides a deep, systems-level exploration of web
+application development, intended for computer science majors. The
+curriculum moves beyond the superficial use of high-level frameworks
+to cultivate a foundational understanding of the underlying protocols,
+architectures, and computer science principles that make the modern
+web possible. Topics include the HTTP protocol stack, data
+representation and semantics (HTML, CSS), client-side programming
+within the browser as a runtime environment (JavaScript, DOM API),
+server-side logic and request handling, database systems and
+object-relational mapping, RESTful API design, and modern full-stack
+development paradigms. The course is intensely hands-on, emphasizing
+practical application of theoretical concepts, and culminates in a
+significant, student-led capstone project.</p>
+
+<h4 id="student-learning-objectives">Student Learning Objectives</h4>
+
+<p>Upon successful completion of this course, students will possess the ability to:</p>
+
+<ul>
+  <li>Analyze the complete lifecycle of a web request, from client to
+server and back, detailing the roles of DNS, TCP/IP, and the HTTP
+protocol, including methods, headers, and status codes.</li>
+  <li>Architect and implement well-structured, semantic, and accessible
+web documents using HTML. This includes a command of content
+sectioning, text formatting, and document metadata.</li>
+  <li>Style web applications effectively and responsively with Cascading
+Style Sheets (CSS), demonstrating a thorough understanding of the
+cascade, specificity, the box model, and modern layout systems like
+Flexbox and Grid.</li>
+  <li>Develop dynamic and interactive client-side applications by
+programmatically manipulating the Document Object Model (DOM) in
+response to user events, leveraging a deep understanding of the
+browser’s event-driven architecture.</li>
+  <li>Master asynchronous programming in JavaScript, using Promises and
+async/await to handle non-blocking operations like network requests,
+and articulate the role of the event loop in the browser’s
+concurrency model.</li>
+  <li>Design and build robust, scalable server-side applications that
+handle client requests, manage application state, process form data,
+and interface with backend services.</li>
+  <li>Model and persist application data in a relational database using
+both raw Structured Query Language (SQL) and an Object-Relational
+Mapper (ORM). Students will be able to perform all CRUD (Create,
+Read, Update, Delete) operations and articulate the trade-offs of
+the ORM abstraction layer.</li>
+  <li>Design, develop, and document RESTful APIs as a core component of a
+distributed system, adhering to principles of statelessness and
+resource-oriented architecture.</li>
+  <li>Utilize modern development tools and best practices, including
+version control (Git), frontend build tools (Vite), and AI-assisted
+programming (GitHub Copilot), to manage a professional development
+workflow.</li>
+  <li>Manage a full-stack project from conception to deployment,
+demonstrating an ability to integrate disparate technologies into a
+cohesive, functional, and secure web application.</li>
+</ul>
+
+<p>While these are the goals, be aware that this it the first iteration
+of this course; we may not hit all of them.</p>
+
+<h4 id="pedagogical-rationale">Pedagogical Rationale</h4>
+
+<p>The course follows a narrative of increasing complexity, mirroring the
+historical evolution of the web itself. We begin with a single, static
+document served over a network. We then make that document
+interactive, connect it to a server with a persistent memory, and
+finally, rebuild the entire system using modern, component-driven
+architectural patterns. This bottom-up approach ensures that students
+understand the why behind each layer of abstraction, rather than
+simply learning to use a tool without context.</p>
+
+<p>To achieve this depth, a deliberate tradeoff is made: we will focus
+deeply on a representative tool from each major category rather than
+providing a superficial survey of all available options. For example,
+we master one backend framework (Flask), one relational database
+paradigm (SQL), and one frontend component library (React). This
+approach teaches the transferable principles of server-side
+development, database interaction, and component-based UI, which are
+far more valuable and durable than expertise in any single, transient
+technology.</p>
+
+<h4 id="sources">Sources</h4>
+
+<p>There is no required textbook, as I have yet to find one that goes
+deeply enough, and focuses on the appropriate topics, for computer
+science majors.</p>
+
+<p>We will often use the <a href="https://developer.mozilla.org/en-US/">MDN Web
+Docs</a>. Other sources – all
+freely available online – will be linked to as necessary.</p>
+
+<h4 id="softwareaccounts">Software/Accounts</h4>
+
+<ul>
+  <li>I recommend <a href="https://code.visualstudio.com/"><strong>VS Code</strong></a>
+for most students due to its support for web technologies and ease
+of use. However, you can work in whatever editor you are comfortable
+in.</li>
+  <li>You must use <a href="https://git-scm.com/"><strong>Git</strong></a> for your projects. It
+must be installed locally, though you can use it exclusively within
+VS Code, if you wish. I recommend learning to use it on the command
+line.</li>
+  <li>A modern command-line terminal. On Windows, I highly recommend
+installing
+<a href="https://learn.microsoft.com/en-us/windows/wsl/install">WSL</a> to
+minimize your suffering. I highly recommend getting familiar with
+the command-line interface.</li>
+  <li>A recent version of <a href="https://www.python.org/">Python</a>. 3.10+ should
+be fine.</li>
+  <li>A recent version of <a href="https://nodejs.org/en">Node JS</a>. 22.18.0+
+should be fine.</li>
+</ul>
+
+<h3 id="assessment">Assessment</h3>
+
+<h4 id="assignments-and-workload">Assignments and Workload</h4>
+
+<p>The weekly workload for this course will vary by student and by week
+but should be about 12 hours per week on average. The following
+table provides a rough estimate of the distribution of time over
+different course components for a 16 week semester, as well as
+detailing the type, amount, and relative value of all assignments.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Amount</th>
+      <th>Final Grade Weight</th>
+      <th>Average Time/Week (Hours)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Lectures</td>
+      <td>48</td>
+      <td>5% (Participation)</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <td>Project Stages</td>
+      <td>8</td>
+      <td>55%</td>
+      <td>6.5</td>
+    </tr>
+    <tr>
+      <td>Quizzes</td>
+      <td>5–7</td>
+      <td>10%</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Midterm Exam</td>
+      <td>1</td>
+      <td>15%</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Exam/Quiz Study</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>Final Project Presentation</td>
+      <td>1</td>
+      <td>15%</td>
+      <td>0.5</td>
+    </tr>
+    <tr>
+      <td>Reading/Unstructured Study</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>12</td>
+    </tr>
+  </tfoot>
+</table>
+
+<h4 id="grading">Grading</h4>
+
+<p>Your final grade is based on a weighted average of particular
+assignment categories. You can estimate your current grade based on
+your scores and these weights. You may always visit the instructor
+outside of class to discuss your current standing. Assignments and
+final grades use a standard grading scale shown below and will not
+be curved except in rare cases when deemed necessary by the
+instructor.</p>
+
+<p>This courses uses a standard grading scale. Assignments and final
+grades will not be curved except in rare cases when its deemed
+necessary by the instructor. Percentage grades translate to letter
+grades as follows:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Score</th>
+      <th style="text-align: center">Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">94–100</td>
+      <td style="text-align: center">A</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">90–93</td>
+      <td style="text-align: center">A-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">88–89</td>
+      <td style="text-align: center">B+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">82–87</td>
+      <td style="text-align: center">B</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">80–81</td>
+      <td style="text-align: center">B-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">78–79</td>
+      <td style="text-align: center">C+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">72–77</td>
+      <td style="text-align: center">C</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">70–71</td>
+      <td style="text-align: center">C-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">68–69</td>
+      <td style="text-align: center">D+</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">62–67</td>
+      <td style="text-align: center">D</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">60–61</td>
+      <td style="text-align: center">D-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0–59</td>
+      <td style="text-align: center">F</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You are always welcome to challenge a grade that you feel is unfair or
+calculated incorrectly. Mistakes made in your favor will never be
+corrected to lower your grade. Mistakes made not in your favor will
+be corrected. Basically, after the initial grading your score can
+only go up as the result of a challenge*.</p>
+
+<p>You are always welcome to challenge a grade that you feel is unfair or
+calculated incorrectly. Mistakes made in your favor will never be
+corrected to lower your grade. Mistakes made not in your favor will be
+corrected. <em>Basically, after the initial grading your score can only
+go up as the result of a challenge.</em></p>
+
+<h4 id="assessment-1">Assessment</h4>
+
+<p><strong>Project Stages</strong>: The course is built around eight iterative project
+stages, where students build the same application multiple times using
+progressively  more  sophisticated  technologies.   Each  stage  is  a
+complete, working version of  the student’s chosen application, moving
+from static HTML/CSS  through React and Next.js  to modern AI-assisted
+development. Students  must be  able to explain  all code  they submit
+during random spot checks.</p>
+
+<p><strong>Quizzes</strong>: Short, low-stakes quizzes will be administered in class
+to ensure students are keeping up with the readings and can recall key
+definitions and concepts from recent lectures.</p>
+
+<p><strong>Midterm Exam</strong>: A written exam covering the foundational concepts
+from the first half of the course (Units 1-3). It will assess
+understanding of HTML/CSS principles, the DOM, JavaScript
+fundamentals, the HTTP protocol, and server-side architecture.</p>
+
+<p><strong>Final Project Presentation</strong>: A retrospective presentation where students demonstrate the evolution of their project across multiple technology stacks, articulating the trade-offs between different approaches and reflecting on their learning journey throughout the semester.</p>
+
+<p><strong>Participation</strong>: Your participation grade is based on a variety of
+activities, such as active engagement in class discussions, asking
+thoughtful questions, answering in-class questions (especially through
+<a href="https://www.socrative.com/">Socrative</a>, and presenting in-class demos
+of assignment progress.</p>
+
+<p>Socrative questions will cover portions of the text that were assigned
+as reading and will range from simple checks to see if the reading was
+done to more challenging questions that follow from a close
+examination of the reading. For the most part, the only requirement is
+to provide an answer to every question and participate in the
+resultant discussions. On occasion, questions will be evaluated for
+their correctness and performance on 3 these questions will also
+factor into the course participation grade. Students who do the
+reading and start the homework as soon as possible will have very
+little to worry about.</p>
+
+<p><strong>Project Spot Checks</strong>: I will occasionally randomly select a student and have them present elements of their current project stage. Students are expected to be able to explain the purpose of any piece of their code, as well as provide a clear explanation of how it works. If a student cannot explain code they submitted, or does not understand why particular code exists in their project, this may indicate a violation of academic integrity (such as inappropriate use of AI or copying code without understanding). Even if not a formal academic integrity violation, inability to explain one’s own code may result in a reduced grade for that project stage. Students should ensure they understand every line of code they submit.</p>
+
+<p><strong>AI Usage Policy</strong>: Unless explicitly stated otherwise for a specific assignment, students are expected NOT to use AI tools for generating code in their project stages. AI may be used to explain concepts or help understand existing code snippets, but should not be used to generate solutions, write functions, or complete coding tasks. Later in the semester, there may be a specific assignment where AI tool usage is explicitly permitted to allow comparison with hand-crafted implementations.</p>
+
+<p>While there is no strict attendance policy, the course participation
+grade is based in large part on engagement. Absent students cannot
+participate in Socrative sessions or explain their code. Students
+should avoid unexcused absences, as defined in the college-wide
+absence policy. Whenever possible, let the instructor know of the
+absence before it occurs. When unexcused absences do occur, it is the
+student’s responsibility to make up for the lost class time and to
+seek the permission of the instructor to hand-in or complete
+assignments that are late due to an unexcused absence.</p>
+
+<p>This course is designed around the assumption that students engage in
+new ideas <em>before</em> they’re covered in class meetings. This means doing
+assigned reading, taking a stab at homework problems, and as a result
+coming to class and lab with some understand about a new idea or, just
+as likely, with a host of questions about something encountered in the
+reading and homework. Not attending class and putting off work to the
+point that an extension is needed are signs that a student isn’t
+holding up their end of the bargain and is not prepared to participate
+in class.</p>
+
+<h3 id="policies">Policies</h3>
+
+<ul>
+  <li>
+    <p><strong>Late assignments</strong>: You have each been allotted a <em>total</em> of <em>5</em> late days. You may apply these to any homework or programming assignment (NOT exams, quizzes, labs, or reading assignments) you see fit and turn in your solutions with no penalty. Each late days gives you exactly 24 extra hours from the original due date and time. However, you may use <em>at most 2</em> late days on any individual assignment. The whole point here is to give you some flexibility that allows for things like illnesses, long trips, and the like. I am unlikely to grant further extensions. You must notify me if you will use late days, and how many, BEFORE the assignment is due. Late assignments (beyond any applied late days) will be subject to a grade reduction at my discretion. While you should expect a reasonable penalty for late work, know that I will NEVER give you a 0 for late work as long as it is turned in before the final exam.</p>
+  </li>
+  <li>
+    <p><strong>Academic dishonesty</strong>: Monmouth College’s official policy on academic dishonesty can be found <a href="https://www.monmouthcollege.edu/offices/student-affairs/academic-regulations/">here</a>. <strong>You</strong> are responsible for reading and complying with that policy.<br /><br />
+Note: Use of ChatGPT or similar AI tools is not allowed in this class unless explicitly allowed for a particular assignment. While such AI models can be effective tools, they should be utilized only at certain stages of the learning process, and only after a thorough discussion of their use.
+<em>In this course, any violation of the academic honesty policy will have varying consequences depending on the severity of the infraction as judged by the instructor. Minimally, a violation will result in an “F” or 0 points on the assignment in question. Additionally, the student’s course grade may be lowered by one letter grade. In severe cases, the student will be assigned a course grade of “F” and dismissed from the class. All cases of academic dishonesty <strong>must</strong> be reported to the Associate Dean who may decide to recommend further action to the Admissions and Academic Status Committee, including suspension or dismissal. It is assumed that students will educate themselves regarding what is considered to be academic dishonesty, so excuses or claims of ignorance will not mitigate the consequences of any violations</em></p>
+  </li>
+  <li>
+    <p><strong>Collaboration</strong>: We encourage you to make use of the resources available to you – it is fine to seek help from a friend, tutor, instructor, internet, etc. However, <em>copying of answers and any act worth of the label “cheating” is never permissible</em>! In addition to listing your sources and collaborators, you should be producing your own writeup in your own words. By “your own words,” we mean you should be producing the text yourself, without some external aid. Verbatim copying of text is specifically disallowed, but so is taking a source and rearranging some phrases and changing some variable names to create a derivative version! Such behavior is definitely NOT “using your own words.” It does not matter if you helped contribute to this source text with others, since then you are still not the sole author of the text.
+The point of collaborating on an assignment is not to produce a jointly authored set of solutions, since that violates the course policies. Instead, it is to help you solve the problems, which sometimes involve a bit of creativity. After you have jointly come up with the ideas you need to solve the problems, though, you should part ways with your group and sit down to do the writing by yourself.
+I also advise against sharing the writeup you submit with others, since if someone else uses your text as a source for their own solution (with or without your permission), you will also be implicated in the violation of the academic integrity policy. In any case, if two nearly identical solutions are received, we have no way of tell which is the original, and the policy is to not award credit for either submission.</p>
+  </li>
+  <li>
+    <p><strong>Electronic devices</strong>: Do not use your phone or other devices in class except where necessary. Any computer or tablet usage should be related to the course. If a device is not being used for Zoom or Socrative it should be put away and turned on silent. Other usage is rude and distracting to others.</p>
+  </li>
+  <li>
+    <p><strong>General expectations</strong>: In short, I expect you to be respectful of others and take
+responsibility for your own learning. You are here to learn, so work
+hard and be professional.</p>
+
+    <ul>
+      <li>
+        <p>Just attending class is not sufficient to truly learn the
+material. Read the text, use the resources available at Monmouth
+College, and go beyond the material.</p>
+      </li>
+      <li>
+        <p>If you miss class, you are responsible for everything covered on
+ that day.  College is, in some sense, your job. Take pride in
+ creating quality work. Staple your assignments, label problems, and
+ present your answers neatly and orderly.</p>
+      </li>
+      <li>
+        <p>Your job is to convince me that you have learned the material –
+show your work! Even if you do not know a particular answer,
+guide me through your thought process.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="outline-and-schedule">Outline and Schedule</h3>
+
+<h4 id="course-outline">Course Outline</h4>
+
+<p><strong>Unit 1: The Document Web: Structure, Style, and Deployment (Weeks 1-3)</strong></p>
+
+<ul>
+  <li>Theme: From a blank file to a live, styled, multi-page static website on the public internet. This unit establishes the baseline of what a “web page” is.</li>
+  <li>Key Concepts: The client-server model, anatomy of a URL, HTML for document structure (semantics, document flow, accessibility), CSS for presentation (the box model, selectors and specificity, layout with Flexbox and Grid), responsive design principles, and version control with Git for deployment.</li>
+  <li>CS Connections: Data Structures (the DOM as a tree), Formal Languages &amp; Grammars (HTML syntax), Distributed Systems (client-server model), Software Engineering (Version Control Systems).</li>
+  <li>Outcome: Students can build and deploy a professional-looking, multi-page static website (e.g., a personal portfolio) using best practices for structure, style, and accessibility, hosted live on the web via GitHub Pages.</li>
+</ul>
+
+<p><strong>Unit 2: The Interactive Web: Client-Side Programming (Weeks 3-5)</strong></p>
+
+<ul>
+  <li>Theme: Bringing static documents to life with client-side logic. This unit introduces behavior into the static world of Unit 1.</li>
+  <li>Key Concepts: JavaScript language fundamentals (variables, types, operators, control flow, functions, objects), the DOM API for programmatic manipulation of the page, event-driven programming (handling clicks, keyboard input, etc.), making asynchronous network requests with the fetch API, and parsing the JSON data interchange format.</li>
+  <li>CS Connections: Programming Language Paradigms (event-driven, functional concepts like callbacks and promises), Asynchronous Programming &amp; Concurrency, Data Structures (JSON as a serialization format).</li>
+  <li>Outcome: Students can write vanilla JavaScript to create rich, interactive user experiences on a web page, including fetching data from a remote API and dynamically updating the DOM without a full page reload.</li>
+</ul>
+
+<p><strong>Unit 3: The Dynamic Web: Servers, HTTP, and State (Weeks 6-8)</strong></p>
+
+<ul>
+  <li>Theme: Building the “other side” of the web. This unit moves focus from the client to the server, explaining how content can be generated dynamically.</li>
+  <li>Key Concepts: The HTTP protocol in depth (methods like GET/POST, headers, status codes), server-side programming with Python and the Flask microframework, routing (mapping URLs to code), server-side templating with Jinja2 to generate HTML, processing incoming form data, and managing user state across requests using cookies and sessions.</li>
+  <li>CS Connections: Computer Networking (Application Layer Protocols), Systems Design (client-server architecture, REST principles), Operating Systems (process management, file I/O).</li>
+  <li>Outcome: Students can build and run a dynamic web application where the server generates unique HTML pages based on user requests, form submissions, and session data.</li>
+</ul>
+
+<p><strong>Unit 4: The Persistent Web: Relational Databases (Weeks 9-10)</strong></p>
+
+<ul>
+  <li>Theme: Giving applications a permanent memory. This unit connects the stateless server from Unit 3 to a stateful database.</li>
+  <li>Key Concepts: Relational database theory (tables, primary/foreign keys, relationships), Structured Query Language (SQL) fundamentals (<code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>, <code>JOIN</code>s), data modeling and schema design, database normalization, and using an Object-Relational Mapper (ORM) like Flask-SQLAlchemy to abstract database interactions in Python code.</li>
+  <li>CS Connections: Database Theory (Relational Algebra, Normal Forms), Data Modeling &amp; Abstraction, Language Theory (SQL as a declarative query language).</li>
+  <li>Outcome: Students can design a normalized relational database schema for an application, create the database, and write server-side code to perform Create, Read, Update, and Delete (CRUD) operations on persistent data.</li>
+</ul>
+
+<p><strong>Unit 5: The Component-Based Web: SPAs and Modern Frontend (Weeks 11-13)</strong></p>
+
+<ul>
+  <li>Theme: Re-architecting the frontend for complexity and scale. This unit introduces the modern paradigm for building large user interfaces.</li>
+  <li>Key Concepts: The motivation for frontend frameworks, comparing Single-Page Applications (SPAs) to Multi-Page Applications (MPAs), component-based architecture, React fundamentals (JSX syntax, components, props for data flow, state for interactivity), client-side routing, and using a build system (Vite/npm) to manage a modern development workflow.</li>
+  <li>CS Connections: Abstraction &amp; Composition, Component-Based Design, Functional Programming (UI as a pure function of state), Virtualization (the concept of the Virtual DOM as an abstraction over the real DOM).</li>
+  <li>Outcome: Students can build a functional Single-Page Application in React that manages its own state, presents a complex UI, and interacts with the back-end API they built in previous units.</li>
+</ul>
+
+<p><strong>Unit 6: The Full-Stack Web: Advanced Architectures and Tooling (Weeks 14-16)</strong></p>
+
+<ul>
+  <li>Theme: Integrating the full stack and exploring production-grade patterns. This unit secures the application and introduces advanced architectural concepts.</li>
+  <li>Key Concepts: User authentication and authorization (password hashing, session-based vs. token-based auth), full-stack integration strategies, Server-Side Rendering (SSR) and its benefits, introduction to a modern full-stack framework like Next.js, managing environment variables for security, and critically evaluating AI-powered development tools.</li>
+  <li>CS Connections: Computer Security &amp; Cryptography (hashing, principle of least privilege), Distributed Systems Architectures (tradeoffs of Client-Side vs. Server-Side Rendering), Software Engineering (DevOps concepts like configuration and environment management).</li>
+  <li>Outcome: Students can implement a secure user authentication system in their full-stack application, articulate the architectural tradeoffs between different rendering strategies (MPA, SPA, SSR), and deploy a complete application using production best practices.</li>
+</ul>
+
+<h4 id="schedule">Schedule</h4>
+
+<p>The following <strong>tentative</strong> calendar should give you a feel for how
+work is distributed throughout the semester. Assignments and events
+are listed in the week they are due or when they occur. <em>This calendar
+is subject to change based on the circumstances of the course</em>.</p>
+
+<p><strong>Note</strong>: All readings should be done <strong>before</strong> the class period in
+which they are listed below.</p>
+
+<!-- (let* ((standard-output (current-buffer)) -->
+<!--        (start-date (org-read-date nil nil "2025-08-20")) -->
+<!--        (end-date (org-read-date nil nil "2025-12-05")) -->
+<!--        (days (list "Mon" "Wed" "Fri")) -->
+<!--        (current start-date)) -->
+<!--   (while (or (string< current end-date) (string= current end-date)) -->
+<!--     (let* ((time (org-time-string-to-time current)) -->
+<!--            (day (format-time-string "%a" time))) -->
+<!--       (if (member day days) -->
+<!--           (princ (concat (format-time-string "%a %m/%d" time) "\n")))) -->
+<!--     (setq current (org-read-date nil nil "++1" nil (org-time-string-to-time current))))) -->
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Date</th>
+      <th style="text-align: center">Topic</th>
+      <th style="text-align: right">Assignment and Readings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Wed 08/20 (Week 1)</td>
+      <td style="text-align: center">Intro and Logistics</td>
+      <td style="text-align: right">This syllabus. <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works">How the Web Works</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 08/22</td>
+      <td style="text-align: center">HTML Fundamentals</td>
+      <td style="text-align: right"><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content">Structuring content with HTML</a> (including “Basic HTML syntax”), Project out</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 08/25 (Week 2)</td>
+      <td style="text-align: center">CSS: Box Model, Selectors</td>
+      <td style="text-align: right"><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics">CSS Styling Basics</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 08/27</td>
+      <td style="text-align: center">CSS Layout: Flexbox</td>
+      <td style="text-align: right"><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout">CSS Layout</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 08/29</td>
+      <td style="text-align: center">(Quiz 1) Git, GitHub, Static Sites</td>
+      <td style="text-align: right"><a href="https://docs.github.com/en/get-started/start-your-journey/about-github-and-git">1</a>, <a href="https://docs.github.com/en/get-started/learning-to-code/getting-started-with-git">2</a>, <a href="https://docs.github.com/en/pages/quickstart">3</a>, Project Proposal due</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">(Mon 09/01) (Week 3)</td>
+      <td style="text-align: center">(Labor Day – no class)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 09/03</td>
+      <td style="text-align: center">JS: Types &amp; Control Flow</td>
+      <td style="text-align: right"><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting">Dynamic Scripting with JavaScript</a> (up to Functions)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 09/05</td>
+      <td style="text-align: center">JS: Functions &amp; Objects</td>
+      <td style="text-align: right"><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Functions">1</a>, <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Build_your_own_function">2</a>, <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Return_values">3</a>, <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Object_basics">4</a>, <strong>Stage 1 due</strong></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 09/08 (Week 4)</td>
+      <td style="text-align: center">DOM: Traversal &amp; Manipulation</td>
+      <td style="text-align: right"><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/DOM_scripting">DOM scripting</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 09/10</td>
+      <td style="text-align: center">Event-Driven Programming</td>
+      <td style="text-align: right"><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Events">Events</a>, <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Event_bubbling">Bubbling</a>, <a href="https://www.geeksforgeeks.org/javascript/what-is-an-event-loop-in-javascript/">Event loop</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 09/12</td>
+      <td style="text-align: center">(Quiz 2) Workshop: Building an Interactive UI</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 09/15 (Week 5)</td>
+      <td style="text-align: center">Asynchronous JS</td>
+      <td style="text-align: right"><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Async_JS">Async</a> (first 3)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 09/17</td>
+      <td style="text-align: center"><code>fetch</code> API, JSON</td>
+      <td style="text-align: right"><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Network_requests">Fetch</a>, <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/JSON">JSON</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 09/19</td>
+      <td style="text-align: center">Client-Side Wrap Up</td>
+      <td style="text-align: right"><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Debugging_JavaScript">JS Debugging</a>,  <strong>Stage 2 due</strong></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 09/22 (Week 6)</td>
+      <td style="text-align: center">Intro to Servers, Flask</td>
+      <td style="text-align: right"><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/How_does_the_Internet_work">How does the Internet work</a>, <a href="https://flask.palletsprojects.com/en/stable/quickstart/">Flask Quickstart</a>, <a href="https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world">Flask Mega Tutorial</a> (as much as needed)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 09/24</td>
+      <td style="text-align: center">HTTP: Requests, Responses, Headers</td>
+      <td style="text-align: right"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview">Overview of HTTP</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Messages">HTTP Messages</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods">HTTP Methods</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status">HTTP Status Codes</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers">HTTP Headers</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 09/26</td>
+      <td style="text-align: center">(Quiz 3) Flask Routing, Jinja2 Templates</td>
+      <td style="text-align: right"><a href="https://flask.palletsprojects.com/en/stable/tutorial/templates">Flask Templates</a>, <a href="https://jinja.palletsprojects.com/en/stable/templates">Template Designer Docs</a>, <a href="https://medium.com/@AlexanderObregon/how-to-build-a-simple-rest-api-with-flask-in-python-9adcd56cf3da">Flask API</a> (for reference)</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 09/29 (Week 7)</td>
+      <td style="text-align: center">Handling Forms, POST</td>
+      <td style="text-align: right">Forms: <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Your_first_form">1</a>, <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/How_to_structure_a_web_form">2</a>, <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Basic_native_form_controls">3</a>; <a href="https://www.geeksforgeeks.org/python/flask-http-methods-handle-get-post-requests/">Flask request tutorial</a>; <a href="https://flask.palletsprojects.com/en/stable/quickstart/#accessing-request-data">Flask request docs</a>; <a href="https://www.geeksforgeeks.org/software-engineering/post-redirect-get-prg-design-pattern/">Flask redirect</a>; <a href="https://www.geeksforgeeks.org/python/csrf-protection-in-flask/">Flask CSRF</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 10/01</td>
+      <td style="text-align: center">State Management: Cookies &amp; Sessions</td>
+      <td style="text-align: right"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies">Cookies</a>, <a href="https://flask.palletsprojects.com/en/stable/quickstart/#cookies">Cookies in Flask</a>, <a href="https://flask.palletsprojects.com/en/stable/quickstart/#sessions">Flask Sessions</a>, <a href="https://flask-session.readthedocs.io/en/latest/introduction.html">Flask Session Extension</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 10/03</td>
+      <td style="text-align: center">REST API Design Principles</td>
+      <td style="text-align: right"><strong>Stage 3 due</strong>, <a href="https://blog.dreamfactory.com/rest-apis-an-overview-of-basic-principles">REST API Principles</a>, <a href="https://medium.com/@AlexanderObregon/how-to-build-a-simple-rest-api-with-flask-in-python-9adcd56cf3da">Flask REST API</a></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 10/06 (Week 8)</td>
+      <td style="text-align: center">Midterm Review</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 10/08</td>
+      <td style="text-align: center">Midterm Exam</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">(Fri 10/10)</td>
+      <td style="text-align: center">(Fall Break – no class)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 10/13 (Week 9)</td>
+      <td style="text-align: center">Relational Databases, SQL Fundamentals &amp; Data Modeling</td>
+      <td style="text-align: right"><a href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/First_steps/Introduction">Server-side intro</a>, <a href="https://www.sqlitetutorial.net/">SQLite Tutorial</a> (sections 1-5), <a href="https://www.oracle.com/database/what-is-a-relational-database/">What is a Relational Database?</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 10/15</td>
+      <td style="text-align: center">SQL Queries, Joins &amp; Advanced Operations</td>
+      <td style="text-align: right"><a href="https://www.sqlitetutorial.net/sqlite-join/">SQLite Joins</a>, <a href="https://www.w3schools.com/sql/sql_join.asp">SQL Joins Explained</a>, <a href="https://www.geeksforgeeks.org/database-normalization-normal-forms/">Database normalization</a> (optional)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 10/17</td>
+      <td style="text-align: center">Flask-SQLALchemy</td>
+      <td style="text-align: right"><strong>Stage 4 due</strong>, <a href="https://flask-sqlalchemy.readthedocs.io/en/stable/quickstart/">Flask-SQLAlchemy quickstart</a>, <a href="https://flask-sqlalchemy.readthedocs.io/en/stable/models/">SQLAlchemy models</a>, <a href="https://www.digitalocean.com/community/tutorials/how-to-use-flask-sqlalchemy-to-interact-with-databases-in-a-flask-application">SQLAlchemy tutorial</a></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 10/20 (Week 10)</td>
+      <td style="text-align: center">Building a CRUD API</td>
+      <td style="text-align: right"><a href="https://flask.palletsprojects.com/en/stable/patterns/sqlalchemy/">Flask SQLAlchemy patterns</a>, <a href="https://realpython.com/flask-connexion-rest-api/">Flask REST API tutorial</a>, <a href="https://developer.mozilla.org/en-US/docs/Glossary/CRUD">CRUD definition</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 10/22</td>
+      <td style="text-align: center">Database Wrap Up</td>
+      <td style="text-align: right"><a href="https://www.geeksforgeeks.org/database-normalization-normal-forms/">Database normalization</a>, <a href="https://use-the-index-luke.com/sql/preface">SQL indexing</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 10/24</td>
+      <td style="text-align: center">(Quiz 4) Frameworks, SPAs, React</td>
+      <td style="text-align: right"><a href="https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks">Client-side frameworks</a>, <a href="https://react.dev/learn">React Quick Start</a>, <a href="https://www.patterns.dev/vanilla/spa-pattern">SPA pattern</a></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 10/27 (Week 11)</td>
+      <td style="text-align: center">React: Components, JSX, Props</td>
+      <td style="text-align: right"><a href="https://react.dev/learn/your-first-component">React components</a>, <a href="https://react.dev/learn/writing-markup-with-jsx">JSX</a>, <a href="https://react.dev/learn/passing-props-to-a-component">Props</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 10/29</td>
+      <td style="text-align: center">React: State &amp; Handling Events</td>
+      <td style="text-align: right"><a href="https://react.dev/learn/state-a-components-memory">React state</a>, <a href="https://react.dev/learn/responding-to-events">Events</a>, <a href="https://react.dev/learn/render-and-commit">Render and commit</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 10/31</td>
+      <td style="text-align: center">React Workshop: Hands-on Practice</td>
+      <td style="text-align: right"><strong>Stage 5 due</strong></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 11/03 (Week 12)</td>
+      <td style="text-align: center">Component Lifecycle &amp; Effects</td>
+      <td style="text-align: right"><a href="https://react.dev/learn/synchronizing-with-effects">Synchronizing with effects</a>, <a href="https://react.dev/learn/you-might-not-need-an-effect">You might not need an effect</a>, <a href="https://react.dev/learn/lifecycle-of-reactive-effects">Effect lifecycle</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 11/05</td>
+      <td style="text-align: center">Client-Side Routing with React Router</td>
+      <td style="text-align: right"><a href="https://reactrouter.com/en/main/start/overview">React Router overview</a>, <a href="https://reactrouter.com/en/main/start/tutorial">React Router tutorial</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">History API</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 11/07</td>
+      <td style="text-align: center">(Quiz 5) React-Backend Integration Workshop</td>
+      <td style="text-align: right"><a href="https://react.dev/learn/sharing-state-between-components">Sharing state</a></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 11/10 (Week 13)</td>
+      <td style="text-align: center">Connecting React to Backend APIs</td>
+      <td style="text-align: right"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS">CORS</a>, <a href="https://flask-cors.readthedocs.io/en/latest/">Flask-CORS</a>, <a href="https://react.dev/reference/react/useEffect#fetching-data-with-effects">Fetching data with effects</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 11/12</td>
+      <td style="text-align: center">Testing Fundamentals (Unit Tests, API Testing)</td>
+      <td style="text-align: right"><a href="https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Introduction">Testing introduction</a>, <a href="https://jestjs.io/docs/getting-started">Jest</a>, <a href="https://flask.palletsprojects.com/en/stable/tutorial/tests/">Flask testing</a>, <a href="https://realpython.com/python-testing/">pytest</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 11/14</td>
+      <td style="text-align: center">Next.js Introduction &amp; SSR Concepts</td>
+      <td style="text-align: right"><strong>Stage 6 due</strong>, <a href="https://nextjs.org/docs">Next.js docs</a>, <a href="https://nextjs.org/learn/foundations/about-nextjs">Next.js foundations</a>, <a href="https://www.patterns.dev/react/server-side-rendering">SSR pattern</a></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 11/17 (Week 14)</td>
+      <td style="text-align: center">Next.js: File-based Routing &amp; API Routes</td>
+      <td style="text-align: right"><a href="https://nextjs.org/docs/app/building-your-application/routing">Next.js routing</a>, <a href="https://nextjs.org/docs/app/building-your-application/routing/route-handlers">Route handlers</a>, <a href="https://nextjs.org/learn/dashboard-app/creating-layouts-and-pages">Layouts and pages</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 11/19</td>
+      <td style="text-align: center">Next.js: Server-Side Rendering &amp; Data Fetching</td>
+      <td style="text-align: right"><a href="https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations">Server actions</a>, <a href="https://nextjs.org/docs/app/building-your-application/rendering/server-components">Server components</a>, <a href="https://nextjs.org/docs/app/building-your-application/data-fetching/caching-and-revalidating">Caching and revalidating</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 11/21</td>
+      <td style="text-align: center">Implementing Login/Logout</td>
+      <td style="text-align: right"><a href="https://auth0.com/blog/complete-guide-to-react-user-authentication/">React authentication</a>, <a href="https://nextjs.org/learn/dashboard-app/adding-authentication">Next.js authentication</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#security">Cookie security</a></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 11/24 (Week 15)</td>
+      <td style="text-align: center">(Quiz 6) Securing API Routes</td>
+      <td style="text-align: right"><a href="https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html">REST security cheat sheet</a>, <a href="https://nextjs.org/docs/app/building-your-application/authentication">Next.js authentication</a>, <a href="https://flask.palletsprojects.com/en/stable/security/">Flask security</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">(Wed 11/26)</td>
+      <td style="text-align: center">(Thanksgiving Break – no class)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">(Fri 11/28)</td>
+      <td style="text-align: center">(Thanksgiving Break – no class)</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mon 12/01 (Week 16)</td>
+      <td style="text-align: center">AI Tools &amp; Development Workshop</td>
+      <td style="text-align: right"><strong>Stage 7 Due</strong>, <a href="https://github.blog/developer-skills/github/how-to-write-better-prompts-for-github-copilot/">GitHub Copilot guide</a>, <a href="https://stackoverflow.blog/2023/06/14/hype-or-not-developers-have-something-to-say-about-ai/">AI in development</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wed 12/03</td>
+      <td style="text-align: center">Deployment &amp; Production</td>
+      <td style="text-align: right"><a href="https://vercel.com/docs/getting-started-with-vercel">Vercel deployment</a>, <a href="https://12factor.net/">12 Factor App</a> (sections I-VI), <a href="https://nextjs.org/docs/pages/building-your-application/deploying/production-checklist">Next.js production checklist</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fri 12/05</td>
+      <td style="text-align: center">Career &amp; Portfolio</td>
+      <td style="text-align: right"><a href="https://www.freecodecamp.org/news/how-to-build-a-developer-portfolio-website/">Developer portfolio guide</a>, <a href="https://github.com/readme/guides/technical-portfolio">GitHub portfolio</a></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td style="text-align: left"><strong>Wed 12/10 8 AM – 11:00 AM</strong></td>
+      <td style="text-align: center">Final Exam Slot – Project Demos</td>
+      <td style="text-align: right"><strong>Stage 8 Due Mon 12/08 8 AM</strong></td>
+    </tr>
+  </tfoot>
+</table>
+
+<h3 id="monmouth-college-services">Monmouth College Services</h3>
+
+<ul>
+  <li>
+    <p>The <a href="https://www.monmouthcollege.edu/offices/academic-support/"><strong>Academic Support
+Office</strong></a>
+offers <em>free</em> resources to assist Monmouth College students with
+their academic success. Programs include supplemental instruction
+for difficult classes, drop-in and appointment tutoring, and
+individual academic coaching. The office is here to help students
+excel academically, since everyone can work toward better grades,
+study skills, and time management. Please email
+<a href="mailto:succeed@monmouthcollege.edu">succeed@monmouthcollege.edu</a>
+for assistance.</p>
+  </li>
+  <li>
+    <p>If you need course adaptions or accommodations because of a
+disability, please make an appointment with the <a href="https://www.monmouthcollege.edu/offices/student-success-and-accessibility-services/">Accessibility Services Office
+(ASO)</a>
+(<a href="mailto:access@monmouthcollege.edu">access@monmouthcollege.edu</a>
+309-457-2257) as soon as possible. The accessibility of this
+course for every learner is important to me. If at any time you
+experience a barrier to learning, please bring it to my attention
+and I will do my best to address it.</p>
+  </li>
+  <li>
+    <p><strong>Office of Student Well-Being &amp; Student Health Center</strong>: Your
+well-being is crucial to your academic success and personal
+growth. That is why our campus provides free resources to support your
+physical and mental health needs. If you would like schedule an
+appointment for counseling or need further health care assistance,
+please reach out to the Office of Student Well-Being at
+<a href="mailto:wellness@monmouthcollege.edu">wellness@monmouthcollege.edu</a>.</p>
+
+    <p>Student Health Center: 
+  Hours: M-F, 9am-1pm
+  Location: McMichael Residence Hall, Lower level 
+  Call: 309-536-6055
+  Email: healthcenter@monmouthcollege.edu</p>
+
+    <p>Counseling Services:
+  Hours: M-F 9am-4:30pm
+  Location: CSB 393, Administrative Area
+  Call: 309-457-2316
+  Email: wellness@monmouthcollege.edu</p>
+
+    <p>TimelyCare: 24/7 free virtual access to medical and mental health
+care anytime. Visit: timelycare.com/monmouthcollege</p>
+  </li>
+</ul>
+
+<!-- Local Variables: -->
+<!-- eval: (orgtbl-mode) -->
+<!-- End: -->
+
+
+			</div>
+		</div>
+		<!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="https://robertutterback.github.io/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+<!-- <script src="/assets/js/katex.js"></script> -->
+<script src="https://robertutterback.github.io/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/academicons.min.css">
+
+<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"> -->
+
+
+<!-- Google Analytics -->
+<!-- <script> -->
+<!-- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!-- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!-- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!-- })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!-- ga('create', 'UA-XXXXXXXX-X', 'auto'); -->
+<!-- ga('send', 'pageview'); -->
+<!-- </script> -->
+
+	</body>
+</html>
