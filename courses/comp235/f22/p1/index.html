@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Robert Utterback | COMP 235, Fall 2022, Program 1</title>
+<meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+">
+
+     <link rel="shortcut icon" href="https://robertutterback.github.io/assets/img/favicon.ico">
+		 <link rel="stylesheet" href="https://robertutterback.github.io/assets/css/main.css">
+		 <!-- <link rel="shortcut icon" href="/assets/img/favicon.ico"> -->
+     <!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+
+     <link rel="canonical" href="https://robertutterback.github.io/courses/comp235/f22/p1/">
+</head>
+
+	<body>
+		<style type="text/css">
+			.schedule {
+			width: 100%;
+			}
+			table {  
+			width: auto;
+			margin: auto;
+			}
+			blockquote {
+			padding: .35rem;
+			font: 12px;
+			}
+			blockquote footer {
+			font-size: 8px;
+			}
+		</style>
+		<div class="course-content">
+			<div class="wrapper">
+				<header class="post-header">
+					<h1 class="post-title">COMP 235, Fall 2022, Program 1</h1>
+					<!-- <h5 class="class-description"></h5> -->
+				</header>
+				<h2 id="intro-to-c">Intro to C</h2>
+
+<h4 id="due-monday-september-5-by-the-start-of-class">Due Monday, September 5 by the start of class.</h4>
+
+<p>You will need to do this assignment on the department server
+(<code>cs.monm.edu</code>). Start early so you can comfortable in that
+environment.</p>
+
+<h3 id="part-1-exponentiation">Part 1: Exponentiation</h3>
+
+<p>Starting from <a href="../expt.c">this template</a>, complete the <code>power</code>
+function. It takes in a base (a <code>double</code>), an exponent called <code>exp</code>
+(an <code>int</code>), and should return <code>base</code> raised to the <code>exp</code> power. In
+other words, base<sup>exp</sup>.</p>
+
+<p>The <code>main</code> function allows the user to enter inputs and perform the
+exponentiation operation. If you would like to write tests for your
+code (recommended), place it near the <code>TESTING HERE</code> block at the
+start of <code>main()</code>. Do not modify below that point.</p>
+
+<p>For testing, you might try running <code>man assert</code> on the command line,
+or try searching for “assert.h” online.</p>
+
+<h3 id="part-2-foobar">Part 2: FooBar</h3>
+
+<p>Start from <a href="../foobar.c">this template</a>. First, complete the <code>foobar</code>
+function. Given an input integer <code>n</code>, <code>foobar</code> should loop from 1 to n
+(inclusive). For each number, <code>foobar</code> will print a value on a
+separate line. If the number is divisible by 4, it should print
+“Foo”. If the number is divislbe by 6, it should print “Bar”. If the
+number is divisible by 4 AND 6, it should print “FooBar”. Otherwise,
+it should print the number itself.</p>
+
+<p>For example, calling <code>foobar(7)</code> should print</p>
+
+<pre><code>1
+2
+3
+Foo
+5
+Bar
+7
+</code></pre>
+
+<p>Your <code>main</code> function should first check the number of arguments. The
+program itself should take exactly one argument, e.g., <code>./a.out
+7</code>. With any other number of arguments, the program should print an
+error message and immediately stop, returning 1.</p>
+
+<p>When given a single argument, you should convert the argument into an
+integer, call <code>foobar</code> with it, and return 0. You do not need to do
+any error checking on the argument itself – you may assume it is an
+integer.</p>
+
+<h3 id="submission">Submission</h3>
+
+<p>We will submit using the <code>handin</code> program. Assuming you have not
+renamed the files, you can run</p>
+
+<pre><code class="language-sh">handin comp235 proj1 expt.c foobar.c
+</code></pre>
+
+<p>to submit your solutions. You can run this command multiple times in
+case you discover an error after submitting.</p>
+
+			</div>
+		</div>
+		<!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="https://robertutterback.github.io/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+<!-- <script src="/assets/js/katex.js"></script> -->
+<script src="https://robertutterback.github.io/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/academicons.min.css">
+
+<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"> -->
+
+
+<!-- Google Analytics -->
+<!-- <script> -->
+<!-- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!-- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!-- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!-- })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!-- ga('create', 'UA-XXXXXXXX-X', 'auto'); -->
+<!-- ga('send', 'pageview'); -->
+<!-- </script> -->
+
+	</body>
+</html>
