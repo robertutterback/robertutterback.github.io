@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Robert Utterback | COMP 151, Spring 2024, Lab 03</title>
+<meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+">
+
+     <link rel="shortcut icon" href="https://robertutterback.github.io/assets/img/favicon.ico">
+		 <link rel="stylesheet" href="https://robertutterback.github.io/assets/css/main.css">
+		 <!-- <link rel="shortcut icon" href="/assets/img/favicon.ico"> -->
+     <!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+
+     <link rel="canonical" href="https://robertutterback.github.io/courses/comp151/s24/lab03/">
+</head>
+
+	<body>
+		<style type="text/css">
+			.schedule {
+			width: 100%;
+			}
+			table {  
+			width: auto;
+			margin: auto;
+			}
+			blockquote {
+			padding: .35rem;
+			font: 12px;
+			}
+			blockquote footer {
+			font-size: 8px;
+			}
+		</style>
+		<div class="course-content">
+			<div class="wrapper">
+				<header class="post-header">
+					<h1 class="post-title">COMP 151, Spring 2024, Lab 03</h1>
+					<!-- <h5 class="class-description"></h5> -->
+				</header>
+				<h2 id="lab-03-experiments-with-turtle">Lab 03: Experiments with Turtle</h2>
+
+<p>Our book has some nice content using <code>turtle</code>, such as <a href="https://runestone.academy/ns/books/published/monmouth-comp151-spring23/Projects/drawing_a_circle.html#drawing-a-circle">this
+activity</a>,
+but doesn’t involve enough problem solving with it.</p>
+
+<p>So, I created a custom lab which involves <code>turtle</code>, <code>random</code>, and just
+a bit of problem solving.</p>
+
+<h3 id="instructions">Instructions</h3>
+
+<p>Choose any code block from the book. Something from the <a href="https://runestone.academy/ns/books/published/monmouth-comp151-spring23/Projects/drawing_a_circle.html#drawing-a-circle">Drawing a
+Circle with the
+Turtle</a>
+activity would be fitting, but it doesn’t really matter.</p>
+
+<p>You need to write code that satisfies the following requirements:</p>
+
+<ul>
+  <li>Randomly choose a number between 1 and 10 (inclusive), call it <code>n</code>.</li>
+  <li>In a loop, create <code>n</code> turtles.</li>
+  <li>For each turtle:
+    <ul>
+      <li>Assign them a random color.</li>
+      <li>Choose a random radius from 50, 75, 100, 125, 150</li>
+      <li>Have the turtle draw a circle with that radius and color</li>
+    </ul>
+  </li>
+  <li>At the end, print total and average distance travelled</li>
+</ul>
+
+<p><strong>Note</strong>: Each turtle should choose its color and radius independently
+of the other turtles.</p>
+
+<p>When you are done, raise your hand and show me your code.</p>
+
+<h3 id="hints">Hints</h3>
+
+<ul>
+  <li>In addition to our book’s chapters on <code>turtle</code> and <code>random</code>, you
+will probably need to skim Python’s official documentation for the
+<a href="https://docs.python.org/3/library/turtle.html"><code>turtle</code> module</a> and
+for the <a href="https://docs.python.org/3/library/random.html"><code>random</code>
+module</a>.</li>
+  <li>To draw a circle, learn about <a href="https://docs.python.org/3/library/turtle.html#turtle.circle"><code>turtle</code>’s <code>circle</code>
+method</a>.</li>
+  <li>You will need just a little bit of <a href="https://runestone.academy/ns/books/published/monmouth-comp151-spring23/Sequences/toctree.html">chapter
+6</a>
+content to create a list of possible radii, and maybe a list of
+possible colors. Luckily, we’ll cover enough of that right before
+lab.</li>
+  <li>To choose an item randomly from a list, learn about <a href="https://docs.python.org/3/library/random.html#random.choice"><code>random</code>’s
+<code>choice</code>
+method</a>.</li>
+  <li>To figure out the area a turtle traveled, you’ll need to use the
+formula for the circumference of a circle.</li>
+  <li>To compute the <strong>total</strong> distance all turtles have traveled, you’ll
+need to have a separate variable that starts at 0 and gets added to
+inside your loop. This is your first example of the <em>accumulator</em>
+pattern. Don’t be afraid to ask for help about this.</li>
+</ul>
+
+
+			</div>
+		</div>
+		<!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="https://robertutterback.github.io/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+<!-- <script src="/assets/js/katex.js"></script> -->
+<script src="https://robertutterback.github.io/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/academicons.min.css">
+
+<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"> -->
+
+
+<!-- Google Analytics -->
+<!-- <script> -->
+<!-- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!-- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!-- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!-- })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!-- ga('create', 'UA-XXXXXXXX-X', 'auto'); -->
+<!-- ga('send', 'pageview'); -->
+<!-- </script> -->
+
+	</body>
+</html>
