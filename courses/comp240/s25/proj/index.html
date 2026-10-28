@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Robert Utterback | COMP240 (S25) -- Projects Overview</title>
+<meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+">
+
+     <link rel="shortcut icon" href="https://robertutterback.github.io/assets/img/favicon.ico">
+		 <link rel="stylesheet" href="https://robertutterback.github.io/assets/css/main.css">
+		 <!-- <link rel="shortcut icon" href="/assets/img/favicon.ico"> -->
+     <!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+
+     <link rel="canonical" href="https://robertutterback.github.io/courses/comp240/s25/proj/">
+</head>
+
+	<body>
+		<style type="text/css">
+			.schedule {
+			width: 100%;
+			}
+			table {  
+			width: auto;
+			margin: auto;
+			}
+			blockquote {
+			padding: .35rem;
+			font: 12px;
+			}
+			blockquote footer {
+			font-size: 8px;
+			}
+		</style>
+		<div class="course-content">
+			<div class="wrapper">
+				<header class="post-header">
+					<h1 class="post-title">COMP240 (S25) -- Projects Overview</h1>
+					<!-- <h5 class="class-description"></h5> -->
+				</header>
+				<p>All projects follow these guidelines. Specific instructions will be
+given for each project, some of which might override these.</p>
+
+<p>This document contains not only requirements, but also general useful
+(in my opinion) advice. Read it thoroughly, then revisit it
+occasionally during each project.</p>
+
+<h2 id="general-guidelines">General Guidelines</h2>
+
+<ul>
+  <li>Use a Scrum process, as discussed in class:
+    <ul>
+      <li>Work in week-long
+<a href="https://en.wikipedia.org/wiki/Scrum_(software_development)#Sprint">sprints</a>
+(unless otherwise specified). Remember that you should have a
+prototype at the end of each sprint, with <em>something</em> working.</li>
+      <li>Before each project, develop <a href="https://en.wikipedia.org/wiki/User_story">user
+stories</a> in the
+described format: “As a [type of user] I want [some goal] so that
+[some reason]”. Estimate the effort required with <a href="https://en.wikipedia.org/wiki/Planning_poker">planning
+poker</a>
+(points). Store these estimates in the product backlog via GitHub
+issues. If needed, revisit these before each sprint, adding or
+modifying them.</li>
+      <li>Before each sprint, perform “sprint planning” to determine which
+stories you will work on during the sprint. If this isn’t the
+first sprint, make sure this happens <em>before</em> the previous
+sprint’s checkpoint presentation, so that you can talk about it
+during the presentaiton.</li>
+      <li>
+        <p>3 or more ‘standup’ meetings per sprint. Email me attendance,
+length of time, and very brief notes. As a reminder, these are
+short (5-10 minute) meetings where each member addresses three
+questions:</p>
+
+        <ol>
+          <li>What have I done recently that helped us meet out sprint goals?</li>
+          <li>What will I do today (or until the next meeting)?</li>
+          <li>What obstacles are preventing progress?</li>
+        </ol>
+
+        <p>After the ‘standup’ meeting, you might move directly into pair
+programming, or you might take some time to do sprint planning,
+story time, etc. No email or notes are necessary for these things.</p>
+      </li>
+      <li>Track your sprint backlog and velocity (points per sprint) however
+you want; you will show me these in the presentations.</li>
+      <li>Near the end of the sprint (but before a presentation), perform a
+sprint retrospective, focusing on your development process.</li>
+      <li>Before a presentation, perform sprint planning for the next sprint.</li>
+    </ul>
+  </li>
+  <li>When closing an issue, make sure its status is clearly: fully
+implemented, partially done, abandoned?</li>
+  <li>Sprint Retrospectives: In general, consider and analyze anything
+related to your development process. Examples include, but are not
+limited to:
+    <ul>
+      <li>How was your velocity? What can be done to improve it?</li>
+      <li>Could your user stories/tasks be smaller? Larger?</li>
+      <li>Can you make a change to aid in managing, sharing, or testing code?</li>
+      <li>What tools did you use effectively? Which should be better
+utilized? Which are unnecessary distractions?</li>
+      <li>In general, what wrked and didn’t work?</li>
+      <li>At an individual level, how did you work with the team, and how
+can you improve?</li>
+    </ul>
+  </li>
+  <li>Do not be surprised when things don’t go as planned; this is not
+unusual. Do you best to make in-sprint adjustments so that you still
+have a working prototype, even if you can’t meet all your sprint
+goals. After the sprint, consider whether changes are necessary
+(your sprint retrospective).</li>
+  <li>By setting your own user stories, you are effectively assigning
+yourselves homework. Aim to work for as much time as the syllabus
+says: roughly 7 hours per week outside of class. Significant
+deviations from this mean you need to reconsider your user stories
+for the next sprint. The final form of each project is flexible so
+long as you can demonstrate consistent progress with a reasonable
+time commitment.</li>
+  <li>Wherever possible, work in separate branches, merged with pull requests.</li>
+  <li>For significant user stories, perform a thorough code review in the
+pull request. I should see comments and discussion. The pull request
+author might also walk the other team members through the code. You
+can revisit your pull request comments to create each presentation’s
+code review section.</li>
+  <li>Aim for small, incremental changes. Smaller than you think. Yet a
+commit should also not break anything. If something is broken, fix
+it before committing (if possible).</li>
+  <li>In that vein, select small user stories and make sure they clear
+“definitions of done”. For each one, think about how you might
+demonstrate its progress during the next presentation.</li>
+  <li>Use GitHub effectively (see below section). I want to see activity from everyone.</li>
+  <li><a href="https://en.wikipedia.org/wiki/Pair_programming">Program in pairs or triples whenever
+possible</a>. Take
+turns (roughly every 30 minutes) being the “driver” (typing at the
+keyboard) and an observer/navigator, who reviews each typed line and
+provides guidance. This actually tends to be MORE effective than
+splitting tasks up individually. Pair programming is best for novel
+or challenging tasks; if you are confident your tasks are both short
+and easy, you may complete them individually.</li>
+  <li>One of the core principles of agile development is <em>collective
+ownership</em>. No one programmer should own a part of the
+code. Knowledge of some part of the system should not reside in only
+one programmer’s brain. Everyone on the team should be familiar with
+the code as a whole and feel like they can add to, improve, or
+otherwise change the code because the code belongs to everyone
+equally and not to the person that happened to type it. This
+prospective helps to ensure that work does not stop if someone
+leaves the team or is otherwise unavailable and it develops a
+greater sense of working as a team towards a common objective.</li>
+  <li>Develop a consistent coding style. Since you are new to this style
+of development, this may happen gradually, over the course of the
+project. At the very least, you should have consistent variable
+naming conventions, use of whitespace, and commenting/documentation.</li>
+  <li>Wherever possible, test your code. Automated tests are
+preferred. This may require looking up testing libraries for the
+project’s programming language. For user interfaces, automated
+testing is beyond the scope of this course, so manual testing is
+acceptable.</li>
+  <li>Restrictions or allowances for AI usage will be provided on a
+per-process basis. If a project description does not make any note
+about AI, assume that no AI usage is allowed.</li>
+  <li>
+    <p>You are generally allowed to use other human-written internet
+sources, with the restriction that you may not copy and paste
+code. When trying to solve a particular problem, the best way to
+avoid accusations of cheating is the following process:</p>
+
+    <ol>
+      <li>Search for your problem.</li>
+      <li>Read the various search results until you understand the problem
+and how to fix it, studying any found code to see how it might
+need to be modified to fit into your code base. If the fix is
+quite small (e.g., 1 line), you can go ahead and implement
+it. Otherwise, do not type any code yet.</li>
+      <li>Close all search-related tabs.</li>
+      <li>Take a 5 minute break, e.g., go for a brief walk.</li>
+      <li>Return and code up your solution without reopening any related
+browser tabs.</li>
+    </ol>
+  </li>
+</ul>
+
+<h2 id="github-activity">GitHub Activity</h2>
+
+<p>For each project, I expect to see contributions from every team member
+on GitHub. This can include commits, creating or closing issues or
+pull requests, comments and discussion, and more.</p>
+
+<p>It is not necessary for each member’s contributions to have the same
+profile. This course typically includes students of varying
+programming background. Hence, some students may make more code
+commits, while other students can focus on writing documentation,
+creating issues, code review, etc.</p>
+
+<p>As a group, however, I am looking for the following:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Criteria</th>
+      <th>Excellent (100%)</th>
+      <th>Good (85%)</th>
+      <th>Needs Improvement (70%)</th>
+      <th>Unsatisfactory (0–50%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Commits</td>
+      <td>Frequent, meaningful commits with clear messages</td>
+      <td>Regular commits but messages lack detail</td>
+      <td>Rare commits. Unclear messages.</td>
+      <td>Commits are infrequent, meaningless, or missing.</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Pull Requests</td>
+      <td>All tasks merved via pull requests with clear descriptions and reviews.</td>
+      <td>Most tasks use pull requests; some lack clarity or reviews.</td>
+      <td>Minimal use of pull requests; no meaninful reviews.</td>
+      <td>No pull requests or fails to merge work.</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Issues</td>
+      <td>Actively uses GitHub issues to track tasks, bugs, user stories, etc.</td>
+      <td>Uses issues but some tasks are untracked or disorganized.</td>
+      <td>Few issues created or used minimally.</td>
+      <td>No meaningful use of GitHub issues.</td>
+    </tr>
+    <tr>
+      <td>Standup Meetings</td>
+      <td>3 meetings per full sprint, brief description emailed</td>
+      <td>2 meetings, notes emailed</td>
+      <td>1 meeting, notes emailed</td>
+      <td>0 meetings</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Overall, GitHub activity is worth 20 points (out of 100) for each project.</p>
+
+<h2 id="project-results-rubric">Project Results Rubric</h2>
+
+<p>The resulting code of each project is worth 60 points (out of 100). I
+have tried to balance attributes such as correctness, style,
+documentation, modularity, and testing, with expectations scaled
+appropriately for a 200-level course.</p>
+
+<p>This is not your first programming course; you should have some idea
+of how to write clean, organized code. This course has a variety of
+students, so some may be more used to this than others. Students with
+more experience should be making an effort to mentor other students
+based on the below categories:</p>
+
+<ul>
+  <li>Correctness: Focus on meeting core requirements with some handling
+of edge cases.</li>
+  <li>Style: Prioritize readability and consistency; minor deviations are
+acceptable if intentional and well-documented.</li>
+  <li>Documentation: Comments should focus on explaining why decisions
+were made rather than what the code does (unless non-obvious).</li>
+  <li>Modularity: Encourage breaking large blocks into smaller, reusable
+pieces, but perfection is not expected.</li>
+  <li>Testing: Simple tests for major functionality and edge cases are
+enough. Automated tests are preferred where feasible.</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Criterion (points)</th>
+      <th>Excellent</th>
+      <th>Good</th>
+      <th>Needs Improvement</th>
+      <th>Unsatisfactory</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Correctness (21)</td>
+      <td>Meets all functional requirements. Bugs, if any, are minor and rare.</td>
+      <td>Meets most requirments, minor issues (e.g., unhandled edge cases)</td>
+      <td>Major functional issues or significant unhandled cases</td>
+      <td>Non-functional or fails to meet key requirements.</td>
+    </tr>
+    <tr>
+      <td>Style/Consistency (9)</td>
+      <td>Clean, readable, consistent formatting and conventions.</td>
+      <td>Mostly readable, minor inconsistencies.</td>
+      <td>Inconsistently styled, difficult to follow. Poor naming conventions.</td>
+      <td>Messy, hard to read. No attention to style or conventions.</td>
+    </tr>
+    <tr>
+      <td>Documentation (9)</td>
+      <td>Meaningful comments. Docstrings where appropriate.</td>
+      <td>Some comments, but missing important areas. Sometimes too many redundant comments.</td>
+      <td>Sparse or poorly written documentation, unclear logic.</td>
+      <td>Absent or unhelpful documentation.</td>
+    </tr>
+    <tr>
+      <td>Organization/Modularity (9)</td>
+      <td>Well-organized, reusable code. Small, management pieces of logic.</td>
+      <td>Mostly modular, but some pieces are too large or pooly designed.</td>
+      <td>Lacks modularity, large blocks of repetitive or hard-to-reuse code.</td>
+      <td>Poorly structured, monolithic blocks.</td>
+    </tr>
+    <tr>
+      <td>Testing (6)</td>
+      <td>Code includes meaningful, automated tests where appropriate.</td>
+      <td>Tests most functionality, but misses some edge cases.</td>
+      <td>Minimal testing or relies only on manual verification where automated testing is possible.</td>
+      <td>No testing, correctness not verified at all.</td>
+    </tr>
+    <tr>
+      <td>Overall Effort (6)</td>
+      <td>Scope and ambition in line with project expectations. Demonstrates creativity and effort.</td>
+      <td>Meets bare minimum project requirements but lacks ambition or creativity.</td>
+      <td>Partially meets requirements.</td>
+      <td>Missing basic requirements and minimal effort shown.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="presentation-rubric">Presentation Rubric</h2>
+
+<p>Overall, presentations are worth 20 points (out of 100) for each project.</p>
+
+<p>I don’t claim to be an expert in presentations. The most important
+thing you can do it practice giving presentations. But here are some
+tips:</p>
+
+<ol>
+  <li><em>Practice!</em>: plan and rehearse in front of teammates or friends to
+smooth your speaking, timing, and clarity. Ask for feedback on
+timing and clarity.</li>
+  <li>Clarify: avoid jargon. Explain concepts clearly, but only explain
+what is necessary.</li>
+  <li>Visualize: use visuals – screenshots, code snippets, diagrams. Aim
+for one visual on each slide, though that is not always achievable.</li>
+  <li>Engagement: thorough participation from all team members. Use a clear and confident tone.</li>
+  <li>Time Management: Do <em>NOT</em> go over the time limit. Practice so you
+have a rough idea of the time limit.</li>
+  <li>Number your slides.</li>
+  <li>Use an outline slide. It should be shown at least near the
+beginning of the presentation. I also generally like to see it
+flashed up between major sections, although that is just a personal
+preference.</li>
+  <li>Don’t add too much text to slides. Don’t just read directly off the
+slide - slides should complement, not replace, your spoken
+explanation. Where you include text, prefer bullet points or
+concise phrases, not full sentences. People have varying opinions
+on exactly how much text is okay. Personally I prefer only sparse
+text, but I am accomodating to other styles as long as the amount
+of text is not overwhelming.</li>
+  <li>Perhaps the most overlooked and most important: don’t try to cover
+too much. You will either go over time or rush. Decide carefully
+what the right “story” is, and which parts are truly essential to
+tell it.</li>
+</ol>
+
+<p>The following rubrics, while still a bit vague, should give you an
+idea of what I’m looking for.</p>
+
+<h3 id="checkpoint-presentations-10-points-total">Checkpoint Presentations (10 points total)</h3>
+
+<p>A checkpoint presentation should be about 5–10 minutes. The purpose
+is to share progress with the “product owner” and stakeholders, while
+also reflecting on the team’s workflow.</p>
+
+<p>It should have the following sections:</p>
+
+<ol>
+  <li>Demo: show the current state of the game, highlighting any bugs
+you fixed and features (user stories) you added.</li>
+  <li>User Stories and Velocity: List your completed user stories (in
+user story format), and show the team’s velocity (both for this
+sprint and previous ones). Velocity should be presented two ways:
+(1) the number of points completed in a sprint, and (2) points
+completed per person-hour of work.</li>
+  <li>Code ‘Review’: Present one interesting or challenging code
+snippet, explaining what it does, how you approached it, and how
+it works. Must be explained by someone who did NOT write it. (You
+may also comment on coding style you developed or decided on
+related to this code.) When choosing a snippet, prioritize code
+that demonstrates teamwork, tackles complexity, or showcases your
+learning process (e.g., debugging a challenging issue or
+requiring research).</li>
+  <li>AI &amp; Internet Usage: Describe the internet sources and AI helpers
+you used, and explain how you used them. Each individual project
+may have different restrictions or allowances for AI usage.</li>
+  <li>Retrospective: Present a simulated SCRUM ‘retrospective’ meeting,
+where you discuss what went well, what didn’t go well, and what
+you would do differently next time. This is not at the level of
+implementation, but is instead about your team’s process of
+development. Focus on concrete examples for what went well or
+didn’t, e.g., “splitting tasks evenly helped us avoid
+bottlenecks”, or “poor communication caused delays”</li>
+  <li>Future plans: Stories/ideas for next sprint.</li>
+</ol>
+
+<p>Checkpoint presentations are a great way to practice presentation
+skills in a relatively low-stakes environment. They should be
+well-organized, yet can be much less formal than the final project
+presentation. Giving several of these per project gives you a chance
+to get into a rhythm.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Section</th>
+      <th>Excellent (100%)</th>
+      <th>Good (85%)</th>
+      <th>Needs Improvement (70%)</th>
+      <th>Unsatisfactory (0–50%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Demo</td>
+      <td>Functional feature w/o unexpected bugs.</td>
+      <td>Mostly functional; minor issues.</td>
+      <td>Partially functional. Disorganized.</td>
+      <td>Prototype broken or demo absent.</td>
+    </tr>
+    <tr>
+      <td>User Stories</td>
+      <td>Clearly, concise stories. Velocity shown.</td>
+      <td>Clarity/organizaiton issues.</td>
+      <td>Stories missing or unclear.</td>
+      <td>No user stories.</td>
+    </tr>
+    <tr>
+      <td>Code Review</td>
+      <td>Insightful explanation, organized code.</td>
+      <td>Adequate explanation, minor gaps in knowledge.</td>
+      <td>Shallow or disorganized review.</td>
+      <td>No meaningful review.</td>
+    </tr>
+    <tr>
+      <td>AI/Internet Usage</td>
+      <td>Full explanation.</td>
+      <td>Adequate explanation but lack of detail.</td>
+      <td>Minimal explanation.</td>
+      <td>No explanation/description.</td>
+    </tr>
+    <tr>
+      <td>Retrospective</td>
+      <td>Thoughtful, actionable insights.</td>
+      <td>Basic but adequate analysis/insights.</td>
+      <td>Minimal or vague analysis.</td>
+      <td>Missing.</td>
+    </tr>
+    <tr>
+      <td>Future Plans</td>
+      <td>Clear, realistic goals.</td>
+      <td>Unclear or unrealistic goals.</td>
+      <td>Minimal planning.</td>
+      <td>No plans discussed.</td>
+    </tr>
+    <tr>
+      <td>Presentation Style</td>
+      <td>Clear, engaging, well-paced.</td>
+      <td>Adequate but lacks engagement, or too much reading from slides.</td>
+      <td>Disorganized or unengaging.</td>
+      <td>Difficult to follow or no effort.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="final-project-presentations-10-points">Final Project Presentations (10 points)</h3>
+
+<p>The final project presentation is longer (15–20 minutes) and should
+be significantly more polished. The purpose is to reflect on the
+project’s development and <em>teach</em> key concepts, with a target audience
+of freshman CS students (think COMP151 and COMP152). Simplify and
+clarify accordingly: use simple language, visuals, and focus on the
+‘why’ behind your decisions.</p>
+
+<p>Required sections:</p>
+
+<ol>
+  <li>Motivation: why was the project chosen? What were you supposed to learn?</li>
+  <li>Development Process: Teach Scrum workflow. Reflect on your sprint cycle and velocity.</li>
+  <li>AI &amp; Internet Usage: Document and explain how you used internet
+sources and AI in your workflow (if applicable). Comment on what
+worked, how you might improve how you use the tools, and any
+dangers of long-term use.</li>
+  <li>Demo: Show off your final product. It is perfectly fine if you
+did not get everything done that you planned to, but it IS
+important that you have a working prototype! Things can be
+unfinished, but not buggy!</li>
+  <li>Code Highlighting: Discuss a key piece of code (or two). Explain
+it clearly, with visuals and careful pacing so that COMP151
+students get the idea. You may also comment on coding style here.</li>
+  <li>Reflection: Both successes and mistakes (both coding and project
+management). What would you do differently if you could restart?</li>
+  <li>Future Directions: If you had another sprint, what would you focus on?</li>
+</ol>
+
+<p>Generally, the same rubric categories as checkpoint presentations, but
+I expect deeper insights, detailed explanations, and significantly
+more polish.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Section</th>
+      <th>Excellent (100%)</th>
+      <th>Good (85%)</th>
+      <th>Needs Improvement (70%)</th>
+      <th>Unsatisfactory (0–50%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Motivation</td>
+      <td>Clear, compelling, well-articulated</td>
+      <td>Adequate but lacks depth</td>
+      <td>Shallow or incomplete</td>
+      <td>Missing or vague</td>
+    </tr>
+    <tr>
+      <td>Dev. Process</td>
+      <td>Detailed explanation of Scrum; teaches concepts well</td>
+      <td>Covers basics but lacks clarity</td>
+      <td>Limited or unclear explanation</td>
+      <td>Process explanation missing</td>
+    </tr>
+    <tr>
+      <td>AI/Internet Usage</td>
+      <td>Full explanation and actionable insights</td>
+      <td>Description but unclear analysis</td>
+      <td>Description but no analysis</td>
+      <td>No explanation or reflection</td>
+    </tr>
+    <tr>
+      <td>Demo</td>
+      <td>Functional, smooth, highlighting key achievements</td>
+      <td>Mostly functional; minor issues</td>
+      <td>Partially functional or disorganized</td>
+      <td>Incomplete or absent.</td>
+    </tr>
+    <tr>
+      <td>Code Highlight</td>
+      <td>Insightful explanation, clear visuals and pacing</td>
+      <td>Adequate, minor gaps</td>
+      <td>Shallow or disorganized review</td>
+      <td>No meaningful explanation</td>
+    </tr>
+    <tr>
+      <td>Reflection</td>
+      <td>Actionable insights on project management</td>
+      <td>Adequate but basic insights</td>
+      <td>Minimal or vague insights</td>
+      <td>No reflection</td>
+    </tr>
+    <tr>
+      <td>Future Directions</td>
+      <td>Realistic, thoughtful next steps</td>
+      <td>Unclear or superficial goals</td>
+      <td>Minimal planning shown.</td>
+      <td>No plans discussed</td>
+    </tr>
+    <tr>
+      <td>Presentation Style</td>
+      <td>Clear, engaging, professional</td>
+      <td>Lacks polish or full engagement</td>
+      <td>Disorganized or unengaging</td>
+      <td>Difficult to follow or no effort</td>
+    </tr>
+  </tbody>
+</table>
+
+
+			</div>
+		</div>
+		<!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="https://robertutterback.github.io/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+<!-- <script src="/assets/js/katex.js"></script> -->
+<script src="https://robertutterback.github.io/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://robertutterback.github.io/assets/css/academicons.min.css">
+
+<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"> -->
+
+
+<!-- Google Analytics -->
+<!-- <script> -->
+<!-- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!-- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!-- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!-- })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!-- ga('create', 'UA-XXXXXXXX-X', 'auto'); -->
+<!-- ga('send', 'pageview'); -->
+<!-- </script> -->
+
+	</body>
+</html>
